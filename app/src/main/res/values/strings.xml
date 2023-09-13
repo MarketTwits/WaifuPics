@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">WaifuPics</string>
+    <string name="main">Main</string>
+    <string name="gallery">Gallery</string>
+    <string name="about">About</string>
+    <string name="waifu_image">Waifu image</string>
 </resources>

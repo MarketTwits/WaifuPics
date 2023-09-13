@@ -6,14 +6,23 @@ interface DependenciesConfig {
         override fun fetch() = dependence + version
     }
     object Compose {
+        private const val composeVersion = "1.4.3"
         private const val composeBomVersion = "2023.03.00"
         private const val composeActivityVersion = "1.7.2"
+        private const val composeLifecycleVersion = "2.6.1"
         const val uiUi = "androidx.compose.ui:ui"
         const val graphics = "androidx.compose.ui:ui-graphics"
         const val toolingPreiew = "androidx.compose.ui:ui-tooling-preview"
         const val material = "androidx.compose.material3:material3"
         const val composeBom = "androidx.compose:compose-bom:$composeBomVersion"
         const val activity ="androidx.activity:activity-compose:$composeActivityVersion"
+        const val composeLifecycle = "androidx.lifecycle:lifecycle-viewmodel-compose:$composeLifecycleVersion"
+        const val icons = "androidx.compose.material:material-icons-extended:$composeVersion"
+
+        object Navigation{
+            private val navigationVersion = "2.7.1"
+             val navigation =  "androidx.navigation:navigation-compose:$navigationVersion"
+        }
     }
     object ComposeDebugAndTest {
         val uiTooling = "androidx.compose.ui:ui-tooling"
@@ -52,5 +61,9 @@ interface DependenciesConfig {
     object CoilCompose : BaseAbsract(){
         override val version = "2.4.0"
         override val dependence = "io.coil-kt:coil-compose:"
+    }
+    object WorkManager : BaseAbsract(){
+        override val version = "2.8.1"
+        override val dependence = "androidx.work:work-runtime-ktx:"
     }
 }
