@@ -1,6 +1,5 @@
 package com.markettwits.waifupics.view.navigation.view
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -30,16 +29,15 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.markettwits.waifupics.R
 import com.markettwits.waifupics.core.WaifuPicsApp
 import com.markettwits.waifupics.view.extensions.noRippleClickable
-import com.markettwits.waifupics.view.navigation.NavGraph
-import com.markettwits.waifupics.view.navigation.NavigationItem
-import com.markettwits.waifupics.view.navigation.rememberNavigationState
+import com.markettwits.waifupics.view.navigation.nav_grapth.NavGraph
+import com.markettwits.waifupics.view.navigation.model.NavigationItem
+import com.markettwits.waifupics.view.navigation.nav_grapth.rememberNavigationState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NavigationScreen(
     modifier: Modifier = Modifier
 ) {
-
     val viewModel = (LocalContext.current.applicationContext as WaifuPicsApp).viewModel(
         checkNotNull(LocalViewModelStoreOwner.current), NavigationViewModel::class.java
     )
