@@ -42,7 +42,7 @@ import net.engawapg.lib.zoomable.zoomable
 @Composable
 fun FullScreenImageDialog(
     modifier: Modifier = Modifier,
-    imageUrl: Drawable,
+    imageUrl: String,
     onClose: () -> Unit
 ) {
     val zoomState = rememberZoomState()

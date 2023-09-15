@@ -1,4 +1,4 @@
-package com.markettwits.waifupics.view.base
+package com.markettwits.waifupics.base
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

@@ -51,6 +51,8 @@ android {
 }
 
 dependencies {
+    implementation ("androidx.compose.runtime:runtime-livedata:1.5.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.0-beta01")
     implementation(DependenciesConfig.Retrofit.retrofit)
     implementation(DependenciesConfig.Retrofit.retrofitConverter)
     implementation(DependenciesConfig.Zoomable.fetch())

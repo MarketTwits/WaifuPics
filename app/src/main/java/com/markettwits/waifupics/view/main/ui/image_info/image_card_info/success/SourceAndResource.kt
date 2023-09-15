@@ -9,10 +9,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.markettwits.waifupics.ui.theme.WaifuPicsTheme
-import com.markettwits.waifupics.view.base.ImageParametersText
+import com.markettwits.waifupics.base.ImageParametersText
+import com.markettwits.waifupics.view.main.data.net.models.AttributesCloud
 
 @Composable
-fun SourceAndResource() {
+fun SourceAndResource(atributes : AttributesCloud) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -21,12 +22,12 @@ fun SourceAndResource() {
         Column {
             ImageParametersText(
                 title = "Image source: ",
-                content = "Pixv",
-                link = "www.google.com"
+                content = atributes.source.name ?: "empty",
+                link = atributes.source.url ?: "empty",
             )
             ImageParametersText(
                 title = "Age rating: ",
-                content = "Questionable",
+                content = atributes.ageRating,
                 link = "https://www.youtube.com/"
             )
         }
@@ -36,6 +37,6 @@ fun SourceAndResource() {
 @Composable
 private fun SourceAndResourcePreview(){
     WaifuPicsTheme {
-        SourceAndResource()
+        //SourceAndResource()
     }
 }

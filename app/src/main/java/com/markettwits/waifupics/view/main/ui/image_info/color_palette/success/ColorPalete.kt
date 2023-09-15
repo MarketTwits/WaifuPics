@@ -11,21 +11,30 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import com.markettwits.waifupics.R
+import com.markettwits.waifupics.core.WaifuPicsApp
 import com.markettwits.waifupics.ui.theme.LightPink
 import com.markettwits.waifupics.view.main.fake.fakeHex
 import com.markettwits.waifupics.view.main.fake.hexToComposeColor
+import com.markettwits.waifupics.view.main.ui.image.ImageViewModel
 
-@Preview
 @Composable
-fun ColorPalette() {
+fun ColorPalette(hex : List<String>) {
+    var pallete = remember {
+        mutableStateOf(hex)
+    }
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -38,12 +47,13 @@ fun ColorPalette() {
                 color = LightPink,
                 fontSize = 14.sp
             )
-            val colors = fakeHex()
             Row(
-                modifier = Modifier.fillMaxWidth() .clip(RoundedCornerShape(10.dp)),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(10.dp)),
                 horizontalArrangement = Arrangement.End
             ) {
-                colors.forEach {
+                pallete.value.forEach {
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()

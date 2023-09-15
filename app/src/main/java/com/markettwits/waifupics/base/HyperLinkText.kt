@@ -1,4 +1,4 @@
-package com.markettwits.waifupics.view.base
+package com.markettwits.waifupics.base
 
 import android.content.Context
 import android.content.Intent
