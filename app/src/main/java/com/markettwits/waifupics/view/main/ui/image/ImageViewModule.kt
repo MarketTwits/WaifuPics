@@ -5,5 +5,5 @@ import com.markettwits.waifupics.view.main.data.net.MakeService
 
 class ImageViewModule : Module<ImageViewModel> {
     override fun viewModel() =
-        ImageViewModel(ImageCommunication.Base(), MakeService.Base().service())
+        ImageViewModel(MakeService.Base().service())
 }

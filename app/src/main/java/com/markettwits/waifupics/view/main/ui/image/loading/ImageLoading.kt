@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.markettwits.waifupics.R
 import com.markettwits.waifupics.ui.theme.Pink
 import com.markettwits.waifupics.ui.theme.WaifuPicsTheme
-import com.markettwits.waifupics.view.base.RoundedLinearProgressIndicator
+import com.markettwits.waifupics.base.RoundedLinearProgressIndicator
 
 
 @Composable

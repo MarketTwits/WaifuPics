@@ -1,4 +1,4 @@
-package com.markettwits.waifupics.view.base
+package com.markettwits.waifupics.base
 
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.LinearEasing

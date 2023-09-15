@@ -1,4 +1,4 @@
-package com.markettwits.waifupics.view.base
+package com.markettwits.waifupics.base
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable

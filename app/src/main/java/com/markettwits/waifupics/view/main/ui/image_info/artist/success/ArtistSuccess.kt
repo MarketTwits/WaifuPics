@@ -28,8 +28,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.markettwits.waifupics.R
 import com.markettwits.waifupics.ui.theme.LightGrey
-import com.markettwits.waifupics.view.base.ImageParametersText
-import com.markettwits.waifupics.view.base.MultiImageParametersText
+import com.markettwits.waifupics.base.ImageParametersText
+import com.markettwits.waifupics.base.MultiImageParametersText
 
 @Preview
 @Composable
