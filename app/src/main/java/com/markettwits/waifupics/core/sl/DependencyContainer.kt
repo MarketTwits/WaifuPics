@@ -2,6 +2,8 @@ package com.markettwits.waifupics.core.sl
 
 import androidx.lifecycle.ViewModel
 import com.markettwits.waifupics.core.Core
+import com.markettwits.waifupics.view.main.ui.image.ImageViewModel
+import com.markettwits.waifupics.view.main.ui.image.ImageViewModule
 import com.markettwits.waifupics.view.navigation.NavigationModule
 import com.markettwits.waifupics.view.navigation.view.NavigationViewModel
 
@@ -19,6 +21,7 @@ interface DependencyContainer {
     ) : DependencyContainer {
         override fun module(className: Class<out ViewModel>) = when (className) {
             NavigationViewModel::class.java -> NavigationModule()
+            ImageViewModel::class.java -> ImageViewModule()
             else -> dependencyContainer.module(className)
         }
     }

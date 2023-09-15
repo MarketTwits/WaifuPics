@@ -33,8 +33,14 @@ interface DependenciesConfig {
     object Espresso : BaseAbsract(){
         override val version = "3.5.1"
         override val dependence = "androidx.test.espresso:espresso-core:"
-
     }
+    object Retrofit{
+        private const val version = "2.9.0"
+        const val retrofit = "com.squareup.retrofit2:retrofit:$version"
+        const val retrofitConverter = "com.squareup.retrofit2:converter-gson:$version"
+    }
+
+
     object Dagger2 : BaseAbsract() {
         override val version = "2.46"
         override val dependence = "com.google.dagger:dagger-android:"
@@ -65,5 +71,9 @@ interface DependenciesConfig {
     object WorkManager : BaseAbsract(){
         override val version = "2.8.1"
         override val dependence = "androidx.work:work-runtime-ktx:"
+    }
+    object Zoomable : BaseAbsract(){
+        override val version = "1.5.1"
+        override val dependence = "net.engawapg.lib:zoomable:"
     }
 }

@@ -1,7 +1,7 @@
 package com.markettwits.waifupics.view.navigation.view
 
 import androidx.lifecycle.ViewModel
-import com.markettwits.waifupics.view.navigation.NavigationItem
+import com.markettwits.waifupics.view.navigation.model.NavigationItem
 
 class NavigationViewModel : ViewModel() {
     fun updateSelectedItemInList(

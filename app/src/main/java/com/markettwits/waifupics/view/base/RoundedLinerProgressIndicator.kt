@@ -17,7 +17,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.ProgressIndicatorDefaults
+import androidx.compose.material3.ProgressIndicatorDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -33,11 +33,7 @@ import com.markettwits.waifupics.ui.theme.Pink
     modifier: Modifier = Modifier,
     height: Dp = 8.dp,
     color: Color = Pink,
-    backgroundColor: Color =
-    //MaterialTheme.colorScheme.background
-        color.copy(
-            alpha = ProgressIndicatorDefaults.IndicatorBackgroundOpacity
-        )
+    backgroundColor: Color = color.copy(alpha = 0.1f)
 ) {
     val infiniteTransition = rememberInfiniteTransition(label = "")
     val animatedColor by infiniteTransition.animateColor(

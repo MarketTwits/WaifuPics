@@ -15,7 +15,7 @@
         android:theme="@style/Theme.WaifuPics"
         tools:targetApi="31">
         <activity
-            android:name=".view.main.MainActivity"
+            android:name=".view.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.WaifuPics">
