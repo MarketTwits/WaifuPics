@@ -1,16 +1,21 @@
 package com.markettwits.waifupics.view.main.data.net.models
 
-data class RandomImageCloud(
- val data : DataCloud
-) data class DataCloud(
+data class RandomImageCloud(val data : DataCloud)
+
+data class DataCloud(
     val type : String,
     val id : String,
     val attributes : AttributesCloud,
-   // val relationships :RelationshipsCloud
+    val relationships :RelationshipsCloud
 )
 data class RelationshipsCloud(
-    val artist : String
+    val uploader : PersonCloud,
+    val artist : PersonCloud
 )
+data class PersonCloud(val links: Links, val data: Data?){
+    data class Links(val links : String,  val related : String)
+    data class Data(val type: String, val id : String)
+}
 data class AttributesCloud(
     val file : String,
     val title : String,

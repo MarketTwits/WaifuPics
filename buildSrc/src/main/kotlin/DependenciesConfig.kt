@@ -1,10 +1,5 @@
-interface DependenciesConfig {
+ interface DependenciesConfig {
     fun fetch(): String
-    abstract class BaseAbsract : DependenciesConfig {
-        protected abstract val version: String
-        protected abstract val dependence: String
-        override fun fetch() = dependence + version
-    }
     object Compose {
         private const val composeVersion = "1.4.3"
         private const val composeBomVersion = "2023.03.00"
@@ -30,7 +25,7 @@ interface DependenciesConfig {
         val bom = "androidx.compose:compose-bom:2023.03.00"
         val junit = "androidx.compose.ui:ui-test-junit4"
     }
-    object Espresso : BaseAbsract(){
+    object Espresso : DependaciesAbstract(){
         override val version = "3.5.1"
         override val dependence = "androidx.test.espresso:espresso-core:"
     }
@@ -41,38 +36,38 @@ interface DependenciesConfig {
     }
 
 
-    object Dagger2 : BaseAbsract() {
+    object Dagger2 : DependaciesAbstract() {
         override val version = "2.46"
         override val dependence = "com.google.dagger:dagger-android:"
     }
 
-    object Lifecycle : BaseAbsract() {
+    object Lifecycle : DependaciesAbstract() {
         override val version = "2.6.1"
         override val dependence = "androidx.lifecycle:lifecycle-runtime-ktx:"
     }
 
-    object JuintExt : BaseAbsract() {
+    object JuintExt : DependaciesAbstract() {
         override val version = "1.1.5"
         override val dependence = "androidx.test.ext:junit:"
     }
-    object KotlinCore : BaseAbsract(){
+    object KotlinCore : DependaciesAbstract(){
         override val version = "1.9.0"
         override val dependence = "androidx.core:core-ktx:"
     }
 
-    object Junit : BaseAbsract() {
+    object Junit : DependaciesAbstract() {
         override val version = "4.13.2"
         override val dependence = "junit:junit:"
     }
-    object CoilCompose : BaseAbsract(){
+    object CoilCompose : DependaciesAbstract(){
         override val version = "2.4.0"
         override val dependence = "io.coil-kt:coil-compose:"
     }
-    object WorkManager : BaseAbsract(){
+    object WorkManager : DependaciesAbstract(){
         override val version = "2.8.1"
         override val dependence = "androidx.work:work-runtime-ktx:"
     }
-    object Zoomable : BaseAbsract(){
+    object Zoomable : DependaciesAbstract(){
         override val version = "1.5.1"
         override val dependence = "net.engawapg.lib:zoomable:"
     }

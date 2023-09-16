@@ -8,7 +8,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -32,10 +31,10 @@ fun HyperlinkText(
     val context = LocalContext.current
     val annotatedString = buildAnnotatedString {
         append(fullText)
-
         for ((key, value) in hyperLinks) {
             val startIndex = fullText.indexOf(key)
             val endIndex = startIndex + key.length
+
             addStyle(
                 style = SpanStyle(
                     color = linkTextColor,
@@ -75,11 +74,21 @@ fun HyperlinkText(
     )
 }
 
-fun openWebPage(url: String, context: Context) {
+ fun openWebPage(url: String, context: Context) {
     var webpage = Uri.parse(url)
     if (!url.startsWith("http://") && !url.startsWith("https://")) {
         webpage = Uri.parse("http://$url")
     }
     val intent = Intent(Intent.ACTION_VIEW, webpage)
     ContextCompat.startActivity(context, intent, null)
+
+}
+@Composable
+fun OpenWebPageComposable(url: String) {
+    var webpage = Uri.parse(url)
+    if (!url.startsWith("http://") && !url.startsWith("https://")) {
+        webpage = Uri.parse("http://$url")
+    }
+    val intent = Intent(Intent.ACTION_VIEW, webpage)
+    ContextCompat.startActivity(LocalContext.current, intent, null)
 }

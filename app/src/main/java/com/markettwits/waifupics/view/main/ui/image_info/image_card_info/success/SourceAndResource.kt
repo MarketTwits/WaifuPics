@@ -8,12 +8,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.markettwits.waifupics.ui.theme.WaifuPicsTheme
 import com.markettwits.waifupics.base.ImageParametersText
-import com.markettwits.waifupics.view.main.data.net.models.AttributesCloud
+import com.markettwits.waifupics.theame.theme.WaifuPicsTheme
+import com.markettwits.waifupics.view.main.ui.ImageSourceUi
 
 @Composable
-fun SourceAndResource(atributes : AttributesCloud) {
+fun SourceAndResource(source : ImageSourceUi) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -21,14 +21,13 @@ fun SourceAndResource(atributes : AttributesCloud) {
     ) {
         Column {
             ImageParametersText(
-                title = "Image source: ",
-                content = atributes.source.name ?: "empty",
-                link = atributes.source.url ?: "empty",
+                title = "Image source",
+                content = source.source,
+                link = source.sourceUrl,
             )
             ImageParametersText(
-                title = "Age rating: ",
-                content = atributes.ageRating,
-                link = "https://www.youtube.com/"
+                title = "Age rating",
+                content = source.ageRating
             )
         }
     }

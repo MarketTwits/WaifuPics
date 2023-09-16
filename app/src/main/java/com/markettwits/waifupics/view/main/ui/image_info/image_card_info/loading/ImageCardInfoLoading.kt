@@ -2,9 +2,6 @@ package com.markettwits.waifupics.view.main.ui.image_info.image_card_info.loadin
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Divider
@@ -14,8 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.markettwits.waifupics.ui.theme.DirtyWhite
-import com.markettwits.waifupics.ui.theme.WaifuPicsTheme
+import com.markettwits.waifupics.theame.theme.DirtyWhite
+import com.markettwits.waifupics.theame.theme.WaifuPicsTheme
 import com.markettwits.waifupics.view.main.ui.image_info.artist.loading.ArtistInfoLoading
 import com.markettwits.waifupics.view.main.ui.image_info.color_palette.loading.ColorPaletteLoading
 

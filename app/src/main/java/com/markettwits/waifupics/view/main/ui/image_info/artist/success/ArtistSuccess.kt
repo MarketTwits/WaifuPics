@@ -1,6 +1,5 @@
 package com.markettwits.waifupics.view.main.ui.image_info.artist.success
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,16 +19,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.markettwits.waifupics.R
-import com.markettwits.waifupics.ui.theme.LightGrey
-import com.markettwits.waifupics.base.ImageParametersText
-import com.markettwits.waifupics.base.MultiImageParametersText
+import com.markettwits.waifupics.base.MultyLinksText
+import com.markettwits.waifupics.base.UnlinkMultiText
+import com.markettwits.waifupics.theame.theme.LightGrey
+import com.markettwits.waifupics.view.main.ui.AuthorUi
 
 @Preview
 @Composable
@@ -59,59 +59,74 @@ fun ArtistEmptyInfo() {
         }
     }
 }
-@Preview
+
 @Composable
-fun ArtistInfo() {
+fun ArtistInfo(author : AuthorUi) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .padding(10.dp)
     ) {
         Column {
-            ArtistTitle()
-            ImageParametersText(
-                title = "Aliases",
-                content = "夕末",
-                link = "www.google.com"
+            ArtistTitle(author.imageUrl, author.title)
+            UnlinkMultiText(
+                title = "Aliases: ",
+                text = author.aliases
             )
-            MultiImageParametersText(
-                title = "Links",
-                content = listOf(
-                    "\uD83D\uDD17 Pixiv",
-                    "\uD83D\uDD17 Twitter",
-                    "\uD83D\uDD17 Weibu"
-                ),
-                link = listOf(
-                    "https://www.pixiv.net/en/users/19389056",
-                    "https://twitter.com/xilmo1",
-                    "https://weibo.com/3541932414"
-                )
+            MultyLinksText(
+                title = "Links: ",
+                links = author.links
             )
-
         }
     }
 }
+
 @Composable
-fun ArtistTitle() {
-    val user = "User"
-    val iconProfile =
-        "https://pbs.twimg.com/profile_images/1563823251293229056/CHZ_lqn3_400x400.jpg"
+fun ArtistTitle(imageUrl : String, name : String) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Image(
+        AsyncImage(
             modifier = Modifier
                 .size(20.dp)
                 .clip(RoundedCornerShape(20.dp)),
-            painter = painterResource(id = R.drawable.artist_profile_test),
-            contentDescription = user
+            model = imageUrl,
+            contentDescription = name
         )
         Spacer(modifier = Modifier.width(10.dp))
         Text(
-            text = "xilmo",
+            text = name,
             color = MaterialTheme.colorScheme.onBackground,
             fontSize = 14.sp,
             fontFamily = FontFamily(Font(R.font.rubik_medium))
         )
+    }
+}
+
+@Composable
+fun Uploader(userName: String, iconUrl: String) {
+    Box(
+        modifier = Modifier
+            .padding(10.dp)
+            .fillMaxWidth(),
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            AsyncImage(
+                modifier = Modifier
+                    .size(20.dp)
+                    .clip(RoundedCornerShape(20.dp)),
+                model = iconUrl,
+                contentDescription = userName
+            )
+            Spacer(modifier = Modifier.width(10.dp))
+            Text(
+                text = userName,
+                color = MaterialTheme.colorScheme.onBackground,
+                fontSize = 14.sp,
+                fontFamily = FontFamily(Font(R.font.rubik_medium))
+            )
+        }
     }
 }
