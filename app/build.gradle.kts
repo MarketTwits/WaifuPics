@@ -51,7 +51,11 @@ android {
 }
 
 dependencies {
-    implementation ("androidx.compose.runtime:runtime-livedata:1.5.0")
+    val okhttp_ver = "4.10.0"
+    implementation("com.squareup.okhttp3:okhttp:$okhttp_ver")
+    implementation("com.squareup.okhttp3:logging-interceptor:$okhttp_ver")
+    implementation(project(path = ":core"))
+    implementation ("androidx.compose.runtime:runtime-livedata:1.5.1")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.0-beta01")
     implementation(DependenciesConfig.Retrofit.retrofit)
     implementation(DependenciesConfig.Retrofit.retrofitConverter)
@@ -59,7 +63,6 @@ dependencies {
     implementation ("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
     implementation(DependenciesConfig.Compose.icons)
     implementation(DependenciesConfig.WorkManager.fetch())
-    implementation(DependenciesConfig.Dagger2.fetch())
     implementation(DependenciesConfig.KotlinCore.fetch())
     implementation(DependenciesConfig.Lifecycle.fetch())
     implementation(DependenciesConfig.Compose.activity)

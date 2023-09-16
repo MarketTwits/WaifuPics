@@ -15,20 +15,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import com.markettwits.waifupics.R
-import com.markettwits.waifupics.core.WaifuPicsApp
-import com.markettwits.waifupics.ui.theme.LightPink
-import com.markettwits.waifupics.view.main.fake.fakeHex
+import com.markettwits.waifupics.theame.theme.LightPink
 import com.markettwits.waifupics.view.main.fake.hexToComposeColor
-import com.markettwits.waifupics.view.main.ui.image.ImageViewModel
 
 @Composable
 fun ColorPalette(hex : List<String>) {
