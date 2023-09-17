@@ -29,8 +29,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.markettwits.waifupics.R
 import com.markettwits.waifupics.core.WaifuPicsApp
 import com.markettwits.waifupics.view.extensions.noRippleClickable
-import com.markettwits.waifupics.view.navigation.nav_grapth.NavGraph
 import com.markettwits.waifupics.view.navigation.model.NavigationItem
+import com.markettwits.waifupics.view.navigation.nav_grapth.NavGraph
 import com.markettwits.waifupics.view.navigation.nav_grapth.rememberNavigationState
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -51,16 +51,16 @@ fun NavigationScreen(
     }
 
     Scaffold(bottomBar = {
-        NavigationPanel(
-            list = selectedItemSaveble.value,
-            navItemClick = { selectedItem ->
-                if (!selectedItem.isSelected) {
-                    navigationState.navigateTo(selectedItem.screen.route())
-                }
-                selectedItemSaveble.value =
-                    viewModel.updateSelectedItemInList(selectedItemSaveble.value, selectedItem)
-            }
-        )
+//        NavigationPanel(
+//            list = selectedItemSaveble.value,
+//            navItemClick = { selectedItem ->
+//                if (!selectedItem.isSelected) {
+//                    navigationState.navigateTo(selectedItem.screen.route())
+//                }
+//                selectedItemSaveble.value =
+//                    viewModel.updateSelectedItemInList(selectedItemSaveble.value, selectedItem)
+//            }
+//        )
     }) {
         NavGraph(
             paddingValues = it,
