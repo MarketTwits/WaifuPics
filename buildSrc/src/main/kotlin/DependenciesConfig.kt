@@ -1,18 +1,21 @@
  interface DependenciesConfig {
     fun fetch(): String
     object Compose {
-        private const val composeVersion = "1.4.3"
+        private const val composeVersion = "1.5.3"
+        private const val composeUiVersion = "1.5.1"
         private const val composeBomVersion = "2023.03.00"
         private const val composeActivityVersion = "1.7.2"
         private const val composeLifecycleVersion = "2.6.1"
-        const val uiUi = "androidx.compose.ui:ui"
-        const val graphics = "androidx.compose.ui:ui-graphics"
-        const val toolingPreiew = "androidx.compose.ui:ui-tooling-preview"
-        const val material = "androidx.compose.material3:material3"
+        private const val composeMaterial3 = "1.1.1"
+
+        const val uiUi = "androidx.compose.ui:ui:$composeUiVersion"
+        const val graphics = "androidx.compose.ui:ui-graphics:$composeUiVersion"
+        const val material3 = "androidx.compose.material3:material3:$composeMaterial3"
+        const val material = "androidx.compose.material:material:$composeUiVersion"
         const val composeBom = "androidx.compose:compose-bom:$composeBomVersion"
         const val activity ="androidx.activity:activity-compose:$composeActivityVersion"
         const val composeLifecycle = "androidx.lifecycle:lifecycle-viewmodel-compose:$composeLifecycleVersion"
-        const val icons = "androidx.compose.material:material-icons-extended:$composeVersion"
+        const val icons = "androidx.compose.material:material-icons-extended:$composeUiVersion"
 
         object Navigation{
             private val navigationVersion = "2.7.1"
@@ -20,10 +23,14 @@
         }
     }
     object ComposeDebugAndTest {
-        val uiTooling = "androidx.compose.ui:ui-tooling"
-        val manifest = "androidx.compose.ui:ui-test-manifest"
-        val bom = "androidx.compose:compose-bom:2023.03.00"
-        val junit = "androidx.compose.ui:ui-test-junit4"
+        private const val uiToolingVersion = "1.4.3"
+        private const val junitComposeVersion = "1.5.1"
+        private const val composeBomVersion = "2023.03.00"
+        const val uiTooling = "androidx.compose.ui:ui-tooling:$uiToolingVersion"
+        const val toolingPreiew = "androidx.compose.ui:ui-tooling-preview:$uiToolingVersion"
+        const val manifest = "androidx.compose.ui:ui-test-manifest"
+        const val bom = "androidx.compose:compose-bom:2023.03.00"
+        const val junit = "androidx.compose.ui:ui-test-junit4:$junitComposeVersion"
     }
     object Espresso : DependaciesAbstract(){
         override val version = "3.5.1"
@@ -51,7 +58,7 @@
         override val dependence = "androidx.test.ext:junit:"
     }
     object KotlinCore : DependaciesAbstract(){
-        override val version = "1.9.0"
+        override val version = "1.9.1"
         override val dependence = "androidx.core:core-ktx:"
     }
 

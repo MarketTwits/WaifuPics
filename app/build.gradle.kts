@@ -41,7 +41,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion = "1.5.3"
     }
     packaging {
         resources {
@@ -69,15 +69,15 @@ dependencies {
     implementation(platform(DependenciesConfig.Compose.composeBom))
     implementation(DependenciesConfig.Compose.uiUi)
     implementation(DependenciesConfig.Compose.graphics)
-    implementation(DependenciesConfig.Compose.toolingPreiew)
-    implementation(DependenciesConfig.Compose.material)
+    implementation(DependenciesConfig.ComposeDebugAndTest.toolingPreiew)
+    implementation(DependenciesConfig.Compose.material3)
     implementation(DependenciesConfig.Compose.Navigation.navigation)
     implementation(DependenciesConfig.Compose.composeLifecycle)
     implementation(DependenciesConfig.CoilCompose.fetch())
     //implementation("androidx.compose.material:material:1.5.1")
+    implementation(DependenciesConfig.Compose.material)
     implementation("androidx.navigation:navigation-runtime-ktx:2.7.2")
     implementation("androidx.work:work-runtime-ktx:2.8.1")
-    //implementation("androidx.compose.material3:material3-android:1.2.0-alpha07")
     testImplementation(DependenciesConfig.Junit.fetch())
     androidTestImplementation(DependenciesConfig.JuintExt.fetch())
     androidTestImplementation(DependenciesConfig.Espresso.fetch())
@@ -85,4 +85,6 @@ dependencies {
     androidTestImplementation(DependenciesConfig.ComposeDebugAndTest.junit)
     debugImplementation(DependenciesConfig.ComposeDebugAndTest.uiTooling)
     debugImplementation(DependenciesConfig.ComposeDebugAndTest.manifest)
+
+
 }

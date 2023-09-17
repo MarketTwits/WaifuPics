@@ -6,7 +6,7 @@ import com.markettwits.waifupics.view.main.data.net.models.UserCloud
 import com.markettwits.waifupics.view.main.ui.RandomImageUiState
 
 interface RandomImageRepository {
-    suspend fun fetchRandomImage(filters : Map<String, String>) : RandomImageUiState
+    suspend fun fetchRandomImage(filters : String) : RandomImageUiState
     suspend fun fetchUser(userId : String) : UserCloud
     suspend fun fetchAuthor(authorId : String) : AuthorCloud
     suspend fun preloadImage(url : String)
@@ -15,9 +15,9 @@ interface RandomImageRepository {
         private val service: MakeService,
         private val mapper: RandomImageUiMapper
     ) : RandomImageRepository{
-        override suspend fun fetchRandomImage(filters: Map<String, String>) : RandomImageUiState {
+        override suspend fun fetchRandomImage(filters: String) : RandomImageUiState {
             return try {
-                val request = service.service().randomImage()
+                val request = service.service().randomImage(filters)
                 val user = fetchUser(request.data.relationships.uploader.data!!.id)
                 val authorData = request.data.relationships.artist.data
                 val author = if (authorData != null) fetchAuthor(authorData.id) else null

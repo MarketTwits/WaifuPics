@@ -1,6 +1,8 @@
 package com.markettwits.waifupics.base
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -19,7 +21,6 @@ import com.markettwits.waifupics.R
 import com.markettwits.waifupics.theame.theme.LightPink
 import com.markettwits.waifupics.theame.theme.WaifuPicsTheme
 import com.markettwits.waifupics.view.extensions.extractSiteName
-import com.markettwits.waifupics.view.extensions.extractSiteNames
 import java.util.Locale
 
 @Composable
@@ -70,29 +71,6 @@ fun ImageParametersText(
     }
 }
 
-@Composable
-fun MultiImageParametersText(
-    title: String,
-    link: List<String>
-) {
-    val outputString = link.extractSiteNames()
-    val mutableMap = mutableMapOf<String, String>()
-    outputString.forEachIndexed { index, s ->
-        mutableMap.put(s, link[index])
-    }
-    HyperlinkText(
-        fullText = "$title: ${outputString.joinToString(", ")}",
-        hyperLinks = mutableMap,
-        textStyle = TextStyle(
-            color = LightPink,
-            fontFamily = FontFamily(Font(R.font.rubik_medium))
-        ),
-        linkTextFontWeight = FontWeight.Medium,
-        linkTextColor = MaterialTheme.colorScheme.onPrimary,
-        fontSize = 14.sp,
-    )
-}
-
 @Preview
 @Composable
 private fun Preview() {
@@ -110,6 +88,7 @@ private fun Preview() {
     }
 
 }
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun UnlinkMultiText(
     title: String,
@@ -122,8 +101,8 @@ fun UnlinkMultiText(
             fontFamily = FontFamily(Font(R.font.rubik_medium)),
             fontSize = 14.sp
         )
-        LazyRow() {
-            items(text) {
+        FlowRow {
+            text.forEach {
                 Text(
                     text = it,
                     color = MaterialTheme.colorScheme.onPrimary,
@@ -132,6 +111,16 @@ fun UnlinkMultiText(
                 )
             }
         }
+//        LazyRow() {
+//            items(text) {
+//                Text(
+//                    text = it,
+//                    color = MaterialTheme.colorScheme.onPrimary,
+//                    fontFamily = FontFamily(Font(R.font.rubik_medium)),
+//                    fontSize = 14.sp,
+//                )
+//            }
+//        }
     }
 }
 @Composable

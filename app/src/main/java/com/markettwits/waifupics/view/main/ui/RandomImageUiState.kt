@@ -2,6 +2,7 @@ package com.markettwits.waifupics.view.main.ui
 
 import android.util.Log
 import androidx.compose.runtime.Composable
+import com.markettwits.waifupics.view.filter.BottomSheetFilter
 import com.markettwits.waifupics.view.main.ui.bottom_pannel.BottomPanel
 import com.markettwits.waifupics.view.main.ui.image.loading.ImageLoading
 import com.markettwits.waifupics.view.main.ui.image.suceess.ImageCard
@@ -43,6 +44,7 @@ interface RandomImageUiState {
             ImageCard(imageUrl)
             ImageInfoCardWithUploader(owner, imageData, collorPallente)
             BottomPanel(isLoading = false)
+            BottomSheetFilter()
         }
     }
 
@@ -56,6 +58,7 @@ interface RandomImageUiState {
             ImageCard(imageUrl)
             ImageInfoCardEmptyAuthor(imageData, collorPallente)
             BottomPanel(isLoading = false)
+            BottomSheetFilter()
         }
     }
 
@@ -74,6 +77,7 @@ interface RandomImageUiState {
                 colorPalette = collorPallente
             )
             BottomPanel(isLoading = false)
+            BottomSheetFilter()
         }
     }
 }

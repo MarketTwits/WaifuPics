@@ -35,7 +35,7 @@ fun MainScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        viewModel.state.observe(LocalLifecycleOwner.current){
+        viewModel.state.observe(LocalLifecycleOwner.current) {
             state.value = it
         }
         state.value.Handle()

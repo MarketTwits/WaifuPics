@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import com.markettwits.waifupics.base.BaseDivider
 import com.markettwits.waifupics.theame.theme.DirtyWhite
 import com.markettwits.waifupics.view.main.ui.AuthorUi
 import com.markettwits.waifupics.view.main.ui.ImageSourceUi
@@ -53,10 +54,10 @@ fun ImageInfoCardWithUploader(
             .background(MaterialTheme.colorScheme.secondary)
     ) {
         Uploader(userName = uploader.userName, iconUrl = uploader.avatarUrl)
-        Divider(thickness = 0.1.dp, color = DirtyWhite)
+        BaseDivider()
         SourceAndResource(imageData)
-        Divider(thickness = 0.1.dp, color = DirtyWhite)
-        ColorPalette(colorPalette)
+        BaseDivider()
+        ColorPalette(hex = colorPalette)
     }
 }
 @Composable
