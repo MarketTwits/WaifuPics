@@ -1,9 +1,10 @@
 package com.markettwits.waifupics.view.main.ui
 
-import android.util.Log
 import androidx.compose.runtime.Composable
-import com.markettwits.waifupics.view.filter.BottomSheetFilter
+import com.markettwits.waifupics.view.filter.presentation.BottomSheetFilter
 import com.markettwits.waifupics.view.main.ui.bottom_pannel.BottomPanel
+import com.markettwits.waifupics.view.main.ui.bottom_pannel.BottomPanelUiState
+import com.markettwits.waifupics.view.main.ui.image.fuckup.ImageFuckup
 import com.markettwits.waifupics.view.main.ui.image.loading.ImageLoading
 import com.markettwits.waifupics.view.main.ui.image.suceess.ImageCard
 import com.markettwits.waifupics.view.main.ui.image_info.image_card_info.loading.ImageCardInfoLoading
@@ -15,35 +16,39 @@ interface RandomImageUiState {
     @Composable
     fun Handle() = Unit
 
-    object Initial : RandomImageUiState {}
+    object Initial : RandomImageUiState
 
     object Progress : RandomImageUiState {
         @Composable
         override fun Handle() {
             ImageLoading()
             ImageCardInfoLoading()
-            BottomPanel(isLoading = true)
+            BottomPanel(BottomPanelUiState.Loading)
         }
     }
 
-    data class Error(val message: String) : RandomImageUiState {
+    data class Error(private val message: String) : RandomImageUiState {
         @Composable
         override fun Handle() {
-            Log.d("mt05", message)
+            ImageFuckup()
+            BottomPanel(BottomPanelUiState.Error)
+            BottomSheetFilter()
         }
     }
 
+
+
     data class SuccessWithOwner(
-        val imageUrl: String,
-        val collorPallente: List<String>,
-        val imageData: ImageSourceUi,
-        val owner: UploaderUi
+        private val imageUrl: String,
+        private val collorPallente: List<String>,
+        private val imageData: ImageSourceUi,
+        private val owner: UploaderUi
     ) : RandomImageUiState {
         @Composable
         override fun Handle() {
             ImageCard(imageUrl)
             ImageInfoCardWithUploader(owner, imageData, collorPallente)
-            BottomPanel(isLoading = false)
+            BottomPanel(BottomPanelUiState.Success)
             BottomSheetFilter()
         }
     }
@@ -57,7 +62,7 @@ interface RandomImageUiState {
         override fun Handle() {
             ImageCard(imageUrl)
             ImageInfoCardEmptyAuthor(imageData, collorPallente)
-            BottomPanel(isLoading = false)
+            BottomPanel(BottomPanelUiState.Success)
             BottomSheetFilter()
         }
     }
@@ -76,7 +81,7 @@ interface RandomImageUiState {
                 imageData = imageData,
                 colorPalette = collorPallente
             )
-            BottomPanel(isLoading = false)
+            BottomPanel(BottomPanelUiState.Success)
             BottomSheetFilter()
         }
     }

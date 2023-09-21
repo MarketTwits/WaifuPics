@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.markettwits.waifupics.R
 import com.markettwits.waifupics.theame.theme.LightPink
-import com.markettwits.waifupics.view.main.fake.hexToComposeColor
+import com.markettwits.waifupics.view.extensions.hexToComposeColor
 
 @Composable
 fun ColorPalette(hex : List<String>) {

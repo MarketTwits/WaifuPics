@@ -51,6 +51,10 @@ android {
 }
 
 dependencies {
+    val lifecycle_version = "2.6.2"
+    // ViewModel utilities for Compose
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version")
+
     val okhttp_ver = "4.10.0"
     implementation("com.squareup.okhttp3:okhttp:$okhttp_ver")
     implementation("com.squareup.okhttp3:logging-interceptor:$okhttp_ver")
@@ -68,6 +72,7 @@ dependencies {
     implementation(DependenciesConfig.Compose.activity)
     implementation(platform(DependenciesConfig.Compose.composeBom))
     implementation(DependenciesConfig.Compose.uiUi)
+    implementation(DependenciesConfig.Compose.runtime)
     implementation(DependenciesConfig.Compose.graphics)
     implementation(DependenciesConfig.ComposeDebugAndTest.toolingPreiew)
     implementation(DependenciesConfig.Compose.material3)

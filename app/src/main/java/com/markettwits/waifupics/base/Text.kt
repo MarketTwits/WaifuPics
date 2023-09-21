@@ -111,16 +111,6 @@ fun UnlinkMultiText(
                 )
             }
         }
-//        LazyRow() {
-//            items(text) {
-//                Text(
-//                    text = it,
-//                    color = MaterialTheme.colorScheme.onPrimary,
-//                    fontFamily = FontFamily(Font(R.font.rubik_medium)),
-//                    fontSize = 14.sp,
-//                )
-//            }
-//        }
     }
 }
 @Composable
