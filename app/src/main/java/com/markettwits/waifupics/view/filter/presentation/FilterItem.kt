@@ -1,4 +1,4 @@
-package com.markettwits.waifupics.view.filter
+package com.markettwits.waifupics.view.filter.presentation
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

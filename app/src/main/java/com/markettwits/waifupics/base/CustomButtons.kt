@@ -39,14 +39,14 @@ fun BasePanelItem(
             .clickable(enabled = false) {
                 onClick()
             }
-            .background(if (isLoading) MaterialTheme.colorScheme.secondary.copy(alpha = 0.4f) else MaterialTheme.colorScheme.secondary)
+            .background(if (!isLoading) MaterialTheme.colorScheme.secondary.copy(alpha = 0.4f) else MaterialTheme.colorScheme.secondary)
             .padding(10.dp),
         contentAlignment = Alignment.Center
     ) {
         Icon(
             modifier = Modifier.size(20.dp),
             painter = painterResource(id = image),
-            tint = (if (isLoading) MaterialTheme.colorScheme.surfaceTint.copy(alpha = 0.4f) else MaterialTheme.colorScheme.surfaceTint),
+            tint = (if (!isLoading) MaterialTheme.colorScheme.surfaceTint.copy(alpha = 0.4f) else MaterialTheme.colorScheme.surfaceTint),
             contentDescription = contentDescription
         )
     }

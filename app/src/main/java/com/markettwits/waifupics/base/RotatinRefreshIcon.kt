@@ -18,7 +18,7 @@ import com.markettwits.waifupics.R
 
 @Composable
 fun RotationRefreshIcon(
-    isLoading: Boolean
+    isLoading: Boolean,
 ) {
     val infiniteTransition = rememberInfiniteTransition(label = "")
     val rotatingValue = infiniteTransition.animateFloat(

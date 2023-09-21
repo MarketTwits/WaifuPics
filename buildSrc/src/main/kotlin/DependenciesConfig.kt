@@ -16,6 +16,7 @@
         const val activity ="androidx.activity:activity-compose:$composeActivityVersion"
         const val composeLifecycle = "androidx.lifecycle:lifecycle-viewmodel-compose:$composeLifecycleVersion"
         const val icons = "androidx.compose.material:material-icons-extended:$composeUiVersion"
+        const val runtime = "androidx.compose.runtime:runtime:$composeUiVersion"
 
         object Navigation{
             private val navigationVersion = "2.7.1"

@@ -16,7 +16,7 @@ import com.markettwits.waifupics.view.main.ui.image.ImageViewModel
 
 
 @Composable
-fun BottomPanel(isLoading: Boolean) {
+fun BottomPanel(bottomPanelUiState: BottomPanelUiState) {
     val viewModel = (LocalContext.current.applicationContext as WaifuPicsApp).viewModel(
         checkNotNull(LocalViewModelStoreOwner.current), ImageViewModel::class.java
     )
@@ -28,25 +28,25 @@ fun BottomPanel(isLoading: Boolean) {
         BasePanelItem(
             modifier = Modifier.weight(1f),
             image = R.drawable.bookmark_icon,
-            isLoading = isLoading
+            isLoading = bottomPanelUiState.baseBottomEnabled()
         ) {}
         BasePanelItem(
             modifier = Modifier.weight(1f),
             image = R.drawable.heart_icon,
-            isLoading = isLoading
+            isLoading = bottomPanelUiState.baseBottomEnabled()
         ) {}
-        RefreshPanelItem(modifier = Modifier.weight(2f), isLoading = isLoading) {
+        RefreshPanelItem(modifier = Modifier.weight(2f), isLoading = bottomPanelUiState.refresh()) {
             viewModel.fetchRandomImage()
         }
         BasePanelItem(
             modifier = Modifier.weight(1f),
             image = R.drawable.share_icon,
-            isLoading = isLoading
+            isLoading = bottomPanelUiState.baseBottomEnabled()
         ) {}
         BasePanelItem(
             modifier = Modifier.weight(1f),
             image = R.drawable.flag_icon,
-            isLoading = isLoading
+            isLoading = bottomPanelUiState.baseBottomEnabled()
         ) {}
     }
 }
