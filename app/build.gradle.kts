@@ -57,6 +57,7 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:$okhttp_ver")
     implementation("com.squareup.okhttp3:logging-interceptor:$okhttp_ver")
     implementation(project(path = ":core-ui"))
+    implementation(project(path = ":navigation"))
     implementation(DependenciesConfig.Retrofit.retrofit)
     implementation(DependenciesConfig.Retrofit.retrofitConverter)
     implementation(DependenciesConfig.Zoomable.fetch())

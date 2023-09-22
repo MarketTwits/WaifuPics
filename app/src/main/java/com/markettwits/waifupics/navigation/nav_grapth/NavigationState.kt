@@ -8,6 +8,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.markettwits.waifupics.navigation.nav_grapth.AppNavGraph
 import com.markettwits.waifupics.view.main.ui.MainScreen
 
 class NavigationState(

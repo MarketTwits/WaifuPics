@@ -3,7 +3,6 @@ package com.markettwits.waifupics.view.filter.presentation
 import androidx.lifecycle.ViewModel
 import com.markettwits.core.communication.Communication
 import com.markettwits.core.communication.StateCommunication
-import com.markettwits.core.wrappers.HandleDeath
 import com.markettwits.waifupics.view.filter.data.StaticCacheDataSource
 import com.markettwits.waifupics.view.main.domain.FilterChecked
 import kotlinx.coroutines.flow.StateFlow
@@ -12,7 +11,6 @@ class AgeRatingFilterViewModel(
     private val filterChecked: FilterChecked,
     private val communication: AgeRatingFilterCommunication,
     private val filterCommunication: FilterCommunication,
-    private val handleDeath: HandleDeath,
     private val defaultValue: StaticCacheDataSource,
 ) : ViewModel(), AgeRatingFilterResult, FilterImageType,
     StateCommunication.UiMutable<FilterState> {
@@ -22,10 +20,10 @@ class AgeRatingFilterViewModel(
 
     override fun filter(selectedItem: FilterItem) {
         communication.map(
-            communication.fetch().value.copy(
+            communication.state().value.copy(
                 filter = filterChecked.checked(
                     selectedItem,
-                    fetch().value.filter
+                    state().value.filter
                 )
             )
         )
@@ -36,14 +34,18 @@ class AgeRatingFilterViewModel(
         communication.updateState(function)
     }
 
-    override fun fetch(): StateFlow<FilterState> = communication.fetch()
+    override fun state(): StateFlow<FilterState> = communication.state()
 
     override fun filterInner() {
-        val filter = filterChecked.mapFilter(communication.fetch().value.filter)
+        val filter = filterChecked.mapFilter(communication.state().value.filter)
         filterCommunication.map(filter)
+    }
+    fun toggle(){
+        communication.map(state().value.toggle())
     }
 
 }
+
 interface FilterImageType {
     fun filter(selectedItem: FilterItem)
 }

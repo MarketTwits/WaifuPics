@@ -14,12 +14,12 @@ interface StateCommunication {
         fun updateState(function: (T) -> T)
     }
 
-    interface Fetch<T : Any> {
-        fun fetch(): StateFlow<T>
+    interface State<T : Any> {
+        fun state(): StateFlow<T>
     }
 
-    interface Mutable<T : Any> : Update<T>, Fetch<T>, UpdateState<T>
-    interface UiMutable<T : Any> : UpdateState<T>, Fetch<T>
+    interface Mutable<T : Any> : Update<T>, State<T>, UpdateState<T>
+    interface UiMutable<T : Any> : UpdateState<T>, State<T>
     abstract class Abstract<T : Any>(
         initialValue: T
     ) : Mutable<T> {
@@ -29,7 +29,7 @@ interface StateCommunication {
             state.value = source
         }
 
-        override fun fetch() = state.asStateFlow()
+        override fun state() = state.asStateFlow()
         override fun updateState(function: (T) -> T) = state.update(function)
     }
 }

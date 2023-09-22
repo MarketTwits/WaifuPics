@@ -1,6 +1,7 @@
-package com.markettwits.waifupics.view.navigation.view
+package com.markettwits.waifupics.navigation.view
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,19 +20,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.markettwits.waifupics.R
 import com.markettwits.waifupics.core.WaifuPicsApp
-import com.markettwits.waifupics.view.extensions.noRippleClickable
 import com.markettwits.waifupics.view.navigation.model.NavigationItem
 import com.markettwits.waifupics.view.navigation.nav_grapth.NavGraph
 import com.markettwits.waifupics.view.navigation.nav_grapth.rememberNavigationState
+import com.markettwits.waifupics.view.navigation.view.NavigationViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -41,7 +39,6 @@ fun NavigationScreen(
     val viewModel = (LocalContext.current.applicationContext as WaifuPicsApp).viewModel(
         checkNotNull(LocalViewModelStoreOwner.current), NavigationViewModel::class.java
     )
-
     val navigationState = rememberNavigationState()
     val navBackStackEntry =
         navigationState.navHostController.currentBackStackEntryAsState()
@@ -78,8 +75,7 @@ fun NavigationPanel(
         modifier = Modifier
             .height(40.dp)
             .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.background)
-        ,
+            .background(MaterialTheme.colorScheme.background),
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -92,13 +88,12 @@ fun NavigationPanel(
             list.forEach {
                 Text(
                     modifier = Modifier
-                        .noRippleClickable {
+                        .clickable {
                             navItemClick(it)
                         }
                         .weight(1f),
                     text = stringResource(id = it.title),
                     color = if (!it.isSelected) Color.Gray else MaterialTheme.colorScheme.onBackground,
-                    fontFamily = FontFamily(Font(R.font.rubik_medium)),
                     textAlign = TextAlign.Center,
                     fontSize = 24.sp,
                 )
