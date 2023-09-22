@@ -5,13 +5,13 @@ plugins {
 }
 
 android {
-    namespace = "com.markettwits.waifupics"
-    compileSdk = 34
+    namespace = Config.SDK.namespace
+    compileSdk = Config.SDK.compileSdk
 
     defaultConfig {
-        applicationId = "com.markettwits.waifupics"
-        minSdk = 24
-        targetSdk = 34
+        applicationId = Config.SDK.namespace
+        minSdk = Config.SDK.minSdk
+        targetSdk = Config.SDK.targetSdk
         versionCode = 1
         versionName = "1.0"
 
@@ -41,7 +41,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.3"
+        kotlinCompilerExtensionVersion = DependenciesConfig.Compose.composeVersion
     }
     packaging {
         resources {
@@ -51,45 +51,19 @@ android {
 }
 
 dependencies {
-    val lifecycle_version = "2.6.2"
-    // ViewModel utilities for Compose
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version")
 
     val okhttp_ver = "4.10.0"
+
     implementation("com.squareup.okhttp3:okhttp:$okhttp_ver")
     implementation("com.squareup.okhttp3:logging-interceptor:$okhttp_ver")
-    implementation(project(path = ":core"))
-    implementation ("androidx.compose.runtime:runtime-livedata:1.5.1")
-    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.0-beta01")
+    implementation(project(path = ":core-ui"))
     implementation(DependenciesConfig.Retrofit.retrofit)
     implementation(DependenciesConfig.Retrofit.retrofitConverter)
     implementation(DependenciesConfig.Zoomable.fetch())
-    implementation ("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
-    implementation(DependenciesConfig.Compose.icons)
+
     implementation(DependenciesConfig.WorkManager.fetch())
     implementation(DependenciesConfig.KotlinCore.fetch())
-    implementation(DependenciesConfig.Lifecycle.fetch())
-    implementation(DependenciesConfig.Compose.activity)
-    implementation(platform(DependenciesConfig.Compose.composeBom))
-    implementation(DependenciesConfig.Compose.uiUi)
-    implementation(DependenciesConfig.Compose.runtime)
-    implementation(DependenciesConfig.Compose.graphics)
-    implementation(DependenciesConfig.ComposeDebugAndTest.toolingPreiew)
-    implementation(DependenciesConfig.Compose.material3)
-    implementation(DependenciesConfig.Compose.Navigation.navigation)
-    implementation(DependenciesConfig.Compose.composeLifecycle)
-    implementation(DependenciesConfig.CoilCompose.fetch())
-    //implementation("androidx.compose.material:material:1.5.1")
-    implementation(DependenciesConfig.Compose.material)
-    implementation("androidx.navigation:navigation-runtime-ktx:2.7.2")
-    implementation("androidx.work:work-runtime-ktx:2.8.1")
-    testImplementation(DependenciesConfig.Junit.fetch())
-    androidTestImplementation(DependenciesConfig.JuintExt.fetch())
-    androidTestImplementation(DependenciesConfig.Espresso.fetch())
-    androidTestImplementation(platform(DependenciesConfig.ComposeDebugAndTest.bom))
-    androidTestImplementation(DependenciesConfig.ComposeDebugAndTest.junit)
-    debugImplementation(DependenciesConfig.ComposeDebugAndTest.uiTooling)
-    debugImplementation(DependenciesConfig.ComposeDebugAndTest.manifest)
 
+    implementation("androidx.work:work-runtime-ktx:2.8.1")
 
 }

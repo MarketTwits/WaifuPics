@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.markettwits.core"
-    compileSdk = 34
+    compileSdk = Config.SDK.compileSdk
 
     defaultConfig {
         minSdk = 24
@@ -17,10 +17,6 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
         }
     }
     compileOptions {
@@ -33,11 +29,5 @@ android {
 }
 
 dependencies {
-
-    implementation("androidx.core:core-ktx:1.9.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("androidx.test:monitor:1.6.1")
-    implementation("androidx.test.ext:junit-ktx:1.1.5")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("junit:junit:4.12")
+    api("androidx.appcompat:appcompat:1.6.1")
 }

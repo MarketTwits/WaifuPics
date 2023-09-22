@@ -3,6 +3,7 @@ package com.markettwits.waifupics.view.filter.presentation
 import androidx.lifecycle.ViewModel
 import com.markettwits.core.communication.Communication
 import com.markettwits.core.communication.StateCommunication
+import com.markettwits.core.wrappers.HandleDeath
 import com.markettwits.waifupics.view.filter.data.StaticCacheDataSource
 import com.markettwits.waifupics.view.main.domain.FilterChecked
 import kotlinx.coroutines.flow.StateFlow
@@ -11,6 +12,7 @@ class AgeRatingFilterViewModel(
     private val filterChecked: FilterChecked,
     private val communication: AgeRatingFilterCommunication,
     private val filterCommunication: FilterCommunication,
+    private val handleDeath: HandleDeath,
     private val defaultValue: StaticCacheDataSource,
 ) : ViewModel(), AgeRatingFilterResult, FilterImageType,
     StateCommunication.UiMutable<FilterState> {
@@ -40,6 +42,7 @@ class AgeRatingFilterViewModel(
         val filter = filterChecked.mapFilter(communication.fetch().value.filter)
         filterCommunication.map(filter)
     }
+
 }
 interface FilterImageType {
     fun filter(selectedItem: FilterItem)

@@ -1,5 +1,6 @@
 package com.markettwits.waifupics.view.filter.presentation
 
+
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -12,7 +13,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -28,17 +28,13 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
@@ -49,32 +45,27 @@ import com.markettwits.waifupics.base.BaseDivider
 import com.markettwits.waifupics.core.ProvideViewModel
 import com.markettwits.waifupics.theame.theme.LightPink
 import com.markettwits.waifupics.theame.theme.WaifuPicsTheme
-import com.markettwits.waifupics.view.LocalBundle
 
 @Composable
 @Preview
 private fun BottomSheetPreview() {
     WaifuPicsTheme {
-        BottomSheetFilter(
-            modifier = Modifier
-                .windowInsetsPadding(WindowInsets.statusBars)
-        )
+        //BottomSheetFilter()
     }
 }
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BottomSheetFilter(modifier: Modifier = Modifier) {
     val viewModel = ProvideViewModel<AgeRatingFilterViewModel>()
     val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
-//    val filterState =  viewModel.fetch().collectAsState()
-//    viewModel.updateState {
-//        filterState.value
-//    }
-    val filterState by  viewModel.fetch().collectAsState()
+    val filterState by viewModel.fetch().collectAsState()
     viewModel.updateState {
         filterState
     }
+
+
     AgeFilterBox(modifier = modifier) {
         FilterHeader(
             onClick = { updateState(viewModel, filterState) },
@@ -87,9 +78,9 @@ fun BottomSheetFilter(modifier: Modifier = Modifier) {
             ) {
                 BottomScreenContent(
                     filter = filterState.filter,
-                    toggleScreen = { updateState(viewModel, filterState)},
+                    toggleScreen = { updateState(viewModel, filterState) },
                     isOpened = filterState.isOpened
-                ){
+                ) {
                     viewModel.filter(it)
                 }
             }
@@ -100,13 +91,14 @@ fun BottomSheetFilter(modifier: Modifier = Modifier) {
 private fun updateState(viewModel: AgeRatingFilterViewModel, filterState: FilterState) {
     viewModel.updateState { filterState.toggle() }
 }
+
 @Composable
 fun BottomScreenContent(
-    filter : List<FilterItem>,
-    toggleScreen : () -> Unit,
+    filter: List<FilterItem>,
+    toggleScreen: () -> Unit,
     isOpened: Boolean,
     onItemClick: (FilterItem) -> Unit
-    ) {
+) {
     Column {
         BaseDivider()
         FilterBody(filterState = filter) {
@@ -145,12 +137,10 @@ fun FilterHeader(
 ) {
     Row(
         modifier = modifier
+            .clickable { onClick() }
             .windowInsetsPadding(WindowInsets.navigationBars)
             .fillMaxWidth()
-            .padding(10.dp)
-            .clickable {
-                onClick()
-            },
+            .padding(10.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(

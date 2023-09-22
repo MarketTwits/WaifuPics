@@ -1,4 +1,4 @@
-package com.markettwits.core
+package com.markettwits.core_ui
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
@@ -17,6 +17,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.markettwits.core.test", appContext.packageName)
+        assertEquals("com.markettwits.core_ui.test", appContext.packageName)
     }
 }

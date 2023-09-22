@@ -16,3 +16,4 @@ dependencyResolutionManagement {
 rootProject.name = "WaifuPics"
 include(":app")
 include(":core")
+include(":core-ui")
