@@ -1,11 +1,13 @@
 package com.markettwits.waifupics.view.main.ui
 
+import android.util.Log
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import com.markettwits.waifupics.core.WaifuPicsApp
+import com.markettwits.waifupics.view.LocalBundle
 import com.markettwits.waifupics.view.main.ui.image.ImageViewModel
 
 @Composable
@@ -22,4 +24,6 @@ fun MainScreen(
         }
         state.value.Handle()
     }
+    val bundle = LocalBundle.current
+    Log.d("mt05", bundle.toString())
 }

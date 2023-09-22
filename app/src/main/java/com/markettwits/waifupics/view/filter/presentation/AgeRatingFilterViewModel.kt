@@ -11,45 +11,36 @@ class AgeRatingFilterViewModel(
     private val filterChecked: FilterChecked,
     private val communication: AgeRatingFilterCommunication,
     private val filterCommunication: FilterCommunication,
-    private val dialogStateCommunication: DialogStateCommunication,
-    private val defaultValue: StaticCacheDataSource
-) : ViewModel(), AgeRatingFilterResult, FilterImageType, OpenCloseFilter,
-    StateCommunication.UiMutable<List<FilterItem>> {
+    private val defaultValue: StaticCacheDataSource,
+) : ViewModel(), AgeRatingFilterResult, FilterImageType,
+    StateCommunication.UiMutable<FilterState> {
     init {
-        communication.map(defaultValue.filter())
+        communication.map(FilterState(filter = defaultValue.filter()))
     }
 
     override fun filter(selectedItem: FilterItem) {
-        communication.map(filterChecked.checked(selectedItem, fetch().value))
+        communication.map(
+            communication.fetch().value.copy(
+                filter = filterChecked.checked(
+                    selectedItem,
+                    fetch().value.filter
+                )
+            )
+        )
         filterInner()
     }
 
-    override fun updateState(function: (List<FilterItem>) -> List<FilterItem>) {
+    override fun updateState(function: (FilterState) -> FilterState) {
         communication.updateState(function)
     }
-    override fun fetch(): StateFlow<List<FilterItem>> = communication.fetch()
+
+    override fun fetch(): StateFlow<FilterState> = communication.fetch()
 
     override fun filterInner() {
-        val filter = filterChecked.mapFilter(communication.fetch().value)
+        val filter = filterChecked.mapFilter(communication.fetch().value.filter)
         filterCommunication.map(filter)
     }
-    override fun openMenu() {
-        dialogStateCommunication.map(dialogStateCommunication != dialogStateCommunication.fetch())
-    }
-
-    override fun dialogState() = dialogStateCommunication.fetch()
-
-    override fun updateOpenDialogState(function: (Boolean) -> Boolean) {
-        dialogStateCommunication.updateState(function)
-    }
 }
-
-interface OpenCloseFilter {
-    fun openMenu()
-    fun dialogState() : StateFlow<Boolean>
-    fun updateOpenDialogState(function: (Boolean) -> Boolean)
-}
-
 interface FilterImageType {
     fun filter(selectedItem: FilterItem)
 }
@@ -58,16 +49,10 @@ interface AgeRatingFilterResult {
     fun filterInner()
 }
 
-interface AgeRatingFilterCommunication : StateCommunication.Mutable<List<FilterItem>> {
-    class Base : StateCommunication.Abstract<List<FilterItem>>(emptyList()),
+interface AgeRatingFilterCommunication : StateCommunication.Mutable<FilterState> {
+    class Base : StateCommunication.Abstract<FilterState>(FilterState()),
         AgeRatingFilterCommunication
 }
-
-interface DialogStateCommunication : StateCommunication.Mutable<Boolean> {
-    class Base : StateCommunication.Abstract<Boolean>(false),
-        DialogStateCommunication
-}
-
 
 interface FilterCommunication : Communication.Mutable<String> {
     class Base : Communication.Abstract<String>(), FilterCommunication

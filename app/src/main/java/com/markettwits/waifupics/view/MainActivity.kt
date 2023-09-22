@@ -5,6 +5,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Modifier
 import coil.ImageLoader
 import coil.annotation.ExperimentalCoilApi
@@ -15,10 +18,7 @@ import com.markettwits.waifupics.view.navigation.view.NavigationScreen
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            if (savedInstanceState == null){
-                clearCache(this, true, true)
-            }
+        setContentLocal(savedInstanceState = savedInstanceState) {
             WaifuPicsTheme() {
                 NavigationScreen(modifier = Modifier.fillMaxSize())
             }
@@ -26,17 +26,18 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@OptIn(ExperimentalCoilApi::class)
-fun clearCache(context: Context, memory: Boolean = true, file: Boolean = true) {
-    // 1) clear memory cache
-    if (memory) {
-        val imageLoader = context.imageLoader
-        imageLoader.memoryCache?.clear()
-    }
-    // 2) clear file cache
-    if (file) {
-        val cache = ImageLoader(context).diskCache
-        cache?.clear()
+
+
+
+
+val LocalBundle = compositionLocalOf<Bundle?> { error("Bundle is not available") }
+fun ComponentActivity.setContentLocal(
+    savedInstanceState: Bundle?,
+    content: @Composable () -> Unit,
+) {
+    setContent {
+        CompositionLocalProvider(LocalBundle provides savedInstanceState) {
+            content()
+        }
     }
 }
-

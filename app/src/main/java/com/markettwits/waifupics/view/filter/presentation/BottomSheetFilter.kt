@@ -28,14 +28,17 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
@@ -46,6 +49,7 @@ import com.markettwits.waifupics.base.BaseDivider
 import com.markettwits.waifupics.core.ProvideViewModel
 import com.markettwits.waifupics.theame.theme.LightPink
 import com.markettwits.waifupics.theame.theme.WaifuPicsTheme
+import com.markettwits.waifupics.view.LocalBundle
 
 @Composable
 @Preview
@@ -61,42 +65,64 @@ private fun BottomSheetPreview() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BottomSheetFilter(modifier: Modifier = Modifier) {
-
     val viewModel = ProvideViewModel<AgeRatingFilterViewModel>()
-    var openBottomSheet by rememberSaveable { mutableStateOf(false) }
     val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
-    val filterState = viewModel.fetch().collectAsState()
+//    val filterState =  viewModel.fetch().collectAsState()
+//    viewModel.updateState {
+//        filterState.value
+//    }
+    val filterState by  viewModel.fetch().collectAsState()
     viewModel.updateState {
-        filterState.value
+        filterState
     }
     AgeFilterBox(modifier = modifier) {
-        FilterHeader(onClick = {
-            openBottomSheet = !openBottomSheet
-        }, isOpened = openBottomSheet)
-        if (openBottomSheet) {
+        FilterHeader(
+            onClick = { updateState(viewModel, filterState) },
+            isOpened = filterState.isOpened
+        )
+        if (filterState.isOpened) {
             ModalBottomSheet(
-                onDismissRequest = { openBottomSheet = false },
+                onDismissRequest = { updateState(viewModel, filterState) },
                 sheetState = bottomSheetState,
             ) {
-                Column {
-                    BaseDivider()
-                    FilterBody(filterState = filterState.value) {
-                        viewModel.filter(it)
-                    }
-                    FilterHeader(
-                        onClick = { openBottomSheet = !openBottomSheet },
-                        isOpened = openBottomSheet
-                    )
+                BottomScreenContent(
+                    filter = filterState.filter,
+                    toggleScreen = { updateState(viewModel, filterState)},
+                    isOpened = filterState.isOpened
+                ){
+                    viewModel.filter(it)
                 }
             }
         }
     }
 }
 
+private fun updateState(viewModel: AgeRatingFilterViewModel, filterState: FilterState) {
+    viewModel.updateState { filterState.toggle() }
+}
+@Composable
+fun BottomScreenContent(
+    filter : List<FilterItem>,
+    toggleScreen : () -> Unit,
+    isOpened: Boolean,
+    onItemClick: (FilterItem) -> Unit
+    ) {
+    Column {
+        BaseDivider()
+        FilterBody(filterState = filter) {
+            onItemClick(it)
+        }
+        FilterHeader(
+            onClick = { toggleScreen() },
+            isOpened = isOpened
+        )
+    }
+}
+
 @Composable
 fun AgeFilterBox(
     modifier: Modifier,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     Box(
         modifier = modifier
@@ -145,7 +171,7 @@ fun FilterHeader(
 fun FilterBody(
     modifier: Modifier = Modifier,
     filterState: List<FilterItem>,
-    selectedItem: (FilterItem) -> Unit
+    selectedItem: (FilterItem) -> Unit,
 ) {
     Column(
         modifier = modifier
@@ -180,7 +206,7 @@ fun FilterBody(
 private fun FilterPosition(
     canBeChecked: Boolean,
     item: FilterItem,
-    onClick: (FilterItem) -> Unit
+    onClick: (FilterItem) -> Unit,
 ) {
     val checkedState = rememberSaveable {
         mutableStateOf(item.checked)
