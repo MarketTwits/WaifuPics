@@ -19,7 +19,17 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
+    }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion  = DependenciesConfig.Compose.composeVersion
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -37,7 +47,7 @@ dependencies {
     api(DependenciesConfig.Lifecycle.fetch())
     api(DependenciesConfig.Compose.activity)
     api(platform(DependenciesConfig.Compose.composeBom))
-    api(DependenciesConfig.Compose.uiUi)
+    //api(DependenciesConfig.Compose.uiUi)
     api(DependenciesConfig.Compose.runtime)
     api(DependenciesConfig.Compose.graphics)
     api(DependenciesConfig.ComposeDebugAndTest.toolingPreiew)
@@ -47,11 +57,14 @@ dependencies {
     api(DependenciesConfig.CoilCompose.fetch())
     api(DependenciesConfig.Compose.material)
     api (DependenciesConfig.Compose.acomponist)
-    api(DependenciesConfig.JuintExt.fetch())
+    androidTestApi(DependenciesConfig.JuintExt.fetch())
     androidTestApi(DependenciesConfig.Espresso.fetch())
     androidTestApi(platform(DependenciesConfig.ComposeDebugAndTest.bom))
     androidTestApi(DependenciesConfig.ComposeDebugAndTest.junit)
     debugApi(DependenciesConfig.ComposeDebugAndTest.uiTooling)
     debugApi(DependenciesConfig.ComposeDebugAndTest.manifest)
-    testApi(DependenciesConfig.Testing.fetch())
+
+
+    api("androidx.test.ext:junit-ktx:1.1.5")
+    testApi("org.testng:testng:6.9.6")
 }

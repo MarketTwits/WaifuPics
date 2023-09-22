@@ -1,4 +1,4 @@
-package com.markettwits.waifupics.view.navigation.nav_grapth
+package com.markettwits.waifupics.navigation.nav_grapth
 
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition

@@ -12,7 +12,7 @@ class ImageViewModel(
     private val async: AsyncViewModel.Abstract<RandomImageUiState>,
     private val randomImageCommunication: RandomImageCommunication,
     private val repository: RandomImageRepository,
-) : ViewModel(), StateCommunication.UiMutable<RandomImageUiState>, RandomImage {
+) : ViewModel(), StateCommunication.State<RandomImageUiState>, RandomImage {
     init {
         randomImageCommunication.map(RandomImageUiState.Progress)
         fetchRandomImage()
@@ -20,18 +20,15 @@ class ImageViewModel(
     override fun fetchRandomImage() {
         randomImageCommunication.map(RandomImageUiState.Progress)
         async.handleAsync({
-            repository.fetchRandomImage(
-                filterResult.fetch() ?: "sfw"
-            )
+            repository.fetchRandomImage(filterResult.fetch() ?: "sfw")
         }) {
             randomImageCommunication.map(it)
         }
     }
-
-    override fun updateState(function: (RandomImageUiState) -> RandomImageUiState) {
-        randomImageCommunication.updateState(function)
-    }
-    override fun fetch() = randomImageCommunication.fetch()
+//    override fun updateState(function: (RandomImageUiState) -> RandomImageUiState) {
+//        randomImageCommunication.updateState(function)
+//    }
+    override fun state() = randomImageCommunication.state()
 }
 interface RandomImage {
     fun fetchRandomImage()

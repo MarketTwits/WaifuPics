@@ -10,7 +10,8 @@ interface DependenciesConfig {
         private const val composeMaterial3 = "1.1.1"
         private const val acomponistVersion = "0.27.0"
 
-        const val uiUi = "androidx.compose.ui:ui:$composeUiVersion"
+        //const val uiUi = "androidx.compose.ui:ui:$composeUiVersion"
+        const val uiUi = "androidx.compose.ui:ui:$composeVersion"
         const val graphics = "androidx.compose.ui:ui-graphics:$composeUiVersion"
         const val material3 = "androidx.compose.material3:material3:$composeMaterial3"
         const val material = "androidx.compose.material:material:$composeUiVersion"
