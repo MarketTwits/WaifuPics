@@ -36,8 +36,6 @@ interface RandomImageUiState {
         }
     }
 
-
-
     data class SuccessWithOwner(
         private val imageUrl: String,
         private val collorPallente: List<String>,

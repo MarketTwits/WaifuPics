@@ -4,16 +4,15 @@ import com.markettwits.core.sl.Module
 import com.markettwits.waifupics.view.filter.data.StaticCacheDataSource
 import com.markettwits.waifupics.view.filter.presentation.AgeRatingFilterCommunication
 import com.markettwits.waifupics.view.filter.presentation.AgeRatingFilterViewModel
-import com.markettwits.waifupics.view.filter.presentation.DialogStateCommunication
 import com.markettwits.waifupics.view.filter.presentation.FilterCommunication
 import com.markettwits.waifupics.view.main.domain.FilterChecked
 
-class AgeRatingFilterModule(private val communication: FilterCommunication): Module<AgeRatingFilterViewModel> {
+class AgeRatingFilterModule(private val communication: FilterCommunication):
+    Module<AgeRatingFilterViewModel> {
     override fun viewModel() = AgeRatingFilterViewModel(
         FilterChecked.Base(),
         AgeRatingFilterCommunication.Base(),
         communication,
-        DialogStateCommunication.Base(),
         StaticCacheDataSource.Base()
     )
 }
