@@ -1,4 +1,4 @@
-package com.markettwits.core
+package com.markettwits.core_ui
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

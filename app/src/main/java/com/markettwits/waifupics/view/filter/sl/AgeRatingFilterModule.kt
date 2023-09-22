@@ -1,6 +1,7 @@
 package com.markettwits.waifupics.view.filter.sl
 
 import com.markettwits.core.sl.Module
+import com.markettwits.core.wrappers.HandleDeath
 import com.markettwits.waifupics.view.filter.data.StaticCacheDataSource
 import com.markettwits.waifupics.view.filter.presentation.AgeRatingFilterCommunication
 import com.markettwits.waifupics.view.filter.presentation.AgeRatingFilterViewModel
@@ -13,6 +14,7 @@ class AgeRatingFilterModule(private val communication: FilterCommunication):
         FilterChecked.Base(),
         AgeRatingFilterCommunication.Base(),
         communication,
+        HandleDeath.Base(),
         StaticCacheDataSource.Base()
     )
 }

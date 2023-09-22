@@ -1,4 +1,4 @@
-package com.example.fintechtinkoff2023.core.communication
+package com.markettwits.core.communication
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flow
