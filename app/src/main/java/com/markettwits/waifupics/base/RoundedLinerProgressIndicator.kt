@@ -30,7 +30,7 @@ import com.markettwits.waifupics.theame.theme.Pink
 
 @Composable fun RoundedLinearProgressIndicator(
     modifier: Modifier = Modifier,
-    height: Dp = 8.dp,
+    height: Dp = 10.dp,
     color: Color = Pink,
     backgroundColor: Color = color.copy(alpha = 0.1f)
 ) {

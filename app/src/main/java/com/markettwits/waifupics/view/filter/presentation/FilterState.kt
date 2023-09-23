@@ -9,8 +9,6 @@ data class FilterState(
     val filter : List<FilterItem> = emptyList()
 ) : Parcelable{
     fun toggle() = this.copy(isOpened = !isOpened)
-    fun couldBeChecked(item: FilterItem): Boolean {
-        val checkedItems = filter.filter { it.checked }
-        return checkedItems.size == 1 && item.checked
-    }
+    fun couldBeChecked(item: FilterItem) =
+        filter.filter { it.checked }.size == 1 && item.checked
 }

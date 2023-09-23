@@ -12,26 +12,17 @@ class AgeRatingFilterViewModel(
     private val communication: AgeRatingFilterCommunication,
     private val filterCommunication: FilterCommunication,
     private val defaultValue: StaticCacheDataSource,
-) : ViewModel(), AgeRatingFilterResult, FilterImageType,
-    StateCommunication.UiMutable<FilterState> {
+) : ViewModel(), FilterImageType,
+    StateCommunication.State<FilterState> {
     init {
         communication.map(FilterState(filter = defaultValue.filter()))
     }
 
-    override fun filter(selectedItem: FilterItem) {
+    override fun filter(item: FilterItem) {
         communication.map(
-            communication.state().value.copy(
-                filter = filterChecked.checked(
-                    selectedItem,
-                    state().value.filter
-                )
-            )
+            state().value.copy(filter = filterChecked.checked(item, state().value.filter))
         )
         filterInner()
-    }
-
-    override fun updateState(function: (FilterState) -> FilterState) {
-        communication.updateState(function)
     }
 
     override fun state(): StateFlow<FilterState> = communication.state()
@@ -40,18 +31,24 @@ class AgeRatingFilterViewModel(
         val filter = filterChecked.mapFilter(communication.state().value.filter)
         filterCommunication.map(filter)
     }
-    fun toggle(){
+
+    override fun toggle() {
         communication.map(state().value.toggle())
+    }
+
+    override fun checked(item: FilterItem) {
+        filter(item.checked(item.checked))
     }
 
 }
 
 interface FilterImageType {
-    fun filter(selectedItem: FilterItem)
-}
 
-interface AgeRatingFilterResult {
+    fun filter(item: FilterItem)
     fun filterInner()
+    fun toggle()
+    fun checked(item: FilterItem)
+
 }
 
 interface AgeRatingFilterCommunication : StateCommunication.Mutable<FilterState> {

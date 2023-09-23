@@ -9,4 +9,7 @@ data class FilterItem(
     val title : String,
     val value : String,
     val checked : Boolean = false,
-) : Parcelable
+) : Parcelable{
+    fun checked(isChecked : Boolean) = this.copy(checked = !isChecked)
+}
+

@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.CachePolicy
 import coil.request.ImageRequest
-import com.markettwits.waifupics.R
+import com.markettwits.core_ui.R
 import com.markettwits.waifupics.view.main.ui.image.zoom.FullScreenImageDialog
 
 

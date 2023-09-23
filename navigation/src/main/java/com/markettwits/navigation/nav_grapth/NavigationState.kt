@@ -8,8 +8,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.markettwits.waifupics.navigation.nav_grapth.AppNavGraph
-import com.markettwits.waifupics.view.main.ui.MainScreen
+import com.markettwits.navigation.nav_grapth.AppNavGraph
 
 class NavigationState(
     val navHostController: NavHostController
@@ -32,13 +31,14 @@ fun rememberNavigationState(
 
 @Composable
 fun NavGraph(
+    screen : @Composable (PaddingValues) -> Unit,
     paddingValues: PaddingValues,
     navigationState: NavigationState,
     ) {
     AppNavGraph(
         navHostController = navigationState.navHostController,
         mainScreenContent = {
-            MainScreen(paddingValues)
+            screen(paddingValues)
         },
         galleryScreenContent = {
             Text(text = "Gallery", color = Color.White)

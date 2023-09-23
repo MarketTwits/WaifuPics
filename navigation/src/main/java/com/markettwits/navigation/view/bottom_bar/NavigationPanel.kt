@@ -1,4 +1,4 @@
-package com.markettwits.waifupics.navigation.view
+package com.markettwits.waifupics.navigation.view.bottom_bar
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -8,63 +8,17 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
-import androidx.navigation.compose.currentBackStackEntryAsState
-import com.markettwits.waifupics.core.WaifuPicsApp
-import com.markettwits.waifupics.view.navigation.model.NavigationItem
-import com.markettwits.waifupics.view.navigation.nav_grapth.NavGraph
-import com.markettwits.waifupics.view.navigation.nav_grapth.rememberNavigationState
-import com.markettwits.waifupics.view.navigation.view.NavigationViewModel
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun NavigationScreen(
-    modifier: Modifier = Modifier
-) {
-    val viewModel = (LocalContext.current.applicationContext as WaifuPicsApp).viewModel(
-        checkNotNull(LocalViewModelStoreOwner.current), NavigationViewModel::class.java
-    )
-    val navigationState = rememberNavigationState()
-    val navBackStackEntry =
-        navigationState.navHostController.currentBackStackEntryAsState()
-
-    val selectedItemSaveble = rememberSaveable {
-        mutableStateOf(viewModel.init())
-    }
-
-    Scaffold(bottomBar = {
-//        NavigationPanel(
-//            list = selectedItemSaveble.value,
-//            navItemClick = { selectedItem ->
-//                if (!selectedItem.isSelected) {
-//                    navigationState.navigateTo(selectedItem.screen.route())
-//                }
-//                selectedItemSaveble.value =
-//                    viewModel.updateSelectedItemInList(selectedItemSaveble.value, selectedItem)
-//            }
-//        )
-    }) {
-        NavGraph(
-            paddingValues = it,
-            navigationState = navigationState
-        )
-    }
-}
+import com.markettwits.navigation.model.NavigationItem
 
 @Composable
 fun NavigationPanel(

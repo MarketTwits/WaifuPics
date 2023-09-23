@@ -8,7 +8,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
-import com.markettwits.waifupics.R
+import com.markettwits.core_ui.R
 import com.markettwits.waifupics.base.BasePanelItem
 import com.markettwits.waifupics.base.RefreshPanelItem
 import com.markettwits.waifupics.core.WaifuPicsApp

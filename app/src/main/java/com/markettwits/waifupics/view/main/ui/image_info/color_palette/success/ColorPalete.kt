@@ -19,13 +19,13 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.markettwits.waifupics.R
+import com.markettwits.core_ui.R
 import com.markettwits.waifupics.theame.theme.LightPink
 import com.markettwits.waifupics.view.extensions.hexToComposeColor
 
 @Composable
 fun ColorPalette(hex : List<String>) {
-    var pallete = remember {
+    val pallete = remember {
         mutableStateOf(hex)
     }
     Box(

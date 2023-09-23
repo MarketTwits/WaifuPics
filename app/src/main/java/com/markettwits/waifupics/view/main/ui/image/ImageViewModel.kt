@@ -17,6 +17,7 @@ class ImageViewModel(
         randomImageCommunication.map(RandomImageUiState.Progress)
         fetchRandomImage()
     }
+
     override fun fetchRandomImage() {
         randomImageCommunication.map(RandomImageUiState.Progress)
         async.handleAsync({
@@ -25,11 +26,10 @@ class ImageViewModel(
             randomImageCommunication.map(it)
         }
     }
-//    override fun updateState(function: (RandomImageUiState) -> RandomImageUiState) {
-//        randomImageCommunication.updateState(function)
-//    }
+
     override fun state() = randomImageCommunication.state()
 }
+
 interface RandomImage {
     fun fetchRandomImage()
 }

@@ -28,9 +28,6 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -39,8 +36,8 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.markettwits.core_ui.ActivityViewModel
-import com.markettwits.waifupics.R
+import com.markettwits.core_ui.ApplicationViewModel
+import com.markettwits.core_ui.R
 import com.markettwits.waifupics.base.BaseDivider
 import com.markettwits.waifupics.theame.theme.LightPink
 import com.markettwits.waifupics.theame.theme.WaifuPicsTheme
@@ -56,7 +53,8 @@ private fun BottomSheetPreview() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BottomSheetFilter(modifier: Modifier = Modifier) {
-    val viewModel: AgeRatingFilterViewModel = ActivityViewModel()
+
+    val viewModel: AgeRatingFilterViewModel = ApplicationViewModel()
     val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val filterState by viewModel.state().collectAsState()
     AgeFilterBox(modifier = modifier) {
@@ -72,9 +70,8 @@ fun BottomSheetFilter(modifier: Modifier = Modifier) {
                 BottomScreenContent(
                     filterState = filterState,
                     toggleScreen = { viewModel.toggle() },
-                    isOpened = filterState.isOpened
                 ) {
-                    viewModel.filter(it)
+                    viewModel.checked(it)
                 }
             }
         }
@@ -85,7 +82,6 @@ fun BottomSheetFilter(modifier: Modifier = Modifier) {
 fun BottomScreenContent(
     filterState: FilterState,
     toggleScreen: () -> Unit,
-    isOpened: Boolean,
     onItemClick: (FilterItem) -> Unit
 ) = Column {
     BaseDivider()
@@ -94,7 +90,7 @@ fun BottomScreenContent(
     }
     FilterHeader(
         onClick = { toggleScreen() },
-        isOpened = isOpened
+        isOpened = filterState.isOpened
     )
 }
 
@@ -165,7 +161,8 @@ fun FilterBody(
     ) {
         filterState.filter.forEach {
             FilterPosition(
-                canBeChecked = filterState.couldBeChecked(it),
+                canBeChecked = filterState.couldBeChecked(it) ,
+                      //  filterState.couldBeChecked(it),
                 item = it
             ) {
                 selectedItem.invoke(it)
@@ -174,31 +171,24 @@ fun FilterBody(
     }
 }
 
-
 @Composable
 private fun FilterPosition(
     canBeChecked: Boolean,
     item: FilterItem,
     onClick: (FilterItem) -> Unit,
 ) {
-    var checkedState by rememberSaveable(item.id) {
-        mutableStateOf(item.checked)
-    }
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .clickable {
-                if (!canBeChecked) {
-                    checkedState = !checkedState
-                    onClick(item.copy(checked = checkedState))
-                }
+                if (!canBeChecked) onClick(item)
             },
         verticalAlignment = Alignment.CenterVertically
     )
     {
         Checkbox(
-            checked = checkedState,
-            onCheckedChange = { checkedState = !checkedState })
+            checked = item.checked,
+            onCheckedChange = { onClick(item) })
         Text(
             text = item.title,
             color = MaterialTheme.colorScheme.surfaceTint,
