@@ -20,7 +20,7 @@ class HomeFeatureImpl : HomeFeatureApi {
         modifier: Modifier
     ) {
         navGraphBuilder.composable(baseRoute) {
-            MainScreen(paddingValues)
+            MainScreen()
         }
     }
 }

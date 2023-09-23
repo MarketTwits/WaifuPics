@@ -1,7 +1,7 @@
-package com.markettwits.waifupics.view.navigation
+package com.markettwits.navigation
 
 import com.markettwits.core.sl.Module
-import com.markettwits.waifupics.view.navigation.view.NavigationViewModel
+import com.markettwits.navigation.view.NavigationViewModel
 
 class NavigationModule : Module<NavigationViewModel> {
     override fun viewModel() = NavigationViewModel()

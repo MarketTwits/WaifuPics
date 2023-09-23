@@ -22,7 +22,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.markettwits.waifupics.R
+import com.markettwits.core_ui.R.font
 
 @Composable
 fun BasePanelItem(
@@ -76,7 +76,7 @@ fun RefreshPanelItem(
             Text(
                 text = "Refresh !",
                 color = MaterialTheme.colorScheme.surfaceTint,
-                fontFamily = FontFamily(Font(R.font.rubik_medium)),
+                fontFamily = FontFamily(Font(font.rubik_medium)),
                 fontSize = 16.sp
             )
         }

@@ -1,6 +1,7 @@
-package com.markettwits.waifupics.view.navigation.nav_grapth
+package com.markettwits.navigation.nav_grapth
 
 import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
@@ -8,16 +9,14 @@ import com.markettwits.waifupics.view.navigation.model.Screen
 
 
 fun NavGraphBuilder.homeScreenNavGraph(
-//    homeScreenContent: @Composable () -> Unit,
-//    galleryScreenContent : @Composable () -> Unit,
-//    aboutScreenContent : @Composable () -> Unit,
+    mainScreen: @Composable () -> Unit,
 ){
     navigation(
         startDestination = Screen.Main.route(),
         route = Screen.Main.route()
     ){
         composable(Screen.Main.route()){
-           Text(text = "Main")
+           mainScreen()
         }
         composable(Screen.Gallery.route()){
             Text(text = "Gallery")
