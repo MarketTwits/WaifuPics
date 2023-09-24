@@ -13,9 +13,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.DensityMedium
+import androidx.compose.material3.DrawerState
+import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,18 +32,23 @@ import androidx.compose.ui.unit.dp
 import com.markettwits.core_ui.R
 import com.markettwits.waifupics.theame.theme.WaifuPicsTheme
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @Preview
 private fun TopBarPanelPreview() {
     WaifuPicsTheme(darkTheme = true) {
-        TopBarPanel(){}
+        TopBarPanel(
+            drawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
+        ) {}
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopBarPanel(
     modifier: Modifier = Modifier,
-    onClick : () -> Unit,
+    drawerState: DrawerState,
+    onClick: () -> Unit,
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -48,7 +58,7 @@ fun TopBarPanel(
             .background(MaterialTheme.colorScheme.background)
     ) {
         Spacer(modifier = Modifier.width(10.dp))
-        MenuButton(modifier = Modifier.clickable { onClick() })
+        MenuButton(drawerState = drawerState) { onClick() }
         Spacer(modifier = Modifier.width(10.dp))
         Image(
             modifier = Modifier
@@ -59,18 +69,24 @@ fun TopBarPanel(
     }
 }
 
+
 @Composable
-private fun MenuButton(modifier: Modifier = Modifier) {
+private fun MenuButton(
+    modifier: Modifier = Modifier,
+    drawerState: DrawerState,
+    onClick: () -> Unit
+) {
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
             .clip(CircleShape)
+            .clickable { onClick() }
             .size(40.dp)
             .background(MaterialTheme.colorScheme.secondary)
             .padding(7.dp)
     ) {
         Icon(
-            imageVector = Icons.Filled.DensityMedium,
+            imageVector = if (drawerState.isClosed) Icons.Filled.DensityMedium else Icons.Filled.Close,
             tint = MaterialTheme.colorScheme.surfaceTint,
             contentDescription = null
         )

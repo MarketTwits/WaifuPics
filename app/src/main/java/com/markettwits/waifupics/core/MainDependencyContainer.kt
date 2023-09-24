@@ -20,7 +20,7 @@ class MainDependencyContainer(
     override fun module(className: Class<out ViewModel>): Module<out ViewModel> = when (className) {
         NavigationViewModel::class.java -> NavigationModule()
         ImageViewModel::class.java -> ImageViewModule(core, filter)
-        AgeRatingFilterViewModel::class.java -> AgeRatingFilterModule(filter)
+        AgeRatingFilterViewModel::class.java -> AgeRatingFilterModule(core,filter)
         else -> other.module(className)
     }
 }

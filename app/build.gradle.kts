@@ -1,3 +1,6 @@
+import DependenciesGroup.Retrofit.okkhttpImpl
+import DependenciesGroup.Retrofit.retrofitImpl
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -54,17 +57,10 @@ dependencies {
 
     val okhttp_ver = "4.10.0"
 
-    implementation("com.squareup.okhttp3:okhttp:$okhttp_ver")
-    implementation("com.squareup.okhttp3:logging-interceptor:$okhttp_ver")
     implementation(project(path = ":core-ui"))
     implementation(project(path = ":navigation"))
-    implementation(DependenciesConfig.Retrofit.retrofit)
-    implementation(DependenciesConfig.Retrofit.retrofitConverter)
+    retrofitImpl()
+    okkhttpImpl()
     implementation(DependenciesConfig.Zoomable.fetch())
-
-    implementation(DependenciesConfig.WorkManager.fetch())
-    implementation(DependenciesConfig.KotlinCore.fetch())
-
-    implementation("androidx.work:work-runtime-ktx:2.8.1")
-
+    //implementation(DependenciesConfig.KotlinCore.fetch())
 }

@@ -1,8 +1,11 @@
 package com.markettwits.waifupics.view.filter.presentation
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.markettwits.core.communication.Communication
 import com.markettwits.core.communication.StateCommunication
+import com.markettwits.core.wrappers.SaveAndRestoreState
+import com.markettwits.core.wrappers.WrapBundle
 import com.markettwits.waifupics.view.filter.data.StaticCacheDataSource
 import com.markettwits.waifupics.view.main.domain.FilterChecked
 import kotlinx.coroutines.flow.StateFlow
@@ -12,12 +15,31 @@ class AgeRatingFilterViewModel(
     private val communication: AgeRatingFilterCommunication,
     private val filterCommunication: FilterCommunication,
     private val defaultValue: StaticCacheDataSource,
+    private val saveAndRestore : SaveAndRestoreState
 ) : ViewModel(), FilterImageType,
     StateCommunication.State<FilterState> {
-    init {
-        communication.map(FilterState(filter = defaultValue.filter()))
-    }
 
+    private val callback = object : SaveAndRestoreState.Callback{
+        override fun save(bundle: WrapBundle) {
+            bundle.save("FilterState", communication.state().value)
+            Log.d("mt05", "Save: $bundle")
+        }
+        override fun restored(bundle: WrapBundle) {
+            Log.d("mt05", "Restore: $bundle")
+            communication.map(bundle.read("FilterState", FilterState::class.java))
+        }
+    }
+    fun init(firstRun : Boolean){
+        if (firstRun){
+            if (communication.state().value.filter.isEmpty()){
+                communication.map(FilterState(filter = defaultValue.filter()))
+            }
+            Log.d("mt05", "First run : AgeRatingFilter")
+        }
+    }
+    init {
+        saveAndRestore.subscribe(callback)
+    }
     override fun filter(item: FilterItem) {
         communication.map(
             state().value.copy(filter = filterChecked.checked(item, state().value.filter))

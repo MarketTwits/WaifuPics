@@ -9,10 +9,11 @@ import com.markettwits.waifupics.view.main.ui.image.ImageViewModel
 @Composable
 fun MainScreen(
     paddingValues: PaddingValues = PaddingValues(),
+    firstRun : Boolean,
 ) {
     val viewModel: ImageViewModel = ApplicationViewModel()
     val state = viewModel.state().collectAsState()
     RandomImageColumn(paddingValues = paddingValues) {
-        state.value.Handle()
+        state.value.Handle(firstRun)
     }
 }

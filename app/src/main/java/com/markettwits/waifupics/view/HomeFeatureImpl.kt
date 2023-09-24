@@ -5,7 +5,6 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import com.markettwits.waifupics.view.main.ui.MainScreen
 
 class HomeFeatureImpl : HomeFeatureApi {
 
@@ -20,7 +19,7 @@ class HomeFeatureImpl : HomeFeatureApi {
         modifier: Modifier
     ) {
         navGraphBuilder.composable(baseRoute) {
-            MainScreen()
+            //MainScreen()
         }
     }
 }
