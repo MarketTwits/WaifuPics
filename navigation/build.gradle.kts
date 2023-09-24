@@ -41,4 +41,5 @@ android {
 
 dependencies {
    implementation(project(":core-ui"))
+    implementation ("me.onebone:toolbar-compose:2.3.2")
 }

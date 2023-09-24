@@ -34,6 +34,7 @@ interface DependenciesConfig {
         private const val uiToolingVersion = "1.4.3"
         private const val junitComposeVersion = "1.5.1"
         private const val composeBomVersion = "2023.03.00"
+
         const val uiTooling = "androidx.compose.ui:ui-tooling:$uiToolingVersion"
         const val toolingPreiew = "androidx.compose.ui:ui-tooling-preview:$uiToolingVersion"
         const val manifest = "androidx.compose.ui:ui-test-manifest"
@@ -51,7 +52,11 @@ interface DependenciesConfig {
         const val retrofit = "com.squareup.retrofit2:retrofit:$version"
         const val retrofitConverter = "com.squareup.retrofit2:converter-gson:$version"
     }
-
+    object Okkhttp{
+        private const val version = "4.11.0"
+        const val okhttp3 = "com.squareup.okhttp3:okhttp:$version"
+        const val okhttp3LogginInterceptor = "com.squareup.okhttp3:logging-interceptor:$version"
+    }
 
     object Dagger2 : DependaciesAbstract() {
         override val version = "2.46"
@@ -62,12 +67,7 @@ interface DependenciesConfig {
         override val version = "2.6.1"
         override val dependence = "androidx.lifecycle:lifecycle-runtime-ktx:"
     }
-
-    //    object JuintExt : DependaciesAbstract() {
-//        override val version = "1.1.5"
-//        override val dependence = "androidx.test.ext:junit:"
-//    }
-    object JuintExt : DependaciesAbstract() {
+    object JuintExtKtx : DependaciesAbstract() {
         override val version = "1.1.5"
         override val dependence = "androidx.test.ext:junit-ktx:"
     }

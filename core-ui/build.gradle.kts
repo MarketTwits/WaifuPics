@@ -1,3 +1,5 @@
+import DependenciesGroup.Compose.composeUiApi
+
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
@@ -42,29 +44,5 @@ android {
 
 dependencies {
     api(project(path = ":core"))
-
-    api(DependenciesConfig.Compose.icons)
-    api(DependenciesConfig.Lifecycle.fetch())
-    api(DependenciesConfig.Compose.activity)
-    api(platform(DependenciesConfig.Compose.composeBom))
-    //api(DependenciesConfig.Compose.uiUi)
-    api(DependenciesConfig.Compose.runtime)
-    api(DependenciesConfig.Compose.graphics)
-    api(DependenciesConfig.ComposeDebugAndTest.toolingPreiew)
-    api(DependenciesConfig.Compose.material3)
-    api(DependenciesConfig.Compose.Navigation.navigation)
-    api(DependenciesConfig.Compose.composeLifecycle)
-    api(DependenciesConfig.CoilCompose.fetch())
-    api(DependenciesConfig.Compose.material)
-    api (DependenciesConfig.Compose.acomponist)
-    androidTestApi(DependenciesConfig.JuintExt.fetch())
-    androidTestApi(DependenciesConfig.Espresso.fetch())
-    androidTestApi(platform(DependenciesConfig.ComposeDebugAndTest.bom))
-    androidTestApi(DependenciesConfig.ComposeDebugAndTest.junit)
-    debugApi(DependenciesConfig.ComposeDebugAndTest.uiTooling)
-    debugApi(DependenciesConfig.ComposeDebugAndTest.manifest)
-
-
-    api("androidx.test.ext:junit-ktx:1.1.5")
-    testApi("org.testng:testng:6.9.6")
+    composeUiApi()
 }

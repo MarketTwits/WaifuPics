@@ -1,10 +1,10 @@
 package com.markettwits.waifupics.view.navigation.nav_grapth
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -41,10 +41,10 @@ fun NavGraph(
             screen(paddingValues)
         },
         galleryScreenContent = {
-            Text(text = "Gallery", color = Color.White)
+            Text(text = "Gallery", color = MaterialTheme.colorScheme.onBackground)
         },
         aboutScreenContent = {
-            Text(text = "About", color = Color.White)
+            Text(text = "About", color = MaterialTheme.colorScheme.onBackground)
         }
     )
 }

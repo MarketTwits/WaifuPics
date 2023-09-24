@@ -1,4 +1,4 @@
-package com.markettwits.navigation.view.drawawer
+package com.markettwits.navigation.view.repack.drawawer
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box

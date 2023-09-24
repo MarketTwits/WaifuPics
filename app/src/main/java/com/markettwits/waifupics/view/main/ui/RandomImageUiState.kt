@@ -14,13 +14,13 @@ import com.markettwits.waifupics.view.main.ui.image_info.image_card_info.success
 
 interface RandomImageUiState {
     @Composable
-    fun Handle() = Unit
+    fun Handle(firstRun : Boolean) = Unit
 
     object Initial : RandomImageUiState
 
     object Progress : RandomImageUiState {
         @Composable
-        override fun Handle() {
+        override fun Handle(firstRun : Boolean) {
             ImageLoading()
             ImageCardInfoLoading()
             BottomPanel(BottomPanelUiState.Loading)
@@ -29,10 +29,10 @@ interface RandomImageUiState {
 
     data class Error(private val message: String) : RandomImageUiState {
         @Composable
-        override fun Handle() {
+        override fun Handle(firstRun : Boolean) {
             ImageFuckup()
             BottomPanel(BottomPanelUiState.Error)
-            BottomSheetFilter()
+            BottomSheetFilter(firstRun)
         }
     }
 
@@ -43,11 +43,11 @@ interface RandomImageUiState {
         private val owner: UploaderUi
     ) : RandomImageUiState {
         @Composable
-        override fun Handle() {
+        override fun Handle(firstRun : Boolean) {
             ImageCard(imageUrl)
             ImageInfoCardWithUploader(owner, imageData, collorPallente)
             BottomPanel(BottomPanelUiState.Success)
-            BottomSheetFilter()
+            BottomSheetFilter(firstRun)
         }
     }
 
@@ -57,11 +57,11 @@ interface RandomImageUiState {
         val imageData: ImageSourceUi
     ) : RandomImageUiState {
         @Composable
-        override fun Handle() {
+        override fun Handle(firstRun : Boolean) {
             ImageCard(imageUrl)
             ImageInfoCardEmptyAuthor(imageData, collorPallente)
             BottomPanel(BottomPanelUiState.Success)
-            BottomSheetFilter()
+            BottomSheetFilter(firstRun)
         }
     }
 
@@ -72,7 +72,7 @@ interface RandomImageUiState {
         val author: AuthorUi
     ) : RandomImageUiState {
         @Composable
-        override fun Handle() {
+        override fun Handle(firstRun : Boolean) {
             ImageCard(imageUrl)
             ImageInfoCardWitAuthor(
                 author = author,
@@ -80,7 +80,7 @@ interface RandomImageUiState {
                 colorPalette = collorPallente
             )
             BottomPanel(BottomPanelUiState.Success)
-            BottomSheetFilter()
+            BottomSheetFilter(firstRun)
         }
     }
 }

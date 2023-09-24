@@ -8,12 +8,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.KeyboardArrowDown
@@ -31,14 +28,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.markettwits.core_ui.ApplicationViewModel
 import com.markettwits.core_ui.R
 import com.markettwits.waifupics.base.BaseDivider
+import com.markettwits.waifupics.core.WaifuPicsApp
 import com.markettwits.waifupics.theame.theme.LightPink
 import com.markettwits.waifupics.theame.theme.WaifuPicsTheme
 
@@ -46,17 +44,24 @@ import com.markettwits.waifupics.theame.theme.WaifuPicsTheme
 @Preview
 private fun BottomSheetPreview() {
     WaifuPicsTheme {
-        BottomSheetFilter()
+        BottomSheetFilter(true)
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BottomSheetFilter(modifier: Modifier = Modifier) {
+fun BottomSheetFilter(
+    firstRun: Boolean,
+    modifier: Modifier = Modifier
+) {
 
-    val viewModel: AgeRatingFilterViewModel = ApplicationViewModel()
+    //val viewModel: AgeRatingFilterViewModel = ApplicationViewModel()
+    val viewModel: AgeRatingFilterViewModel =
+        (LocalContext.current.applicationContext as WaifuPicsApp).ageRativgViewModel
+    viewModel.init(firstRun)
     val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val filterState by viewModel.state().collectAsState()
+
     AgeFilterBox(modifier = modifier) {
         FilterHeader(
             onClick = { viewModel.toggle() },
@@ -80,6 +85,7 @@ fun BottomSheetFilter(modifier: Modifier = Modifier) {
 
 @Composable
 fun BottomScreenContent(
+    modifier: Modifier = Modifier,
     filterState: FilterState,
     toggleScreen: () -> Unit,
     onItemClick: (FilterItem) -> Unit
@@ -121,7 +127,6 @@ fun FilterHeader(
     Row(
         modifier = modifier
             .clickable { onClick() }
-            .windowInsetsPadding(WindowInsets.navigationBars)
             .fillMaxWidth()
             .padding(10.dp),
         horizontalArrangement = Arrangement.SpaceBetween
@@ -161,8 +166,7 @@ fun FilterBody(
     ) {
         filterState.filter.forEach {
             FilterPosition(
-                canBeChecked = filterState.couldBeChecked(it) ,
-                      //  filterState.couldBeChecked(it),
+                canBeChecked = filterState.couldBeChecked(it),
                 item = it
             ) {
                 selectedItem.invoke(it)
