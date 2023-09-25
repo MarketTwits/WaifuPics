@@ -9,15 +9,15 @@ import com.markettwits.core.sl.ViewModelsFactory
 import com.markettwits.core.wrappers.SaveAndRestore
 import com.markettwits.core.wrappers.SaveAndRestoreState
 import com.markettwits.core.wrappers.WrapBundle
-import com.markettwits.waifupics.filter.data.StaticCacheDataSource
-import com.markettwits.waifupics.filter.presentation.AgeRatingFilterCommunication
-import com.markettwits.waifupics.filter.presentation.AgeRatingFilterViewModel
-import com.markettwits.waifupics.filter.presentation.FilterCommunication
+import com.markettwits.filter.data.StaticCacheDataSource
+import com.markettwits.filter.presentation.AgeRatingFilterCommunication
+import com.markettwits.filter.presentation.AgeRatingFilterViewModel
+import com.markettwits.filter.presentation.FilterCommunication
 import com.markettwits.waifupics.view.main.domain.FilterChecked
 
 class WaifuPicsApp : Application(), ProvideViewModel, SaveAndRestore {
 
-    lateinit var ageRativgViewModel : AgeRatingFilterViewModel
+    private lateinit var ageRativgViewModel : AgeRatingFilterViewModel
 
 
     private lateinit var viewModelFactory: ViewModelsFactory
