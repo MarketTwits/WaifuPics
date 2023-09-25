@@ -1,4 +1,3 @@
-import DependenciesGroup.Compose.composeUiApi
 
 plugins {
     id("com.android.library")
@@ -31,7 +30,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion  = DependenciesConfig.Compose.composeVersion
+        kotlinCompilerExtensionVersion  = libs.versions.compose.asProvider().get()
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -44,5 +43,8 @@ android {
 
 dependencies {
     api(project(path = ":core"))
-    composeUiApi()
+    api(libs.bundles.composeUiBundle)
+    api(libs.junit.ext.ktx)
+    debugApi(libs.bundles.composeUiBundleDebug)
+
 }

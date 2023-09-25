@@ -1,6 +1,3 @@
-import DependenciesGroup.Retrofit.okkhttpImpl
-import DependenciesGroup.Retrofit.retrofitImpl
-
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -44,7 +41,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = DependenciesConfig.Compose.composeVersion
+        kotlinCompilerExtensionVersion = libs.versions.compose.asProvider().get()
     }
     packaging {
         resources {
@@ -54,13 +51,8 @@ android {
 }
 
 dependencies {
-
-    val okhttp_ver = "4.10.0"
-
     implementation(project(path = ":core-ui"))
     implementation(project(path = ":navigation"))
-    retrofitImpl()
-    okkhttpImpl()
-    implementation(DependenciesConfig.Zoomable.fetch())
-    //implementation(DependenciesConfig.KotlinCore.fetch())
+    implementation(libs.bundles.network)
+    implementation(libs.zoomable)
 }
