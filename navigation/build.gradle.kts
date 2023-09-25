@@ -6,10 +6,10 @@ plugins {
 
 android {
     namespace = "com.markettwits.navigation"
-    compileSdk = 33
+    compileSdk = Config.SDK.compileSdk
 
     defaultConfig {
-        minSdk = 24
+        minSdk = Config.SDK.minSdk
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -28,7 +28,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion  = DependenciesConfig.Compose.composeVersion
+        kotlinCompilerExtensionVersion  = libs.versions.compose.asProvider().get()
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -41,5 +41,5 @@ android {
 
 dependencies {
    implementation(project(":core-ui"))
-    implementation ("me.onebone:toolbar-compose:2.3.2")
+   implementation (libs.onebone.toolbar)
 }

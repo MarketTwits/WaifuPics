@@ -38,7 +38,8 @@ class AgeRatingFilterViewModel(
         }
     }
     init {
-        saveAndRestore.subscribe(callback)
+        //saveAndRestore.subscribe(callback)
+        communication.map(FilterState(filter = defaultValue.filter()))
     }
     override fun filter(item: FilterItem) {
         communication.map(

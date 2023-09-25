@@ -17,7 +17,6 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.DensityMedium
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.rememberDrawerState
@@ -32,7 +31,6 @@ import androidx.compose.ui.unit.dp
 import com.markettwits.core_ui.R
 import com.markettwits.waifupics.theame.theme.WaifuPicsTheme
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @Preview
 private fun TopBarPanelPreview() {
