@@ -4,6 +4,7 @@ import android.content.Context
 import com.markettwits.core.Core
 import com.markettwits.core.sl.DependencyContainer
 import com.markettwits.core.wrappers.SaveAndRestoreState
+import com.markettwits.sl.NavigationDependencyContainer
 
 interface MakeDependencies {
     fun dependencies(): DependencyContainer
@@ -16,7 +17,7 @@ interface MakeDependencies {
             val core = Core(context, saveAndRestoreState)
             val error = DependencyContainer.Error()
             val main = MainDependencyContainer(core, error)
-            return BaseDependencyContainer(core, main)
+            return NavigationDependencyContainer(main, main.navigation)
         }
     }
 }

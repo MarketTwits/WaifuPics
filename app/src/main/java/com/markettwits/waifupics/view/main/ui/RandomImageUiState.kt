@@ -1,7 +1,7 @@
 package com.markettwits.waifupics.view.main.ui
 
 import androidx.compose.runtime.Composable
-import com.markettwits.waifupics.view.filter.presentation.BottomSheetFilter
+import com.markettwits.waifupics.filter.presentation.BottomSheetFilter
 import com.markettwits.waifupics.view.main.ui.bottom_pannel.BottomPanel
 import com.markettwits.waifupics.view.main.ui.bottom_pannel.BottomPanelUiState
 import com.markettwits.waifupics.view.main.ui.image.fuckup.ImageFuckup
