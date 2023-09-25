@@ -1,6 +1,6 @@
 package com.markettwits.waifupics.view.main.domain
 
-import com.markettwits.waifupics.view.filter.presentation.FilterItem
+import com.markettwits.waifupics.filter.presentation.FilterItem
 
 interface FilterChecked {
     fun checked(selectedItem : FilterItem, currentList : List<FilterItem>) : List<FilterItem>

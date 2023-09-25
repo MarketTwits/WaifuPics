@@ -8,9 +8,8 @@ import androidx.compose.ui.Modifier
 import com.markettwits.core.wrappers.SaveAndRestore
 import com.markettwits.core.wrappers.WrapBundle
 import com.markettwits.core_ui.setContentLocal
-import com.markettwits.navigation.view.NavigationScreen
+import com.markettwits.presentation.NavigationScreen
 import com.markettwits.waifupics.theame.theme.WaifuPicsTheme
-import com.markettwits.waifupics.view.main.ui.MainScreen
 
 
 class MainActivity : ComponentActivity() {
@@ -20,9 +19,7 @@ class MainActivity : ComponentActivity() {
         (application as SaveAndRestore).init(firstRun)
         setContentLocal(savedInstanceState){
             WaifuPicsTheme {
-                NavigationScreen(modifier = Modifier.fillMaxSize()){
-                    MainScreen(it, firstRun)
-                }
+                NavigationScreen(modifier = Modifier.fillMaxSize())
             }
         }
     }

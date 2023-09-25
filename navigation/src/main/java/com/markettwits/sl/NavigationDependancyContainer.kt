@@ -1,19 +1,17 @@
-package com.markettwits.waifupics.core
+package com.markettwits.sl
 
 import androidx.lifecycle.ViewModel
-import com.markettwits.core.Core
 import com.markettwits.core.sl.DependencyContainer
+import com.markettwits.presentation.HandleNavigation
 import com.markettwits.presentation.NavigationViewModel
-import com.markettwits.sl.NavigationModule
 
-class BaseDependencyContainer(
-    private val core: Core,
+class NavigationDependencyContainer(
     private val dependencyContainer: DependencyContainer,
-) : DependencyContainer {
-
+    private val navigation : HandleNavigation,
+): DependencyContainer {
     override fun module(className: Class<out ViewModel>) =
         if (className == NavigationViewModel::class.java)
-            NavigationModule(BaseHandleNavigation())
+            NavigationModule(navigation)
         else
             dependencyContainer.module(className)
 }

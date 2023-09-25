@@ -5,7 +5,7 @@ import com.markettwits.core.sl.Module
 import com.markettwits.core.wrappers.AsyncViewModel
 import com.markettwits.core.wrappers.DispatchersList
 import com.markettwits.core.wrappers.RunAsync
-import com.markettwits.waifupics.view.filter.presentation.FilterCommunication
+import com.markettwits.waifupics.filter.presentation.FilterCommunication
 import com.markettwits.waifupics.view.main.data.ImageLoader
 import com.markettwits.waifupics.view.main.data.RandomImageRepository
 import com.markettwits.waifupics.view.main.data.RandomImageUiMapper
