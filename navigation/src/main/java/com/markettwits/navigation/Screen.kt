@@ -8,7 +8,6 @@ interface Screen : Parcelable {
     abstract class Abstract(private val route: String) : Screen, Parcelable {
         override fun route() = route
     }
-
     @Parcelize
     object Main : Abstract(ROUTE_MAIN)
 

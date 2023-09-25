@@ -26,6 +26,11 @@ testing = "6.9.6"
 #Network
 retrofit = "2.9.0"
 okkhttp = "4.11.0"
+core-ktx = "1.9.0"
+androidx-test-ext-junit = "1.1.5"
+espresso-core = "3.5.1"
+appcompat = "1.6.1"
+material = "1.9.0"
 
 [libraries]
 compose-ui = { group = "androidx.compose", name = "ui:ui", version.ref = "compose" }
@@ -55,12 +60,16 @@ retrofit = {group = "com.squareup.retrofit2", name = "retrofit", version.ref = "
 retrofit-converter = {group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit"}
 okkhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okkhttp"}
 okkhttp-interceptor = {group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref ="okkhttp"}
+core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
+androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 [plugins]
-android-application = { id = "com.android.application", version.ref = "gradle" }
 android-library = { id = "com.android.library", version.ref = "gradle" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-kotlin-parcelize = {id = "kotlin-parcelize", version.ref = "kotlin"}
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize",  version.ref = "kotlin"}
 
 [bundles]
 composeUiBundle = [

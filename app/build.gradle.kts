@@ -51,8 +51,7 @@ android {
 }
 
 dependencies {
+    implementation(project(path =":random-image"))
     implementation(project(path = ":core-ui"))
     implementation(project(path = ":navigation"))
-    implementation(libs.bundles.network)
-    implementation(libs.zoomable)
 }
