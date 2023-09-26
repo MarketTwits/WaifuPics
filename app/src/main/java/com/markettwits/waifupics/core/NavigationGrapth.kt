@@ -3,10 +3,10 @@ package com.markettwits.waifupics.core
 import androidx.compose.runtime.Composable
 import com.markettwits.navigation.AppNavGraph
 import com.markettwits.navigation.NavigationState
+import com.markettwits.presentation.GalleryScreen
 import com.markettwits.presentation.HandleNavigation
 import com.markettwits.`random-image`.ui.MainScreen
 import com.markettwits.waifupics.about.AboutScreen
-import com.markettwits.waifupics.gallery.GalleryScreen
 
 
 class BaseHandleNavigation : HandleNavigation {

@@ -15,7 +15,7 @@ import com.markettwits.waifupics.view.main.ui.image.ImageViewModel
 
 
 @Composable
-fun BottomPanel(bottomPanelUiState: BottomPanelUiState) {
+fun BottomPanel(bottomPanelUiState: BottomPanelUiState, imageUrl : String = "", ageRating : String ="") {
     val viewModel : ImageViewModel = ApplicationViewModel()
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -31,7 +31,9 @@ fun BottomPanel(bottomPanelUiState: BottomPanelUiState) {
             modifier = Modifier.weight(1f),
             image = R.drawable.heart_icon,
             isLoading = bottomPanelUiState.baseBottomEnabled()
-        ) {}
+        ) {
+            viewModel.addToFavorite(imageUrl, ageRating)
+        }
         RefreshPanelItem(modifier = Modifier.weight(2f), isLoading = bottomPanelUiState.refresh()) {
             viewModel.fetchRandomImage()
         }

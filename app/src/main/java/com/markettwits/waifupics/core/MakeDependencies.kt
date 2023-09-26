@@ -5,6 +5,7 @@ import com.markettwits.core.Core
 import com.markettwits.core.sl.DependencyContainer
 import com.markettwits.core.wrappers.SaveAndRestoreState
 import com.markettwits.`random-image`.sl.RandomImageDependencyContainer
+import com.markettwits.sl.GalleryDependencyContainer
 import com.markettwits.sl.NavigationDependencyContainer
 
 interface MakeDependencies {
@@ -17,7 +18,8 @@ interface MakeDependencies {
         override fun dependencies(): DependencyContainer {
             val core = Core(context, saveAndRestoreState)
             val error = DependencyContainer.Error()
-            val randomImage = RandomImageDependencyContainer(core, error)
+            val gallery = GalleryDependencyContainer(error)
+            val randomImage = RandomImageDependencyContainer(core, gallery)
             val navigation = NavigationDependencyContainer(randomImage, BaseHandleNavigation())
             return BaseDependencyContainer(core, navigation)
         }

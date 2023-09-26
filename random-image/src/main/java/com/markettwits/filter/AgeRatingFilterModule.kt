@@ -6,7 +6,7 @@ import com.markettwits.filter.data.StaticCacheDataSource
 import com.markettwits.filter.presentation.AgeRatingFilterCommunication
 import com.markettwits.filter.presentation.AgeRatingFilterViewModel
 import com.markettwits.filter.presentation.FilterCommunication
-import com.markettwits.waifupics.view.main.domain.FilterChecked
+import com.markettwits.`random-image`.domain.FilterChecked
 
 class AgeRatingFilterModule(
     private val core : Core,

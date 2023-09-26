@@ -36,7 +36,7 @@ fun BasePanelItem(
         modifier = modifier
             .padding(5.dp)
             .clip(RoundedCornerShape(10.dp))
-            .clickable(enabled = false) {
+            .clickable(enabled = true) {
                 onClick()
             }
             .background(if (!isLoading) MaterialTheme.colorScheme.secondary.copy(alpha = 0.4f) else MaterialTheme.colorScheme.secondary)

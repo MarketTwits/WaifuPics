@@ -7,8 +7,8 @@ import com.markettwits.core.communication.StateCommunication
 import com.markettwits.core.wrappers.SaveAndRestoreState
 import com.markettwits.core.wrappers.WrapBundle
 import com.markettwits.filter.data.StaticCacheDataSource
+import com.markettwits.`random-image`.domain.FilterChecked
 import com.markettwits.waifupics.filter.presentation.FilterState
-import com.markettwits.waifupics.view.main.domain.FilterChecked
 import kotlinx.coroutines.flow.StateFlow
 
 class AgeRatingFilterViewModel(

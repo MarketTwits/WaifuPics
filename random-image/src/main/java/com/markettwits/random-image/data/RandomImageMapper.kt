@@ -26,25 +26,25 @@ interface RandomImageUiMapper {
             }
         }
         override fun mapWithoutOwner(cloud: DataCloud): RandomImageUiState {
-            return RandomImageUiState.SuccessEmptyAuthor(
+            return RandomImageUiState.Success.EmptyAuthor(
                 imageUrl = cloud.attributes.file,
                 imageData = ImageSourceUi(
                     source = cloud.attributes.source.name ?: "",
                     sourceUrl = cloud.attributes.source.url ?: "",
                     ageRating = cloud.attributes.ageRating
                 ),
-                collorPallente = cloud.attributes.colors.palette
+                colorPalette = cloud.attributes.colors.palette
             )
         }
         override fun mapWithOwner(cloud: DataCloud,user : UserCloudData): RandomImageUiState {
-            return RandomImageUiState.SuccessWithOwner(
+            return RandomImageUiState.Success.WithOwner(
                 imageUrl = cloud.attributes.file,
                 imageData = ImageSourceUi(
                     source = cloud.attributes.source.name ?: "",
                     sourceUrl = cloud.attributes.source.url ?: "",
                     ageRating = cloud.attributes.ageRating
                 ),
-                collorPallente = cloud.attributes.colors.palette,
+                colorPalette = cloud.attributes.colors.palette,
                 owner = UploaderUi(user.attributes.username, user.attributes.avatarImage)
             )
         }
@@ -54,14 +54,14 @@ interface RandomImageUiMapper {
             user: UserCloudData,
             authorCloud: AuthorCloud
         ) : RandomImageUiState {
-            return RandomImageUiState.SuccessWithAuthor(
+            return RandomImageUiState.Success.WithAuthor(
                 imageUrl = cloud.attributes.file,
                 imageData = ImageSourceUi(
                     source = cloud.attributes.source.name ?: "",
                     sourceUrl = cloud.attributes.source.url ?: "",
                     ageRating = cloud.attributes.ageRating
                 ),
-                collorPallente = cloud.attributes.colors.palette,
+                colorPalette = cloud.attributes.colors.palette,
                 author = AuthorUi(authorCloud.data.attributes.imageUrl, authorCloud.data.attributes.name, authorCloud.data.attributes.aliases, authorCloud.data.attributes.officialLinks)
             )
         }

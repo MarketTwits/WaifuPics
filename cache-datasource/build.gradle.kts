@@ -2,15 +2,15 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.realm)
 }
 
 android {
-    namespace = "com.markettwits.random_image"
-    compileSdk = 33
+    namespace = "com.markettwits.image_cache_datasource"
+    compileSdk = Config.SDK.compileSdk
 
     defaultConfig {
-        minSdk = 24
+        minSdk = Config.SDK.minSdk
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -25,12 +25,6 @@ android {
             )
         }
     }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion  = libs.versions.compose.asProvider().get()
-    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -41,9 +35,10 @@ android {
 }
 
 dependencies {
-
-    implementation(project(path = ":core-ui"))
-    implementation(project(":cache-datasource"))
-    implementation(libs.bundles.network)
-    implementation(libs.zoomable)
+    implementation(project(":core"))
+    implementation ("io.realm.kotlin:library-base:1.11.0")
+    implementation ("io.realm.kotlin:library-sync:1.11.0")
+    implementation(libs.realm)
+    implementation(libs.core.ktx)
+    testImplementation(libs.junit)
 }

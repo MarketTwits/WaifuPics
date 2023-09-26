@@ -35,52 +35,47 @@ interface RandomImageUiState {
             BottomSheetFilter(firstRun)
         }
     }
-
-    data class SuccessWithOwner(
-        private val imageUrl: String,
-        private val collorPallente: List<String>,
-        private val imageData: ImageSourceUi,
-        private val owner: UploaderUi
-    ) : RandomImageUiState {
-        @Composable
-        override fun Handle(firstRun : Boolean) {
-            ImageCard(imageUrl)
-            ImageInfoCardWithUploader(owner, imageData, collorPallente)
-            BottomPanel(BottomPanelUiState.Success)
-            BottomSheetFilter(firstRun)
+    interface Success : RandomImageUiState{
+        data class WithOwner(
+            private val imageUrl: String,
+            private val colorPalette: List<String>,
+            private val imageData: ImageSourceUi,
+            private val owner: UploaderUi
+        ) : Success{
+            @Composable
+            override fun Handle(firstRun: Boolean) {
+                ImageCard(imageUrl)
+                ImageInfoCardWithUploader(owner, imageData, colorPalette)
+                BottomPanel(BottomPanelUiState.Success, imageUrl, imageData.ageRating)
+                BottomSheetFilter(firstRun)
+            }
         }
-    }
-
-    data class SuccessEmptyAuthor(
-        val imageUrl: String,
-        val collorPallente: List<String>,
-        val imageData: ImageSourceUi
-    ) : RandomImageUiState {
-        @Composable
-        override fun Handle(firstRun : Boolean) {
-            ImageCard(imageUrl)
-            ImageInfoCardEmptyAuthor(imageData, collorPallente)
-            BottomPanel(BottomPanelUiState.Success)
-            BottomSheetFilter(firstRun)
+        data class EmptyAuthor(
+            private val imageUrl: String,
+            private val colorPalette: List<String>,
+            private val imageData: ImageSourceUi
+        ) : Success{
+            @Composable
+            override fun Handle(firstRun : Boolean) {
+                ImageCard(imageUrl)
+                ImageInfoCardEmptyAuthor(imageData, colorPalette)
+                BottomPanel(BottomPanelUiState.Success, imageUrl, imageData.ageRating)
+                BottomSheetFilter(firstRun)
+            }
         }
-    }
-
-    data class SuccessWithAuthor(
-        val imageUrl: String,
-        val collorPallente: List<String>,
-        val imageData: ImageSourceUi,
-        val author: AuthorUi
-    ) : RandomImageUiState {
-        @Composable
-        override fun Handle(firstRun : Boolean) {
-            ImageCard(imageUrl)
-            ImageInfoCardWitAuthor(
-                author = author,
-                imageData = imageData,
-                colorPalette = collorPallente
-            )
-            BottomPanel(BottomPanelUiState.Success)
-            BottomSheetFilter(firstRun)
+        data class WithAuthor(
+            private val imageUrl: String,
+            private val colorPalette: List<String>,
+            private val imageData: ImageSourceUi,
+            private val author: AuthorUi
+        ) : Success{
+            @Composable
+            override fun Handle(firstRun : Boolean) {
+                ImageCard(imageUrl)
+                ImageInfoCardWitAuthor(author, imageData,colorPalette)
+                BottomPanel(BottomPanelUiState.Success, imageUrl,imageData.ageRating)
+                BottomSheetFilter(firstRun)
+            }
         }
     }
 }
