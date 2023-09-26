@@ -1,10 +1,14 @@
 package com.markettwits.`random-image`.ui.image
 
 import com.markettwits.core.Core
+import com.markettwits.core.RealmDatabaseProvider
 import com.markettwits.core.sl.Module
 import com.markettwits.core.wrappers.AsyncViewModel
 import com.markettwits.core.wrappers.DispatchersList
 import com.markettwits.core.wrappers.RunAsync
+import com.markettwits.data.ImageUiToCacheMapper
+import com.markettwits.database.FavoriteImageRepository
+import com.markettwits.database.ImagesCacheDataSource
 import com.markettwits.filter.presentation.FilterCommunication
 import com.markettwits.waifupics.view.main.data.ImageLoader
 import com.markettwits.waifupics.view.main.data.RandomImageRepository
@@ -17,6 +21,9 @@ class ImageViewModule(
     private val core: Core,
     private val filter : FilterCommunication
 ) : Module<ImageViewModel> {
+    //FIXME
+    private val repository =
+        FavoriteImageRepository.Base(ImagesCacheDataSource(RealmDatabaseProvider.Base()), ImageUiToCacheMapper.Base())
     override fun viewModel() =
         ImageViewModel(
             filter,
@@ -26,6 +33,7 @@ class ImageViewModule(
                 ImageLoader.Base(core.context()),
                 MakeService.Base(),
                 RandomImageUiMapper.Base()
-            )
+            ),
+            repository
         )
 }

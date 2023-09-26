@@ -31,8 +31,6 @@ interface RandomImageRepository {
         override suspend fun fetchUser(userId: String) = service.service().fetchUserById(userId)
         override suspend fun fetchAuthor(authorId: String) =
             service.service().fetchArtistById(authorId)
-
-
         override suspend fun preloadImage(url: String) {
             imageLoader.load(url)
         }

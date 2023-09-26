@@ -32,6 +32,9 @@ espresso-core = "3.5.1"
 appcompat = "1.6.1"
 material = "1.9.0"
 
+#Database
+realm = "1.11.0"
+
 [libraries]
 compose-ui = { group = "androidx.compose", name = "ui:ui", version.ref = "compose" }
 compose-graphics = { group = "androidx.compose.ui", name = "ui-graphics", version.ref = "compose-ui" }
@@ -61,6 +64,7 @@ retrofit-converter = {group = "com.squareup.retrofit2", name = "converter-gson",
 okkhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okkhttp"}
 okkhttp-interceptor = {group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref ="okkhttp"}
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
+realm = {group =  "io.realm.kotlin", name = "library-base", version.ref = "realm"}
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
@@ -70,6 +74,8 @@ material = { group = "com.google.android.material", name = "material", version.r
 android-library = { id = "com.android.library", version.ref = "gradle" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize",  version.ref = "kotlin"}
+realm = {id = "io.realm.kotlin", version.ref = "realm"}
+
 
 [bundles]
 composeUiBundle = [

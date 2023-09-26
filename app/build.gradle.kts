@@ -54,4 +54,5 @@ dependencies {
     implementation(project(path =":random-image"))
     implementation(project(path = ":core-ui"))
     implementation(project(path = ":navigation"))
+    implementation(project(path = ":gallery"))
 }

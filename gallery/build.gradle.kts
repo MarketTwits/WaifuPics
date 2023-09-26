@@ -2,15 +2,14 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
-    namespace = "com.markettwits.random_image"
-    compileSdk = 33
+    namespace = "com.markettwits.gallery"
+    compileSdk = Config.SDK.compileSdk
 
     defaultConfig {
-        minSdk = 24
+        minSdk = Config.SDK.minSdk
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -41,9 +40,6 @@ android {
 }
 
 dependencies {
-
-    implementation(project(path = ":core-ui"))
     implementation(project(":cache-datasource"))
-    implementation(libs.bundles.network)
-    implementation(libs.zoomable)
+    implementation(project(":core-ui"))
 }
