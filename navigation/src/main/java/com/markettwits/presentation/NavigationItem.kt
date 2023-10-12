@@ -28,7 +28,6 @@ interface NavigationItem : Parcelable {
 
     ) : NavigationItem {
         override val iconRes: Int = R.drawable.gallery_menu_icon
-
         override fun copy(selected : Boolean) = copy(isSelected = selected)
     }
     @Parcelize

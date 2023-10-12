@@ -1,4 +1,4 @@
-package com.markettwits.waifupics.view.main.ui.image_info.artist.success
+package com.markettwits.`random-image`.ui.image_info.artist.success
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

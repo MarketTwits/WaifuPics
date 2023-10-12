@@ -5,4 +5,7 @@ object Config {
         const val targetSdk = 34
         const val namespace = "com.markettwits.waifupics"
     }
+    object JDK{
+        const val jvm = 8
+    }
 }

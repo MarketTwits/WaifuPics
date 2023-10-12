@@ -7,7 +7,8 @@ interface FavoriteImageCacheToUiMapper {
     fun map(item : ImageFavoriteCache) : ImageFavoriteUi
     class Base() : FavoriteImageCacheToUiMapper{
         override fun map(item: ImageFavoriteCache): ImageFavoriteUi {
-            return ImageFavoriteUi(
+            return ImageFavoriteUi.Base(
+                id = item.id,
                 imageUrl  = item.imageUrl,
                 protected = item.protected
             )

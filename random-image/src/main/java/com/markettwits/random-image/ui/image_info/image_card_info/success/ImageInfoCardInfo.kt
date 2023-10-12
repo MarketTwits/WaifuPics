@@ -13,11 +13,11 @@ import androidx.compose.ui.unit.dp
 import com.markettwits.`random-image`.ui.AuthorUi
 import com.markettwits.`random-image`.ui.ImageSourceUi
 import com.markettwits.`random-image`.ui.UploaderUi
+import com.markettwits.`random-image`.ui.image_info.artist.success.ArtistEmptyInfo
+import com.markettwits.`random-image`.ui.image_info.artist.success.ArtistInfo
+import com.markettwits.`random-image`.ui.image_info.artist.success.Uploader
 import com.markettwits.waifupics.base.BaseDivider
 import com.markettwits.waifupics.theame.theme.DirtyWhite
-import com.markettwits.waifupics.view.main.ui.image_info.artist.success.ArtistEmptyInfo
-import com.markettwits.waifupics.view.main.ui.image_info.artist.success.ArtistInfo
-import com.markettwits.waifupics.view.main.ui.image_info.artist.success.Uploader
 import com.markettwits.waifupics.view.main.ui.image_info.color_palette.success.ColorPalette
 
 @Composable
