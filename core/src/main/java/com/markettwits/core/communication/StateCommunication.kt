@@ -28,7 +28,6 @@ interface StateCommunication {
         override fun map(source: T) {
             state.value = source
         }
-
         override fun state() = state.asStateFlow()
         override fun updateState(function: (T) -> T) = state.update(function)
     }

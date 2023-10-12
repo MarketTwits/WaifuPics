@@ -16,7 +16,9 @@ android {
             useSupportLibrary = true
         }
     }
-
+    kotlin{
+        jvmToolchain(Config.JDK.jvm)
+    }
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -32,13 +34,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion  = libs.versions.compose.asProvider().get()
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
+
 }
 
 dependencies {

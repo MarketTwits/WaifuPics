@@ -3,7 +3,7 @@ package com.markettwits.waifupics.view.main.ui.image
 import androidx.lifecycle.ViewModel
 import com.markettwits.core.communication.StateCommunication
 import com.markettwits.core.wrappers.AsyncViewModel
-import com.markettwits.database.FavoriteImageRepository
+import com.markettwits.data.FavoriteImageRepository
 import com.markettwits.filter.presentation.FilterCommunication
 import com.markettwits.`random-image`.ui.RandomImageUiState
 import com.markettwits.waifupics.view.main.data.RandomImageRepository

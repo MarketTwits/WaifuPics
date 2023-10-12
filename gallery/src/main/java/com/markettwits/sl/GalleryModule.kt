@@ -6,10 +6,10 @@ import com.markettwits.core.wrappers.AsyncViewModel
 import com.markettwits.core.wrappers.DispatchersList
 import com.markettwits.core.wrappers.RunAsync
 import com.markettwits.data.FavoriteImageCacheToUiMapper
+import com.markettwits.data.FavoriteImageRepository
 import com.markettwits.data.GalleryRepository
 import com.markettwits.data.ImageUiToCacheMapper
-import com.markettwits.database.FavoriteImageRepository
-import com.markettwits.database.ImagesCacheDataSource
+import com.markettwits.data.ImagesCacheDataSource
 import com.markettwits.presentation.GalleryCommunication
 import com.markettwits.presentation.GalleryViewModel
 

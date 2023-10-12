@@ -6,6 +6,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 
+
 class NavigationState(
     val navHostController: NavHostController
 ) {
@@ -17,6 +18,9 @@ class NavigationState(
             restoreState = true
             launchSingleTop = true
         }
+    }
+    fun navigateToImage(imageId: String){
+        navHostController.navigate("gallery_item/$imageId")
     }
 }
 

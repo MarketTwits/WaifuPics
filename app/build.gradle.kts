@@ -1,10 +1,11 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id ("kotlin-parcelize")
+    id("kotlin-parcelize")
 }
 
 android {
+
     namespace = Config.SDK.namespace
     compileSdk = Config.SDK.compileSdk
 
@@ -20,7 +21,9 @@ android {
             useSupportLibrary = true
         }
     }
-
+    kotlin{
+        jvmToolchain(Config.JDK.jvm)
+    }
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -30,13 +33,7 @@ android {
             )
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
+
     buildFeatures {
         compose = true
     }
@@ -51,7 +48,7 @@ android {
 }
 
 dependencies {
-    implementation(project(path =":random-image"))
+    implementation(project(path = ":random-image"))
     implementation(project(path = ":core-ui"))
     implementation(project(path = ":navigation"))
     implementation(project(path = ":gallery"))

@@ -6,9 +6,9 @@ import com.markettwits.core.sl.Module
 import com.markettwits.core.wrappers.AsyncViewModel
 import com.markettwits.core.wrappers.DispatchersList
 import com.markettwits.core.wrappers.RunAsync
+import com.markettwits.data.FavoriteImageRepository
 import com.markettwits.data.ImageUiToCacheMapper
-import com.markettwits.database.FavoriteImageRepository
-import com.markettwits.database.ImagesCacheDataSource
+import com.markettwits.data.ImagesCacheDataSource
 import com.markettwits.filter.presentation.FilterCommunication
 import com.markettwits.waifupics.view.main.data.ImageLoader
 import com.markettwits.waifupics.view.main.data.RandomImageRepository

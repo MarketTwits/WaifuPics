@@ -54,9 +54,6 @@ fun BottomSheetFilter(
 ) {
 
     val viewModel: AgeRatingFilterViewModel = ApplicationViewModel()
-//    val viewModel: AgeRatingFilterViewModel =
-//        (LocalContext.current.applicationContext as WaifuPicsApp).ageRativgViewModel
-    //viewModel.init(firstRun)
     val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val filterState by viewModel.state().collectAsState()
 

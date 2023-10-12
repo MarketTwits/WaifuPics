@@ -1,7 +1,7 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
-    id ("kotlin-parcelize")
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
@@ -14,7 +14,9 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
-
+    kotlin{
+        jvmToolchain(Config.JDK.jvm)
+    }
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -30,16 +32,11 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion  = libs.versions.compose.asProvider().get()
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
+
 }
 
 dependencies {
    implementation(project(":core-ui"))
+    implementation(libs.retrofit.converter)
    implementation (libs.onebone.toolbar)
 }

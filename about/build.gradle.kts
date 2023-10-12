@@ -1,12 +1,10 @@
-@Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
-    namespace = "com.markettwits.gallery"
+    namespace = "com.markettwits.about"
     compileSdk = Config.SDK.compileSdk
 
     defaultConfig {
@@ -18,6 +16,7 @@ android {
     kotlin{
         jvmToolchain(Config.JDK.jvm)
     }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -27,18 +26,14 @@ android {
             )
         }
     }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion  = libs.versions.compose.asProvider().get()
-    }
-
 }
 
 dependencies {
-    implementation(project(":cache-datasource"))
-    implementation(project(":core-ui"))
-    implementation(project(":navigation"))
-    implementation("run.nabla:gallery-picker:1.4.5")
+
+    implementation(libs.core.ktx)
+    implementation(libs.appcompat)
+    implementation(libs.material)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.espresso.core)
 }
