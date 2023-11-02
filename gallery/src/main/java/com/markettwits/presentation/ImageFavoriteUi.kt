@@ -14,6 +14,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.markettwits.core_ui.image.LocalImageLoader
 import run.nabla.gallerypicker.picker.GalleryPickerState
 
 sealed interface ImageFavoriteUi {
@@ -92,7 +93,7 @@ private fun GalleryItemBase(
             modifier = modifier
                 .heightIn(min = state.itemMinHeight.dp, max = state.itemMaxHeight.dp)
                 .fillMaxSize(),
-            model = imageUrl,
+            model = LocalImageLoader.current.memoryWithDisk(imageUrl),
             contentScale = ContentScale.Crop,
             contentDescription = null
         )

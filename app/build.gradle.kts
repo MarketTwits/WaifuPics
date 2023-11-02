@@ -48,7 +48,7 @@ android {
 }
 
 dependencies {
-    implementation(project(path = ":random-image"))
+    implementation(project(":random_image"))
     implementation(project(path = ":core-ui"))
     implementation(project(path = ":navigation"))
     implementation(project(path = ":gallery"))

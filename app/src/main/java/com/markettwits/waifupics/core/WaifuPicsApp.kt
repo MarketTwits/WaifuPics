@@ -13,7 +13,7 @@ import com.markettwits.filter.data.StaticCacheDataSource
 import com.markettwits.filter.presentation.AgeRatingFilterCommunication
 import com.markettwits.filter.presentation.AgeRatingFilterViewModel
 import com.markettwits.filter.presentation.FilterCommunication
-import com.markettwits.`random-image`.domain.FilterChecked
+import com.markettwits.random_image.domain.FilterChecked
 
 class WaifuPicsApp : Application(), ProvideViewModel, SaveAndRestore {
 
