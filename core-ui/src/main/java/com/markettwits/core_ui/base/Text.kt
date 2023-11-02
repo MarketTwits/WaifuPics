@@ -1,4 +1,5 @@
 package com.markettwits.core_ui.base
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -10,65 +11,68 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.markettwits.core_ui.R
 import com.markettwits.core_ui.base_extensions.extractSiteName
-import com.markettwits.waifupics.base.HyperlinkText
 import com.markettwits.waifupics.base.openWebPage
 import com.markettwits.waifupics.theame.theme.LightPink
 import com.markettwits.waifupics.theame.theme.WaifuPicsTheme
 import java.util.Locale
 
-@Composable
-fun ImageParametersText(
-    title: String,
-    content: String,
-    link: String,
-) {
-    if (content.isEmpty()) {
-        Row {
-            ImageParametersText(title = title, content = "No source available")
-        }
-    } else {
-        HyperlinkText(
-            fullText = "$title: \uD83D\uDD17 $content",
-            hyperLinks = mutableMapOf(
-                content to link,
-            ),
-            textStyle = TextStyle(
-                color = LightPink,
-                fontFamily = FontFamily(Font(R.font.rubik_medium))
-            ),
-            linkTextFontWeight = FontWeight.Medium,
-            linkTextColor = MaterialTheme.colorScheme.onPrimary,
-            fontSize = 14.sp,
-        )
-    }
-}
+//@Composable
+//fun ImageParametersText(
+//    title: String,
+//    content: String,
+//    link: String,
+//) {
+//    if (content.isEmpty()) {
+//        Row {
+//            ImageParametersText(title = title, content = "No source available")
+//        }
+//    } else {
+//        HyperlinkText(
+//            fullText = "$title: \uD83D\uDD17 $content",
+//            hyperLinks = mutableMapOf(
+//                content to link,
+//            ),
+//            textStyle = TextStyle(
+//                color = LightPink,
+//                fontFamily = FontFamily(Font(R.font.rubik_medium))
+//            ),
+//            linkTextFontWeight = FontWeight.Medium,
+//            linkTextColor = MaterialTheme.colorScheme.onPrimary,
+//            fontSize = 14.sp,
+//        )
+//    }
+//}
 
 @Composable
 fun ImageParametersText(
     title: String,
     content: String
 ) {
-    Row {
-        Text(
-            text = "$title : ",
-            color = LightPink,
-            fontFamily = FontFamily(Font(R.font.rubik_medium)),
-            fontSize = 14.sp,
-        )
-        Text(
-            text = content,
-            color = MaterialTheme.colorScheme.onPrimary,
-            fontFamily = FontFamily(Font(R.font.rubik_medium)),
-            fontSize = 14.sp,
-        )
+    if (content.isEmpty()) {
+        Row {
+            ImageParametersText(title = title, content = "No source available")
+        }
+    } else {
+        Row {
+            Text(
+                text = "$title : ",
+                color = LightPink,
+                fontFamily = FontFamily(Font(R.font.rubik_medium)),
+                fontSize = 14.sp,
+            )
+            Text(
+                text = content,
+                color = MaterialTheme.colorScheme.onPrimary,
+                fontFamily = FontFamily(Font(R.font.rubik_medium)),
+                fontSize = 14.sp,
+            )
+        }
     }
 }
 
@@ -87,14 +91,26 @@ private fun Preview() {
             links = inputUrls
         )
     }
-
 }
+
+@Preview
+@Composable
+private fun PreviewImageParameters() {
+    WaifuPicsTheme {
+
+        MultyLinksText(
+            title = "Image source",
+            links = listOf("https://danbooru.donmai.us/post/show/4906121")
+        )
+    }
+}
+
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun UnlinkMultiText(
     title: String,
-    text : List<String>
-){
+    text: List<String>
+) {
     Row {
         Text(
             text = title,
@@ -114,6 +130,7 @@ fun UnlinkMultiText(
         }
     }
 }
+
 @Composable
 fun MultyLinksText(
     title: String,
@@ -128,7 +145,7 @@ fun MultyLinksText(
         )
         LazyRow() {
             items(links) {
-                val text = formatUrl(it)
+                val text = if (it.isNullOrEmpty()) " No data source" else formatUrl(it)
                 val context = LocalContext.current
                 Text(
                     modifier = Modifier.clickable(onClick = {
@@ -141,6 +158,32 @@ fun MultyLinksText(
                 )
             }
         }
+    }
+}
+
+@Composable
+fun SingleLinkText(
+    title: String,
+    link: String
+) {
+    Row {
+        Text(
+            text = title,
+            color = LightPink,
+            fontFamily = FontFamily(Font(R.font.rubik_medium)),
+            fontSize = 14.sp
+        )
+        val text = if (link.isNullOrEmpty()) "No data source" else formatUrl(link)
+        val context = LocalContext.current
+        Text(
+            modifier = Modifier.clickable(onClick = {
+                openWebPage(link, context)
+            }),
+            text = text,
+            color = MaterialTheme.colorScheme.onPrimary,
+            fontFamily = FontFamily(Font(R.font.rubik_medium)),
+            fontSize = 14.sp,
+        )
     }
 }
 
