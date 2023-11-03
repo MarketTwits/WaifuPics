@@ -1,17 +1,20 @@
 package com.markettwits.random_image.data
 
 import android.util.Log
+import com.markettwits.data.FavoriteImageRepository
 import com.markettwits.random_image.ui.RandomImageUiState
 import com.markettwits.waifupics.view.main.data.ImageLoader
 import com.markettwits.waifupics.view.main.data.net.MakeService
 
 interface RandomImageRepository {
     suspend fun fetchRandomImage(filters: List<String>): RandomImageUiState
+    suspend fun addToFavorite(url : String, protected : Boolean)
     suspend fun preloadImage(url: String)
     class Base(
         private val imageLoader: ImageLoader,
         private val service: MakeService,
-        private val mapper: RandomImageUiMapper
+        private val mapper: RandomImageUiMapper,
+        private val cache : FavoriteImageRepository
     ) : RandomImageRepository {
         override suspend fun fetchRandomImage(filters: List<String>): RandomImageUiState {
             return try {
@@ -24,8 +27,12 @@ interface RandomImageRepository {
             }
         }
 
+        override suspend fun addToFavorite(url: String, protected: Boolean) {
+            cache.add(url, protected)
+        }
+
         override suspend fun preloadImage(url: String) {
-            imageLoader.load(url)
+           // imageLoader.load(url)
         }
     }
 }

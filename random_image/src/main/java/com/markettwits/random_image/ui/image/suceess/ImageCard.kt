@@ -1,6 +1,5 @@
 package com.markettwits.random_image.ui.image.suceess
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -16,31 +15,42 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
+import coil.compose.AsyncImagePainter
+import coil.compose.SubcomposeAsyncImage
+import coil.compose.SubcomposeAsyncImageContent
 import com.markettwits.core_ui.R
 import com.markettwits.core_ui.image.LocalImageLoader
+import com.markettwits.random_image.ui.image.loading.ImageLoading
 import com.markettwits.waifupics.view.main.ui.image.zoom.FullScreenImageDialog
 
 
-@SuppressLint("RememberReturnType")
 @Composable
 fun ImageCard(imageUrl: String) {
     var isDialogOpen by remember{ mutableStateOf(false) }
-    AsyncImage(
-        modifier = Modifier
-            .padding(20.dp)
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(10.dp))
-            .wrapContentHeight()
-            .clickable { isDialogOpen = true },
-        contentScale = ContentScale.FillWidth,
-        model = LocalImageLoader.current.memorySingle(imageUrl),
-        contentDescription = stringResource(R.string.waifu_image),
-    )
-    if (isDialogOpen) {
-        FullScreenImageDialog(
-            imageUrl = imageUrl,
-            onClose = { isDialogOpen = false }
-        )
+
+    val modifier = Modifier
+        .padding(20.dp)
+        .fillMaxWidth()
+        .clip(RoundedCornerShape(10.dp))
+        .wrapContentHeight()
+        .clickable { isDialogOpen = true }
+        SubcomposeAsyncImage(
+            model = LocalImageLoader.current.memorySingle(imageUrl),
+            contentScale = ContentScale.FillWidth,
+            contentDescription = stringResource(R.string.waifu_image)
+        ) {
+            val state = painter.state
+            if (state is AsyncImagePainter.State.Loading || state is AsyncImagePainter.State.Error) {
+                ImageLoading()
+            } else {
+                SubcomposeAsyncImageContent(modifier = modifier)
+            }
+        }
+        if (isDialogOpen) {
+            FullScreenImageDialog(
+                imageUrl = imageUrl,
+                onClose = { isDialogOpen = false }
+            )
+        }
     }
-}
+

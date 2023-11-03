@@ -1,4 +1,4 @@
-package com.markettwits.waifupics.view.main.ui.image.loading
+package com.markettwits.random_image.ui.image.loading
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -25,11 +25,11 @@ import com.markettwits.waifupics.theame.theme.WaifuPicsTheme
 
 
 @Composable
-fun ImageLoading() {
+fun ImageLoading(modifier: Modifier = Modifier) {
     val scaleFactor = 0.35f // Adjust this value to control the size reduction
     Box(
-        modifier = Modifier
-            .padding(30.dp)
+        modifier = modifier
+            .padding(20.dp)
             .height(350.dp)
             .fillMaxWidth()
             .clip(RoundedCornerShape(10.dp))
@@ -38,7 +38,7 @@ fun ImageLoading() {
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.scale(scaleFactor) // Apply scaling to the Column
+            modifier = Modifier.scale(scaleFactor)
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.favicon),
@@ -54,6 +54,6 @@ fun ImageLoading() {
 @Composable
 private fun ImageLoadingPreview() {
     WaifuPicsTheme(darkTheme = true) {
-        ImageLoading()
+        ImageLoading(Modifier)
     }
 }

@@ -7,6 +7,7 @@ import com.markettwits.core.wrappers.AsyncViewModel
 import com.markettwits.core.wrappers.DispatchersList
 import com.markettwits.core.wrappers.RunAsync
 import com.markettwits.data.FavoriteImageRepository
+import com.markettwits.data.ImageLoaderDataSource
 import com.markettwits.data.ImageUiToCacheMapper
 import com.markettwits.data.ImagesCacheDataSource
 import com.markettwits.filter.presentation.FilterCommunication
@@ -19,11 +20,16 @@ import com.markettwits.waifupics.view.main.data.net.MakeService
 
 class ImageViewModule(
     private val core: Core,
-    private val filter : FilterCommunication
+    private val filter: FilterCommunication
 ) : Module<ImageViewModel> {
     //FIXME
     private val repository =
-        FavoriteImageRepository.Base(ImagesCacheDataSource(RealmDatabaseProvider.Base()), ImageUiToCacheMapper.Base())
+        FavoriteImageRepository.Base(
+            ImagesCacheDataSource(RealmDatabaseProvider.Base()),
+            ImageUiToCacheMapper.Base(),
+            ImageLoaderDataSource.Base(core.context())
+        )
+
     override fun viewModel() =
         ImageViewModel(
             filter,
@@ -32,8 +38,8 @@ class ImageViewModule(
             RandomImageRepository.Base(
                 ImageLoader.Base(core.context()),
                 MakeService.Base(),
-                RandomImageUiMapper.Base()
+                RandomImageUiMapper.Base(),
+                repository
             ),
-            repository
         )
 }
