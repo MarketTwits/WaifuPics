@@ -44,7 +44,8 @@ fun BasePanelItem(
         contentAlignment = Alignment.Center
     ) {
         Icon(
-            modifier = Modifier.size(20.dp),
+            modifier = Modifier
+                .size(20.dp),
             painter = painterResource(id = image),
             tint = (if (!isLoading) MaterialTheme.colorScheme.surfaceTint.copy(alpha = 0.4f) else MaterialTheme.colorScheme.surfaceTint),
             contentDescription = contentDescription

@@ -1,4 +1,4 @@
-package com.markettwits.data
+package com.markettwits.data.mapper
 
 import android.os.Build
 import androidx.annotation.RequiresApi

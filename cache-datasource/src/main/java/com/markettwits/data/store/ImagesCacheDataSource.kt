@@ -1,4 +1,4 @@
-package com.markettwits.data
+package com.markettwits.data.store
 
 import com.markettwits.core.CRUDApi
 import com.markettwits.core.RealmDatabaseProvider
@@ -34,5 +34,22 @@ class ImagesCacheDataSource(
                 throw RuntimeException("ImagesCacheDataSource#delete" + e.localizedMessage)
             }
         }
+    }
+    fun delete(imageUrl: String){
+        realm.writeBlocking {
+            val item = query<ImageFavoriteRealmCache>(query = "imageUrl == $0", imageUrl).first().find()
+            try {
+                item?.let { delete(it) }
+            } catch (e: Exception) {
+                throw RuntimeException("ImagesCacheDataSource#delete" + e.localizedMessage)
+            }
+        }
+    }
+
+
+    fun hasImageWithUrl(imageUrl: String): Boolean {
+        val item =
+            realm.query<ImageFavoriteRealmCache>(query = "imageUrl == $0", imageUrl).count().find()
+        return item > 0
     }
 }

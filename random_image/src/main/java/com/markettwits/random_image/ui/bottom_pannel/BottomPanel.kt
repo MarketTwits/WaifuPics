@@ -6,19 +6,21 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import com.markettwits.core_ui.ApplicationViewModel
 import com.markettwits.core_ui.R
 import com.markettwits.random_image.ui.ImageViewModel
+import com.markettwits.random_image.ui.bottom_pannel.panel.HeartButton
 import com.markettwits.waifupics.base.BasePanelItem
 import com.markettwits.waifupics.base.RefreshPanelItem
-import com.markettwits.waifupics.view.main.ui.bottom_pannel.BottomPanelUiState
 
 
 @Composable
-fun BottomPanel(bottomPanelUiState: BottomPanelUiState, imageUrl : String = "", ageRating : String ="") {
-    val viewModel : ImageViewModel = ApplicationViewModel()
-    val context = LocalContext.current
+fun BottomPanel(
+    bottomPanelUiState: BottomPanelUiState,
+    imageUrl: String = "",
+    ageRating: String = ""
+) {
+    val viewModel: ImageViewModel.Base = ApplicationViewModel()
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
@@ -26,28 +28,28 @@ fun BottomPanel(bottomPanelUiState: BottomPanelUiState, imageUrl : String = "", 
     ) {
         BasePanelItem(
             modifier = Modifier.weight(1f),
-            image = R.drawable.bookmark_icon,
+            image = R.drawable.ic_bookmark,
             isLoading = bottomPanelUiState.baseBottomEnabled()
         ) {}
-        BasePanelItem(
+        HeartButton(
             modifier = Modifier.weight(1f),
-            image = R.drawable.heart_icon,
-            isLoading = bottomPanelUiState.baseBottomEnabled()
-        ) {
-            //todo
-            viewModel.addToFavorite(imageUrl, true, context)
-        }
+            loadingState = bottomPanelUiState,
+            imageUrl = imageUrl,
+            viewModel = viewModel
+        )
         RefreshPanelItem(modifier = Modifier.weight(2f), isLoading = bottomPanelUiState.refresh()) {
             viewModel.fetchRandomImage()
         }
         BasePanelItem(
             modifier = Modifier.weight(1f),
-            image = R.drawable.share_icon,
+            image = R.drawable.ic_share,
             isLoading = bottomPanelUiState.baseBottomEnabled()
-        ) {}
+        ) {
+            viewModel.shareImage(imageUrl)
+        }
         BasePanelItem(
             modifier = Modifier.weight(1f),
-            image = R.drawable.flag_icon,
+            image = R.drawable.ic_flag,
             isLoading = bottomPanelUiState.baseBottomEnabled()
         ) {}
     }

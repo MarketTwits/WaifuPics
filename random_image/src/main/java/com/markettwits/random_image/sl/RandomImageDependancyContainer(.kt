@@ -15,7 +15,7 @@ class RandomImageDependencyContainer(
 ) : DependencyContainer {
     val filter = FilterCommunication.Base()
     override fun module(className: Class<out ViewModel>)= when (className) {
-        ImageViewModel::class.java -> ImageViewModule(core, filter)
+        ImageViewModel.Base::class.java -> ImageViewModule(core, filter)
         AgeRatingFilterViewModel::class.java -> AgeRatingFilterModule(core,filter)
         else -> other.module(className)
     }

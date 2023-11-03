@@ -7,7 +7,7 @@ interface GalleryRepository {
     suspend fun delete(url : String, id : Long)
     suspend fun saveToGallery(url: String)
     class Base(
-        private val dataSource: FavoriteImageRepository,
+        private val dataSource: ImageRepository,
         private val cacheToUiMapper: FavoriteImageCacheToUiMapper
     ) : GalleryRepository {
         override suspend fun fetch() = dataSource.fetch().map { cacheToUiMapper.map(it) }
