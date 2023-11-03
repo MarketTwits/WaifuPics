@@ -1,4 +1,4 @@
-package com.markettwits.waifupics.view.main.ui.bottom_pannel
+package com.markettwits.random_image.ui.bottom_pannel
 
 interface BottomPanelUiState{
     fun baseBottomEnabled() : Boolean

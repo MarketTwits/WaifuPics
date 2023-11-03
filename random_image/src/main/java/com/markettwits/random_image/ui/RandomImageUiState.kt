@@ -3,11 +3,11 @@ package com.markettwits.random_image.ui
 import androidx.compose.runtime.Composable
 import com.markettwits.filter.presentation.BottomSheetFilter
 import com.markettwits.random_image.ui.bottom_pannel.BottomPanel
+import com.markettwits.random_image.ui.bottom_pannel.BottomPanelUiState
 import com.markettwits.random_image.ui.image.loading.ImageLoading
 import com.markettwits.random_image.ui.image.suceess.ImageCard
 import com.markettwits.random_image.ui.image_info.image_card_info.success.ImageInfoCardEmptyAuthor
 import com.markettwits.random_image.ui.image_info.image_card_info.success.ImageInfoCardWitAuthor
-import com.markettwits.waifupics.view.main.ui.bottom_pannel.BottomPanelUiState
 import com.markettwits.waifupics.view.main.ui.image.fuckup.ImageFuckup
 import com.markettwits.waifupics.view.main.ui.image_info.image_card_info.loading.ImageCardInfoLoading
 

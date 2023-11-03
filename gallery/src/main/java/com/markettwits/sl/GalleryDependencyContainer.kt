@@ -5,11 +5,11 @@ import com.markettwits.core.Core
 import com.markettwits.core.RealmDatabaseProvider
 import com.markettwits.core.sl.DependencyContainer
 import com.markettwits.data.FavoriteImageCacheToUiMapper
-import com.markettwits.data.FavoriteImageRepository
 import com.markettwits.data.GalleryRepository
-import com.markettwits.data.ImageLoaderDataSource
-import com.markettwits.data.ImageUiToCacheMapper
-import com.markettwits.data.ImagesCacheDataSource
+import com.markettwits.data.ImageRepository
+import com.markettwits.data.mapper.ImageUiToCacheMapper
+import com.markettwits.data.store.ImageLoaderDataSource
+import com.markettwits.data.store.ImagesCacheDataSource
 import com.markettwits.presentation.list.DetailCommunication
 import com.markettwits.presentation.list.GalleryScreenViewModel
 import com.markettwits.presentation.list.GalleryViewModel
@@ -20,7 +20,7 @@ class GalleryDependencyContainer(
 ) : DependencyContainer {
     private val communication = DetailCommunication.Base()
     private val repository = GalleryRepository.Base(
-        FavoriteImageRepository.Base(
+        ImageRepository.Base(
             ImagesCacheDataSource(RealmDatabaseProvider.Base()),
             ImageUiToCacheMapper.Base(),
             ImageLoaderDataSource.Base(core.context())

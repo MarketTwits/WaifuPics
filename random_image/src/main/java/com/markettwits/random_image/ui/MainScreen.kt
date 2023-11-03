@@ -10,7 +10,7 @@ fun MainScreen(
     paddingValues: PaddingValues = PaddingValues(),
     firstRun : Boolean,
 ) {
-    val viewModel: ImageViewModel = ApplicationViewModel()
+    val viewModel: ImageViewModel.Base = ApplicationViewModel()
     val state = viewModel.state().collectAsState()
     RandomImageColumn(paddingValues = paddingValues) {
         state.value.Handle(firstRun)

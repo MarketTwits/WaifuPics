@@ -34,7 +34,7 @@ fun RotationRefreshIcon(
         modifier = Modifier
             .size(20.dp)
             .rotate(if (isLoading)rotatingValue.value else 0f),
-        painter = painterResource(id = R.drawable.refresh_icon),
+        painter = painterResource(id = R.drawable.ic_refresh),
         tint = MaterialTheme.colorScheme.surfaceTint,
         contentDescription = "Fetch new image"
     )

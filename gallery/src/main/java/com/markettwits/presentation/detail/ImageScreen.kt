@@ -47,7 +47,7 @@ import com.markettwits.waifupics.theame.theme.WaifuPicsTheme
 @Composable
 private fun TopBarScreenImagePreview() {
     WaifuPicsTheme {
-        Column{
+        Column {
             TopBarScreenImage(modifier = Modifier) {}
         }
     }
@@ -65,8 +65,8 @@ fun ImageScreenFull(
             .background(MaterialTheme.colorScheme.background)
     ) {
         Column {
-            TopBarScreenImage(modifier){
-                viewModel.saveToGallery(state.imageUrl())
+            TopBarScreenImage(modifier) {
+                viewModel.saveToGallery()
             }
             AsyncImage(
                 modifier = Modifier
@@ -77,7 +77,9 @@ fun ImageScreenFull(
                 contentScale = ContentScale.Fit,
                 contentDescription = ""
             )
-            DownBarScreenImage(Modifier.weight(0.1f))
+            DownBarScreenImage(Modifier.weight(0.1f)){
+                viewModel.delete()
+            }
         }
     }
 }
@@ -119,7 +121,7 @@ fun TopBarScreenImage(modifier: Modifier, onClickMenu: () -> Unit) {
 }
 
 @Composable
-fun DownBarScreenImage(modifier: Modifier) {
+fun DownBarScreenImage(modifier: Modifier, onClickDelete: () -> Unit) {
     Row(
         modifier = modifier
             .padding(20.dp)
@@ -135,7 +137,9 @@ fun DownBarScreenImage(modifier: Modifier) {
             tint = MaterialTheme.colorScheme.onBackground
         )
         Icon(
-            modifier = Modifier.size(30.dp),
+            modifier = Modifier
+                .size(30.dp)
+                .clickable { onClickDelete() },
             imageVector = Icons.Default.Delete,
             contentDescription = "delete",
             tint = MaterialTheme.colorScheme.onBackground

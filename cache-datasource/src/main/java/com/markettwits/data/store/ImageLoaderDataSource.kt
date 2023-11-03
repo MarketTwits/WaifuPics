@@ -1,4 +1,4 @@
-package com.markettwits.data
+package com.markettwits.data.store
 
 import android.content.ContentValues
 import android.content.Context
@@ -9,6 +9,7 @@ import androidx.core.graphics.drawable.toBitmap
 import coil.ImageLoader
 import coil.request.ImageRequest
 import coil.request.SuccessResult
+import com.markettwits.data.ImageRepository
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -16,9 +17,19 @@ import java.io.IOException
 import java.util.UUID
 
 interface ImageLoaderDataSource {
+    suspend fun deleteImage(imageUrl: String)
     suspend fun loadImage(imageUrl: String): String
     suspend fun saveToGallery(imageUrl: String)
     class Base(private val context: Context) : ImageLoaderDataSource {
+        override suspend fun deleteImage(imageUrl: String) {
+            val file = File(imageUrl)
+            try {
+                file.delete()
+            }catch (e : Exception){
+                throw RuntimeException("delete error :${e.cause}")
+            }
+        }
+
         override suspend fun loadImage(imageUrl: String) : String {
             val imageLoader = ImageLoader.Builder(context).build()
             val request = ImageRequest.Builder(context)
@@ -61,7 +72,7 @@ interface ImageLoaderDataSource {
         fun saveBitmapToStorage(
             bitmap: Bitmap,
             metadata: String
-        ): FavoriteImageRepository.Base.SavedImageInfo {
+        ): ImageRepository.Base.SavedImageInfo {
             val fileName = "image_${UUID.randomUUID()}.png"
             val directory = File(context.filesDir, "images") // Use your app's folder name
             if (!directory.exists()) {
@@ -75,7 +86,7 @@ interface ImageLoaderDataSource {
                 outputStream = FileOutputStream(file)
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
                 val imagePath = file.absolutePath
-                return FavoriteImageRepository.Base.SavedImageInfo(imagePath, metadata)
+                return ImageRepository.Base.SavedImageInfo(imagePath, metadata)
             } catch (e: IOException) {
                 e.printStackTrace()
             } finally {
@@ -85,7 +96,7 @@ interface ImageLoaderDataSource {
                     e.printStackTrace()
                 }
             }
-            return FavoriteImageRepository.Base.SavedImageInfo("", "")
+            return ImageRepository.Base.SavedImageInfo("", "")
         }
 
     }
