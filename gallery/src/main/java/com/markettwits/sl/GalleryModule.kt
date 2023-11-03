@@ -1,26 +1,22 @@
 package com.markettwits.sl
 
-import com.markettwits.core.RealmDatabaseProvider
 import com.markettwits.core.sl.Module
 import com.markettwits.core.wrappers.AsyncViewModel
 import com.markettwits.core.wrappers.DispatchersList
 import com.markettwits.core.wrappers.RunAsync
-import com.markettwits.data.FavoriteImageCacheToUiMapper
-import com.markettwits.data.FavoriteImageRepository
 import com.markettwits.data.GalleryRepository
-import com.markettwits.data.ImageUiToCacheMapper
-import com.markettwits.data.ImagesCacheDataSource
-import com.markettwits.presentation.GalleryCommunication
-import com.markettwits.presentation.GalleryViewModel
+import com.markettwits.presentation.list.DetailCommunication
+import com.markettwits.presentation.list.GalleryCommunication
+import com.markettwits.presentation.list.GalleryViewModel
 
-class GalleryModule : Module<GalleryViewModel> {
-    val repository = GalleryRepository.Base(
-        FavoriteImageRepository.Base(ImagesCacheDataSource(RealmDatabaseProvider.Base()), ImageUiToCacheMapper.Base()),
-        FavoriteImageCacheToUiMapper.Base(),
-    )
+class GalleryModule(
+    private val communication: DetailCommunication,
+    private val repository: GalleryRepository
+) : Module<GalleryViewModel> {
     override fun viewModel() = GalleryViewModel(
         GalleryCommunication.Base(),
         repository,
-        AsyncViewModel.Base(RunAsync.Base(DispatchersList.Base()))
+        AsyncViewModel.Base(RunAsync.Base(DispatchersList.Base())),
+        communication
     )
 }

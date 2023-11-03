@@ -8,8 +8,8 @@ import androidx.navigation.navArgument
 import com.markettwits.navigation.LocalNavigationState
 import com.markettwits.navigation.MultiNavigationAppState
 import com.markettwits.navigation.Screen
-import com.markettwits.presentation.GalleryScreen
-import com.markettwits.presentation.ImageScreenFull
+import com.markettwits.presentation.detail.ImageScreenFull
+import com.markettwits.presentation.list.GalleryScreen
 import com.markettwits.random_image.ui.MainScreen
 import com.markettwits.waifupics.about.AboutScreen
 
@@ -36,16 +36,16 @@ fun NavGraphBuilder.baseTabNavGraph(
 fun NavGraphBuilder.detailsImage() {
     composable(
         route = Screen.GalleryItem.route(),
-        arguments = listOf(navArgument(Screen.GalleryItem.routArgument()) {
+        arguments = listOf(navArgument(Screen.GalleryItem.route()) {
             type = NavType.StringType
         }),
     ) { backStackEntry ->
         val imageUrl =
             LocalNavigationState.rootNavigation.getNavController.currentBackStackEntry?.arguments?.getString(
-                Screen.GalleryItem.routArgument()
+                Screen.GalleryItem.route()
             )
                 ?: ""
-        ImageScreenFull(imageUrl = imageUrl)
+        ImageScreenFull()
     }
 }
 

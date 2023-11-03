@@ -33,5 +33,6 @@ dependencies {
     implementation(project(":core"))
     implementation(libs.realm)
     implementation(libs.core.ktx)
+    implementation(libs.compose.coil)
     testImplementation(libs.junit)
 }

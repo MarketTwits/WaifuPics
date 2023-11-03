@@ -1,5 +1,7 @@
-package com.markettwits.presentation
+package com.markettwits.presentation.detail
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -19,6 +21,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -27,43 +31,59 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.markettwits.core_ui.image.LocalImageLoader
+import com.markettwits.core_ui.ApplicationViewModel
 import com.markettwits.navigation.LocalNavigationState
+import com.markettwits.presentation.list.GalleryScreenViewModel
 import com.markettwits.waifupics.theame.theme.WaifuPicsTheme
 
+//@Preview
+//@Composable
+//private fun ImageScreenFullPreview() {
+//    WaifuPicsTheme {
+//        ImageScreenFull()
+//    }
+//}
 @Preview
 @Composable
-private fun ImageScreenFullPreview() {
+private fun TopBarScreenImagePreview() {
     WaifuPicsTheme {
-        ImageScreenFull(imageUrl = "")
+        Column{
+            TopBarScreenImage(modifier = Modifier) {}
+        }
     }
 }
 
 @Composable
 fun ImageScreenFull(
     modifier: Modifier = Modifier,
-    imageUrl: String
 ) {
-    Box(modifier = modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
+    val viewModel: GalleryScreenViewModel.Base = ApplicationViewModel()
+    val state by viewModel.state().collectAsState()
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+    ) {
         Column {
-            TopBarScreenImage(modifier = Modifier.weight(0.1f))
+            TopBarScreenImage(modifier){
+                viewModel.saveToGallery(state.imageUrl())
+            }
             AsyncImage(
                 modifier = Modifier
                     .weight(0.8f)
                     .fillMaxWidth(),
-                model = LocalImageLoader.current.memoryWithDisk(imageUrl),
+                model = loadImageBitmap(state.imageUrl()),
                 placeholder = painterResource(id = com.markettwits.core_ui.R.drawable.debug_image),
                 contentScale = ContentScale.Fit,
                 contentDescription = ""
             )
             DownBarScreenImage(Modifier.weight(0.1f))
         }
-
     }
 }
 
 @Composable
-fun TopBarScreenImage(modifier: Modifier) {
+fun TopBarScreenImage(modifier: Modifier, onClickMenu: () -> Unit) {
     Row(
         modifier = modifier
             .padding(20.dp)
@@ -81,13 +101,16 @@ fun TopBarScreenImage(modifier: Modifier) {
                 tint = MaterialTheme.colorScheme.onBackground
             )
             Text(
-                text = "31 July 2022",
+                text = "created",
                 modifier = Modifier.padding(start = 26.dp),
                 color = MaterialTheme.colorScheme.onBackground,
                 fontSize = 16.sp
             )
         }
         Icon(
+            modifier = modifier.clickable {
+                onClickMenu()
+            },
             imageVector = Icons.Default.Dehaze,
             contentDescription = "menu",
             tint = MaterialTheme.colorScheme.onBackground
@@ -107,7 +130,7 @@ fun DownBarScreenImage(modifier: Modifier) {
     {
         Icon(
             modifier = Modifier.size(30.dp),
-            imageVector = Icons.Default.Share ,
+            imageVector = Icons.Default.Share,
             contentDescription = "share",
             tint = MaterialTheme.colorScheme.onBackground
         )
@@ -119,3 +142,13 @@ fun DownBarScreenImage(modifier: Modifier) {
         )
     }
 }
+
+private fun loadImageBitmap(imagePath: String): Bitmap? {
+    return try {
+        BitmapFactory.decodeFile(imagePath)
+    } catch (e: Exception) {
+        e.printStackTrace()
+        null
+    }
+}
+

@@ -18,7 +18,7 @@ interface MakeDependencies {
         override fun dependencies(): DependencyContainer {
             val core = Core(context, saveAndRestoreState)
             val error = DependencyContainer.Error()
-            val gallery = GalleryDependencyContainer(error)
+            val gallery = GalleryDependencyContainer(error, core)
             val randomImage = RandomImageDependencyContainer(core, gallery)
             val navigation = NavigationDependencyContainer(randomImage, BaseHandleNavigation())
             return BaseDependencyContainer(core, navigation)

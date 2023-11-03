@@ -1,14 +1,26 @@
 package com.markettwits.data
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.markettwits.models.ImageFavoriteRealmCache
+import java.time.LocalDateTime
 
 interface ImageUiToCacheMapper {
-    fun map(url: String, ageRating: String): ImageFavoriteRealmCache
+    fun map(networkUrl: String,storageUrl : String, ageRating: Boolean): ImageFavoriteRealmCache
     class Base : ImageUiToCacheMapper {
-        override fun map(url: String, ageRating: String) =
+        @RequiresApi(Build.VERSION_CODES.O)
+        override fun map(networkUrl: String, storageUrl : String, ageRating: Boolean) =
             ImageFavoriteRealmCache().apply {
-                imageUrl = url
-                protected = ageRating == "explicit"
+                imageUrl = networkUrl
+                localUrl = storageUrl
+                createdTime = now()
+                protected = ageRating
             }
+        @RequiresApi(Build.VERSION_CODES.O)
+        private fun now() : Long{
+            val time = LocalDateTime.now()
+            val t = time.toEpochSecond(java.time.ZoneOffset.UTC)
+            return t
+        }
     }
 }

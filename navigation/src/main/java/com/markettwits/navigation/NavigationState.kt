@@ -23,10 +23,10 @@ class NavigationState(
         }
         fullScreen = false
     }
-    fun navigateToImage(imageId: String){
-        navHostController.navigate(Screen.GalleryItem.routeId(imageId))
-        fullScreen = true
-    }
+//    fun navigateToImage(imageId: String){
+//        navHostController.navigate(Screen.GalleryItem.routeId(imageId))
+//        fullScreen = true
+//    }
 }
 
 @Composable

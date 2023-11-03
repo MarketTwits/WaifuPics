@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import com.markettwits.core_ui.ApplicationViewModel
 import com.markettwits.core_ui.R
 import com.markettwits.random_image.ui.ImageViewModel
@@ -17,6 +18,7 @@ import com.markettwits.waifupics.view.main.ui.bottom_pannel.BottomPanelUiState
 @Composable
 fun BottomPanel(bottomPanelUiState: BottomPanelUiState, imageUrl : String = "", ageRating : String ="") {
     val viewModel : ImageViewModel = ApplicationViewModel()
+    val context = LocalContext.current
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
@@ -32,7 +34,8 @@ fun BottomPanel(bottomPanelUiState: BottomPanelUiState, imageUrl : String = "", 
             image = R.drawable.heart_icon,
             isLoading = bottomPanelUiState.baseBottomEnabled()
         ) {
-            viewModel.addToFavorite(imageUrl, ageRating)
+            //todo
+            viewModel.addToFavorite(imageUrl, true, context)
         }
         RefreshPanelItem(modifier = Modifier.weight(2f), isLoading = bottomPanelUiState.refresh()) {
             viewModel.fetchRandomImage()
