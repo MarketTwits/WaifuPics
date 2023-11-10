@@ -3,6 +3,7 @@ package com.markettwits.data.store
 import android.content.ContentValues
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.provider.MediaStore
 import android.util.Log
 import androidx.core.graphics.drawable.toBitmap
@@ -19,6 +20,7 @@ import java.util.UUID
 interface ImageLoaderDataSource {
     suspend fun deleteImage(imageUrl: String)
     suspend fun loadImage(imageUrl: String): String
+    suspend fun loadImage(image : Drawable) : String
     suspend fun saveToGallery(imageUrl: String)
     class Base(private val context: Context) : ImageLoaderDataSource {
         override suspend fun deleteImage(imageUrl: String) {
@@ -40,6 +42,12 @@ interface ImageLoaderDataSource {
             val imageDrawable = (result as SuccessResult).drawable
             val imageBitmap = imageDrawable.toBitmap()
             val a = saveBitmapToStorage(imageBitmap, "test random data: ${UUID.randomUUID()}")
+            Log.d("mt05", a.toString())
+            return a.imagePath
+        }
+
+        override suspend fun loadImage(image: Drawable): String {
+            val a = saveBitmapToStorage(image.toBitmap(), "test random data: ${UUID.randomUUID()}")
             Log.d("mt05", a.toString())
             return a.imagePath
         }

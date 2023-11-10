@@ -17,14 +17,17 @@ import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.Dehaze
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Share
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,9 +35,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.markettwits.core_ui.ApplicationViewModel
+import com.markettwits.core_ui.image.LocalImageLoader
 import com.markettwits.navigation.LocalNavigationState
 import com.markettwits.presentation.list.GalleryScreenViewModel
 import com.markettwits.waifupics.theame.theme.WaifuPicsTheme
+import net.engawapg.lib.zoomable.rememberZoomState
+import net.engawapg.lib.zoomable.zoomable
 
 //@Preview
 //@Composable
@@ -59,6 +65,7 @@ fun ImageScreenFull(
 ) {
     val viewModel: GalleryScreenViewModel.Base = ApplicationViewModel()
     val state by viewModel.state().collectAsState()
+    val zoomState = rememberZoomState()
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -68,16 +75,22 @@ fun ImageScreenFull(
             TopBarScreenImage(modifier) {
                 viewModel.saveToGallery()
             }
-            AsyncImage(
-                modifier = Modifier
-                    .weight(0.8f)
-                    .fillMaxWidth(),
-                model = loadImageBitmap(state.imageUrl()),
-                placeholder = painterResource(id = com.markettwits.core_ui.R.drawable.debug_image),
-                contentScale = ContentScale.Fit,
-                contentDescription = ""
-            )
-            DownBarScreenImage(Modifier.weight(0.1f)){
+                AsyncImage(
+                    modifier = Modifier
+                        .graphicsLayer(
+                            scaleX = zoomState.scale,
+                            scaleY = zoomState.scale
+                        )
+                        .weight(0.8f)
+                        .fillMaxWidth()
+                        .zoomable(zoomState)
+                    ,
+                    model = LocalImageLoader.current.single(state.imageUrl()),
+                    //  placeholder = painterResource(id = com.markettwits.core_ui.R.drawable.debug_image),
+                    contentScale = ContentScale.Fit,
+                    contentDescription = ""
+                )
+            DownBarScreenImage(Modifier.weight(0.1f)) {
                 viewModel.delete()
             }
         }

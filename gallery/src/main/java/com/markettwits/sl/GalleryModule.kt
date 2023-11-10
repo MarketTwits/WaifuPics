@@ -12,8 +12,8 @@ import com.markettwits.presentation.list.GalleryViewModel
 class GalleryModule(
     private val communication: DetailCommunication,
     private val repository: GalleryRepository
-) : Module<GalleryViewModel> {
-    override fun viewModel() = GalleryViewModel(
+) : Module<GalleryViewModel.Base> {
+    override fun viewModel() = GalleryViewModel.Base(
         GalleryCommunication.Base(),
         repository,
         AsyncViewModel.Base(RunAsync.Base(DispatchersList.Base())),

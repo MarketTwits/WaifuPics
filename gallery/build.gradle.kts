@@ -40,5 +40,6 @@ dependencies {
     implementation(project(":cache-datasource"))
     implementation(project(":core-ui"))
     implementation(project(":navigation"))
+    implementation(libs.zoomable)
     implementation("run.nabla:gallery-picker:1.4.5")
 }

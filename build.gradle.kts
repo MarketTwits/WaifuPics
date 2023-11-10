@@ -5,4 +5,11 @@ plugins {
     id("org.jetbrains.kotlin.android") version "1.9.10" apply false
     id("com.android.library") version "8.1.1" apply false
     id("org.jetbrains.kotlin.plugin.parcelize") version "1.9.10" apply false
+    alias(libs.plugins.ksp) apply false
+}
+
+buildscript {
+    dependencies {
+        classpath(libs.realm.gradle.plugin)
+    }
 }

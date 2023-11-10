@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -49,8 +50,7 @@ fun GalleryScreen() {
     val context = LocalContext.current
     //val navigationState = LocalNavigation.current
     var isDialogOpen by remember { mutableStateOf("") }
-    val viewModel: GalleryViewModel = ApplicationViewModel()
-    Log.d("mt05", "gallery : ${viewModel.hashCode()}")
+    val viewModel: GalleryViewModel.Base = ApplicationViewModel()
     val state by viewModel.state().collectAsState()
     val imageState = rememberGalleryPickerState()
     viewModel.favoriteImages()
@@ -62,7 +62,7 @@ fun GalleryScreen() {
         LazyVerticalGrid(
             columns = GridCells.Adaptive(100.dp),
         ) {
-            items(state) { image ->
+            items(state, key = {it.id()}) { image ->
                 image.GalleryItem(Modifier.combinedClickable(
                     onClick = {
                         viewModel.toDetail(image)
@@ -72,7 +72,6 @@ fun GalleryScreen() {
                     },
                     onLongClick = {
                         viewModel.deleteImage(image.imageUrl(), image.id())
-                        viewModel.favoriteImages()
                     }
                 ), imageState)
             }

@@ -9,6 +9,6 @@ interface DependencyContainer {
     class Error : DependencyContainer {
 
         override fun module(className: Class<out ViewModel>): Module<out ViewModel> =
-            throw IllegalArgumentException("unknown className $className")
+            throw IllegalArgumentException("unknown className ${className.name}")
     }
 }

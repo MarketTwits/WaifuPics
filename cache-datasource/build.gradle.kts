@@ -2,7 +2,9 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.realm)
+    alias(libs.plugins.ksp)
 }
+
 
 android {
     namespace = "com.markettwits.image_cache_datasource"
@@ -32,6 +34,8 @@ android {
 dependencies {
     implementation(project(":core"))
     implementation(libs.realm)
+    implementation ("io.realm.kotlin:library-base:1.11.0")
+    implementation ("io.realm.kotlin:library-sync:1.11.0")
     implementation(libs.core.ktx)
     implementation(libs.compose.coil)
     testImplementation(libs.junit)
