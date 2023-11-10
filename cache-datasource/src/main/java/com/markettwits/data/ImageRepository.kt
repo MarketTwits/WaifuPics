@@ -1,14 +1,19 @@
 package com.markettwits.data
 
+import android.graphics.drawable.Drawable
 import com.markettwits.data.mapper.ImageUiToCacheMapper
 import com.markettwits.data.store.ImageLoaderDataSource
 import com.markettwits.data.store.ImagesCacheDataSource
 import com.markettwits.models.ImageFavoriteCache
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 interface ImageRepository {
+    suspend fun observe() : Flow<List<ImageFavoriteCache>>
     suspend fun saveToGallery(url: String)
-    suspend fun addToFavorite(url: String, ageRating: Boolean)
-    suspend fun addOrDelete(url: String)
+   //suspend fun addToFavorite(url: String, ageRating: Boolean)
+    suspend fun addToFavorite(drawable: Drawable, networkUrl : String)
+    suspend fun addOrDelete(image: Drawable, url : String)
     suspend fun fetch(): List<ImageFavoriteCache>
     suspend fun delete(id: Long, url : String)
     suspend fun delete(imageUrl : String)
@@ -20,20 +25,31 @@ interface ImageRepository {
 
     ) : ImageRepository {
         override suspend fun fetch() = database.read().map { it.map() }
+        override suspend fun observe(): Flow<List<ImageFavoriteCache>> {
+            return  database.observeFavoriteImages().map { it.map { it.map() } }
+        }
+
         override suspend fun saveToGallery(url: String) {
             image.saveToGallery(url)
         }
-        override suspend fun addToFavorite(url: String, ageRating: Boolean) {
-            val file = image.loadImage(url)
-            database.write(uiToCache.map(url, file, ageRating))
+//        override suspend fun addToFavorite(url: String, ageRating: Boolean) {
+//            val file = image.loadImage(url)
+//            database.write(uiToCache.map(url, file, ageRating))
+//            database.observeFavoriteImages()
+//        }
+
+        override suspend fun addToFavorite(drawable: Drawable,networkUrl : String) {
+            val file = image.loadImage(drawable)
+            database.write(uiToCache.map(networkUrl, file, false))
+            database.observeFavoriteImages()
         }
 
-        override suspend fun addOrDelete(url: String) {
+        override suspend fun addOrDelete(image: Drawable, url : String) {
             if (database.hasImageWithUrl(url)) {
                 database.delete(url)
                 delete(url)
             } else {
-                addToFavorite(url, false)
+                addToFavorite(image, url)
             }
         }
 

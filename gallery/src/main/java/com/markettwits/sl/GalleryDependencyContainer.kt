@@ -29,7 +29,7 @@ class GalleryDependencyContainer(
     )
 
     override fun module(className: Class<out ViewModel>) = when (className) {
-        GalleryViewModel::class.java -> GalleryModule(communication, repository)
+        GalleryViewModel.Base::class.java -> GalleryModule(communication, repository)
         GalleryScreenViewModel.Base::class.java -> GalleryItemDetail(communication, repository)
         else -> dependencyContainer.module(className)
     }

@@ -1,5 +1,6 @@
 package com.markettwits.random_image.data
 
+import android.graphics.drawable.Drawable
 import android.util.Log
 import com.markettwits.data.ImageRepository
 import com.markettwits.random_image.ui.RandomImageUiState
@@ -8,7 +9,7 @@ import com.markettwits.waifupics.view.main.data.net.MakeService
 
 interface RandomImageRepository {
     suspend fun fetchRandomImage(filters: List<String>): RandomImageUiState
-    suspend fun addToFavorite(url : String, protected : Boolean)
+    suspend fun addToFavorite(image : Drawable, url : String,protected : Boolean)
     suspend fun preloadImage(url: String)
     class Base(
         private val imageLoader: ImageLoader,
@@ -27,9 +28,12 @@ interface RandomImageRepository {
             }
         }
 
-        override suspend fun addToFavorite(url: String, protected: Boolean) {
-            cache.addOrDelete(url)
+        override suspend fun addToFavorite(image: Drawable, url: String, protected: Boolean) {
+            cache.addOrDelete(image, url)
         }
+//        override suspend fun addToFavorite(url: String, protected: Boolean) {
+//            cache.addOrDelete(url)
+//        }
 
         override suspend fun preloadImage(url: String) {
            // imageLoader.load(url)

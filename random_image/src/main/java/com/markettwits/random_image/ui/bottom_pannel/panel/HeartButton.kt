@@ -27,6 +27,6 @@ fun HeartButton(
         isLoading = loadingState.baseBottomEnabled()
     ) {
         checked = !checked
-        viewModel.addToFavorite(imageUrl, true)
+        viewModel.addToFavorite()
     }
 }

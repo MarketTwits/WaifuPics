@@ -14,6 +14,7 @@ import com.markettwits.filter.presentation.FilterCommunication
 import com.markettwits.random_image.data.RandomImageRepository
 import com.markettwits.random_image.data.RandomImageUiMapper
 import com.markettwits.random_image.ui.ImageViewModel
+import com.markettwits.random_image.ui.LoadedImageCommunication
 import com.markettwits.random_image.ui.RandomImageCommunication
 import com.markettwits.random_image.ui.bottom_pannel.share.ShareImage
 import com.markettwits.waifupics.view.main.data.ImageLoader
@@ -36,6 +37,7 @@ class ImageViewModule(
             filter,
             AsyncViewModel.Base(RunAsync.Base(DispatchersList.Base())),
             RandomImageCommunication.Base(),
+            LoadedImageCommunication.Base(),
             RandomImageRepository.Base(
                 ImageLoader.Base(core.context()),
                 MakeService.Base(),
