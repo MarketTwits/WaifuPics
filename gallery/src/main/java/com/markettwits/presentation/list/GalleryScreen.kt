@@ -53,7 +53,6 @@ fun GalleryScreen() {
     val viewModel: GalleryViewModel.Base = ApplicationViewModel()
     val state by viewModel.state().collectAsState()
     val imageState = rememberGalleryPickerState()
-    viewModel.favoriteImages()
     Box(
         modifier = Modifier
             .fillMaxSize()

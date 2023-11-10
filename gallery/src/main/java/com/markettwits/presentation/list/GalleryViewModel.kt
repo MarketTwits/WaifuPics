@@ -21,6 +21,9 @@ interface GalleryViewModel{
         private val current : DetailCommunication
     ) : ViewModel(), StateCommunication.State<List<ImageFavoriteUi>>, GalleryViewModel {
 
+        init {
+            favoriteImages()
+        }
         fun toDetail(state : ImageFavoriteUi){
             current.map(state)
         }
