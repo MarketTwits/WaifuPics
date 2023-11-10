@@ -11,7 +11,7 @@ import com.markettwits.data.mapper.ImageUiToCacheMapper
 import com.markettwits.data.store.ImageLoaderDataSource
 import com.markettwits.data.store.ImagesCacheDataSource
 import com.markettwits.presentation.list.DetailCommunication
-import com.markettwits.presentation.list.GalleryScreenViewModel
+import com.markettwits.presentation.detail.GalleryScreenViewModel
 import com.markettwits.presentation.list.GalleryViewModel
 
 class GalleryDependencyContainer(

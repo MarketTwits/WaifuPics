@@ -1,4 +1,4 @@
-package com.markettwits.presentation
+package com.markettwits.presentation.list
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory

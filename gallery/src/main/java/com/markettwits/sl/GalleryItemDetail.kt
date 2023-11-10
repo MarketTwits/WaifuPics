@@ -6,7 +6,7 @@ import com.markettwits.core.wrappers.DispatchersList
 import com.markettwits.core.wrappers.RunAsync
 import com.markettwits.data.GalleryRepository
 import com.markettwits.presentation.list.DetailCommunication
-import com.markettwits.presentation.list.GalleryScreenViewModel
+import com.markettwits.presentation.detail.GalleryScreenViewModel
 
 class GalleryItemDetail(private val communication: DetailCommunication, private val repository: GalleryRepository) : Module<GalleryScreenViewModel.Base> {
 
