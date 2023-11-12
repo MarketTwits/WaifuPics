@@ -10,15 +10,14 @@ import com.markettwits.core_ui.ApplicationViewModel
 import com.markettwits.core_ui.R
 import com.markettwits.random_image.ui.ImageViewModel
 import com.markettwits.random_image.ui.bottom_pannel.panel.HeartButton
-import com.markettwits.waifupics.base.BasePanelItem
-import com.markettwits.waifupics.base.RefreshPanelItem
+import com.markettwits.core_ui.base.BasePanelItem
+import com.markettwits.core_ui.base.RefreshPanelItem
 
 
 @Composable
 fun BottomPanel(
     bottomPanelUiState: BottomPanelUiState,
     imageUrl: String = "",
-    ageRating: String = ""
 ) {
     val viewModel: ImageViewModel.Base = ApplicationViewModel()
     Row(
@@ -29,12 +28,11 @@ fun BottomPanel(
         BasePanelItem(
             modifier = Modifier.weight(1f),
             image = R.drawable.ic_bookmark,
-            isLoading = bottomPanelUiState.baseBottomEnabled()
+            enabled = bottomPanelUiState.baseBottomEnabled()
         ) {}
         HeartButton(
             modifier = Modifier.weight(1f),
             loadingState = bottomPanelUiState,
-            imageUrl = imageUrl,
             viewModel = viewModel
         )
         RefreshPanelItem(modifier = Modifier.weight(2f), isLoading = bottomPanelUiState.refresh()) {
@@ -43,14 +41,14 @@ fun BottomPanel(
         BasePanelItem(
             modifier = Modifier.weight(1f),
             image = R.drawable.ic_share,
-            isLoading = bottomPanelUiState.baseBottomEnabled()
+            enabled = bottomPanelUiState.baseBottomEnabled()
         ) {
-            viewModel.shareImage(imageUrl)
+            viewModel.shareImage()
         }
         BasePanelItem(
             modifier = Modifier.weight(1f),
             image = R.drawable.ic_flag,
-            isLoading = bottomPanelUiState.baseBottomEnabled()
+            enabled = bottomPanelUiState.baseBottomEnabled()
         ) {}
     }
 }

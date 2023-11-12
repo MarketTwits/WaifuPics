@@ -1,4 +1,4 @@
-package com.markettwits.waifupics.base
+package com.markettwits.core_ui.base
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -23,11 +23,12 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.markettwits.core_ui.R.font
+import com.markettwits.waifupics.base.RotationRefreshIcon
 
 @Composable
 fun BasePanelItem(
     modifier: Modifier = Modifier,
-    isLoading: Boolean,
+    enabled: Boolean,
     image: Int,
     contentDescription: String = "",
     onClick: () -> Unit,
@@ -36,10 +37,10 @@ fun BasePanelItem(
         modifier = modifier
             .padding(5.dp)
             .clip(RoundedCornerShape(10.dp))
-            .clickable(enabled = true) {
-                onClick()
+            .clickable(enabled = enabled) {
+              onClick()
             }
-            .background(if (!isLoading) MaterialTheme.colorScheme.secondary.copy(alpha = 0.4f) else MaterialTheme.colorScheme.secondary)
+            .background(if (!enabled) MaterialTheme.colorScheme.secondary.copy(alpha = 0.4f) else MaterialTheme.colorScheme.secondary)
             .padding(10.dp),
         contentAlignment = Alignment.Center
     ) {
@@ -47,7 +48,7 @@ fun BasePanelItem(
             modifier = Modifier
                 .size(20.dp),
             painter = painterResource(id = image),
-            tint = (if (!isLoading) MaterialTheme.colorScheme.surfaceTint.copy(alpha = 0.4f) else MaterialTheme.colorScheme.surfaceTint),
+            tint = (if (!enabled) MaterialTheme.colorScheme.surfaceTint.copy(alpha = 0.4f) else MaterialTheme.colorScheme.surfaceTint),
             contentDescription = contentDescription
         )
     }

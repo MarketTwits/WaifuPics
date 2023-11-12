@@ -13,6 +13,7 @@ import com.markettwits.random_image.ui.bottom_pannel.share.ShareImage
 interface ImageViewModel {
     fun currentImage(image: Drawable, networkUrl: String)
     fun shareImage(imageUrl: String)
+    fun shareImage()
     fun fetchRandomImage()
     fun addToFavorite()
     class Base(
@@ -31,9 +32,13 @@ interface ImageViewModel {
         override fun currentImage(image: Drawable, networkUrl: String) {
             loadedImageCommunication.map(FavoriteImage(image, networkUrl))
         }
-
+        @Deprecated("Actual variant with drawable, use shareImage()")
         override fun shareImage(imageUrl: String) {
             shareImage.shareImageUrl(imageUrl)
+        }
+
+        override fun shareImage() {
+            shareImage.shareImageDrawable(loadedImageCommunication.state().value.image)
         }
 
         override fun fetchRandomImage() {
