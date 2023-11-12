@@ -45,7 +45,7 @@ interface RandomImageUiState {
             override fun Handle(firstRun : Boolean) {
                 ImageCard(imageUrl)
                 ImageInfoCardEmptyAuthor(imageData, colorPalette)
-                BottomPanel(BottomPanelUiState.Success, imageUrl, imageData.ageRating)
+                BottomPanel(BottomPanelUiState.Success, imageUrl)
                 BottomSheetFilter(firstRun)
             }
         }
@@ -59,7 +59,7 @@ interface RandomImageUiState {
             override fun Handle(firstRun : Boolean) {
                 ImageCard(imageUrl)
                 ImageInfoCardWitAuthor(author, imageData,colorPalette)
-                BottomPanel(BottomPanelUiState.Success, imageUrl,imageData.ageRating)
+                BottomPanel(BottomPanelUiState.Success, imageUrl)
                 BottomSheetFilter(firstRun)
             }
         }
