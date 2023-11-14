@@ -6,9 +6,9 @@ import android.graphics.drawable.shapes.OvalShape
 import androidx.lifecycle.ViewModel
 import com.markettwits.core.communication.StateCommunication
 import com.markettwits.core.wrappers.AsyncViewModel
+import com.markettwits.core_ui.image.ShareImage
 import com.markettwits.filter.presentation.FilterCommunication
 import com.markettwits.random_image.data.RandomImageRepository
-import com.markettwits.random_image.ui.bottom_pannel.share.ShareImage
 
 interface ImageViewModel {
     fun currentImage(image: Drawable, networkUrl: String)

@@ -1,9 +1,11 @@
 package com.markettwits.sl
 
+import com.markettwits.core.Core
 import com.markettwits.core.sl.Module
 import com.markettwits.core.wrappers.AsyncViewModel
 import com.markettwits.core.wrappers.DispatchersList
 import com.markettwits.core.wrappers.RunAsync
+import com.markettwits.core_ui.image.ShareImage
 import com.markettwits.data.GalleryRepository
 import com.markettwits.presentation.detail.CurrentItemCommunication
 import com.markettwits.presentation.list.DetailCommunication
@@ -14,6 +16,7 @@ import com.markettwits.presentation.detail.ImageControllerState
 import com.markettwits.presentation.list.GalleryCommunication
 
 class GalleryItemDetail(
+    private val core : Core,
     private val communication: DetailCommunication,
     private val galleryCommunication: GalleryCommunication,
     private val repository: GalleryRepository,
@@ -28,7 +31,8 @@ class GalleryItemDetail(
             ImageControllerPanel.Base(
                 DispatchersList.Base(),
                 ImageControllerPanelCommunication.Base()
-            )
+            ),
+            ShareImage.Base(core.context())
         )
     }
 }

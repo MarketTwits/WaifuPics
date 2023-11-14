@@ -30,7 +30,9 @@ fun DownBarScreenImage(viewModel : GalleryScreenViewModel) {
     )
     {
         Icon(
-            modifier = Modifier.size(30.dp),
+            modifier = Modifier
+                .clickable { viewModel.shareImage() }
+                .size(30.dp),
             imageVector = Icons.Default.Share,
             contentDescription = "share",
             tint = MaterialTheme.colorScheme.onBackground
