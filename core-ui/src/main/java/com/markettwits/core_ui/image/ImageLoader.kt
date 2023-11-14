@@ -15,7 +15,6 @@ interface ImageLoader {
             .diskCachePolicy(CachePolicy.DISABLED)
             .data(data = data)
             .build()
-
         override fun memorySingle(data: Any) = ImageRequest.Builder(context)
             .memoryCachePolicy(CachePolicy.ENABLED)
             .diskCachePolicy(CachePolicy.DISABLED)

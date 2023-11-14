@@ -11,10 +11,11 @@ import com.markettwits.presentation.list.GalleryViewModel
 
 class GalleryModule(
     private val communication: DetailCommunication,
-    private val repository: GalleryRepository
+    private val repository: GalleryRepository,
+    private val galleryCommunication: GalleryCommunication
 ) : Module<GalleryViewModel.Base> {
     override fun viewModel() = GalleryViewModel.Base(
-        GalleryCommunication.Base(),
+       galleryCommunication,
         repository,
         AsyncViewModel.Base(RunAsync.Base(DispatchersList.Base())),
         communication

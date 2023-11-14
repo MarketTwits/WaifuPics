@@ -1,5 +1,6 @@
 package com.markettwits.presentation.detail.bottomBar
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -15,11 +16,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.markettwits.presentation.detail.GalleryScreenViewModel
 
 @Composable
-fun DownBarScreenImage(modifier: Modifier, onClickDelete: () -> Unit) {
+fun DownBarScreenImage(viewModel : GalleryScreenViewModel) {
     Row(
-        modifier = modifier
+        modifier = Modifier
+            .background(MaterialTheme.colorScheme.background.copy(alpha = 0.4f))
             .padding(20.dp)
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceEvenly,
@@ -35,7 +38,7 @@ fun DownBarScreenImage(modifier: Modifier, onClickDelete: () -> Unit) {
         Icon(
             modifier = Modifier
                 .size(30.dp)
-                .clickable { onClickDelete() },
+                .clickable { viewModel.delete() },
             imageVector = Icons.Default.Delete,
             contentDescription = "delete",
             tint = MaterialTheme.colorScheme.onBackground
