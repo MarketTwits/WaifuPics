@@ -14,9 +14,12 @@ interface GalleryRepository {
         private val cacheToUiMapper: FavoriteImageCacheToUiMapper,
     ) : GalleryRepository {
         override suspend fun observe(): Flow<List<ImageFavoriteUi>> {
-            return dataSource.observe().map { it.map { cacheToUiMapper.map(it) } }
+            return dataSource.observe().map {
+                val items = it.map { cacheToUiMapper.map(it) }
+                items.reversed()
+            }
         }
-
+        @Deprecated("use observe method instead of this")
         override suspend fun fetch() = dataSource.fetch().map { cacheToUiMapper.map(it) }
         override suspend fun delete(url: String, id: Long) {
             dataSource.delete(id, url)

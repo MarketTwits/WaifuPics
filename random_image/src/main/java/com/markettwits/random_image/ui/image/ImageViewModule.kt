@@ -6,6 +6,7 @@ import com.markettwits.core.sl.Module
 import com.markettwits.core.wrappers.AsyncViewModel
 import com.markettwits.core.wrappers.DispatchersList
 import com.markettwits.core.wrappers.RunAsync
+import com.markettwits.core_ui.image.ShareImage
 import com.markettwits.data.ImageRepository
 import com.markettwits.data.mapper.ImageUiToCacheMapper
 import com.markettwits.data.store.ImageLoaderDataSource
@@ -16,7 +17,6 @@ import com.markettwits.random_image.data.RandomImageUiMapper
 import com.markettwits.random_image.ui.ImageViewModel
 import com.markettwits.random_image.ui.LoadedImageCommunication
 import com.markettwits.random_image.ui.RandomImageCommunication
-import com.markettwits.random_image.ui.bottom_pannel.share.ShareImage
 import com.markettwits.waifupics.view.main.data.ImageLoader
 import com.markettwits.waifupics.view.main.data.net.MakeService
 
