@@ -12,6 +12,7 @@ import com.markettwits.data.store.ImageLoaderDataSource
 import com.markettwits.data.store.ImagesCacheDataSource
 import com.markettwits.presentation.list.DetailCommunication
 import com.markettwits.presentation.detail.GalleryScreenViewModel
+import com.markettwits.presentation.list.GalleryCommunication
 import com.markettwits.presentation.list.GalleryViewModel
 
 class GalleryDependencyContainer(
@@ -19,6 +20,7 @@ class GalleryDependencyContainer(
     private val core: Core
 ) : DependencyContainer {
     private val communication = DetailCommunication.Base()
+    private val galleryCommunication = GalleryCommunication.Base()
     private val repository = GalleryRepository.Base(
         ImageRepository.Base(
             ImagesCacheDataSource(RealmDatabaseProvider.Base()),
@@ -29,8 +31,8 @@ class GalleryDependencyContainer(
     )
 
     override fun module(className: Class<out ViewModel>) = when (className) {
-        GalleryViewModel.Base::class.java -> GalleryModule(communication, repository)
-        GalleryScreenViewModel.Base::class.java -> GalleryItemDetail(communication, repository)
+        GalleryViewModel.Base::class.java -> GalleryModule(communication, repository, galleryCommunication)
+        GalleryScreenViewModel.Base::class.java -> GalleryItemDetail(communication, galleryCommunication, repository, )
         else -> dependencyContainer.module(className)
     }
 }
