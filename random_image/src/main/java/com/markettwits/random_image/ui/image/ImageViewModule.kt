@@ -18,7 +18,6 @@ import com.markettwits.random_image.data.RandomImageUiMapper
 import com.markettwits.random_image.ui.ImageViewModel
 import com.markettwits.random_image.ui.LoadedImageCommunication
 import com.markettwits.random_image.ui.RandomImageCommunication
-import com.markettwits.waifupics.view.main.data.ImageLoader
 import com.markettwits.waifupics.view.main.data.net.MakeService
 
 class ImageViewModule(
@@ -41,11 +40,10 @@ class ImageViewModule(
             RandomImageCommunication.Base(),
             LoadedImageCommunication.Base(),
             RandomImageRepository.Base(
-                ImageLoader.Base(core.context()),
                 MakeService.Base(),
                 RandomImageUiMapper.Base(),
                 repository,
             ),
-            ShareImage.Base(core.context())
+            ShareImage.Base(core.context()),
         )
 }

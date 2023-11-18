@@ -10,13 +10,16 @@ import com.markettwits.core_ui.image.ShareImage
 import com.markettwits.filter.ProtectedMapper
 import com.markettwits.filter.presentation.FilterCommunication
 import com.markettwits.random_image.data.RandomImageRepository
+import kotlinx.coroutines.flow.StateFlow
 
 interface ImageViewModel {
-    fun currentImage(image: Drawable, networkUrl: String)
+    fun currentImage(image: Drawable, networkUrl: String, id : Int)
     fun shareImage(imageUrl: String)
     fun shareImage()
     fun fetchRandomImage()
     fun addToFavorite()
+    fun reported()
+
     class Base(
         private val filterResult: FilterCommunication,
         private val protectedMapper: ProtectedMapper,
@@ -31,9 +34,10 @@ interface ImageViewModel {
             fetchRandomImage()
         }
 
-        override fun currentImage(image: Drawable, networkUrl: String) {
+        override fun currentImage(image: Drawable, networkUrl: String, id : Int) {
             loadedImageCommunication.map(
                 FavoriteImage(
+                    id,
                     image,
                     networkUrl,
                     protectedMapper.map(filterResult.fetch() ?: listOf("safe"))
@@ -69,6 +73,14 @@ interface ImageViewModel {
             }) {}
         }
 
+        override fun reported() {
+            async.handleAsync({
+                repository.reportImage(loadedImageCommunication.state().value.id)
+            }){
+                //TODO add request
+            }
+        }
+
         override fun state() = randomImageCommunication.state()
     }
 }
@@ -78,11 +90,12 @@ interface RandomImageCommunication : StateCommunication.Mutable<RandomImageUiSta
         RandomImageCommunication
 }
 
-data class FavoriteImage(val image: Drawable, val networkUrl: String, val protected: Boolean)
+data class FavoriteImage(val id : Int,val image: Drawable, val networkUrl: String, val protected: Boolean)
 interface LoadedImageCommunication : StateCommunication.Mutable<FavoriteImage> {
     class Base :
         StateCommunication.Abstract<FavoriteImage>(
             FavoriteImage(
+                0,
                 ShapeDrawable(OvalShape()),
                 "",
                 false

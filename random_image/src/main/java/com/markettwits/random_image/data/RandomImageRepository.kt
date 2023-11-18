@@ -3,20 +3,29 @@ package com.markettwits.random_image.data
 import android.graphics.drawable.Drawable
 import android.util.Log
 import com.markettwits.data.ImageRepository
+import com.markettwits.random_image.ui.ImageReportUi
 import com.markettwits.random_image.ui.RandomImageUiState
 import com.markettwits.waifupics.view.main.data.ImageLoader
 import com.markettwits.waifupics.view.main.data.net.MakeService
 
 interface RandomImageRepository {
+    suspend fun reportImage(id : Int) : ImageReportUi
     suspend fun fetchRandomImage(filters: List<String>): RandomImageUiState
     suspend fun addToFavorite(image : Drawable, url : String,protected : Boolean)
-    suspend fun preloadImage(url: String)
     class Base(
-        private val imageLoader: ImageLoader,
         private val service: MakeService,
         private val mapper: RandomImageUiMapper,
         private val cache : ImageRepository
     ) : RandomImageRepository {
+        override suspend fun reportImage(id: Int): ImageReportUi {
+            return try {
+                service.service().report(id)
+                ImageReportUi("Sended")
+            }catch (e : Exception){
+                ImageReportUi("Can't send requst : ${e.message}")
+            }
+        }
+
         override suspend fun fetchRandomImage(filters: List<String>): RandomImageUiState {
             return try {
                 val request = service.service().randomImage(filters)
@@ -30,13 +39,6 @@ interface RandomImageRepository {
 
         override suspend fun addToFavorite(image: Drawable, url: String, protected: Boolean) {
             cache.addOrDelete(image, url, protected)
-        }
-//        override suspend fun addToFavorite(url: String, protected: Boolean) {
-//            cache.addOrDelete(url)
-//        }
-
-        override suspend fun preloadImage(url: String) {
-           // imageLoader.load(url)
         }
     }
 }

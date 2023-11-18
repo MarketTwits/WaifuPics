@@ -12,6 +12,7 @@ import com.markettwits.random_image.ui.ImageViewModel
 import com.markettwits.random_image.ui.bottom_pannel.panel.HeartButton
 import com.markettwits.core_ui.base.BasePanelItem
 import com.markettwits.core_ui.base.RefreshPanelItem
+import com.markettwits.random_image.ui.bottom_pannel.panel.ReportedButton
 
 
 @Composable
@@ -45,10 +46,17 @@ fun BottomPanel(
         ) {
             viewModel.shareImage()
         }
-        BasePanelItem(
+        ReportedButton(
             modifier = Modifier.weight(1f),
-            image = R.drawable.ic_flag,
-            enabled = bottomPanelUiState.baseBottomEnabled()
-        ) {}
+            enabled = bottomPanelUiState.baseBottomEnabled(),
+            viewModel = viewModel
+        )
+//        BasePanelItem(
+//            modifier = Modifier.weight(1f),
+//            image = R.drawable.ic_flag,
+//            enabled = bottomPanelUiState.baseBottomEnabled()
+//        ) {
+//            viewModel.changeReportedDialogState()
+//        }
     }
 }

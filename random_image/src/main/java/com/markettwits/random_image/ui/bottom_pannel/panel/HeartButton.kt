@@ -1,5 +1,6 @@
 package com.markettwits.random_image.ui.bottom_pannel.panel
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -25,6 +26,7 @@ fun HeartButton(
         image = if (checked) R.drawable.ic_heart_solid else R.drawable.ic_heart,
         enabled = loadingState.baseBottomEnabled()
     ) {
+        Log.d("mt05", checked.toString())
         checked = !checked
         viewModel.addToFavorite()
     }
