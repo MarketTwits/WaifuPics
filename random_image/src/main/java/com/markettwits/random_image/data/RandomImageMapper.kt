@@ -14,6 +14,7 @@ interface RandomImageUiMapper {
         ): RandomImageUiState {
             val item = if (cloud.artist != null)
                 RandomImageUiState.Success.WithAuthor(
+                    cloud.id,
                     cloud.image_url,
                     cloud.color_palette,
                     ImageSourceUi(cloud.source ?: "", cloud.rating),
@@ -26,6 +27,7 @@ interface RandomImageUiMapper {
                 )
             else {
                 RandomImageUiState.Success.EmptyAuthor(
+                    cloud.id,
                     cloud.image_url,
                     cloud.color_palette,
                     ImageSourceUi(cloud.source ?: "", cloud.rating),
