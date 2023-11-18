@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.markettwits.core.communication.StateCommunication
 import com.markettwits.core.wrappers.AsyncViewModel
 import com.markettwits.core_ui.image.ShareImage
+import com.markettwits.filter.ProtectedMapper
 import com.markettwits.filter.presentation.FilterCommunication
 import com.markettwits.random_image.data.RandomImageRepository
 
@@ -18,6 +19,7 @@ interface ImageViewModel {
     fun addToFavorite()
     class Base(
         private val filterResult: FilterCommunication,
+        private val protectedMapper: ProtectedMapper,
         private val async: AsyncViewModel.Abstract<RandomImageUiState>,
         private val randomImageCommunication: RandomImageCommunication,
         private val loadedImageCommunication: LoadedImageCommunication,
@@ -30,8 +32,15 @@ interface ImageViewModel {
         }
 
         override fun currentImage(image: Drawable, networkUrl: String) {
-            loadedImageCommunication.map(FavoriteImage(image, networkUrl))
+            loadedImageCommunication.map(
+                FavoriteImage(
+                    image,
+                    networkUrl,
+                    protectedMapper.map(filterResult.fetch() ?: listOf("safe"))
+                )
+            )
         }
+
         @Deprecated("Actual variant with drawable, use shareImage()")
         override fun shareImage(imageUrl: String) {
             shareImage.shareImageUrl(imageUrl)
@@ -55,7 +64,7 @@ interface ImageViewModel {
                 repository.addToFavorite(
                     loadedImageCommunication.state().value.image,
                     loadedImageCommunication.state().value.networkUrl,
-                    false
+                    loadedImageCommunication.state().value.protected
                 )
             }) {}
         }
@@ -69,10 +78,16 @@ interface RandomImageCommunication : StateCommunication.Mutable<RandomImageUiSta
         RandomImageCommunication
 }
 
-data class FavoriteImage(val image: Drawable, val networkUrl: String)
+data class FavoriteImage(val image: Drawable, val networkUrl: String, val protected: Boolean)
 interface LoadedImageCommunication : StateCommunication.Mutable<FavoriteImage> {
     class Base :
-        StateCommunication.Abstract<FavoriteImage>(FavoriteImage(ShapeDrawable(OvalShape()), "")),
+        StateCommunication.Abstract<FavoriteImage>(
+            FavoriteImage(
+                ShapeDrawable(OvalShape()),
+                "",
+                false
+            ),
+        ),
         LoadedImageCommunication
 }
 

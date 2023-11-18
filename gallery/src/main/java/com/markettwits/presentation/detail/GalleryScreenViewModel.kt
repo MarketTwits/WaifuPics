@@ -1,6 +1,8 @@
 package com.markettwits.presentation.detail
 
 import android.graphics.drawable.Drawable
+import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.markettwits.core.communication.StateCommunication
 import com.markettwits.core.wrappers.AsyncViewModel
@@ -37,8 +39,12 @@ interface GalleryScreenViewModel {
     ) : ViewModel(), GalleryScreenViewModel {
         override fun state() = list.state()
         override fun shareImage() {
-            shareImage.shareImageLocalUrl(item.state().value.imageUrl())
+            val imageUrl = item.state().value.imageUrl()
+            shareImage.shareImageLocalUrl(imageUrl)
+            Log.d("mt05", "shareImage imageUrl: $imageUrl")
         }
+
+
 
         override fun activePanel() {
             async.handleAsync({ imageControllerPanel.changeState() }) {}
@@ -69,7 +75,7 @@ interface GalleryScreenViewModel {
         }
 
         override fun setCurrentItem(image: ImageFavoriteUi) {
-            item.map(image)
+           item.map(image)
         }
 
 
@@ -79,8 +85,7 @@ interface GalleryScreenViewModel {
             }) {}
         }
 
-        override fun currentImage() =
-            item.state()
+        override fun currentImage() = item.state()
 
     }
 }

@@ -11,31 +11,26 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.key
+import androidx.compose.runtime.internal.composableLambda
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.markettwits.core_ui.ApplicationViewModel
 import com.markettwits.navigation.LocalNavigationState
 import com.markettwits.navigation.Screen
 import com.markettwits.presentation.detail.ImageFavoriteUi
-import com.markettwits.waifupics.theame.theme.WaifuPicsTheme
+import com.markettwits.presentation.list.allert_dialog.ProtectedAlertDialog
+import com.markettwits.presentation.list.allert_dialog.ProtectedUiState
+import com.markettwits.presentation.list.allert_dialog.ProtectedUiStateEvent
 import run.nabla.gallerypicker.picker.rememberGalleryPickerState
-
-@Composable
-@Preview
-private fun GalleryScreenPreview() {
-    WaifuPicsTheme {
-        GalleryScreen()
-    }
-}
 
 @OptIn(ExperimentalFoundationApi::class)
 @SuppressLint("CoroutineCreationDuringComposition")
@@ -49,10 +44,12 @@ fun GalleryScreen() {
     }
     val context = LocalContext.current
     //val navigationState = LocalNavigation.current
-    var isDialogOpen by remember { mutableStateOf("") }
+    var openAlertDialog by remember { mutableStateOf(false) }
     val viewModel: GalleryViewModel.Base = ApplicationViewModel()
     val state by viewModel.state().collectAsState()
     val imageState = rememberGalleryPickerState()
+    //  val protected = viewModel.observeProtected().collectAsState()
+    val protectedEvent by viewModel.observeProtectedEvent().observeAsState()
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -61,21 +58,35 @@ fun GalleryScreen() {
         LazyVerticalGrid(
             columns = GridCells.Adaptive(100.dp),
         ) {
-            items(state, key = {it.id()}) { image ->
-                image.GalleryItem(Modifier.combinedClickable(
-                    onClick = {
-                        viewModel.toDetail(image)
-                        LocalNavigationState.rootNavigation.getNavController.navigate(
-                            Screen.GalleryItem.route()
-                        )
-                    },
-                    onLongClick = {
-                        viewModel.deleteImage(image.imageUrl(), image.id())
-                    }
-                ), imageState)
+            items(state, key = { it.id() }) { image ->
+                image.GalleryItem(
+                    Modifier.combinedClickable(
+                        onClick = {
+                            viewModel.toDetail(image)
+                            showDetailScreen()
+                        },
+                        onLongClick = {
+                            viewModel.deleteImage(image.imageUrl(), image.id())
+                        }
+                    ), imageState)
             }
         }
-        //if (isDialogOpen != "") ImageScreenFull(state. = isDialogOpen)
+//        when(protectedEvent){
+//            is ProtectedUiStateEvent.ShowDialog -> {
+//                ProtectedAlertDialog(onSubmit = {
+//                    viewModel.successProtected()
+//                }, onDismiss = {
+//                    viewModel.dismissProtected()
+//                })
+//            }
+//        }
     }
-
 }
+
+fun showDetailScreen(){
+    LocalNavigationState.rootNavigation.getNavController.navigate(
+        Screen.GalleryItem.route()
+    )
+}
+
+

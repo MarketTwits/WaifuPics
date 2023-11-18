@@ -1,6 +1,7 @@
 package com.markettwits.presentation.detail
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -16,8 +17,15 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableLongStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,6 +36,7 @@ import com.markettwits.core_ui.base_extensions.noRippleClickable
 import com.markettwits.presentation.detail.bottomBar.DownBarScreenImage
 import com.markettwits.presentation.detail.image.ImageContent
 import com.markettwits.presentation.detail.topbar.TopBarScreenImage
+import kotlinx.coroutines.launch
 import net.engawapg.lib.zoomable.rememberZoomState
 import net.engawapg.lib.zoomable.zoomable
 
@@ -46,6 +55,7 @@ fun ImageScreenFull(
         state.size
     }, initialPage = state.indexOf(currentImage))
     //viewModel.initScreen()
+    val coroutineScope = rememberCoroutineScope()
 
     Scaffold(
         modifier = Modifier
@@ -64,19 +74,20 @@ fun ImageScreenFull(
                 contentAlignment = Alignment.Center
             ) {
                 HorizontalPager(
+                    state = pagerState,
                     modifier = Modifier
                         .zoomable(zoomState)
                         .graphicsLayer(
                             scaleX = zoomState.scale,
                             scaleY = zoomState.scale
-                        ),
-                    state = pagerState,
+                        )
                 ) { index ->
-                    viewModel.setCurrentItem(state[index])
                     ImageContent(
                         imageUrl = state[index].imageUrl(),
                         paddingValues = it,
-                    )
+                    ){
+                        viewModel.setCurrentItem(state[pagerState.currentPage])
+                    }
                 }
             }
         }

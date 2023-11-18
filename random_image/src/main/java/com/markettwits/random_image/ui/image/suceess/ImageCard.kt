@@ -64,7 +64,6 @@ fun ImageCard(imageUrl: String) {
             )
         }
     }
-fun painterToBitmap(drawable: Drawable) =
-    drawable.toBitmap()
+
 
 

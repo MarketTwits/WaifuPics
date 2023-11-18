@@ -37,6 +37,7 @@ android {
 }
 
 dependencies {
+    implementation("androidx.compose.runtime:runtime-livedata:1.5.2")
     implementation(project(":cache-datasource"))
     implementation(project(":core-ui"))
     implementation(project(":navigation"))

@@ -10,9 +10,9 @@ import androidx.navigation.compose.rememberNavController
 
 @Stable
 class NavigationState(
-    val navHostController: NavHostController
+    private val navHostController: NavHostController
 ) {
-    var fullScreen = false
+    private var fullScreen = false
     fun navigateTo(route: String) {
         navHostController.navigate(route) {
             popUpTo(navHostController.graph.findStartDestination().id) {
@@ -23,15 +23,6 @@ class NavigationState(
         }
         fullScreen = false
     }
-//    fun navigateToImage(imageId: String){
-//        navHostController.navigate(Screen.GalleryItem.routeId(imageId))
-//        fullScreen = true
-//    }
 }
-
-@Composable
-fun rememberNavigationState(
-    navHostController: NavHostController = rememberNavController()
-) = remember { NavigationState(navHostController) }
 
 

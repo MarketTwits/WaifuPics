@@ -12,8 +12,8 @@ interface ImageRepository {
     suspend fun observe() : Flow<List<ImageFavoriteCache>>
     suspend fun saveToGallery(url: String)
    //suspend fun addToFavorite(url: String, ageRating: Boolean)
-    suspend fun addToFavorite(drawable: Drawable, networkUrl : String)
-    suspend fun addOrDelete(image: Drawable, url : String)
+    suspend fun addToFavorite(drawable: Drawable, networkUrl : String,protected : Boolean)
+    suspend fun addOrDelete(image: Drawable, url : String, protected: Boolean)
     suspend fun fetch(): List<ImageFavoriteCache>
     suspend fun delete(id: Long, url : String)
     suspend fun delete(imageUrl : String)
@@ -38,18 +38,18 @@ interface ImageRepository {
 //            database.observeFavoriteImages()
 //        }
 
-        override suspend fun addToFavorite(drawable: Drawable,networkUrl : String) {
+        override suspend fun addToFavorite(drawable: Drawable,networkUrl : String, protected: Boolean) {
             val file = image.loadImage(drawable)
-            database.write(uiToCache.map(networkUrl, file, false))
+            database.write(uiToCache.map(networkUrl, file, protected))
             database.observeFavoriteImages()
         }
 
-        override suspend fun addOrDelete(image: Drawable, url : String) {
+        override suspend fun addOrDelete(image: Drawable, url : String, protected: Boolean) {
             if (database.hasImageWithUrl(url)) {
                 database.delete(url)
                 delete(url)
             } else {
-                addToFavorite(image, url)
+                addToFavorite(image, url, protected)
             }
         }
 

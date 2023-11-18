@@ -1,7 +1,12 @@
 package com.markettwits.core_ui.base_extensions
+
 import android.graphics.Color
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
@@ -11,7 +16,7 @@ import java.net.URI
 
 
 inline fun Modifier.noRippleClickable(
-    crossinline onClick: () -> Unit
+    crossinline onClick: () -> Unit,
 ): Modifier = composed {
     clickable(
         indication = null,
