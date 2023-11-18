@@ -38,7 +38,7 @@ fun BasePanelItem(
             .padding(5.dp)
             .clip(RoundedCornerShape(10.dp))
             .clickable(enabled = enabled) {
-              onClick()
+                onClick()
             }
             .background(if (!enabled) MaterialTheme.colorScheme.secondary.copy(alpha = 0.4f) else MaterialTheme.colorScheme.secondary)
             .padding(10.dp),
@@ -73,7 +73,7 @@ fun RefreshPanelItem(
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            RotationRefreshIcon(isLoading)
+            RotationRefreshIcon(!isLoading)
             Spacer(modifier = Modifier.width(5.dp))
             Text(
                 text = "Refresh !",
