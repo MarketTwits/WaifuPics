@@ -1,5 +1,6 @@
 package com.markettwits.data
 
+import android.util.Log
 import com.markettwits.presentation.detail.ImageFavoriteUi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -15,6 +16,7 @@ interface GalleryRepository {
     ) : GalleryRepository {
         override suspend fun observe(): Flow<List<ImageFavoriteUi>> {
             return dataSource.observe().map {
+                Log.d("mt05", "listGallery :$it")
                 val items = it.map { cacheToUiMapper.map(it) }
                 items.reversed()
             }

@@ -29,7 +29,7 @@ interface RandomImageRepository {
         }
 
         override suspend fun addToFavorite(image: Drawable, url: String, protected: Boolean) {
-            cache.addOrDelete(image, url)
+            cache.addOrDelete(image, url, protected)
         }
 //        override suspend fun addToFavorite(url: String, protected: Boolean) {
 //            cache.addOrDelete(url)

@@ -40,11 +40,6 @@ fun NavGraphBuilder.detailsImage() {
             type = NavType.StringType
         }),
     ) { backStackEntry ->
-        val imageUrl =
-            LocalNavigationState.rootNavigation.getNavController.currentBackStackEntry?.arguments?.getString(
-                Screen.GalleryItem.route()
-            )
-                ?: ""
         ImageScreenFull()
     }
 }

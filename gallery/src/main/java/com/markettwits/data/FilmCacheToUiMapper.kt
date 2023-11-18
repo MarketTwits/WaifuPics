@@ -18,12 +18,20 @@ interface FavoriteImageCacheToUiMapper {
     class Base() : FavoriteImageCacheToUiMapper{
         @RequiresApi(Build.VERSION_CODES.O)
         override fun map(item: ImageFavoriteCache): ImageFavoriteUi {
-            return ImageFavoriteUi.Base(
-                id = item.id,
-                imageUrl  = item.localUrl,
-                protected = item.protected,
-                created = mapTime(item.created)
-            )
+            return if (item.protected) {
+                ImageFavoriteUi.Protected(
+                    id = item.id,
+                    imageUrl = item.localUrl,
+                    protected = item.protected,
+                    created = mapTime(item.created)
+                )
+            }else{
+                ImageFavoriteUi.Base(
+                    id = item.id,
+                    imageUrl = item.localUrl,
+                    protected = item.protected,
+                    created = mapTime(item.created))
+            }
         }
         override fun mapTime(time: Long): String {
             val date = Date(time * MILLS_IN_SECOND)

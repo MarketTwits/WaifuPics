@@ -11,6 +11,7 @@ import com.markettwits.data.ImageRepository
 import com.markettwits.data.mapper.ImageUiToCacheMapper
 import com.markettwits.data.store.ImageLoaderDataSource
 import com.markettwits.data.store.ImagesCacheDataSource
+import com.markettwits.filter.ProtectedMapper
 import com.markettwits.filter.presentation.FilterCommunication
 import com.markettwits.random_image.data.RandomImageRepository
 import com.markettwits.random_image.data.RandomImageUiMapper
@@ -35,6 +36,7 @@ class ImageViewModule(
     override fun viewModel() =
         ImageViewModel.Base(
             filter,
+            ProtectedMapper.Base(),
             AsyncViewModel.Base(RunAsync.Base(DispatchersList.Base())),
             RandomImageCommunication.Base(),
             LoadedImageCommunication.Base(),
