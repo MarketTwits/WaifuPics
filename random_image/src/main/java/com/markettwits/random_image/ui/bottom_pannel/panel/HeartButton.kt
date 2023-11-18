@@ -8,15 +8,14 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.markettwits.core_ui.R
-import com.markettwits.random_image.ui.ImageViewModel
-import com.markettwits.random_image.ui.bottom_pannel.BottomPanelUiState
 import com.markettwits.core_ui.base.BasePanelItem
+import com.markettwits.random_image.ui.ImageViewModel
 
 @Composable
 fun HeartButton(
     modifier: Modifier,
-    loadingState: BottomPanelUiState,
-    viewModel: ImageViewModel
+    enabled: Boolean,
+    viewModel: ImageViewModel,
 ) {
     var checked by rememberSaveable{
         mutableStateOf(false)
@@ -24,7 +23,7 @@ fun HeartButton(
     BasePanelItem(
         modifier = modifier,
         image = if (checked) R.drawable.ic_heart_solid else R.drawable.ic_heart,
-        enabled = loadingState.baseBottomEnabled()
+        enabled = enabled
     ) {
         Log.d("mt05", checked.toString())
         checked = !checked

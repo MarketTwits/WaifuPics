@@ -1,8 +1,6 @@
 package com.markettwits.random_image.ui
 
 import android.graphics.drawable.Drawable
-import android.graphics.drawable.ShapeDrawable
-import android.graphics.drawable.shapes.OvalShape
 import androidx.lifecycle.ViewModel
 import com.markettwits.core.communication.StateCommunication
 import com.markettwits.core.wrappers.AsyncViewModel
@@ -13,12 +11,14 @@ import com.markettwits.random_image.data.RandomImageRepository
 import kotlinx.coroutines.flow.StateFlow
 
 interface ImageViewModel {
-    fun currentImage(image: Drawable, networkUrl: String, id : Int)
+    fun loadedImageState(): StateFlow<LoadedImage>
+    fun currentImage(image: Drawable, networkUrl: String, id: Int)
     fun shareImage(imageUrl: String)
     fun shareImage()
     fun fetchRandomImage()
     fun addToFavorite()
     fun reported()
+    fun imageLoading()
 
     class Base(
         private val filterResult: FilterCommunication,
@@ -34,9 +34,13 @@ interface ImageViewModel {
             fetchRandomImage()
         }
 
-        override fun currentImage(image: Drawable, networkUrl: String, id : Int) {
+        override fun loadedImageState() =
+            loadedImageCommunication.state()
+
+
+        override fun currentImage(image: Drawable, networkUrl: String, id: Int) {
             loadedImageCommunication.map(
-                FavoriteImage(
+                LoadedImage.Loaded(
                     id,
                     image,
                     networkUrl,
@@ -51,11 +55,12 @@ interface ImageViewModel {
         }
 
         override fun shareImage() {
-            shareImage.shareImageDrawable(loadedImageCommunication.state().value.image)
+            shareImage.shareImageDrawable((loadedImageCommunication.state().value as LoadedImage.Loaded).image)
         }
 
         override fun fetchRandomImage() {
             randomImageCommunication.map(RandomImageUiState.Progress)
+            loadedImageCommunication.map(LoadedImage.Loading)
             async.handleAsync({
                 repository.fetchRandomImage(filterResult.fetch() ?: listOf("safe"))
             }) {
@@ -64,21 +69,27 @@ interface ImageViewModel {
         }
 
         override fun addToFavorite() {
+            val state = loadedImageCommunication.state().value as LoadedImage.Loaded
             async.handleAsync({
                 repository.addToFavorite(
-                    loadedImageCommunication.state().value.image,
-                    loadedImageCommunication.state().value.networkUrl,
-                    loadedImageCommunication.state().value.protected
+                    state.image,
+                    state.networkUrl,
+                    state.protected
                 )
             }) {}
         }
 
         override fun reported() {
+            val state = loadedImageCommunication.state().value as LoadedImage.Loaded
             async.handleAsync({
-                repository.reportImage(loadedImageCommunication.state().value.id)
-            }){
+                repository.reportImage(state.id)
+            }) {
                 //TODO add request
             }
+        }
+
+        override fun imageLoading() {
+            loadedImageCommunication.map(LoadedImage.Loading)
         }
 
         override fun state() = randomImageCommunication.state()
@@ -90,16 +101,22 @@ interface RandomImageCommunication : StateCommunication.Mutable<RandomImageUiSta
         RandomImageCommunication
 }
 
-data class FavoriteImage(val id : Int,val image: Drawable, val networkUrl: String, val protected: Boolean)
-interface LoadedImageCommunication : StateCommunication.Mutable<FavoriteImage> {
+//data class LoadedImage(val id : Int, val image: Drawable, val networkUrl: String, val protected: Boolean)
+sealed class LoadedImage {
+    data class Loaded(
+        val id: Int,
+        val image: Drawable,
+        val networkUrl: String,
+        val protected: Boolean,
+    ) : LoadedImage()
+
+    data object Loading : LoadedImage()
+}
+
+interface LoadedImageCommunication : StateCommunication.Mutable<LoadedImage> {
     class Base :
-        StateCommunication.Abstract<FavoriteImage>(
-            FavoriteImage(
-                0,
-                ShapeDrawable(OvalShape()),
-                "",
-                false
-            ),
+        StateCommunication.Abstract<LoadedImage>(
+            LoadedImage.Loading,
         ),
         LoadedImageCommunication
 }

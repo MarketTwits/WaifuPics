@@ -3,7 +3,6 @@ package com.markettwits.random_image.ui
 import androidx.compose.runtime.Composable
 import com.markettwits.filter.presentation.BottomSheetFilter
 import com.markettwits.random_image.ui.bottom_pannel.BottomPanel
-import com.markettwits.random_image.ui.bottom_pannel.BottomPanelUiState
 import com.markettwits.random_image.ui.image.loading.ImageLoading
 import com.markettwits.random_image.ui.image.suceess.ImageCard
 import com.markettwits.random_image.ui.image_info.image_card_info.success.ImageInfoCardEmptyAuthor
@@ -21,7 +20,7 @@ interface RandomImageUiState {
         override fun Handle(firstRun: Boolean) {
             ImageLoading()
             ImageCardInfoLoading()
-            BottomPanel(BottomPanelUiState.Loading)
+            BottomPanel()
         }
     }
 
@@ -29,7 +28,7 @@ interface RandomImageUiState {
         @Composable
         override fun Handle(firstRun: Boolean) {
             ImageFuckup()
-            BottomPanel(BottomPanelUiState.Error)
+            BottomPanel()
             BottomSheetFilter(firstRun)
         }
     }
@@ -46,10 +45,12 @@ interface RandomImageUiState {
             override fun Handle(firstRun: Boolean) {
                 ImageCard(imageUrl, id)
                 ImageInfoCardEmptyAuthor(imageData, colorPalette)
-                BottomPanel(BottomPanelUiState.Success, imageUrl)
+                BottomPanel(imageUrl)
                 BottomSheetFilter(firstRun)
             }
+
         }
+
 
         data class WithAuthor(
             private val id: Int,
@@ -62,7 +63,7 @@ interface RandomImageUiState {
             override fun Handle(firstRun: Boolean) {
                 ImageCard(imageUrl, id)
                 ImageInfoCardWitAuthor(author, imageData, colorPalette)
-                BottomPanel(BottomPanelUiState.Success, imageUrl)
+                BottomPanel(imageUrl)
                 BottomSheetFilter(firstRun)
             }
         }
