@@ -3,6 +3,7 @@ package com.markettwits.waifupics
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.markettwits.core.wrappers.SaveAndRestore
 import com.markettwits.core.wrappers.WrapBundle
 import com.markettwits.core_ui.setContentLocal
@@ -13,6 +14,7 @@ import com.markettwits.waifupics.theame.theme.WaifuPicsTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        installSplashScreen()
         val firstRun = savedInstanceState == null
         (application as SaveAndRestore).init(firstRun)
         setContentLocal(savedInstanceState){

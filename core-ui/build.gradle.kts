@@ -38,6 +38,7 @@ android {
 }
 
 dependencies {
+    api("androidx.core:core-splashscreen:1.0.1")
     api(project(path = ":core"))
     api(libs.bundles.composeUiBundle)
     api(libs.junit.ext.ktx)
