@@ -1,8 +1,6 @@
 package com.markettwits.presentation.detail
 
-import android.graphics.drawable.Drawable
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.markettwits.core.communication.StateCommunication
 import com.markettwits.core.wrappers.AsyncViewModel
@@ -10,11 +8,7 @@ import com.markettwits.core_ui.image.ShareImage
 import com.markettwits.data.GalleryRepository
 import com.markettwits.presentation.list.DetailCommunication
 import com.markettwits.presentation.list.GalleryCommunication
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.map
 
 interface GalleryScreenViewModel {
     fun activePanel()
@@ -28,6 +22,7 @@ interface GalleryScreenViewModel {
     fun currentImage() : StateFlow<ImageFavoriteUi>
     fun state(): StateFlow<List<ImageFavoriteUi>>
     fun shareImage()
+    fun editImage()
 
     class Base(
         private val item: DetailCommunication,
@@ -44,6 +39,9 @@ interface GalleryScreenViewModel {
             Log.d("mt05", "shareImage imageUrl: $imageUrl")
         }
 
+        override fun editImage() {
+            shareImage.edit(item.state().value.imageUrl())
+        }
 
 
         override fun activePanel() {
@@ -61,7 +59,7 @@ interface GalleryScreenViewModel {
         }
 
         override fun setImageAs() {
-
+            shareImage.useAs(item.state().value.imageUrl())
         }
 
         override fun delete() {
@@ -71,7 +69,7 @@ interface GalleryScreenViewModel {
         }
 
         override fun infoAboutImage() {
-
+            //TODO
         }
 
         override fun setCurrentItem(image: ImageFavoriteUi) {

@@ -6,7 +6,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
 import android.net.Uri
-import android.provider.MediaStore
 import androidx.core.content.FileProvider
 import androidx.core.graphics.drawable.toBitmap
 import java.io.File
@@ -15,6 +14,8 @@ import java.io.IOException
 import java.io.OutputStream
 
 interface ShareImage {
+    fun useAs(imagePath: String)
+    fun edit(imagePath: String)
     fun shareImageLocalUrl(imagePath: String)
     fun shareImageUrl(url: String)
     fun shareImageDrawable(image: Drawable)
@@ -57,6 +58,37 @@ interface ShareImage {
     }
 
     class Base(private val context: Context) : Abstract(context) {
+        override fun useAs(imagePath: String) {
+            val imageFile = File(imagePath)
+            val contentUri: Uri =
+                FileProvider.getUriForFile(context, LOCAL_FILE_PROVIDER, imageFile)
+
+            val intent = Intent(Intent.ACTION_ATTACH_DATA).apply {
+                addCategory(Intent.CATEGORY_DEFAULT)
+                setDataAndType(contentUri, TYPE_IMAGE)
+                putExtra("mimeType", TYPE_IMAGE)
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            }
+            context.startActivity(
+                Intent.createChooser(intent, "useAs").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            )
+        }
+
+        override fun edit(imagePath: String) {
+            val imageFile = File(imagePath)
+            val contentUri: Uri =
+                FileProvider.getUriForFile(context, LOCAL_FILE_PROVIDER, imageFile)
+
+            val intent = Intent(Intent.ACTION_EDIT).apply {
+                addCategory(Intent.CATEGORY_DEFAULT)
+                setDataAndType(contentUri, TYPE_IMAGE)
+                putExtra("mimeType", TYPE_IMAGE)
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            }
+            context.startActivity(
+                Intent.createChooser(intent, "Edit").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            )
+        }
 
         override fun shareImageLocalUrl(imagePath: String) {
             val imageFile = File(imagePath)

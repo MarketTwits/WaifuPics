@@ -1,12 +1,9 @@
 package com.markettwits.presentation.detail.topbar
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
@@ -23,8 +20,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.markettwits.navigation.LocalNavigationState
 import com.markettwits.presentation.detail.GalleryScreenViewModel
-import com.markettwits.presentation.detail.ImageFavoriteUi
-import kotlinx.coroutines.flow.Flow
 
 
 @Composable
@@ -59,7 +54,10 @@ fun TopBarScreenImage(viewModel: GalleryScreenViewModel) {
                 viewModel.infoAboutImage()
             }, saveToGallery = {
                 viewModel.saveToGallery()
-            })
+            }, edit = {
+                viewModel.editImage()
+            }
+            )
         }
     }
 }
