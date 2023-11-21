@@ -14,17 +14,24 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.markettwits.navigation.LocalNavigationState
 import com.markettwits.presentation.detail.GalleryScreenViewModel
+import com.markettwits.presentation.detail.info.InfoImageBottomSheet
 
 
 @Composable
 fun TopBarScreenImage(viewModel: GalleryScreenViewModel) {
     val item by viewModel.currentImage().collectAsState()
+    var infoImage by remember {
+        mutableStateOf(false)
+    }
     Surface(
         modifier = Modifier.fillMaxWidth(),
         color = MaterialTheme.colorScheme.background.copy(alpha = 0.4f)
@@ -51,13 +58,19 @@ fun TopBarScreenImage(viewModel: GalleryScreenViewModel) {
             ItemDropDownMenu(setAs = {
                 viewModel.setImageAs()
             }, info = {
-                viewModel.infoAboutImage()
+                // viewModel.infoAboutImage()
+                infoImage = true
             }, saveToGallery = {
                 viewModel.saveToGallery()
             }, edit = {
                 viewModel.editImage()
             }
             )
+            if (infoImage) {
+                InfoImageBottomSheet {
+                    infoImage = false
+                }
+            }
         }
     }
 }

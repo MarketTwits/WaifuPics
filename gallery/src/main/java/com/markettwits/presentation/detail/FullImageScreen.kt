@@ -34,11 +34,6 @@ fun ImageScreenFull(
     val state by viewModel.state().collectAsState()
     val currentImage by viewModel.currentImage().collectAsState()
     val handlePanel by viewModel.imagePanelState().collectAsState()
-//    val configuration = LocalConfiguration.current
-//
-//    val screenHeight = configuration.screenHeightDp
-//    val screenWidth = configuration.screenWidthDp
-//    zoomState.setContentSize(androidx.compose.ui.geometry.Size(screenHeight.toFloat(), screenWidth.toFloat()))
     val pagerState = rememberPagerState(pageCount = {
         state.size
     }, initialPage = state.indexOf(currentImage))
