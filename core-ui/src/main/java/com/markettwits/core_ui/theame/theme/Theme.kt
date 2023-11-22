@@ -1,4 +1,4 @@
-package com.markettwits.waifupics.theame.theme
+package com.markettwits.core_ui.theame.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -12,6 +12,12 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.markettwits.waifupics.theame.theme.DarkGrey
+import com.markettwits.waifupics.theame.theme.DirtyWhite
+import com.markettwits.waifupics.theame.theme.LightPink
+import com.markettwits.waifupics.theame.theme.Pink
+import com.markettwits.waifupics.theame.theme.PinkMilk
+import com.markettwits.waifupics.theame.theme.Typography
 
 private val DarkColorScheme = darkColorScheme(
     primary = Color.Black,
@@ -54,7 +60,6 @@ fun WaifuPicsTheme(
             color = if (darkTheme) Color.Black else Color.White
         )
     }
-
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
             val context = LocalContext.current
@@ -69,3 +74,4 @@ fun WaifuPicsTheme(
         content = content
     )
 }
+

@@ -11,8 +11,8 @@ import androidx.compose.ui.unit.dp
 import com.markettwits.core_ui.base.ImageParametersText
 import com.markettwits.core_ui.base.MultyLinksText
 import com.markettwits.core_ui.base.SingleLinkText
+import com.markettwits.core_ui.theame.theme.WaifuPicsTheme
 import com.markettwits.random_image.ui.ImageSourceUi
-import com.markettwits.waifupics.theame.theme.WaifuPicsTheme
 
 @Composable
 fun SourceAndResource(source : ImageSourceUi) {

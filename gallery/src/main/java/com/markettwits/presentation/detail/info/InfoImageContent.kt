@@ -19,21 +19,23 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.markettwits.core_ui.ApplicationViewModel
+import com.markettwits.core_ui.theame.theme.WaifuPicsTheme
 import com.markettwits.presentation.detail.GalleryScreenViewModel
 import com.markettwits.presentation.detail.button.EditButton
 import com.markettwits.presentation.detail.button.OpenAsButton
 import com.markettwits.presentation.detail.button.SaveButton
 import com.markettwits.presentation.detail.button.ShareButton
-import com.markettwits.waifupics.theame.theme.WaifuPicsTheme
 
 @Composable
 @Preview
@@ -55,6 +57,8 @@ private fun InfoImageContentPreviewDark() {
 fun InfoImageContent() {
     val viewModel : GalleryScreenViewModel.Base = ApplicationViewModel()
     val image = viewModel.infoAboutImage()
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
     Box(
         modifier = Modifier
             .padding(10.dp)

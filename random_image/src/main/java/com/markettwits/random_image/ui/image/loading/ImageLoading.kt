@@ -19,9 +19,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.markettwits.core_ui.R
+import com.markettwits.core_ui.theame.theme.WaifuPicsTheme
 import com.markettwits.waifupics.base.RoundedLinearProgressIndicator
 import com.markettwits.waifupics.theame.theme.Pink
-import com.markettwits.waifupics.theame.theme.WaifuPicsTheme
 
 
 @Composable

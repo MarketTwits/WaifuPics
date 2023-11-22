@@ -7,8 +7,8 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.markettwits.core.wrappers.SaveAndRestore
 import com.markettwits.core.wrappers.WrapBundle
 import com.markettwits.core_ui.setContentLocal
+import com.markettwits.core_ui.theame.theme.WaifuPicsTheme
 import com.markettwits.waifupics.core.MenuNavGraph
-import com.markettwits.waifupics.theame.theme.WaifuPicsTheme
 
 
 class MainActivity : ComponentActivity() {

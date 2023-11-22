@@ -15,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 
+@Deprecated("Use InfoImageBottomSheet")
 @Composable
 fun ItemDropDownMenu(
     setAs: () -> Unit,
