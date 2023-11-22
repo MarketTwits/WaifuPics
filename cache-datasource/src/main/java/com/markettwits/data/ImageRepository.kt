@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.map
 interface ImageRepository {
     suspend fun observe() : Flow<List<ImageFavoriteCache>>
     suspend fun saveToGallery(url: String)
-   //suspend fun addToFavorite(url: String, ageRating: Boolean)
     suspend fun addToFavorite(drawable: Drawable, networkUrl : String,protected : Boolean)
     suspend fun addOrDelete(image: Drawable, url : String, protected: Boolean)
     suspend fun fetch(): List<ImageFavoriteCache>

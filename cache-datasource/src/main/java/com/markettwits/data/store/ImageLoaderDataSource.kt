@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import android.media.ExifInterface
 import android.provider.MediaStore
 import android.util.Log
 import androidx.core.graphics.drawable.toBitmap
@@ -94,6 +95,8 @@ interface ImageLoaderDataSource {
                 outputStream = FileOutputStream(file)
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
                 val imagePath = file.absolutePath
+                //TODO refactor
+                setAuthorInExif(imagePath, metadata)
                 return ImageRepository.Base.SavedImageInfo(imagePath, metadata)
             } catch (e: IOException) {
                 e.printStackTrace()
@@ -105,6 +108,22 @@ interface ImageLoaderDataSource {
                 }
             }
             return ImageRepository.Base.SavedImageInfo("", "")
+        }
+
+        private fun setAuthorInExif(imagePath: String, author: String) {
+            try {
+                // Open the image file for writing Exif data
+                val exifInterface = ExifInterface(imagePath)
+
+                // Set the author information
+                exifInterface.setAttribute(ExifInterface.TAG_ARTIST, author)
+
+                // Save the changes
+                exifInterface.saveAttributes()
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
 
     }

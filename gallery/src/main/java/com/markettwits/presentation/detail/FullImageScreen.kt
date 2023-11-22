@@ -15,8 +15,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalContext
 import com.markettwits.core_ui.ApplicationViewModel
 import com.markettwits.core_ui.base_extensions.noRippleClickable
+import com.markettwits.data.ExifServiceWrapper
 import com.markettwits.presentation.detail.bottomBar.DownBarScreenImage
 import com.markettwits.presentation.detail.image.ImageContent
 import com.markettwits.presentation.detail.topbar.TopBarScreenImage
@@ -39,6 +41,7 @@ fun ImageScreenFull(
     }, initialPage = state.indexOf(currentImage))
     //viewModel.initScreen()
     val coroutineScope = rememberCoroutineScope()
+    val context = LocalContext.current
 
     Scaffold(
         modifier = Modifier
@@ -63,10 +66,12 @@ fun ImageScreenFull(
                             scaleY = zoomState.scale
                         )
                 ) { index ->
+                    val exif = ExifServiceWrapper.Base(context)
+                    exif.imagePath(state[index].imageUrl())
                     ImageContent(
                         imageUrl = state[index].imageUrl(),
                         paddingValues = it,
-                    ){
+                    ) {
                         viewModel.setCurrentItem(state[pagerState.currentPage])
                     }
                 }

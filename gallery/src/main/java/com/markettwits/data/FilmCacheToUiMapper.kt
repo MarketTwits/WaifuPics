@@ -1,22 +1,15 @@
 package com.markettwits.data
 
-import android.os.Build
-import android.util.Log
-import androidx.annotation.RequiresApi
-import androidx.compose.ui.text.toUpperCase
 import com.markettwits.models.ImageFavoriteCache
 import com.markettwits.presentation.detail.ImageFavoriteUi
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.Date
 import java.util.Locale
 
 interface FavoriteImageCacheToUiMapper {
     fun map(item : ImageFavoriteCache) : ImageFavoriteUi
     fun mapTime(time : Long) : String
-    class Base() : FavoriteImageCacheToUiMapper{
-        @RequiresApi(Build.VERSION_CODES.O)
+    class Base : FavoriteImageCacheToUiMapper{
         override fun map(item: ImageFavoriteCache): ImageFavoriteUi {
             return if (item.protected) {
                 ImageFavoriteUi.Protected(
