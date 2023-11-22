@@ -1,9 +1,9 @@
 package com.markettwits.random_image.data
 
 import com.markettwits.random_image.data.net.models.RandomImageItemCloud
-import com.markettwits.random_image.ui.AuthorUi
-import com.markettwits.random_image.ui.ImageSourceUi
-import com.markettwits.random_image.ui.RandomImageUiState
+import com.markettwits.random_image.presentation.AuthorUi
+import com.markettwits.random_image.presentation.ImageSourceUi
+import com.markettwits.random_image.presentation.RandomImageUiState
 
 interface RandomImageUiMapper {
     fun map(cloud: RandomImageItemCloud): RandomImageUiState

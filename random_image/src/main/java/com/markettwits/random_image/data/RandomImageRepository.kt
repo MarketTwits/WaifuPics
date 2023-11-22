@@ -3,9 +3,8 @@ package com.markettwits.random_image.data
 import android.graphics.drawable.Drawable
 import android.util.Log
 import com.markettwits.data.ImageRepository
-import com.markettwits.random_image.ui.ImageReportUi
-import com.markettwits.random_image.ui.RandomImageUiState
-import com.markettwits.waifupics.view.main.data.ImageLoader
+import com.markettwits.random_image.presentation.RandomImageUiState
+import com.markettwits.random_image.presentation.report_image.ImageReportUi
 import com.markettwits.waifupics.view.main.data.net.MakeService
 
 interface RandomImageRepository {

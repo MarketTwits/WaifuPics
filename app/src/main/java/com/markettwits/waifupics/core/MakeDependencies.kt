@@ -4,7 +4,7 @@ import android.content.Context
 import com.markettwits.core.Core
 import com.markettwits.core.sl.DependencyContainer
 import com.markettwits.core.wrappers.SaveAndRestoreState
-import com.markettwits.random_image.sl.RandomImageDependencyContainer
+import com.markettwits.random_image.di.RandomImageDependencyContainer
 import com.markettwits.sl.GalleryDependencyContainer
 import com.markettwits.sl.NavigationDependencyContainer
 
