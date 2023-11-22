@@ -4,16 +4,15 @@ import android.graphics.drawable.Drawable
 import androidx.lifecycle.ViewModel
 import com.markettwits.core.communication.StateCommunication
 import com.markettwits.core.wrappers.AsyncViewModel
-import com.markettwits.core_ui.image.ShareImage
 import com.markettwits.filter.ProtectedMapper
 import com.markettwits.filter.presentation.FilterCommunication
 import com.markettwits.random_image.data.RandomImageRepository
+import com.markettwits.random_image.ui.share_image.ShareImageAction
 import kotlinx.coroutines.flow.StateFlow
 
 interface ImageViewModel {
     fun loadedImageState(): StateFlow<LoadedImage>
     fun currentImage(image: Drawable, networkUrl: String, id: Int)
-    fun shareImage(imageUrl: String)
     fun shareImage()
     fun fetchRandomImage()
     fun addToFavorite()
@@ -27,7 +26,7 @@ interface ImageViewModel {
         private val randomImageCommunication: RandomImageCommunication,
         private val loadedImageCommunication: LoadedImageCommunication,
         private val repository: RandomImageRepository,
-        private val shareImage: ShareImage,
+        private val shareImageAction: ShareImageAction
     ) : ViewModel(), StateCommunication.State<RandomImageUiState>, ImageViewModel {
         init {
             randomImageCommunication.map(RandomImageUiState.Progress)
@@ -49,13 +48,8 @@ interface ImageViewModel {
             )
         }
 
-        @Deprecated("Actual variant with drawable, use shareImage()")
-        override fun shareImage(imageUrl: String) {
-            shareImage.shareImageUrl(imageUrl)
-        }
-
         override fun shareImage() {
-            shareImage.shareImageDrawable((loadedImageCommunication.state().value as LoadedImage.Loaded).image)
+            shareImageAction.shareImageDrawable((loadedImageCommunication.state().value as LoadedImage.Loaded).image)
         }
 
         override fun fetchRandomImage() {
@@ -101,7 +95,6 @@ interface RandomImageCommunication : StateCommunication.Mutable<RandomImageUiSta
         RandomImageCommunication
 }
 
-//data class LoadedImage(val id : Int, val image: Drawable, val networkUrl: String, val protected: Boolean)
 sealed class LoadedImage {
     data class Loaded(
         val id: Int,

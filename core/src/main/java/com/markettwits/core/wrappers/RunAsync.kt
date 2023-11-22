@@ -16,6 +16,8 @@ interface RunAsync {
         io: suspend () -> T,
         ui: (T) -> Unit
     )
+
+    fun <T : Any> runAsync(scope: CoroutineScope, io: suspend () -> T)
     fun clear()
     class Base(
         private val dispatchersList: DispatchersList
@@ -44,6 +46,12 @@ interface RunAsync {
                 withContext(dispatchersList.main()) {
                     ui.invoke(result)
                 }
+            }
+        }
+
+        override fun <T : Any> runAsync(scope: CoroutineScope,io: suspend () -> T) {
+            job = scope.launch(dispatchersList.io()) {
+                io.invoke()
             }
         }
 

@@ -1,21 +1,17 @@
 package com.markettwits.presentation.detail
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.markettwits.core.communication.StateCommunication
 import com.markettwits.core.wrappers.AsyncViewModel
-import com.markettwits.core_ui.image.ShareImage
+import com.markettwits.core_ui.image.ImageIntentAction
 import com.markettwits.data.GalleryRepository
-import com.markettwits.data.media_info.ExifServiceWrapper
 import com.markettwits.presentation.detail.info.MediaInfoUiState
 import com.markettwits.presentation.list.DetailCommunication
 import com.markettwits.presentation.list.GalleryCommunication
 import kotlinx.coroutines.flow.StateFlow
 
 interface GalleryScreenViewModel {
-    fun activePanel()
-    fun imagePanelState(): StateFlow<ImageControllerState>
-    fun initScreen()
+
     fun setImageAs()
     fun delete()
     fun infoAboutImage(): MediaInfoUiState
@@ -32,44 +28,31 @@ interface GalleryScreenViewModel {
         private val list: GalleryCommunication,
         private val async: AsyncViewModel<Unit>,
         private val repository: GalleryRepository,
-        private val imageControllerPanel: ImageControllerPanel,
-        private val shareImage: ShareImage,
-        private val exifServiceWrapper: ExifServiceWrapper
+        private val imageIntentAction: ImageIntentAction.Mutable,
     ) : ViewModel(), GalleryScreenViewModel {
         override fun state() = list.state()
         override fun shareImage() {
             val imageUrl = item.state().value.imageUrl()
-            shareImage.shareImageLocalUrl(imageUrl)
-            Log.d("mt05", "shareImage imageUrl: $imageUrl")
+            async.handleAsyncSingle {
+                imageIntentAction.shareImage(imageUrl)
+            }
         }
 
         override fun editImage() {
-            shareImage.edit(item.state().value.imageUrl())
+            async.handleAsyncSingle {
+                imageIntentAction.launchEditAs(item.state().value.imageUrl())
+            }
         }
-
-
-        override fun activePanel() {
-            async.handleAsync({ imageControllerPanel.changeState() }) {}
-        }
-
-        override fun imagePanelState(): StateFlow<ImageControllerState> {
-            return imageControllerPanel.state().state()
-        }
-
-        override fun initScreen() {
-            async.handleAsync({
-                imageControllerPanel.init()
-            }) {}
-        }
-
         override fun setImageAs() {
-            shareImage.useAs(item.state().value.imageUrl())
+            async.handleAsyncSingle{
+                imageIntentAction.launchUseAs(item.state().value.imageUrl())
+            }
         }
 
         override fun delete() {
-            async.handleAsync({
+            async.handleAsyncSingle {
                 repository.delete(item.state().value.imageUrl(), item.state().value.id())
-            }) {}
+            }
         }
 
         override fun infoAboutImage(): MediaInfoUiState =
@@ -79,11 +62,12 @@ interface GalleryScreenViewModel {
             item.map(image)
         }
 
-
         override fun saveToGallery() {
             async.handleAsync({
                 repository.saveToGallery(item.state().value.imageUrl())
-            }) {}
+            }) {
+                //TODO add callback
+            }
         }
 
         override fun currentImage() = item.state()

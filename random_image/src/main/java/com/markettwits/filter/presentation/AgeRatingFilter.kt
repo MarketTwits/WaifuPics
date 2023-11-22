@@ -33,10 +33,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.markettwits.core_ui.ApplicationViewModel
 import com.markettwits.core_ui.R
+import com.markettwits.core_ui.theame.theme.WaifuPicsTheme
 import com.markettwits.waifupics.base.BaseDivider
 import com.markettwits.waifupics.filter.presentation.FilterState
 import com.markettwits.waifupics.theame.theme.LightPink
-import com.markettwits.waifupics.theame.theme.WaifuPicsTheme
 
 @Composable
 @Preview

@@ -5,12 +5,10 @@ import com.markettwits.core.sl.Module
 import com.markettwits.core.wrappers.AsyncViewModel
 import com.markettwits.core.wrappers.DispatchersList
 import com.markettwits.core.wrappers.RunAsync
-import com.markettwits.core_ui.image.ShareImage
+import com.markettwits.core_ui.image.ImageFileWrapper
 import com.markettwits.data.GalleryRepository
-import com.markettwits.data.media_info.ExifServiceWrapper
 import com.markettwits.presentation.detail.GalleryScreenViewModel
-import com.markettwits.presentation.detail.ImageControllerPanel
-import com.markettwits.presentation.detail.ImageControllerPanelCommunication
+import com.markettwits.presentation.image_action.ImageIntentActionImpl
 import com.markettwits.presentation.list.DetailCommunication
 import com.markettwits.presentation.list.GalleryCommunication
 
@@ -27,12 +25,7 @@ class GalleryItemDetailModule(
             galleryCommunication,
             AsyncViewModel.Base(RunAsync.Base(DispatchersList.Base())),
             repository,
-            ImageControllerPanel.Base(
-                DispatchersList.Base(),
-                ImageControllerPanelCommunication.Base()
-            ),
-            ShareImage.Base(core.context()),
-            ExifServiceWrapper.Base()
+            ImageIntentActionImpl(core.context(),ImageFileWrapper.Base(core.context()))
         )
     }
 }

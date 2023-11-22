@@ -6,7 +6,7 @@ import com.markettwits.core.sl.Module
 import com.markettwits.core.wrappers.AsyncViewModel
 import com.markettwits.core.wrappers.DispatchersList
 import com.markettwits.core.wrappers.RunAsync
-import com.markettwits.core_ui.image.ShareImage
+import com.markettwits.core_ui.image.ImageFileWrapper
 import com.markettwits.data.ImageRepository
 import com.markettwits.data.mapper.ImageUiToCacheMapper
 import com.markettwits.data.store.ImageLoaderDataSource
@@ -18,6 +18,7 @@ import com.markettwits.random_image.data.RandomImageUiMapper
 import com.markettwits.random_image.ui.ImageViewModel
 import com.markettwits.random_image.ui.LoadedImageCommunication
 import com.markettwits.random_image.ui.RandomImageCommunication
+import com.markettwits.random_image.ui.share_image.ShareImageAction
 import com.markettwits.waifupics.view.main.data.net.MakeService
 
 class ImageViewModule(
@@ -44,6 +45,6 @@ class ImageViewModule(
                 RandomImageUiMapper.Base(),
                 repository,
             ),
-            ShareImage.Base(core.context()),
+            ShareImageAction.Base(core.context(), ImageFileWrapper.Base(core.context()))
         )
 }

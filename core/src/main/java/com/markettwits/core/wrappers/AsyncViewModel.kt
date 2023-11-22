@@ -5,6 +5,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 
 interface AsyncViewModel<T : Any> {
+     fun handleAsyncSingle(io : suspend () -> T)
      fun <T : Any> handleAsync(
         io: suspend () -> T,
         ui: (T) -> Unit
@@ -30,6 +31,8 @@ interface AsyncViewModel<T : Any> {
             io: suspend () -> T,
             ui: (T) -> Unit
         ) = runAsync.runAsync(io, ui)
+
+        override fun handleAsyncSingle(io: suspend () -> T)  = runAsync.runAsync(scope,io)
     }
     class Base<T : Any>(private val runAsync: RunAsync) : Abstract<T>(runAsync)
 }
