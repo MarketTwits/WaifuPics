@@ -5,12 +5,11 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
-import com.markettwits.navigation.LocalNavigationState
 import com.markettwits.navigation.MultiNavigationAppState
 import com.markettwits.navigation.Screen
 import com.markettwits.presentation.detail.ImageScreenFull
 import com.markettwits.presentation.list.GalleryScreen
-import com.markettwits.random_image.ui.MainScreen
+import com.markettwits.random_image.presentation.MainScreen
 import com.markettwits.waifupics.about.AboutScreen
 
 fun NavGraphBuilder.baseTabNavGraph(

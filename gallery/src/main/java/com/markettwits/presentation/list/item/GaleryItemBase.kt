@@ -1,14 +1,12 @@
 package com.markettwits.presentation.list.item
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -18,7 +16,7 @@ import coil.compose.AsyncImage
 import com.markettwits.core_ui.image.LocalImageLoader
 import run.nabla.gallerypicker.picker.GalleryPickerState
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GalleryItemBase(
     modifier: Modifier = Modifier,
@@ -43,14 +41,5 @@ fun GalleryItemBase(
             contentScale = ContentScale.Crop,
             contentDescription = null
         )
-    }
-}
-
-private fun loadImageBitmap(imagePath: String): Bitmap? {
-    return try {
-        BitmapFactory.decodeFile(imagePath)
-    } catch (e: Exception) {
-        e.printStackTrace()
-        null
     }
 }
