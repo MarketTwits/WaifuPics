@@ -43,4 +43,6 @@ dependencies {
     implementation(project(":navigation"))
     implementation(libs.zoomable)
     implementation("run.nabla:gallery-picker:1.4.5")
+    implementation(libs.androidx.exifinterface)
+
 }
