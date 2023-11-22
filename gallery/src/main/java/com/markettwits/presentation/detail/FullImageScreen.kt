@@ -2,6 +2,7 @@ package com.markettwits.presentation.detail
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.HorizontalPager
@@ -11,6 +12,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,7 +21,6 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import com.markettwits.core_ui.ApplicationViewModel
 import com.markettwits.core_ui.base_extensions.noRippleClickable
-import com.markettwits.data.ExifServiceWrapper
 import com.markettwits.presentation.detail.bottomBar.DownBarScreenImage
 import com.markettwits.presentation.detail.image.ImageContent
 import com.markettwits.presentation.detail.topbar.TopBarScreenImage
@@ -43,13 +45,18 @@ fun ImageScreenFull(
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
 
+    val barState = remember{
+        mutableStateOf(true)
+    }
     Scaffold(
         modifier = Modifier
             .noRippleClickable { viewModel.activePanel() },
         backgroundColor = MaterialTheme.colorScheme.background,
         topBar = {
+            if (barState.value)
                 TopBarScreenImage(viewModel)
         }, bottomBar = {
+            if (barState.value)
                 DownBarScreenImage(viewModel = viewModel)
         }) {
             Box(
@@ -61,13 +68,14 @@ fun ImageScreenFull(
                     state = pagerState,
                     modifier = Modifier
                         .zoomable(zoomState)
+                        .clickable {
+                            barState.value = !barState.value
+                        }
                         .graphicsLayer(
                             scaleX = zoomState.scale,
                             scaleY = zoomState.scale
                         )
                 ) { index ->
-                    val exif = ExifServiceWrapper.Base(context)
-                    exif.imagePath(state[index].imageUrl())
                     ImageContent(
                         imageUrl = state[index].imageUrl(),
                         paddingValues = it,
@@ -76,7 +84,7 @@ fun ImageScreenFull(
                     }
                 }
             }
-        }
+    }
 }
 
 

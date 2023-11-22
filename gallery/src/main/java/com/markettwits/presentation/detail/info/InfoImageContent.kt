@@ -16,10 +16,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AddPhotoAlternate
-import androidx.compose.material.icons.filled.MarkEmailRead
-import androidx.compose.material.icons.filled.PhotoAlbum
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,8 +27,11 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.markettwits.core_ui.ApplicationViewModel
+import com.markettwits.presentation.detail.GalleryScreenViewModel
 import com.markettwits.presentation.detail.button.EditButton
 import com.markettwits.presentation.detail.button.OpenAsButton
+import com.markettwits.presentation.detail.button.SaveButton
 import com.markettwits.presentation.detail.button.ShareButton
 import com.markettwits.waifupics.theame.theme.WaifuPicsTheme
 
@@ -54,6 +53,8 @@ private fun InfoImageContentPreviewDark() {
 
 @Composable
 fun InfoImageContent() {
+    val viewModel : GalleryScreenViewModel.Base = ApplicationViewModel()
+    val image = viewModel.infoAboutImage()
     Box(
         modifier = Modifier
             .padding(10.dp)
@@ -70,9 +71,20 @@ fun InfoImageContent() {
                 .fillMaxWidth()
                 .verticalScroll(rememberScrollState())
         ) {
-            MediaViewInfoActions()
-            ImageInfoDate("ноября 5, 2023 4:09 PM")
-            ImageInfoColum(mediaInfo())
+            MediaViewInfoActions(
+                onClickEdit = {
+                    viewModel.editImage()
+                }, onClickOpenAs = {
+                    viewModel.setImageAs()
+                }, onClickShare = {
+                    viewModel.shareImage()
+                },
+                onClickSave = {
+                    viewModel.saveToGallery()
+                }
+            )
+            ImageInfoDate(image.created)
+            ImageInfoColum(image.mediaInfo)
 
         }
     }
@@ -101,7 +113,12 @@ private fun ImageInfoColum(mediaInfoList: List<MediaInfo>){
     }
 }
 @Composable
-private fun MediaViewInfoActions(){
+private fun MediaViewInfoActions(
+    onClickShare : () -> Unit,
+    onClickOpenAs : () -> Unit,
+    onClickEdit : () -> Unit,
+    onClickSave : () -> Unit,
+){
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -109,18 +126,17 @@ private fun MediaViewInfoActions(){
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceEvenly,
     ) {
-        // Share Component
-        ShareButton(followTheme = true)
-        // Use as or Open With
-        OpenAsButton(followTheme = true)
-        // Edit
-        EditButton(followTheme = true)
+        ShareButton(){
+            onClickShare()
+        }
+        OpenAsButton(){
+            onClickOpenAs()
+        }
+        EditButton(){
+            onClickEdit()
+        }
+        SaveButton {
+            onClickSave()
+        }
     }
 }
-
-fun mediaInfo() = listOf(
-    MediaInfo(1, "Label", "Screenshot_202310105-2030230.jpg",Icons.Default.AddPhotoAlternate),
-    MediaInfo(2, "Metadata", "261,01KM 2,4 MP 1080 * 2280", Icons.Default.MarkEmailRead),
-    MediaInfo(3, "Path", "/storage/emulated/0/Pictures/Screenshots",Icons.Default.PhotoAlbum),
-)
-

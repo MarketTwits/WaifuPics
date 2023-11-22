@@ -8,10 +8,12 @@ import com.markettwits.data.FavoriteImageCacheToUiMapper
 import com.markettwits.data.GalleryRepository
 import com.markettwits.data.ImageRepository
 import com.markettwits.data.mapper.ImageUiToCacheMapper
+import com.markettwits.data.media_info.ExifServiceWrapper
+import com.markettwits.data.media_info.ImageInfoToUiMapper
 import com.markettwits.data.store.ImageLoaderDataSource
 import com.markettwits.data.store.ImagesCacheDataSource
-import com.markettwits.presentation.list.DetailCommunication
 import com.markettwits.presentation.detail.GalleryScreenViewModel
+import com.markettwits.presentation.list.DetailCommunication
 import com.markettwits.presentation.list.GalleryCommunication
 import com.markettwits.presentation.list.GalleryViewModel
 
@@ -28,6 +30,8 @@ class GalleryDependencyContainer(
             ImageLoaderDataSource.Base(core.context())
         ),
         FavoriteImageCacheToUiMapper.Base(),
+        ExifServiceWrapper.Base(),
+        ImageInfoToUiMapper.Base()
     )
 
     override fun module(className: Class<out ViewModel>) = when (className) {
