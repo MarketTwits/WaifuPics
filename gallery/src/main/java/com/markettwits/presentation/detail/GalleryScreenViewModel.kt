@@ -6,6 +6,8 @@ import com.markettwits.core.communication.StateCommunication
 import com.markettwits.core.wrappers.AsyncViewModel
 import com.markettwits.core_ui.image.ShareImage
 import com.markettwits.data.GalleryRepository
+import com.markettwits.data.media_info.ExifServiceWrapper
+import com.markettwits.presentation.detail.info.MediaInfoUiState
 import com.markettwits.presentation.list.DetailCommunication
 import com.markettwits.presentation.list.GalleryCommunication
 import kotlinx.coroutines.flow.StateFlow
@@ -16,13 +18,14 @@ interface GalleryScreenViewModel {
     fun initScreen()
     fun setImageAs()
     fun delete()
-    fun infoAboutImage()
+    fun infoAboutImage(): MediaInfoUiState
     fun setCurrentItem(image: ImageFavoriteUi)
     fun saveToGallery()
-    fun currentImage() : StateFlow<ImageFavoriteUi>
+    fun currentImage(): StateFlow<ImageFavoriteUi>
     fun state(): StateFlow<List<ImageFavoriteUi>>
     fun shareImage()
     fun editImage()
+
 
     class Base(
         private val item: DetailCommunication,
@@ -30,7 +33,8 @@ interface GalleryScreenViewModel {
         private val async: AsyncViewModel<Unit>,
         private val repository: GalleryRepository,
         private val imageControllerPanel: ImageControllerPanel,
-        private val shareImage : ShareImage,
+        private val shareImage: ShareImage,
+        private val exifServiceWrapper: ExifServiceWrapper
     ) : ViewModel(), GalleryScreenViewModel {
         override fun state() = list.state()
         override fun shareImage() {
@@ -68,12 +72,11 @@ interface GalleryScreenViewModel {
             }) {}
         }
 
-        override fun infoAboutImage() {
-            //TODO
-        }
+        override fun infoAboutImage(): MediaInfoUiState =
+             repository.infoAboutImage(item.state().value.imageUrl())
 
         override fun setCurrentItem(image: ImageFavoriteUi) {
-           item.map(image)
+            item.map(image)
         }
 
 
@@ -87,6 +90,8 @@ interface GalleryScreenViewModel {
 
     }
 }
-interface CurrentItemCommunication : StateCommunication.Mutable<ImageFavoriteUi>{
-    class Base : StateCommunication.Abstract<ImageFavoriteUi>(ImageFavoriteUi.Initial),  CurrentItemCommunication
+
+interface CurrentItemCommunication : StateCommunication.Mutable<ImageFavoriteUi> {
+    class Base : StateCommunication.Abstract<ImageFavoriteUi>(ImageFavoriteUi.Initial),
+        CurrentItemCommunication
 }

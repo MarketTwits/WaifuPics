@@ -12,6 +12,7 @@ import coil.ImageLoader
 import coil.request.ImageRequest
 import coil.request.SuccessResult
 import com.markettwits.data.ImageRepository
+import org.jetbrains.annotations.ApiStatus.Experimental
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -109,22 +110,16 @@ interface ImageLoaderDataSource {
             }
             return ImageRepository.Base.SavedImageInfo("", "")
         }
-
+        @Experimental
         private fun setAuthorInExif(imagePath: String, author: String) {
             try {
-                // Open the image file for writing Exif data
                 val exifInterface = ExifInterface(imagePath)
-
-                // Set the author information
                 exifInterface.setAttribute(ExifInterface.TAG_ARTIST, author)
-
-                // Save the changes
+                exifInterface.setAttribute(ExifInterface.TAG_FILE_SOURCE, author)
                 exifInterface.saveAttributes()
-
             } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
-
     }
 }

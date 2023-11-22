@@ -7,10 +7,11 @@ import com.markettwits.core.wrappers.DispatchersList
 import com.markettwits.core.wrappers.RunAsync
 import com.markettwits.core_ui.image.ShareImage
 import com.markettwits.data.GalleryRepository
-import com.markettwits.presentation.list.DetailCommunication
+import com.markettwits.data.media_info.ExifServiceWrapper
 import com.markettwits.presentation.detail.GalleryScreenViewModel
 import com.markettwits.presentation.detail.ImageControllerPanel
 import com.markettwits.presentation.detail.ImageControllerPanelCommunication
+import com.markettwits.presentation.list.DetailCommunication
 import com.markettwits.presentation.list.GalleryCommunication
 
 class GalleryItemDetailModule(
@@ -30,7 +31,8 @@ class GalleryItemDetailModule(
                 DispatchersList.Base(),
                 ImageControllerPanelCommunication.Base()
             ),
-            ShareImage.Base(core.context())
+            ShareImage.Base(core.context()),
+            ExifServiceWrapper.Base()
         )
     }
 }
