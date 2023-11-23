@@ -1,5 +1,8 @@
 package com.markettwits.random_image.data.net.models
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class RandomImageItemCloud(
     val color_dominant: List<Int>,
     val color_palette: List<List<Int>>,
@@ -11,6 +14,7 @@ data class RandomImageItemCloud(
     val source: String?,
     val rating : String
 ){
+    @Serializable
     data class ArtistCloud(
         val aliases: List<String>,
         val id: Int,
@@ -21,4 +25,5 @@ data class RandomImageItemCloud(
     data class TagCloud(val tag : String)
 
 }
+@Serializable
 data class RandomImageCloud(val items : List<RandomImageItemCloud>)
