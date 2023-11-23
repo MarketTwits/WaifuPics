@@ -9,11 +9,11 @@ import com.markettwits.core.sl.ViewModelsFactory
 import com.markettwits.core.wrappers.SaveAndRestore
 import com.markettwits.core.wrappers.SaveAndRestoreState
 import com.markettwits.core.wrappers.WrapBundle
-import com.markettwits.filter.data.StaticCacheDataSource
-import com.markettwits.filter.presentation.AgeRatingFilterCommunication
-import com.markettwits.filter.presentation.AgeRatingFilterViewModel
-import com.markettwits.filter.presentation.FilterCommunication
 import com.markettwits.random_image.domain.FilterChecked
+import com.markettwits.random_image.presentation.features.filter.data.StaticCacheDataSource
+import com.markettwits.random_image.presentation.features.filter.presentation.AgeRatingFilterCommunication
+import com.markettwits.random_image.presentation.features.filter.presentation.AgeRatingFilterViewModel
+import com.markettwits.random_image.presentation.features.filter.presentation.FilterCommunication
 
 class WaifuPicsApp : Application(), ProvideViewModel, SaveAndRestore {
 

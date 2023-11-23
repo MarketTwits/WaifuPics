@@ -17,5 +17,7 @@ interface NekoService {
     suspend fun report(
         @Path("id") id : Int
     )
-
+    companion object{
+        const val BASE_URL = "https://api.nekosapi.com/"
+    }
 }

@@ -10,22 +10,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CardElevation
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
@@ -44,17 +33,20 @@ import com.markettwits.waifupics.theame.theme.PurpleGrey40
 @OptIn(ExperimentalMaterial3Api::class)
 
 @Composable
-fun ProtectedAlertDialog(onSubmit : () -> Unit, onDismiss : () -> Unit) {
+fun ProtectedAlertDialog(onSubmit: () -> Unit, onDismiss: () -> Unit) {
     Dialog(onDismissRequest = { onDismiss() }) {
-        ProtectedAlertDialogLayout(onSubmit = {onSubmit()}, onDismiss = {onDismiss()})
+        ProtectedAlertDialogLayout(onSubmit = { onSubmit() }, onDismiss = { onDismiss() })
     }
 }
 
 @Composable
-private fun ProtectedAlertDialogLayout(modifier: Modifier = Modifier, onSubmit : () -> Unit, onDismiss : () -> Unit) {
+private fun ProtectedAlertDialogLayout(
+    modifier: Modifier = Modifier,
+    onSubmit: () -> Unit,
+    onDismiss: () -> Unit
+) {
     Card(
         shape = RoundedCornerShape(10.dp),
-        // modifier = modifier.size(280.dp, 240.dp)
         modifier = Modifier.padding(10.dp, 5.dp, 10.dp, 10.dp),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
@@ -64,8 +56,6 @@ private fun ProtectedAlertDialogLayout(modifier: Modifier = Modifier, onSubmit :
             modifier
                 .background(MaterialTheme.colorScheme.secondary)
         ) {
-
-            //.......................................................................
             Image(
                 painter = painterResource(id = R.drawable.ic_warning),
                 contentDescription = null, // decorative

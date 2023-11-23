@@ -2,36 +2,35 @@ package com.markettwits.random_image.data
 
 import android.graphics.drawable.Drawable
 import com.markettwits.data.ImageRepository
-import com.markettwits.random_image.presentation.RandomImageUiState
-import com.markettwits.random_image.presentation.report_image.ImageReportUi
-import com.markettwits.waifupics.view.main.data.net.MakeService
+import com.markettwits.random_image.data.cloud.HandleNetworkResult
+import com.markettwits.random_image.data.net.NekoService
+import com.markettwits.random_image.data.net.RandomImageMapperCloud
+import com.markettwits.random_image.presentation.features.report_image.ImageReportUi
+import com.markettwits.random_image.presentation.random_image_screen.RandomImageUiState
 
 interface RandomImageRepository {
     suspend fun reportImage(id : Int) : ImageReportUi
     suspend fun fetchRandomImage(filters: List<String>): RandomImageUiState
     suspend fun addToFavorite(image : Drawable, url : String,protected : Boolean)
     class Base(
-        private val service: MakeService,
-        private val mapper: RandomImageUiMapper,
+        private val service: NekoService,
+        private val imageMapperCloud: RandomImageMapperCloud,
+        private val reportedImageMapperCloud : ReportedImageMapperCloud,
+        private val async : HandleNetworkResult,
         private val cache : ImageRepository
     ) : RandomImageRepository {
         override suspend fun reportImage(id: Int): ImageReportUi {
-            return try {
-                service.service().report(id)
-                ImageReportUi("Sended")
-            }catch (e : Exception){
-                ImageReportUi("Can't send request : ${e.message}")
+            val result = async.tryRequest {
+                service.report(id)
             }
+            return result.map(reportedImageMapperCloud)
         }
 
         override suspend fun fetchRandomImage(filters: List<String>): RandomImageUiState {
-            return try {
-                val request = service.service().randomImage(filters)
-                val image = mapper.map(request.items[0])
-                image
-            } catch (e: Exception) {
-                RandomImageUiState.Error(e.message.toString())
+            val result = async.tryRequest {
+                service.randomImage(filters).items[0]
             }
+            return result.map(imageMapperCloud)
         }
 
         override suspend fun addToFavorite(image: Drawable, url: String, protected: Boolean) {

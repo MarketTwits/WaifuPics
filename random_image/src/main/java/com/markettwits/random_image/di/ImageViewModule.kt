@@ -11,15 +11,22 @@ import com.markettwits.data.ImageRepository
 import com.markettwits.data.mapper.ImageUiToCacheMapper
 import com.markettwits.data.store.ImageLoaderDataSource
 import com.markettwits.data.store.ImagesCacheDataSource
-import com.markettwits.filter.ProtectedMapper
-import com.markettwits.filter.presentation.FilterCommunication
 import com.markettwits.random_image.data.RandomImageRepository
-import com.markettwits.random_image.data.RandomImageUiMapper
-import com.markettwits.random_image.presentation.ImageViewModel
-import com.markettwits.random_image.presentation.LoadedImageCommunication
-import com.markettwits.random_image.presentation.RandomImageCommunication
-import com.markettwits.random_image.presentation.share_image.ShareImageAction
-import com.markettwits.waifupics.view.main.data.net.MakeService
+import com.markettwits.random_image.data.ReportedImageMapperCloud
+import com.markettwits.random_image.data.cloud.ExceptionMapper
+import com.markettwits.random_image.data.cloud.HandleNetworkResult
+import com.markettwits.random_image.data.cloud.OkkHttpWrapper
+import com.markettwits.random_image.data.cloud.RetrofitFactory
+import com.markettwits.random_image.data.net.NekoService
+import com.markettwits.random_image.data.net.RandomImageMapperCloud
+import com.markettwits.random_image.presentation.features.filter.ProtectedMapper
+import com.markettwits.random_image.presentation.features.filter.presentation.FilterCommunication
+import com.markettwits.random_image.presentation.features.share_image.ShareImageAction
+import com.markettwits.random_image.presentation.random_image_screen.ImageViewModel
+import com.markettwits.random_image.presentation.random_image_screen.LoadedImageCommunication
+import com.markettwits.random_image.presentation.random_image_screen.RandomImageCommunication
+import kotlinx.serialization.json.Json
+import okhttp3.OkHttpClient
 
 class ImageViewModule(
     private val core: Core,
@@ -41,10 +48,20 @@ class ImageViewModule(
             RandomImageCommunication.Base(),
             LoadedImageCommunication.Base(),
             RandomImageRepository.Base(
-                MakeService.Base(),
-                RandomImageUiMapper.Base(),
+                RetrofitFactory.Base(NekoService.BASE_URL, provideClient(), provideJson()).create(NekoService::class.java),
+                RandomImageMapperCloud(),
+                ReportedImageMapperCloud(),
+                HandleNetworkResult.Base(ExceptionMapper()),
                 repository,
             ),
             ShareImageAction.Base(core.context(), ImageFileWrapper.Base(core.context()))
         )
+    private fun provideClient(): OkHttpClient {
+        return OkkHttpWrapper.Base().client()
+    }
+    private fun provideJson(): Json {
+        return Json {
+            ignoreUnknownKeys = true
+        }
+    }
 }

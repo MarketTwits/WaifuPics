@@ -3,8 +3,8 @@ package com.markettwits.waifupics.core
 import androidx.lifecycle.ViewModel
 import com.markettwits.core.Core
 import com.markettwits.core.sl.DependencyContainer
+import com.markettwits.di.NavigationModule
 import com.markettwits.presentation.NavigationViewModel
-import com.markettwits.sl.NavigationModule
 
 class BaseDependencyContainer(
     private val core: Core,

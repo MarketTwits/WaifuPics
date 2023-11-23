@@ -9,7 +9,7 @@ import com.markettwits.navigation.MultiNavigationAppState
 import com.markettwits.navigation.Screen
 import com.markettwits.presentation.detail.ImageScreenFull
 import com.markettwits.presentation.list.GalleryScreen
-import com.markettwits.random_image.presentation.MainScreen
+import com.markettwits.random_image.presentation.random_image_screen.MainScreen
 import com.markettwits.waifupics.about.AboutScreen
 
 fun NavGraphBuilder.baseTabNavGraph(
@@ -21,7 +21,7 @@ fun NavGraphBuilder.baseTabNavGraph(
         route = route
     ) {
         composable(route = Screen.Main.route()) {
-            MainScreen(firstRun = false)
+            MainScreen()
         }
         composable(route = Screen.About.route()) {
             AboutScreen()

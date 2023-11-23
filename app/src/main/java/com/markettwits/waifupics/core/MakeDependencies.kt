@@ -4,9 +4,9 @@ import android.content.Context
 import com.markettwits.core.Core
 import com.markettwits.core.sl.DependencyContainer
 import com.markettwits.core.wrappers.SaveAndRestoreState
+import com.markettwits.di.GalleryDependencyContainer
+import com.markettwits.di.NavigationDependencyContainer
 import com.markettwits.random_image.di.RandomImageDependencyContainer
-import com.markettwits.sl.GalleryDependencyContainer
-import com.markettwits.sl.NavigationDependencyContainer
 
 interface MakeDependencies {
     fun dependencies(): DependencyContainer
