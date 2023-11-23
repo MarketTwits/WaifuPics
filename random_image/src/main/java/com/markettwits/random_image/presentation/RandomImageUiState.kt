@@ -3,11 +3,11 @@ package com.markettwits.random_image.presentation
 import androidx.compose.runtime.Composable
 import com.markettwits.filter.presentation.BottomSheetFilter
 import com.markettwits.random_image.presentation.bottom_pannel.BottomPanel
+import com.markettwits.random_image.presentation.image.fuckup.ImageFuckup
 import com.markettwits.random_image.presentation.image.loading.ImageLoading
 import com.markettwits.random_image.presentation.image.suceess.ImageCard
 import com.markettwits.random_image.presentation.image_info.image_card_info.success.ImageInfoCardEmptyAuthor
 import com.markettwits.random_image.presentation.image_info.image_card_info.success.ImageInfoCardWitAuthor
-import com.markettwits.waifupics.view.main.ui.image.fuckup.ImageFuckup
 import com.markettwits.waifupics.view.main.ui.image_info.image_card_info.loading.ImageCardInfoLoading
 
 interface RandomImageUiState {
@@ -27,7 +27,7 @@ interface RandomImageUiState {
     data class Error(private val message: String) : RandomImageUiState {
         @Composable
         override fun Handle(firstRun: Boolean) {
-            ImageFuckup()
+            ImageFuckup(message)
             BottomPanel()
             BottomSheetFilter(firstRun)
         }
