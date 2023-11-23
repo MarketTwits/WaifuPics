@@ -11,6 +11,7 @@ import com.markettwits.random_image.presentation.share_image.ShareImageAction
 import kotlinx.coroutines.flow.StateFlow
 
 interface ImageViewModel {
+
     fun loadedImageState(): StateFlow<LoadedImage>
     fun currentImage(image: Drawable, networkUrl: String, id: Int)
     fun shareImage()

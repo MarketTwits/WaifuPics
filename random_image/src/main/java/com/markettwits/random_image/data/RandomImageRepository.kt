@@ -1,7 +1,6 @@
 package com.markettwits.random_image.data
 
 import android.graphics.drawable.Drawable
-import android.util.Log
 import com.markettwits.data.ImageRepository
 import com.markettwits.random_image.presentation.RandomImageUiState
 import com.markettwits.random_image.presentation.report_image.ImageReportUi
@@ -21,7 +20,7 @@ interface RandomImageRepository {
                 service.service().report(id)
                 ImageReportUi("Sended")
             }catch (e : Exception){
-                ImageReportUi("Can't send requst : ${e.message}")
+                ImageReportUi("Can't send request : ${e.message}")
             }
         }
 
@@ -31,7 +30,6 @@ interface RandomImageRepository {
                 val image = mapper.map(request.items[0])
                 image
             } catch (e: Exception) {
-                Log.d("mt05", "repository: " + e.message.toString())
                 RandomImageUiState.Error(e.message.toString())
             }
         }
