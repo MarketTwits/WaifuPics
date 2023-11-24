@@ -1,7 +1,7 @@
 package com.markettwits.di
 
 import androidx.lifecycle.ViewModel
-import com.markettwits.core.sl.DependencyContainer
+import com.markettwits.core.di.DependencyContainer
 import com.markettwits.presentation.HandleNavigation
 import com.markettwits.presentation.NavigationViewModel
 

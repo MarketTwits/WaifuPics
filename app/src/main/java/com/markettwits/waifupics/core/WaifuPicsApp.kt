@@ -4,20 +4,15 @@ import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
-import com.markettwits.core.sl.ProvideViewModel
-import com.markettwits.core.sl.ViewModelsFactory
+import com.markettwits.core.di.ProvideViewModel
+import com.markettwits.core.di.ViewModelsFactory
 import com.markettwits.core.wrappers.SaveAndRestore
 import com.markettwits.core.wrappers.SaveAndRestoreState
 import com.markettwits.core.wrappers.WrapBundle
-import com.markettwits.random_image.domain.FilterChecked
-import com.markettwits.random_image.presentation.features.filter.data.StaticCacheDataSource
-import com.markettwits.random_image.presentation.features.filter.presentation.AgeRatingFilterCommunication
-import com.markettwits.random_image.presentation.features.filter.presentation.AgeRatingFilterViewModel
-import com.markettwits.random_image.presentation.features.filter.presentation.FilterCommunication
 
 class WaifuPicsApp : Application(), ProvideViewModel, SaveAndRestore {
 
-    private lateinit var ageRativgViewModel : AgeRatingFilterViewModel
+//    private lateinit var ageRativgViewModel : AgeRatingFilterViewModel
 
 
     private lateinit var viewModelFactory: ViewModelsFactory
@@ -27,13 +22,13 @@ class WaifuPicsApp : Application(), ProvideViewModel, SaveAndRestore {
         val make = MakeDependencies.Base(this, saveAndRestoreState)
         viewModelFactory = ViewModelsFactory(make.dependencies())
 
-        ageRativgViewModel = AgeRatingFilterViewModel(
-            FilterChecked.Base(),
-            AgeRatingFilterCommunication.Base(),
-            FilterCommunication.Base(),
-            StaticCacheDataSource.Base(),
-            saveAndRestoreState
-        )
+//        ageRativgViewModel = AgeRatingFilterViewModel(
+//            FilterChecked.Base(),
+//            AgeRatingFilterCommunication.Base(),
+//            FilterCommunication.Base(),
+//            StaticCacheDataSource.Base(),
+//            saveAndRestoreState
+//        )
 
     }
     override fun <T : ViewModel> viewModel(owner: ViewModelStoreOwner, className: Class<T>): T {

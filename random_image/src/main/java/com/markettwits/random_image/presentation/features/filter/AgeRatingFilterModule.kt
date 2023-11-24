@@ -1,7 +1,7 @@
 package com.markettwits.random_image.presentation.features.filter
 
 import com.markettwits.core.Core
-import com.markettwits.core.sl.Module
+import com.markettwits.core.di.Module
 import com.markettwits.random_image.domain.FilterChecked
 import com.markettwits.random_image.presentation.features.filter.data.StaticCacheDataSource
 import com.markettwits.random_image.presentation.features.filter.presentation.AgeRatingFilterCommunication

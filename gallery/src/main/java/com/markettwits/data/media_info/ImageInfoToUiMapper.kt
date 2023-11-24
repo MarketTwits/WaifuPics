@@ -1,6 +1,6 @@
 package com.markettwits.data.media_info
 
-import com.markettwits.presentation.detail.info.MediaInfoUiState
+import com.markettwits.presentation.screens.detail.info.MediaInfoUiState
 
 interface ImageInfoToUiMapper {
     fun map(image: ExifAttributes): MediaInfoUiState

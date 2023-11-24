@@ -12,9 +12,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import com.markettwits.core_ui.ApplicationViewModel
 import com.markettwits.navigation.LocalNavigationState
-import com.markettwits.navigation.MultiNavigationAppState
-import com.markettwits.presentation.top_bar.NavigationBody
-import com.markettwits.presentation.top_bar.TopBarPanel
+import com.markettwits.presentation.menu.NavigationBody
+import com.markettwits.presentation.menu.TopBarPanel
 import kotlinx.coroutines.launch
 import me.onebone.toolbar.CollapsingToolbarScaffold
 import me.onebone.toolbar.ScrollStrategy
@@ -26,7 +25,6 @@ fun NavigationScreen(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) {
-    val navigationState = LocalNavigationState.baseNavigation
     val viewModel: NavigationViewModel = ApplicationViewModel()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -35,12 +33,12 @@ fun NavigationScreen(
         toolbar = {
             TopBarPanel(
                 drawerState = drawerState,
-            ) { viewModel.toggleMenu(scope, drawerState) }
+            ) {
+                viewModel.toggleMenu(scope, drawerState)
+            }
         }) {
         DrawerContent(
             drawerState = drawerState,
-            navigationState = navigationState,
-            viewModel = viewModel,
             content
         )
     }
@@ -65,8 +63,6 @@ fun SurfaceLayout(
 @Composable
 fun DrawerContent(
     drawerState: DrawerState,
-    navigationState: MultiNavigationAppState,
-    viewModel: NavigationViewModel,
     content: @Composable () -> Unit
 ) {
     val scope = rememberCoroutineScope()

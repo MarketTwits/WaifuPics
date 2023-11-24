@@ -1,7 +1,7 @@
 package com.markettwits.data
 
-import com.markettwits.models.ImageFavoriteCache
-import com.markettwits.presentation.detail.ImageFavoriteUi
+import com.markettwits.domain.ImageFavoriteCache
+import com.markettwits.presentation.screens.detail.ImageFavoriteUi
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale

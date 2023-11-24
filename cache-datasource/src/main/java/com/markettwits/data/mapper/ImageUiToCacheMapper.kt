@@ -2,7 +2,7 @@ package com.markettwits.data.mapper
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.markettwits.models.ImageFavoriteRealmCache
+import com.markettwits.data.entities.ImageFavoriteRealmCache
 import java.time.LocalDateTime
 
 interface ImageUiToCacheMapper {

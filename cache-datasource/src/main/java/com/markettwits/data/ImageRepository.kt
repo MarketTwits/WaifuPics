@@ -4,7 +4,7 @@ import android.graphics.drawable.Drawable
 import com.markettwits.data.mapper.ImageUiToCacheMapper
 import com.markettwits.data.store.ImageLoaderDataSource
 import com.markettwits.data.store.ImagesCacheDataSource
-import com.markettwits.models.ImageFavoriteCache
+import com.markettwits.domain.ImageFavoriteCache
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -31,11 +31,6 @@ interface ImageRepository {
         override suspend fun saveToGallery(url: String) {
             image.saveToGallery(url)
         }
-//        override suspend fun addToFavorite(url: String, ageRating: Boolean) {
-//            val file = image.loadImage(url)
-//            database.write(uiToCache.map(url, file, ageRating))
-//            database.observeFavoriteImages()
-//        }
 
         override suspend fun addToFavorite(drawable: Drawable,networkUrl : String, protected: Boolean) {
             val file = image.loadImage(drawable)
