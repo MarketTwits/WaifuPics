@@ -3,6 +3,16 @@
 kotlin = "1.9.10"
 gradle = "8.1.1"
 
+#SDK
+
+compileSdk = "34"
+minSdk = "24"
+targetSdk = "34"
+namespace = "com.markettwits.waifupics"
+jvm = "8"
+jvm-dot = "1.8"
+
+
 # Compose
 compose = "1.5.3"
 compose-ui = "1.5.1"
@@ -40,10 +50,11 @@ nabla-gallery = "1.4.5"
 realm = "1.11.0"
 #Codegen
 ksp = "1.9.10-1.0.13"
-#Serialization
+
 #Serialization
 kotlinx-serialization = "1.4.1"
 jakewharton = "0.8.0"
+
 org-jetbrains-kotlin-jvm = "1.8.0"
 
 [libraries]
@@ -65,7 +76,7 @@ onebone-toolbar = {group = "me.onebone", name = "toolbar-compose", version.ref =
 android-lifecycle-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "android-lifecycle-ktx" }
 realm-gradle-plugin = { module = "io.realm:realm-gradle-plugin", version.ref = "realm-gradle-plugin" }
 zoomable = { group = "net.engawapg.lib", name = "zoomable", version.ref = "zoomable" }
-androidx-exifinterface = { group = "androidx.exifinterface", name = "exifinterface", version.ref = "exifinterface" }
+#androidx-exifinterface = { group = "androidx.exifinterface", name = "exifinterface", version.ref = "exifinterface" }
 
 junit = {group = "junit", name = "junit",version.ref = "junit"}
 junit-ext-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junit-ext-ktx" }
@@ -96,6 +107,7 @@ kotlin-gradle = {module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.r
 
 kotlin-serialization =  {id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin"}
 android-library = { id = "com.android.library", version.ref = "gradle" }
+android-application = {id = "com.android.application", version.ref = "gradle"}
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize",  version.ref = "kotlin"}
 realm = {id = "io.realm.kotlin", version.ref = "realm"}

@@ -1,16 +1,6 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
-plugins {
-    id("com.android.application") version "8.1.1" apply false
-    id("org.jetbrains.kotlin.android") version "1.9.10" apply false
-    id("com.android.library") version "8.1.1" apply false
-    id("org.jetbrains.kotlin.plugin.parcelize") version "1.9.10" apply false
-    alias(libs.plugins.ksp) apply false
-    alias(libs.plugins.org.jetbrains.kotlin.jvm) apply false
-}
-
-buildscript {
-    dependencies {
-        classpath(libs.realm.gradle.plugin)
-    }
+tasks.withType<Wrapper>().configureEach {
+    distributionType = Wrapper.DistributionType.BIN
+    gradleVersion = libs.versions.gradle.get()
 }
