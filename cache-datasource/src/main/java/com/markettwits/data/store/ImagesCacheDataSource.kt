@@ -1,7 +1,7 @@
 package com.markettwits.data.store
 
 import com.markettwits.core.RealmDatabaseProvider
-import com.markettwits.models.ImageFavoriteRealmCache
+import com.markettwits.data.entities.ImageFavoriteRealmCache
 import io.realm.kotlin.ext.query
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

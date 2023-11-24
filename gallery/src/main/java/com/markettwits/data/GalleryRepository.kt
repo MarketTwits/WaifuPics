@@ -2,8 +2,8 @@ package com.markettwits.data
 
 import com.markettwits.data.media_info.ExifServiceWrapper
 import com.markettwits.data.media_info.ImageInfoToUiMapper
-import com.markettwits.presentation.detail.ImageFavoriteUi
-import com.markettwits.presentation.detail.info.MediaInfoUiState
+import com.markettwits.presentation.screens.detail.ImageFavoriteUi
+import com.markettwits.presentation.screens.detail.info.MediaInfoUiState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

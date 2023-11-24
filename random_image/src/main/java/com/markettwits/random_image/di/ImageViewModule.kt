@@ -2,7 +2,7 @@ package com.markettwits.random_image.di
 
 import com.markettwits.core.Core
 import com.markettwits.core.RealmDatabaseProvider
-import com.markettwits.core.sl.Module
+import com.markettwits.core.di.Module
 import com.markettwits.core.wrappers.AsyncViewModel
 import com.markettwits.core.wrappers.DispatchersList
 import com.markettwits.core.wrappers.RunAsync

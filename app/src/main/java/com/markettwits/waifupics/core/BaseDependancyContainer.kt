@@ -2,7 +2,7 @@ package com.markettwits.waifupics.core
 
 import androidx.lifecycle.ViewModel
 import com.markettwits.core.Core
-import com.markettwits.core.sl.DependencyContainer
+import com.markettwits.core.di.DependencyContainer
 import com.markettwits.di.NavigationModule
 import com.markettwits.presentation.NavigationViewModel
 

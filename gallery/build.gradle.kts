@@ -1,4 +1,3 @@
-@Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
@@ -37,12 +36,8 @@ android {
 }
 
 dependencies {
-    implementation("androidx.compose.runtime:runtime-livedata:1.5.2")
     implementation(project(":cache-datasource"))
     implementation(project(":core-ui"))
-    implementation(project(":navigation"))
     implementation(libs.zoomable)
     implementation("run.nabla:gallery-picker:1.4.5")
-    implementation(libs.androidx.exifinterface)
-
 }

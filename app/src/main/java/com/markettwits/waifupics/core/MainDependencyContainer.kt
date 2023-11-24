@@ -2,8 +2,8 @@ package com.markettwits.waifupics.core
 
 import androidx.lifecycle.ViewModel
 import com.markettwits.core.Core
-import com.markettwits.core.sl.DependencyContainer
-import com.markettwits.core.sl.Module
+import com.markettwits.core.di.DependencyContainer
+import com.markettwits.core.di.Module
 
 class MainDependencyContainer(
     private val core: Core,

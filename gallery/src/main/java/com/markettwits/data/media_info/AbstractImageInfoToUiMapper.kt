@@ -4,7 +4,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddPhotoAlternate
 import androidx.compose.material.icons.filled.MarkEmailRead
 import androidx.compose.material.icons.filled.PhotoAlbum
-import com.markettwits.presentation.detail.info.MediaInfo
+import com.markettwits.presentation.screens.detail.info.MediaInfo
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
