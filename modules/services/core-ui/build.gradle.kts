@@ -9,9 +9,8 @@ android {
 
 dependencies {
     api("androidx.core:core-splashscreen:1.0.1")
-    api(project(path = ":modules:services:core"))
+    api(project(":modules:services:core"))
     api(libs.bundles.composeUiBundle)
     api(libs.junit.ext.ktx)
     debugApi(libs.bundles.composeUiBundleDebug)
-
 }

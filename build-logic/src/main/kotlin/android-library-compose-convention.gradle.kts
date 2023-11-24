@@ -1,8 +1,3 @@
-import com.android.build.gradle.BaseExtension
-import com.android.build.gradle.LibraryExtension
-import org.gradle.kotlin.dsl.configure
-import org.jetbrains.kotlin.gradle.plugin.mpp.pm20.util.libsDirectory
-
 plugins {
     id("com.android.library")
     id("base-android-convention")

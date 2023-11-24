@@ -1,38 +1,10 @@
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
-    id("kotlin-parcelize")
+    id("android-application-convention")
 }
 
 android {
 
-    namespace = Config.SDK.namespace
-    compileSdk = Config.SDK.compileSdk
-
-    defaultConfig {
-        applicationId = Config.SDK.namespace
-        minSdk = Config.SDK.minSdk
-        targetSdk = Config.SDK.targetSdk
-        versionCode = 1
-        versionName = "1.0"
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
-    }
-    kotlin{
-        jvmToolchain(Config.JDK.jvm)
-    }
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
+    namespace = libs.versions.namespace.get()
 
     buildFeatures {
         compose = true

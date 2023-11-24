@@ -1,7 +1,8 @@
 import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.LibraryExtension
+import localLibs
 import org.gradle.kotlin.dsl.configure
-import org.jetbrains.kotlin.gradle.plugin.mpp.pm20.util.libsDirectory
+import org.gradle.kotlin.dsl.getByType
 
 configure<BaseExtension>{
     val extension = extensions.getByType<LibraryExtension>()
