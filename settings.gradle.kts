@@ -13,6 +13,8 @@ dependencyResolutionManagement {
     }
 }
 
+includeBuild("build-logic")
+
 rootProject.name = "WaifuPics"
 include(":app")
 include(":modules:services:core")
