@@ -34,6 +34,7 @@ core-ktx = "1.9.0"
 #UI
 appcompat = "1.6.1"
 material = "1.9.0"
+nabla-gallery = "1.4.5"
 
 #Database
 realm = "1.11.0"
@@ -75,6 +76,7 @@ kotlinx-serialization-core = {group = "org.jetbrains.kotlinx", name = "kotlinx-s
 kotlinx-serialization-json = {group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinx-serialization"}
 jakewharton = {group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version.ref = "jakewharton"}
 
+#Data
 retrofit = {group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit"}
 retrofit-converter = {group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit"}
 okkhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okkhttp"}
@@ -83,8 +85,10 @@ core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx
 realm = {group =  "io.realm.kotlin", name = "library-base", version.ref = "realm"}
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
+#UI
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+nabla-gallery = {group = "run.nabla", name = "gallery-picker", version.ref = "nabla-gallery"}
 
 [plugins]
 
