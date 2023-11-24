@@ -1,4 +1,4 @@
- pluginManagement {
+pluginManagement {
     repositories {
         google()
         mavenCentral()
@@ -15,10 +15,10 @@ dependencyResolutionManagement {
 
 rootProject.name = "WaifuPics"
 include(":app")
-include(":core")
-include(":core-ui")
-include(":navigation")
-include(":random_image")
-include(":gallery")
-include(":cache-datasource")
-include(":about")
+include(":modules:services:core")
+include(":modules:services:core-ui")
+include(":modules:services:cache-datasource")
+include(":modules:features:gallery")
+include(":modules:features:random_image")
+include(":modules:features:about")
+include(":modules:features:navigation")

@@ -1,20 +1,15 @@
+
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id("kotlin-parcelize")
 }
 
 android {
-
-    namespace = Config.SDK.namespace
+    namespace = "com.markettwits.core_ui"
     compileSdk = Config.SDK.compileSdk
 
     defaultConfig {
-        applicationId = Config.SDK.namespace
         minSdk = Config.SDK.minSdk
-        targetSdk = Config.SDK.targetSdk
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -33,23 +28,20 @@ android {
             )
         }
     }
-
     buildFeatures {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.asProvider().get()
+        kotlinCompilerExtensionVersion  = libs.versions.compose.asProvider().get()
     }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
+
 }
 
 dependencies {
-    implementation(project(path = ":modules:features:random_image"))
-    implementation(project(path = ":modules:services:core-ui"))
-    implementation(project(path = ":modules:features:navigation"))
-    implementation(project(path = ":modules:features:gallery"))
+    api("androidx.core:core-splashscreen:1.0.1")
+    api(project(path = ":modules:services:core"))
+    api(libs.bundles.composeUiBundle)
+    api(libs.junit.ext.ktx)
+    debugApi(libs.bundles.composeUiBundleDebug)
+
 }

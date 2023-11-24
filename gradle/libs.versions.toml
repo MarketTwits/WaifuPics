@@ -43,6 +43,7 @@ ksp = "1.9.10-1.0.13"
 #Serialization
 kotlinx-serialization = "1.4.1"
 jakewharton = "0.8.0"
+org-jetbrains-kotlin-jvm = "1.8.0"
 
 [libraries]
 compose-ui = { group = "androidx.compose", name = "ui:ui", version.ref = "compose" }
@@ -93,6 +94,7 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize",  version.ref = "kotlin"}
 realm = {id = "io.realm.kotlin", version.ref = "realm"}
 ksp = {id = "com.google.devtools.ksp", version.ref = "ksp"}
+org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "org-jetbrains-kotlin-jvm" }
 
 
 [bundles]
