@@ -1,6 +1,5 @@
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.android.library.convention)
     alias(libs.plugins.realm)
     alias(libs.plugins.ksp)
 }
@@ -8,27 +7,6 @@ plugins {
 
 android {
     namespace = "com.markettwits.cache_datasource"
-    compileSdk = Config.SDK.compileSdk
-
-    defaultConfig {
-        minSdk = Config.SDK.minSdk
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
-    kotlin{
-        jvmToolchain(Config.JDK.jvm)
-    }
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-
 }
 
 dependencies {

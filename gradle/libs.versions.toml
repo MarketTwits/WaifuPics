@@ -90,6 +90,8 @@ appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "a
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 nabla-gallery = {group = "run.nabla", name = "gallery-picker", version.ref = "nabla-gallery"}
 
+android-gradle = {module = "com.android.tools.build:gradle", version.ref = "gradle"}
+kotlin-gradle = {module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin"}
 [plugins]
 
 kotlin-serialization =  {id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin"}
@@ -99,6 +101,10 @@ kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize",  version.ref 
 realm = {id = "io.realm.kotlin", version.ref = "realm"}
 ksp = {id = "com.google.devtools.ksp", version.ref = "ksp"}
 org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "org-jetbrains-kotlin-jvm" }
+
+#Convention Plugins
+android-library-convention = {id = "android-library-convention", version = "unspecified"}
+android-library-compose-convention = {id = "android-library-compose-convention", version = "unspecified"}
 
 
 [bundles]

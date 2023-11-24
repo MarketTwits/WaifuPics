@@ -1,40 +1,10 @@
 
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.android.library.compose.convention)
 }
 
 android {
     namespace = "com.markettwits.core_ui"
-    compileSdk = Config.SDK.compileSdk
-
-    defaultConfig {
-        minSdk = Config.SDK.minSdk
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
-    }
-    kotlin{
-        jvmToolchain(Config.JDK.jvm)
-    }
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion  = libs.versions.compose.asProvider().get()
-    }
-
 }
 
 dependencies {
