@@ -39,8 +39,9 @@ android {
 
 dependencies {
 
-    implementation(project(path = ":modules:services:core-ui"))
+    implementation(project(":modules:services:core-ui"))
     implementation(project(":modules:services:cache-datasource"))
+    implementation(project(":modules:services:image_action"))
     implementation(libs.bundles.network)
     implementation(libs.zoomable)
 }

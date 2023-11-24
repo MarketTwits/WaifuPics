@@ -3,8 +3,8 @@ package com.markettwits.presentation.screens.detail
 import androidx.lifecycle.ViewModel
 import com.markettwits.core.communication.StateCommunication
 import com.markettwits.core.wrappers.AsyncViewModel
-import com.markettwits.core_ui.image.ImageIntentAction
 import com.markettwits.data.GalleryRepository
+import com.markettwits.image_action.api.ImageIntentAction
 import com.markettwits.presentation.navigation.GalleryNavigation
 import com.markettwits.presentation.screens.detail.info.MediaInfoUiState
 import com.markettwits.presentation.screens.list.DetailCommunication

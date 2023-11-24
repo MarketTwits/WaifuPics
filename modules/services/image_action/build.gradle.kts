@@ -1,11 +1,11 @@
+@Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
-    namespace = "com.markettwits.gallery"
+    namespace = "com.markettwits.image_action"
     compileSdk = Config.SDK.compileSdk
 
     defaultConfig {
@@ -14,9 +14,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
-    kotlin{
-        jvmToolchain(Config.JDK.jvm)
-    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -26,19 +24,18 @@ android {
             )
         }
     }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion  = libs.versions.compose.asProvider().get()
-    }
 
+    kotlin{
+        jvmToolchain(Config.JDK.jvm)
+    }
 }
 
 dependencies {
-    implementation(project(":modules:services:cache-datasource"))
-    implementation(project(":modules:services:core-ui"))
-    implementation(project(":modules:services:image_action"))
-    implementation(libs.nabla.gallery)
-    implementation(libs.zoomable)
+
+    implementation(libs.core.ktx)
+    implementation(libs.appcompat)
+    implementation(libs.material)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.espresso.core)
 }

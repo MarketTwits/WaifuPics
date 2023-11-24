@@ -5,9 +5,9 @@ import com.markettwits.core.di.Module
 import com.markettwits.core.wrappers.AsyncViewModel
 import com.markettwits.core.wrappers.DispatchersList
 import com.markettwits.core.wrappers.RunAsync
-import com.markettwits.core_ui.image.ImageFileWrapper
 import com.markettwits.data.GalleryRepository
-import com.markettwits.presentation.image_action.ImageIntentActionImpl
+import com.markettwits.image_action.ImageFileWrapper
+import com.markettwits.image_action.impl.ImageIntentActionImpl
 import com.markettwits.presentation.navigation.GalleryNavigation
 import com.markettwits.presentation.screens.detail.GalleryScreenViewModel
 import com.markettwits.presentation.screens.list.DetailCommunication
@@ -27,7 +27,7 @@ class GalleryItemDetailModule(
             galleryCommunication,
             AsyncViewModel.Base(RunAsync.Base(DispatchersList.Base())),
             repository,
-            ImageIntentActionImpl(core.context(),ImageFileWrapper.Base(core.context())),
+            ImageIntentActionImpl(core.context(), ImageFileWrapper.Base(core.context())),
             navigation
         )
     }
