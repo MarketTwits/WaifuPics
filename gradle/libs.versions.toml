@@ -64,6 +64,7 @@ compose-runtime = { group = "androidx.compose.runtime", name = "runtime", versio
 compose-lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "compose-lifecycle" }
 compose-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "compose-activity" }
 compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "compose-material3" }
+compose-material3-window-size = { group = "androidx.compose.material3", name = "material3-window-size-class", version.ref = "compose-material3" }
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
 compose-material-icons = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "compose-ui" }
 compose-accomponist = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "accompanist" }
@@ -126,7 +127,7 @@ composeUiBundle = [
     "compose-lifecycle-viewmodel",
     "compose-activity",
     "compose-material3",
-    "compose-navigation",
+    "compose-material3-window-size",
     "compose-accomponist",
     "android-lifecycle-ktx",
     "compose-coil",

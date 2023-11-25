@@ -7,10 +7,11 @@ import com.markettwits.core.wrappers.SaveAndRestoreState
 import com.markettwits.di.GalleryDependencyContainer
 import com.markettwits.di.NavigationDependencyContainer
 import com.markettwits.random_image.di.RandomImageDependencyContainer
-import com.markettwits.waifupics.glue.gallery.GalleryNavigationImpl
+import com.markettwits.waifupics.navigation.BaseRouter
 
 interface MakeDependencies {
     fun dependencies(): DependencyContainer
+    fun navigation() : BaseRouter
 
     class Base(
         private val context: Context,
@@ -19,10 +20,11 @@ interface MakeDependencies {
         override fun dependencies(): DependencyContainer {
             val core = Core(context, saveAndRestoreState)
             val error = DependencyContainer.Error()
-            val gallery = GalleryDependencyContainer(GalleryNavigationImpl(),error, core)
+            val gallery = GalleryDependencyContainer(navigation(),error, core)
             val randomImage = RandomImageDependencyContainer(core, gallery)
-            val navigation = NavigationDependencyContainer(randomImage, BaseHandleNavigation())
+            val navigation = NavigationDependencyContainer(randomImage, navigation())
             return BaseDependencyContainer(core, navigation)
         }
+        override fun navigation() = BaseRouter()
     }
 }

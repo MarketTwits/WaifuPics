@@ -5,7 +5,7 @@ import com.markettwits.core.communication.StateCommunication
 import com.markettwits.core.wrappers.AsyncViewModel
 import com.markettwits.data.GalleryRepository
 import com.markettwits.image_action.api.ImageIntentAction
-import com.markettwits.presentation.navigation.GalleryNavigation
+import com.markettwits.presentation.navigation.GalleryRouter
 import com.markettwits.presentation.screens.detail.info.MediaInfoUiState
 import com.markettwits.presentation.screens.list.DetailCommunication
 import com.markettwits.presentation.screens.list.GalleryCommunication
@@ -24,14 +24,13 @@ interface GalleryScreenViewModel {
     fun editImage()
     fun pop()
 
-
     class Base(
         private val item: DetailCommunication,
         private val list: GalleryCommunication,
         private val async: AsyncViewModel<Unit>,
         private val repository: GalleryRepository,
         private val imageIntentAction: ImageIntentAction.Mutable,
-        private val navigation: GalleryNavigation,
+        private val navigation: GalleryRouter,
     ) : ViewModel(), GalleryScreenViewModel {
         override fun state() = list.state()
         override fun shareImage() {
@@ -71,10 +70,8 @@ interface GalleryScreenViewModel {
         }
 
         override fun saveToGallery() {
-            async.handleAsync({
+            async.handleAsyncSingle {
                 repository.saveToGallery(item.state().value.imageUrl())
-            }) {
-                //TODO add callback
             }
         }
 

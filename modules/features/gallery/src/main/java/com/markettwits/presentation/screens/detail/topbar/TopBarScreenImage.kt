@@ -83,3 +83,4 @@ fun BoxScope.TopBarScreenImage(viewModel: GalleryScreenViewModel, showUI: Boolea
         }
     }
 }
+

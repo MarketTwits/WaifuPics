@@ -1,6 +1,6 @@
 package com.markettwits.presentation.navigation
 
-interface GalleryNavigation {
+interface GalleryRouter {
     fun toDetailImageScreen()
     fun pop()
 }
