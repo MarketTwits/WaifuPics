@@ -12,11 +12,6 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.markettwits.waifupics.theame.theme.DarkGrey
-import com.markettwits.waifupics.theame.theme.DirtyWhite
-import com.markettwits.waifupics.theame.theme.LightPink
-import com.markettwits.waifupics.theame.theme.Pink
-import com.markettwits.waifupics.theame.theme.PinkMilk
 import com.markettwits.waifupics.theame.theme.Typography
 
 private val DarkColorScheme = darkColorScheme(
@@ -40,12 +35,12 @@ private val LightColorScheme = lightColorScheme(
     primaryContainer = LightPink,
     tertiary = Color.White,
     surface = Color.White,
-    onPrimary = Color.Black,
+    onPrimary = Color.DarkGray,
     onSecondary = Color.White,
     onTertiary = Color.White,
     onBackground = Pink,
     onSurface = Color.White,
-    background = Color.White
+    background = Color.White,
 )
 
 @Composable

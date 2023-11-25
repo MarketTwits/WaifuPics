@@ -6,14 +6,17 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -30,7 +33,7 @@ import androidx.compose.ui.unit.sp
 import com.markettwits.presentation.animations.Animation
 import com.markettwits.presentation.screens.detail.GalleryScreenViewModel
 import com.markettwits.presentation.screens.detail.info.InfoImageBottomSheet
-import com.markettwits.waifupics.theame.theme.BlackScrim
+import com.markettwits.core_ui.theame.theme.BlackScrim
 
 
 @Composable
@@ -64,19 +67,19 @@ fun BoxScope.TopBarScreenImage(viewModel: GalleryScreenViewModel, showUI: Boolea
                 },
                 imageVector = Icons.Default.ArrowBackIosNew,
                 contentDescription = "back",
-                tint = MaterialTheme.colorScheme.onBackground
+                tint = Color.White
             )
             Text(
                 text = item.created(),
                 modifier = Modifier.padding(start = 30.dp),
-                color = MaterialTheme.colorScheme.onBackground,
+                color = Color.White,
                 fontSize = 16.sp
             )
             IconButton(onClick = { infoImage = !infoImage }) {
-                Icon(Icons.Default.MoreVert, "", tint = MaterialTheme.colorScheme.onBackground)
+                Icon(Icons.Default.MoreVert, "", tint = Color.White)
             }
             if (infoImage) {
-                InfoImageBottomSheet {
+                InfoImageBottomSheet() {
                     infoImage = false
                 }
             }

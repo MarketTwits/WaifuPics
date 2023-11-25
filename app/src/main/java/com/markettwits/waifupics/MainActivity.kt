@@ -3,7 +3,9 @@ package com.markettwits.waifupics
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
+import androidx.activity.enableEdgeToEdge
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.WindowCompat
 import com.markettwits.core.wrappers.SaveAndRestore
 import com.markettwits.core.wrappers.WrapBundle
 import com.markettwits.core_ui.setContentLocal

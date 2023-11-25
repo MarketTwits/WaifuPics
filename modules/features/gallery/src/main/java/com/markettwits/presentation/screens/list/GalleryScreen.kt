@@ -13,11 +13,10 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.markettwits.core_ui.ApplicationViewModel
+import com.markettwits.presentation.screens.detail.window_controller.rememberWindowInsetsController
 import run.nabla.gallerypicker.picker.rememberGalleryPickerState
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
@@ -27,10 +26,8 @@ fun GalleryScreen() {
 
     val viewModel: GalleryViewModel.Base = ApplicationViewModel()
     val state by viewModel.state().collectAsState()
-    var selected = remember {
-        mutableStateOf(false)
-    }
     val imageState = rememberGalleryPickerState()
+    rememberWindowInsetsController().handle(true)
     Box() {
         Box(
             modifier = Modifier
@@ -48,7 +45,6 @@ fun GalleryScreen() {
                                 viewModel.toDetail(image)
                             },
                             onLongClick = {
-                                //selected.value = !selected.value
                                 viewModel.deleteImage(image.imageUrl(), image.id())
                             }
                         ), imageState)
