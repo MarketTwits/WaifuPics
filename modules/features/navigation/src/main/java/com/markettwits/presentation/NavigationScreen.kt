@@ -11,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import com.markettwits.core_ui.ApplicationViewModel
-import com.markettwits.navigation.LocalNavigationState
 import com.markettwits.presentation.menu.NavigationBody
 import com.markettwits.presentation.menu.TopBarPanel
 import kotlinx.coroutines.launch
@@ -25,7 +24,7 @@ fun NavigationScreen(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) {
-    val viewModel: NavigationViewModel = ApplicationViewModel()
+    val viewModel: NavigationViewModel.Base = ApplicationViewModel()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
@@ -39,7 +38,12 @@ fun NavigationScreen(
         }) {
         DrawerContent(
             drawerState = drawerState,
-            content
+            onClick = {
+                viewModel.navigateTo(it)
+            },
+            content = {
+                content()
+            }
         )
     }
 }
@@ -63,16 +67,15 @@ fun SurfaceLayout(
 @Composable
 fun DrawerContent(
     drawerState: DrawerState,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
+    onClick: (String) -> Unit
 ) {
     val scope = rememberCoroutineScope()
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
             NavigationBody {
-                LocalNavigationState.baseNavigation.navigateTo(
-                    it.screen.route()
-                )
+                onClick(it.screen.route())
                 scope.launch { drawerState.close() }
             }
         }

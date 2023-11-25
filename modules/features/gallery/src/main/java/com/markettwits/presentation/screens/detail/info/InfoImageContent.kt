@@ -41,7 +41,7 @@ import com.markettwits.presentation.screens.detail.button.ShareButton
 @Preview
 private fun InfoImageContentPreviewLight() {
     WaifuPicsTheme {
-        InfoImageContent()
+        InfoImageContent{}
     }
 }
 
@@ -49,12 +49,12 @@ private fun InfoImageContentPreviewLight() {
 @Preview
 private fun InfoImageContentPreviewDark() {
     WaifuPicsTheme(darkTheme = true) {
-        InfoImageContent()
+        InfoImageContent{}
     }
 }
 
 @Composable
-fun InfoImageContent() {
+fun InfoImageContent(onDismiss :() -> Unit) {
     val viewModel : GalleryScreenViewModel.Base = ApplicationViewModel()
     val image = viewModel.infoAboutImage()
     val context = LocalContext.current
@@ -85,6 +85,7 @@ fun InfoImageContent() {
                 },
                 onClickSave = {
                     viewModel.saveToGallery()
+                    onDismiss()
                 }
             )
             ImageInfoDate(image.created)

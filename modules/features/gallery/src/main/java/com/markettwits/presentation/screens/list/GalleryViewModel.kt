@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.markettwits.core.communication.StateCommunication
 import com.markettwits.core.wrappers.AsyncViewModel
 import com.markettwits.data.GalleryRepository
-import com.markettwits.presentation.navigation.GalleryNavigation
+import com.markettwits.presentation.navigation.GalleryRouter
 import com.markettwits.presentation.screens.detail.ImageFavoriteUi
 import kotlinx.coroutines.launch
 
@@ -19,7 +19,7 @@ interface GalleryViewModel{
         private val repository: GalleryRepository,
         private val async: AsyncViewModel.Abstract<List<ImageFavoriteUi>>,
         private val current : DetailCommunication,
-        private val navigation: GalleryNavigation,
+        private val navigation: GalleryRouter,
     ) : ViewModel(), StateCommunication.State<List<ImageFavoriteUi>>, GalleryViewModel {
 
         init {
@@ -44,7 +44,6 @@ interface GalleryViewModel{
                 favoriteImages()
             }
         }
-
 
         override fun state() = gallery.state()
     }

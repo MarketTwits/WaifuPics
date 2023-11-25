@@ -20,6 +20,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.compose.navigation)
     implementation(project(path = ":modules:features:random_image"))
     implementation(project(path = ":modules:services:core-ui"))
     implementation(project(path = ":modules:features:navigation"))

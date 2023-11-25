@@ -5,6 +5,7 @@ import com.markettwits.core.Core
 import com.markettwits.core.di.DependencyContainer
 import com.markettwits.di.NavigationModule
 import com.markettwits.presentation.NavigationViewModel
+import com.markettwits.waifupics.navigation.BaseRouter
 
 class BaseDependencyContainer(
     private val core: Core,
@@ -12,8 +13,8 @@ class BaseDependencyContainer(
 ) : DependencyContainer {
 
     override fun module(className: Class<out ViewModel>) =
-        if (className == NavigationViewModel::class.java)
-            NavigationModule(BaseHandleNavigation())
+        if (className == NavigationViewModel.Base::class.java)
+            NavigationModule(BaseRouter())
         else
             dependencyContainer.module(className)
 }

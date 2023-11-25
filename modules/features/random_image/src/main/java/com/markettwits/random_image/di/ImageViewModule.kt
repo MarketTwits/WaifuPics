@@ -37,7 +37,7 @@ class ImageViewModule(
         ImageRepository.Base(
             ImagesCacheDataSource(RealmDatabaseProvider.Base()),
             ImageUiToCacheMapper.Base(),
-            ImageLoaderDataSource.Base(core.context())
+            ImageLoaderDataSource.Base(core.context(),DispatchersList.Base())
         )
 
     override fun viewModel() =

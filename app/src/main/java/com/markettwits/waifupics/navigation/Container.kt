@@ -5,7 +5,6 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
-import com.markettwits.navigation.MultiNavigationAppState
 import com.markettwits.navigation.Screen
 import com.markettwits.presentation.screens.detail.ImageScreenFull
 import com.markettwits.presentation.screens.list.GalleryScreen

@@ -8,7 +8,7 @@ import com.markettwits.core.wrappers.RunAsync
 import com.markettwits.data.GalleryRepository
 import com.markettwits.image_action.ImageFileWrapper
 import com.markettwits.image_action.impl.ImageIntentActionImpl
-import com.markettwits.presentation.navigation.GalleryNavigation
+import com.markettwits.presentation.navigation.GalleryRouter
 import com.markettwits.presentation.screens.detail.GalleryScreenViewModel
 import com.markettwits.presentation.screens.list.DetailCommunication
 import com.markettwits.presentation.screens.list.GalleryCommunication
@@ -18,7 +18,7 @@ class GalleryItemDetailModule(
     private val communication: DetailCommunication,
     private val galleryCommunication: GalleryCommunication,
     private val repository: GalleryRepository,
-    private val navigation: GalleryNavigation
+    private val navigation: GalleryRouter
 ) : Module<GalleryScreenViewModel.Base> {
 
     override fun viewModel(): GalleryScreenViewModel.Base {

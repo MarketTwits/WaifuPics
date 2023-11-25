@@ -9,6 +9,5 @@ android {
 
 dependencies {
     implementation(project(":modules:services:core-ui"))
-    implementation(libs.retrofit.converter)
     implementation(libs.onebone.toolbar)
 }

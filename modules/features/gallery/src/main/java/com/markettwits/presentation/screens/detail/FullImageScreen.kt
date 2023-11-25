@@ -74,7 +74,7 @@ fun ImageScreenFull(
             modifier = Modifier
                 .zoomable(zoomState)
                 .noRippleClickable {
-                    //TODO change toolBar state
+                    // TODO change toolBar state
                     windowInsetsController.toggleSystemBars(showUI.value)
                 }
                 .graphicsLayer(

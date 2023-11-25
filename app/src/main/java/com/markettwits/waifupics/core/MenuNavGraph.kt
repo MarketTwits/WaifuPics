@@ -7,13 +7,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.markettwits.navigation.Graph
-import com.markettwits.navigation.LocalNavigationState
-import com.markettwits.navigation.MultiNavigationStates
 import com.markettwits.navigation.Screen
-import com.markettwits.navigation.rememberMultiNavigationAppState
 import com.markettwits.presentation.NavigationScreen
+import com.markettwits.waifupics.navigation.LocalNavigationState
+import com.markettwits.waifupics.navigation.MultiNavigationStates
 import com.markettwits.waifupics.navigation.baseTabNavGraph
 import com.markettwits.waifupics.navigation.detailsImage
+import com.markettwits.waifupics.navigation.rememberMultiNavigationAppState
 
 @Composable
 fun MenuNavGraph() {

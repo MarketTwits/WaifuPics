@@ -12,23 +12,13 @@ import com.markettwits.core.wrappers.WrapBundle
 
 class WaifuPicsApp : Application(), ProvideViewModel, SaveAndRestore {
 
-//    private lateinit var ageRativgViewModel : AgeRatingFilterViewModel
-
-
     private lateinit var viewModelFactory: ViewModelsFactory
+
     private val saveAndRestoreState : SaveAndRestoreState = SaveAndRestoreState.Base()
     override fun onCreate() {
         super.onCreate()
         val make = MakeDependencies.Base(this, saveAndRestoreState)
         viewModelFactory = ViewModelsFactory(make.dependencies())
-
-//        ageRativgViewModel = AgeRatingFilterViewModel(
-//            FilterChecked.Base(),
-//            AgeRatingFilterCommunication.Base(),
-//            FilterCommunication.Base(),
-//            StaticCacheDataSource.Base(),
-//            saveAndRestoreState
-//        )
 
     }
     override fun <T : ViewModel> viewModel(owner: ViewModelStoreOwner, className: Class<T>): T {

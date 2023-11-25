@@ -11,7 +11,9 @@ import androidx.core.graphics.drawable.toBitmap
 import coil.ImageLoader
 import coil.request.ImageRequest
 import coil.request.SuccessResult
+import com.markettwits.core.wrappers.DispatchersList
 import com.markettwits.data.ImageRepository
+import kotlinx.coroutines.withContext
 import org.jetbrains.annotations.ApiStatus.Experimental
 import java.io.File
 import java.io.FileInputStream
@@ -22,19 +24,22 @@ import java.util.UUID
 interface ImageLoaderDataSource {
     suspend fun deleteImage(imageUrl: String)
     suspend fun loadImage(imageUrl: String): String
-    suspend fun loadImage(image : Drawable) : String
+    suspend fun loadImage(image: Drawable): String
     suspend fun saveToGallery(imageUrl: String)
-    class Base(private val context: Context) : ImageLoaderDataSource {
+    class Base(
+        private val context: Context,
+        private val dispatchersList: DispatchersList
+    ) : ImageLoaderDataSource {
         override suspend fun deleteImage(imageUrl: String) {
             val file = File(imageUrl)
             try {
                 file.delete()
-            }catch (e : Exception){
+            } catch (e: Exception) {
                 throw RuntimeException("delete error :${e.cause}")
             }
         }
 
-        override suspend fun loadImage(imageUrl: String) : String {
+        override suspend fun loadImage(imageUrl: String): String {
             val imageLoader = ImageLoader.Builder(context).build()
             val request = ImageRequest.Builder(context)
                 .data(imageUrl)
@@ -44,17 +49,16 @@ interface ImageLoaderDataSource {
             val imageDrawable = (result as SuccessResult).drawable
             val imageBitmap = imageDrawable.toBitmap()
             val a = saveBitmapToStorage(imageBitmap, "test random data: ${UUID.randomUUID()}")
-            Log.d("mt05", a.toString())
             return a.imagePath
         }
 
         override suspend fun loadImage(image: Drawable): String {
             val a = saveBitmapToStorage(image.toBitmap(), "test random data: ${UUID.randomUUID()}")
-            Log.d("mt05", a.toString())
             return a.imagePath
         }
 
         override suspend fun saveToGallery(imageUrl: String) {
+
             val name = "NekosAPI, ${UUID.randomUUID()}.png"
             val values = ContentValues().apply {
                 put(MediaStore.Images.Media.DISPLAY_NAME, name)
@@ -63,19 +67,22 @@ interface ImageLoaderDataSource {
                 put(MediaStore.Images.Media.DESCRIPTION, name)
                 put(MediaStore.Images.Media.RELATIVE_PATH, "DCIM/NekosLand")
             }
-            val imageUri = context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
-            try {
-                val inputStream = FileInputStream(imageUrl)
-                val outputStream = context.contentResolver.openOutputStream(imageUri!!)
-                val buffer = ByteArray(1024)
-                var length: Int
-                while (inputStream.read(buffer).also { length = it } > 0) {
-                    outputStream?.write(buffer, 0, length)
+            val imageUri =
+                context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+            withContext(dispatchersList.io()) {
+                try {
+                    val inputStream = FileInputStream(imageUrl)
+                    val outputStream = context.contentResolver.openOutputStream(imageUri!!)
+                    val buffer = ByteArray(1024)
+                    var length: Int
+                    while (inputStream.read(buffer).also { length = it } > 0) {
+                        outputStream?.write(buffer, 0, length)
+                    }
+                    inputStream.close()
+                    outputStream?.close()
+                } catch (e: IOException) {
+                    e.printStackTrace()
                 }
-                inputStream.close()
-                outputStream?.close()
-            } catch (e: IOException) {
-                e.printStackTrace()
             }
         }
 
@@ -110,6 +117,7 @@ interface ImageLoaderDataSource {
             }
             return ImageRepository.Base.SavedImageInfo("", "")
         }
+
         @Experimental
         private fun setAuthorInExif(imagePath: String, author: String) {
             try {

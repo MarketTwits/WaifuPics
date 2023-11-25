@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.markettwits.core.Core
 import com.markettwits.core.RealmDatabaseProvider
 import com.markettwits.core.di.DependencyContainer
+import com.markettwits.core.wrappers.DispatchersList
 import com.markettwits.data.FavoriteImageCacheToUiMapper
 import com.markettwits.data.GalleryRepository
 import com.markettwits.data.ImageRepository
@@ -12,14 +13,14 @@ import com.markettwits.data.media_info.ExifServiceWrapper
 import com.markettwits.data.media_info.ImageInfoToUiMapper
 import com.markettwits.data.store.ImageLoaderDataSource
 import com.markettwits.data.store.ImagesCacheDataSource
-import com.markettwits.presentation.navigation.GalleryNavigation
+import com.markettwits.presentation.navigation.GalleryRouter
 import com.markettwits.presentation.screens.detail.GalleryScreenViewModel
 import com.markettwits.presentation.screens.list.DetailCommunication
 import com.markettwits.presentation.screens.list.GalleryCommunication
 import com.markettwits.presentation.screens.list.GalleryViewModel
 
 class GalleryDependencyContainer(
-    private val navigation: GalleryNavigation,
+    private val navigation: GalleryRouter,
     private val dependencyContainer: DependencyContainer,
     private val core: Core
 ) : DependencyContainer {
@@ -30,7 +31,7 @@ class GalleryDependencyContainer(
         ImageRepository.Base(
             ImagesCacheDataSource(RealmDatabaseProvider.Base()),
             ImageUiToCacheMapper.Base(),
-            ImageLoaderDataSource.Base(core.context())
+            ImageLoaderDataSource.Base(core.context(), DispatchersList.Base())
         ),
         FavoriteImageCacheToUiMapper.Base(),
         ExifServiceWrapper.Base(),
