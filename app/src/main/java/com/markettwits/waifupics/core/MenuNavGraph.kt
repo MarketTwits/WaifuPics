@@ -2,10 +2,16 @@ package com.markettwits.waifupics.core
 
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.markettwits.core_ui.LocalRootPadding
 import com.markettwits.navigation.Graph
 import com.markettwits.navigation.Screen
 import com.markettwits.presentation.NavigationScreen
@@ -31,7 +37,7 @@ fun MenuNavGraph() {
     ) {
         composable(route = Graph.Main.graph()) {
             LocalNavigationState.baseNavigation.setNavController(rememberNavController())
-            NavigationScreen {
+            NavigationScreen() {
                 NavHost(
                     navController = LocalNavigationState.baseNavigation.getNavController,
                     startDestination = Graph.Main.graph(),
