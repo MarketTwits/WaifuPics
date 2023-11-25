@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.markettwits.core_ui.R
 import com.markettwits.core_ui.base_extensions.rgbToComposeColor
-import com.markettwits.core_ui.theame.theme.LightPink
+import com.markettwits.core_ui.theme.LightPink
 
 @Composable
 fun ColorPalette(hex : List<List<Int>>) {

@@ -1,4 +1,4 @@
-package com.markettwits.core_ui.theame.theme
+package com.markettwits.core_ui.theme
 
 
 import androidx.compose.ui.graphics.Color

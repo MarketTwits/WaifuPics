@@ -26,7 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.markettwits.core_ui.R
-import com.markettwits.core_ui.theame.theme.WaifuPicsTheme
+import com.markettwits.core_ui.theme.WaifuPicsTheme
 
 @Composable
 fun ImageFuckup(message : String) {

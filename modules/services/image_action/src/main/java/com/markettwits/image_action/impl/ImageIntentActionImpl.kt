@@ -3,8 +3,8 @@ package com.markettwits.image_action.impl
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Drawable
+import android.util.Log
 import androidx.core.app.ShareCompat
-import com.markettwits.image_action.ImageFileWrapper
 import com.markettwits.image_action.api.ImageIntentAction
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -42,7 +42,7 @@ class ImageIntentActionImpl(
             val intent = Intent(Intent.ACTION_VIEW).apply {
                 addCategory(Intent.CATEGORY_DEFAULT)
                 setDataAndType(imageFileWrapper.pathToUri(imagePath), TYPE_IMAGE)
-                putExtra("mimeType", TYPE_IMAGE)
+                putExtra(MIME_TYPE, TYPE_IMAGE)
                 addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             }
             context.startActivity(
@@ -56,7 +56,7 @@ class ImageIntentActionImpl(
             val intent = Intent(Intent.ACTION_ATTACH_DATA).apply {
                 addCategory(Intent.CATEGORY_DEFAULT)
                 setDataAndType(imageFileWrapper.pathToUri(imagePath), TYPE_IMAGE)
-                putExtra("mimeType", TYPE_IMAGE)
+                putExtra(MIME_TYPE, TYPE_IMAGE)
                 addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             }
             context.startActivity(
@@ -68,10 +68,11 @@ class ImageIntentActionImpl(
 
     override suspend fun launchEditAs(imagePath: String) {
         withContext(Dispatchers.Default) {
+            val uri = imageFileWrapper.pathToUri(imagePath)
             val intent = Intent(Intent.ACTION_EDIT).apply {
                 addCategory(Intent.CATEGORY_DEFAULT)
-                setDataAndType(imageFileWrapper. pathToUri(imagePath), TYPE_IMAGE)
-                putExtra("mimeType", TYPE_IMAGE)
+                setDataAndType(uri, TYPE_IMAGE)
+                putExtra(MIME_TYPE, TYPE_IMAGE)
                 addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             }
             context.startActivity(
@@ -83,5 +84,6 @@ class ImageIntentActionImpl(
     companion object {
         const val INTENT_ACTION_SHARE_IMAGE = "Share Image"
         const val TYPE_IMAGE = "image/*"
+        const val MIME_TYPE = "mimeType"
     }
 }

@@ -19,7 +19,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
-import com.markettwits.core_ui.ApplicationViewModel
+import com.markettwits.core_ui.local_di.ApplicationViewModel
 import com.markettwits.presentation.screens.detail.bottomBar.DownBarScreenImage
 import com.markettwits.presentation.screens.detail.image.ZoomablePagerImage
 import com.markettwits.presentation.screens.detail.topbar.TopBarScreenImage

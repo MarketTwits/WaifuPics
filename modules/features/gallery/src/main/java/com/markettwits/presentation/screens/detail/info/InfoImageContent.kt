@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
@@ -28,14 +27,14 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.markettwits.core_ui.ApplicationViewModel
-import com.markettwits.core_ui.theame.theme.WaifuPicsTheme
+import com.markettwits.core_ui.local_di.ApplicationViewModel
+import com.markettwits.core_ui.theme.WaifuPicsTheme
 import com.markettwits.presentation.screens.detail.GalleryScreenViewModel
 import com.markettwits.presentation.screens.detail.button.EditButton
 import com.markettwits.presentation.screens.detail.button.OpenAsButton
 import com.markettwits.presentation.screens.detail.button.SaveButton
 import com.markettwits.presentation.screens.detail.button.ShareButton
-import com.markettwits.core_ui.theame.theme.LightPink
+import com.markettwits.core_ui.theme.LightPink
 
 @Composable
 @Preview

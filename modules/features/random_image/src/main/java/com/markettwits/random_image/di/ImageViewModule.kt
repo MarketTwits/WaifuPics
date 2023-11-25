@@ -10,7 +10,7 @@ import com.markettwits.data.ImageRepository
 import com.markettwits.data.mapper.ImageUiToCacheMapper
 import com.markettwits.data.store.ImageLoaderDataSource
 import com.markettwits.data.store.ImagesCacheDataSource
-import com.markettwits.image_action.ImageFileWrapper
+import com.markettwits.image_action.impl.ImageFileWrapper
 import com.markettwits.image_action.impl.ImageIntentActionImpl
 import com.markettwits.random_image.data.RandomImageRepository
 import com.markettwits.random_image.data.ReportedImageMapperCloud
