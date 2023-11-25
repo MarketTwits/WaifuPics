@@ -3,9 +3,9 @@
 
 
     <style name="Theme.WaifuPics" parent="@style/Theme.AppCompat.DayNight">
-        <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="o_mr1">
-            default <!-- default, shortEdges, or never -->
-        </item>
+        <!--<item name="android:windowTranslucentStatus">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowTranslucentNavigation">true</item>-->
     </style>
 
 

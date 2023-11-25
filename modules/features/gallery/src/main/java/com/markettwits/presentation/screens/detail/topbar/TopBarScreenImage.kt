@@ -30,6 +30,8 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.markettwits.core_ui.LocalRootPadding
+import com.markettwits.core_ui.base_extensions.noRippleClickable
 import com.markettwits.presentation.animations.Animation
 import com.markettwits.presentation.screens.detail.GalleryScreenViewModel
 import com.markettwits.presentation.screens.detail.info.InfoImageBottomSheet
@@ -54,17 +56,20 @@ fun BoxScope.TopBarScreenImage(viewModel: GalleryScreenViewModel, showUI: Boolea
                         colors = listOf(BlackScrim, Color.Transparent)
                     )
                 )
+                .padding(top = LocalRootPadding.current.calculateTopPadding())
                 .padding(start = 5.dp, end = 8.dp)
-                .padding(vertical = 8.dp)
+                .padding(vertical = 10.dp)
                 .fillMaxWidth()
                 .align(Alignment.TopCenter),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Icon(
-                modifier = Modifier.clickable {
-                    viewModel.pop()
-                },
+                modifier = Modifier
+                    .padding(10.dp)
+                    .noRippleClickable {
+                        viewModel.pop()
+                    },
                 imageVector = Icons.Default.ArrowBackIosNew,
                 contentDescription = "back",
                 tint = Color.White
