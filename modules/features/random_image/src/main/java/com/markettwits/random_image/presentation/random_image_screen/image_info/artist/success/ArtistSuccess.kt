@@ -29,7 +29,7 @@ import com.markettwits.core_ui.R
 import com.markettwits.core_ui.base.MultyLinksText
 import com.markettwits.core_ui.base.UnlinkMultiText
 import com.markettwits.random_image.presentation.random_image_screen.AuthorUi
-import com.markettwits.waifupics.theame.theme.LightGrey
+import com.markettwits.core_ui.theame.theme.LightGrey
 
 @Preview
 @Composable

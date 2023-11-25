@@ -26,7 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.markettwits.waifupics.theame.theme.Pink
+import com.markettwits.core_ui.theame.theme.Pink
 
 @Composable fun RoundedLinearProgressIndicator(
     modifier: Modifier = Modifier,

@@ -36,7 +36,7 @@ import com.markettwits.core_ui.R
 import com.markettwits.core_ui.theame.theme.WaifuPicsTheme
 import com.markettwits.waifupics.base.BaseDivider
 import com.markettwits.waifupics.filter.presentation.FilterState
-import com.markettwits.waifupics.theame.theme.LightPink
+import com.markettwits.core_ui.theame.theme.LightPink
 
 @Composable
 @Preview

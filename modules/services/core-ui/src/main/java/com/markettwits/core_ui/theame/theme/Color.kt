@@ -1,4 +1,4 @@
-package com.markettwits.waifupics.theame.theme
+package com.markettwits.core_ui.theame.theme
 
 
 import androidx.compose.ui.graphics.Color
@@ -17,4 +17,3 @@ val Pink = Color(0xFFE84444)
 val DirtyWhite = Color(229,231,235)
 val PinkMilk = Color(0xFFfffafa)
 val BlackScrim = Color(0xBF000000)
-

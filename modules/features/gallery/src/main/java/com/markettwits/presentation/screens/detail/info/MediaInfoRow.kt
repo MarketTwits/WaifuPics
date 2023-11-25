@@ -1,6 +1,7 @@
 package com.markettwits.presentation.screens.detail.info
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.CircleShape
@@ -8,6 +9,8 @@ import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -31,34 +34,28 @@ fun MediaInfoRow(
     onClick: (() -> Unit)? = null,
     onLongClick: (() -> Unit)? = null,
 ) {
-    val clipboardManager: ClipboardManager = LocalClipboardManager.current
     ListItem(
         modifier = modifier
             .fillMaxWidth()
             .clip(CircleShape.copy(CornerSize(10.dp)))
-            .combinedClickable(
-                onClick = { onClick?.let { it() } },
-                onLongClick = {
-                    if (onLongClick != null) onLongClick()
-                    else {
-                        clipboardManager.setText(AnnotatedString(content))
-                    }
-                }
-            ),
+            .clickable {}
+        ,
         colors = ListItemDefaults.colors(
             containerColor = Color.Transparent
         ),
         headlineContent = {
             Text(
                 text = label,
+                color = MaterialTheme.colorScheme.onPrimary,
                 fontWeight = FontWeight.Medium
             )
         },
         supportingContent = {
-            Text(text = content)
+            Text(text = content, color =  MaterialTheme.colorScheme.onPrimary)
         },
         leadingContent = {
             Icon(
+                tint =  MaterialTheme.colorScheme.onPrimary,
                 imageVector = icon,
                 contentDescription = contentDescription
             )

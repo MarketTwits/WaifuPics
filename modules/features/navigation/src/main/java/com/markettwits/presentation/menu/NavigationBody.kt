@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.sp
 import com.markettwits.core_ui.R
 import com.markettwits.core_ui.theame.theme.WaifuPicsTheme
 import com.markettwits.presentation.NavigationItem
-import com.markettwits.waifupics.theame.theme.LightPink
+import com.markettwits.core_ui.theame.theme.LightPink
 
 @Composable
 @Preview

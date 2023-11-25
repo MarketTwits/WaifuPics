@@ -19,7 +19,7 @@ import com.markettwits.core_ui.R
 import com.markettwits.core_ui.base_extensions.extractSiteName
 import com.markettwits.core_ui.theame.theme.WaifuPicsTheme
 import com.markettwits.waifupics.base.openWebPage
-import com.markettwits.waifupics.theame.theme.LightPink
+import com.markettwits.core_ui.theame.theme.LightPink
 import java.util.Locale
 
 //@Composable

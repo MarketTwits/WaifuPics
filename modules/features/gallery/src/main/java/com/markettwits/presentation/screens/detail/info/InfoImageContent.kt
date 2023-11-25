@@ -7,23 +7,22 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
@@ -36,12 +35,13 @@ import com.markettwits.presentation.screens.detail.button.EditButton
 import com.markettwits.presentation.screens.detail.button.OpenAsButton
 import com.markettwits.presentation.screens.detail.button.SaveButton
 import com.markettwits.presentation.screens.detail.button.ShareButton
+import com.markettwits.core_ui.theame.theme.LightPink
 
 @Composable
 @Preview
 private fun InfoImageContentPreviewLight() {
     WaifuPicsTheme {
-        InfoImageContent{}
+        InfoImageContent {}
     }
 }
 
@@ -49,21 +49,21 @@ private fun InfoImageContentPreviewLight() {
 @Preview
 private fun InfoImageContentPreviewDark() {
     WaifuPicsTheme(darkTheme = true) {
-        InfoImageContent{}
+        InfoImageContent {}
     }
 }
 
 @Composable
-fun InfoImageContent(onDismiss :() -> Unit) {
-    val viewModel : GalleryScreenViewModel.Base = ApplicationViewModel()
+fun InfoImageContent(onDismiss: () -> Unit) {
+    val viewModel: GalleryScreenViewModel.Base = ApplicationViewModel()
     val image = viewModel.infoAboutImage()
-    val context = LocalContext.current
-    val scope = rememberCoroutineScope()
     Box(
         modifier = Modifier
             .padding(10.dp)
             .clip(RoundedCornerShape(10.dp))
-            .fillMaxWidth()
+            // .fillMaxWidth()
+            // .fillMaxSize()
+            .wrapContentSize()
             .animateContentSize()
             .windowInsetsPadding(WindowInsets.navigationBars),
         contentAlignment = Alignment.CenterEnd
@@ -90,7 +90,6 @@ fun InfoImageContent(onDismiss :() -> Unit) {
             )
             ImageInfoDate(image.created)
             ImageInfoColum(image.mediaInfo)
-
         }
     }
 }
@@ -103,27 +102,27 @@ private fun ImageInfoDate(date: String) {
     ) {
         Text(
             text = date,
-            color = MaterialTheme.colorScheme.surfaceTint,
+            color = LightPink,
             fontFamily = FontFamily(Font(com.markettwits.core_ui.R.font.rubik_medium)),
             fontSize = 14.sp
         )
     }
 }
+
 @Composable
-private fun ImageInfoColum(mediaInfoList: List<MediaInfo>){
-    Column() {
-        mediaInfoList.forEach {
-            MediaInfoRow(label = it.label, content = it.content, icon = it.icon)
-        }
+private fun ImageInfoColum(mediaInfoList: List<MediaInfo>) {
+    mediaInfoList.forEach {
+        MediaInfoRow(label = it.label, content = it.content, icon = it.icon)
     }
 }
+
 @Composable
 private fun MediaViewInfoActions(
-    onClickShare : () -> Unit,
-    onClickOpenAs : () -> Unit,
-    onClickEdit : () -> Unit,
-    onClickSave : () -> Unit,
-){
+    onClickShare: () -> Unit,
+    onClickOpenAs: () -> Unit,
+    onClickEdit: () -> Unit,
+    onClickSave: () -> Unit,
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -131,13 +130,13 @@ private fun MediaViewInfoActions(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceEvenly,
     ) {
-        ShareButton(){
+        ShareButton() {
             onClickShare()
         }
-        OpenAsButton(){
+        OpenAsButton() {
             onClickOpenAs()
         }
-        EditButton(){
+        EditButton() {
             onClickEdit()
         }
         SaveButton {

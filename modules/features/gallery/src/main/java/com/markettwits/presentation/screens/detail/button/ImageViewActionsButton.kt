@@ -25,7 +25,7 @@ fun ShareButton(
 
 @Composable
  fun EditButton(
-    followTheme: Boolean = true,
+    followTheme: Boolean = false,
     onItemClick: () -> Unit
 ) {
     BottomBarColumn(

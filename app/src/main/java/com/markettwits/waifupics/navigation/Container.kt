@@ -1,10 +1,14 @@
 package com.markettwits.waifupics.navigation
 
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.markettwits.navigation.Screen
 import com.markettwits.presentation.screens.detail.ImageScreenFull
 import com.markettwits.presentation.screens.list.GalleryScreen

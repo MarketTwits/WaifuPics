@@ -19,7 +19,7 @@ import com.markettwits.presentation.animations.Animation
 import com.markettwits.presentation.screens.detail.GalleryScreenViewModel
 import com.markettwits.presentation.screens.detail.button.DeleteButton
 import com.markettwits.presentation.screens.detail.button.ShareButton
-import com.markettwits.waifupics.theame.theme.BlackScrim
+import com.markettwits.core_ui.theame.theme.BlackScrim
 
 @Composable
 fun BoxScope.DownBarScreenImage(
@@ -51,13 +51,12 @@ fun BoxScope.DownBarScreenImage(
                 .align(Alignment.BottomCenter),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceEvenly,
-
             )
         {
-            ShareButton {
+            ShareButton(followTheme = true) {
                 viewModel.shareImage()
             }
-            DeleteButton {
+            DeleteButton(followTheme = true) {
                 viewModel.delete()
             }
         }

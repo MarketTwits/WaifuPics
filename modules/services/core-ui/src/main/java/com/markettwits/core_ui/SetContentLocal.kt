@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.view.WindowCompat
 import com.markettwits.core_ui.image.ImageLoader
 import com.markettwits.core_ui.image.LocalImageLoader
 
