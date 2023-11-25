@@ -1,4 +1,4 @@
-package com.markettwits.waifupics.base
+package com.markettwits.core_ui.components.progress
 
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode

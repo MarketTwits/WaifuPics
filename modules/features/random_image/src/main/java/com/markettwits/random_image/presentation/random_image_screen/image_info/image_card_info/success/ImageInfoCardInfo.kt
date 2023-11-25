@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import com.markettwits.random_image.presentation.random_image_screen.AuthorUi
 import com.markettwits.random_image.presentation.random_image_screen.ImageSourceUi
 import com.markettwits.random_image.presentation.random_image_screen.image_info.artist.success.ArtistInfo
-import com.markettwits.core_ui.theame.theme.DirtyWhite
+import com.markettwits.core_ui.theme.DirtyWhite
 import com.markettwits.waifupics.view.main.ui.image_info.color_palette.success.ColorPalette
 import com.markettwits.waifupics.view.main.ui.image_info.image_card_info.success.SourceAndResource
 

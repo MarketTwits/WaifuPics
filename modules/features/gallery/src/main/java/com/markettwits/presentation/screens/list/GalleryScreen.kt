@@ -14,7 +14,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.markettwits.core_ui.ApplicationViewModel
+import com.markettwits.core_ui.local_di.ApplicationViewModel
 import com.markettwits.presentation.screens.detail.window_controller.rememberWindowInsetsController
 import com.markettwits.presentation.screens.detail.window_controller.toggleSystemBars
 import run.nabla.gallerypicker.picker.rememberGalleryPickerState

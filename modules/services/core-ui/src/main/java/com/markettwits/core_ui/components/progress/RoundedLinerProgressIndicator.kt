@@ -1,4 +1,4 @@
-package com.markettwits.waifupics.base
+package com.markettwits.core_ui.components.progress
 
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.LinearEasing
@@ -26,9 +26,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.markettwits.core_ui.theame.theme.Pink
+import com.markettwits.core_ui.theme.Pink
 
-@Composable fun RoundedLinearProgressIndicator(
+@Composable
+fun RoundedLinearProgressIndicator(
     modifier: Modifier = Modifier,
     height: Dp = 10.dp,
     color: Color = Pink,

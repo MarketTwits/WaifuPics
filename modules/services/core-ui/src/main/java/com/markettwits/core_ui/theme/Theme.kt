@@ -1,4 +1,4 @@
-package com.markettwits.core_ui.theame.theme
+package com.markettwits.core_ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

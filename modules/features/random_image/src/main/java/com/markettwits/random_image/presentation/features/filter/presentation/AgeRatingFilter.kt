@@ -31,12 +31,12 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.markettwits.core_ui.ApplicationViewModel
+import com.markettwits.core_ui.local_di.ApplicationViewModel
 import com.markettwits.core_ui.R
-import com.markettwits.core_ui.theame.theme.WaifuPicsTheme
-import com.markettwits.waifupics.base.BaseDivider
+import com.markettwits.core_ui.theme.WaifuPicsTheme
+import com.markettwits.core_ui.components.BaseDivider
 import com.markettwits.waifupics.filter.presentation.FilterState
-import com.markettwits.core_ui.theame.theme.LightPink
+import com.markettwits.core_ui.theme.LightPink
 
 @Composable
 @Preview

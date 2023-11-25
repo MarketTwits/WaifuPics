@@ -6,7 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import com.markettwits.core_ui.R
-import com.markettwits.core_ui.base.BasePanelItem
+import com.markettwits.core_ui.components.BasePanelItem
 import com.markettwits.random_image.presentation.features.report_image.ReportedAlertDialog
 
 @Composable

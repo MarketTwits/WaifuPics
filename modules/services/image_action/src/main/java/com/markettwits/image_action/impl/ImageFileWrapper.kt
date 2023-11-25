@@ -1,4 +1,4 @@
-package com.markettwits.image_action
+package com.markettwits.image_action.impl
 
 import android.content.Context
 import android.graphics.Bitmap

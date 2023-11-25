@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
-import com.markettwits.core_ui.ApplicationViewModel
+import com.markettwits.core_ui.local_di.ApplicationViewModel
 import com.markettwits.core_ui.R
 import com.markettwits.core_ui.image.LocalImageLoader
 import com.markettwits.random_image.presentation.random_image_screen.ImageViewModel

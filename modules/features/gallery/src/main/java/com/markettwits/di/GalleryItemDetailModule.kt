@@ -6,7 +6,7 @@ import com.markettwits.core.wrappers.AsyncViewModel
 import com.markettwits.core.wrappers.DispatchersList
 import com.markettwits.core.wrappers.RunAsync
 import com.markettwits.data.GalleryRepository
-import com.markettwits.image_action.ImageFileWrapper
+import com.markettwits.image_action.impl.ImageFileWrapper
 import com.markettwits.image_action.impl.ImageIntentActionImpl
 import com.markettwits.presentation.navigation.GalleryRouter
 import com.markettwits.presentation.screens.detail.GalleryScreenViewModel

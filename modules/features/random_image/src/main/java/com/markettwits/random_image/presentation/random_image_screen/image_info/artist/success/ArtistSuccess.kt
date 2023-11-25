@@ -26,10 +26,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.markettwits.core_ui.R
-import com.markettwits.core_ui.base.MultyLinksText
-import com.markettwits.core_ui.base.UnlinkMultiText
+import com.markettwits.core_ui.components.MultyLinksText
+import com.markettwits.core_ui.components.UnlinkMultiText
 import com.markettwits.random_image.presentation.random_image_screen.AuthorUi
-import com.markettwits.core_ui.theame.theme.LightGrey
+import com.markettwits.core_ui.theme.LightGrey
 
 @Preview
 @Composable

@@ -7,10 +7,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.markettwits.core_ui.ApplicationViewModel
+import com.markettwits.core_ui.local_di.ApplicationViewModel
 import com.markettwits.core_ui.R
-import com.markettwits.core_ui.base.BasePanelItem
-import com.markettwits.core_ui.base.RefreshPanelItem
+import com.markettwits.core_ui.components.BasePanelItem
+import com.markettwits.core_ui.components.RefreshPanelItem
 import com.markettwits.random_image.presentation.features.bottom_pannel.panel.HeartButton
 import com.markettwits.random_image.presentation.features.bottom_pannel.panel.ReportedButton
 import com.markettwits.random_image.presentation.random_image_screen.ImageViewModel

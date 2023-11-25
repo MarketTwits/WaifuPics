@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.markettwits.waifupics.base.LoadingBox
+import com.markettwits.core_ui.components.progress.LoadingBox
 
 @Preview
 @Composable

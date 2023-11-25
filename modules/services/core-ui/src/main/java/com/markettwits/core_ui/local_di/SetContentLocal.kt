@@ -1,4 +1,4 @@
-package com.markettwits.core_ui
+package com.markettwits.core_ui.local_di
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -8,7 +8,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.platform.LocalContext
-import androidx.core.view.WindowCompat
 import com.markettwits.core_ui.image.ImageLoader
 import com.markettwits.core_ui.image.LocalImageLoader
 

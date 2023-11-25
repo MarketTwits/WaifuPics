@@ -8,10 +8,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.markettwits.core_ui.base.ImageParametersText
-import com.markettwits.core_ui.base.MultyLinksText
-import com.markettwits.core_ui.base.SingleLinkText
-import com.markettwits.core_ui.theame.theme.WaifuPicsTheme
+import com.markettwits.core_ui.components.ImageParametersText
+import com.markettwits.core_ui.components.MultyLinksText
+import com.markettwits.core_ui.components.SingleLinkText
+import com.markettwits.core_ui.theme.WaifuPicsTheme
 import com.markettwits.random_image.presentation.random_image_screen.ImageSourceUi
 
 @Composable

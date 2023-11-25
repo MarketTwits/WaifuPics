@@ -36,6 +36,3 @@ fun String.extractSiteName(): String {
     }
 }
 
-fun String.color(hex: String): Color {
-    return Color.parseColor(hex).toColor()
-}

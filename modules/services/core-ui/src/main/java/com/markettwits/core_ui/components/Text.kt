@@ -1,4 +1,4 @@
-package com.markettwits.core_ui.base
+package com.markettwits.core_ui.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -17,37 +17,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.markettwits.core_ui.R
 import com.markettwits.core_ui.base_extensions.extractSiteName
-import com.markettwits.core_ui.theame.theme.WaifuPicsTheme
-import com.markettwits.waifupics.base.openWebPage
-import com.markettwits.core_ui.theame.theme.LightPink
+import com.markettwits.core_ui.theme.WaifuPicsTheme
+import com.markettwits.core_ui.theme.LightPink
 import java.util.Locale
 
-//@Composable
-//fun ImageParametersText(
-//    title: String,
-//    content: String,
-//    link: String,
-//) {
-//    if (content.isEmpty()) {
-//        Row {
-//            ImageParametersText(title = title, content = "No source available")
-//        }
-//    } else {
-//        HyperlinkText(
-//            fullText = "$title: \uD83D\uDD17 $content",
-//            hyperLinks = mutableMapOf(
-//                content to link,
-//            ),
-//            textStyle = TextStyle(
-//                color = LightPink,
-//                fontFamily = FontFamily(Font(R.font.rubik_medium))
-//            ),
-//            linkTextFontWeight = FontWeight.Medium,
-//            linkTextColor = MaterialTheme.colorScheme.onPrimary,
-//            fontSize = 14.sp,
-//        )
-//    }
-//}
 
 @Composable
 fun ImageParametersText(

@@ -1,4 +1,4 @@
-package com.markettwits.core_ui
+package com.markettwits.core_ui.local_di
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
