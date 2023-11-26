@@ -1,8 +1,3 @@
-/*
- * SPDX-FileCopyrightText: 2023 IacobIacob01
- * SPDX-License-Identifier: Apache-2.0
- */
-
 package com.markettwits.presentation.screens.list.seledted
 
 import android.app.Activity
@@ -17,16 +12,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
@@ -38,6 +29,7 @@ import androidx.compose.material.icons.outlined.DriveFileMove
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.surfaceColorAtElevation
@@ -60,58 +52,32 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.markettwits.presentation.screens.detail.ImageFavoriteUi
+import com.markettwits.presentation.screens.ImageFavoriteUi
+import com.markettwits.presentation.screens.detail.button.DeleteButton
+import com.markettwits.presentation.screens.detail.button.ShareButton
 import kotlinx.coroutines.launch
 
 
-@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
+
 @Composable
 fun SelectionSheet(
     modifier: Modifier = Modifier,
-    selectedMedia: List<ImageFavoriteUi>,
-    selectionState: MutableState<Boolean>,
+    selectedMedia: SnapshotStateList<ImageFavoriteUi>,
+    selectionState: Boolean,
+    clearSelection : () -> Unit
 ) {
-    fun clearSelection() {
-       // selectedMedia.clear()
-        selectionState.value = false
-    }
-
-    val context = LocalContext.current
-    val scope = rememberCoroutineScope()
-    val trashSheetState = remember{
-        mutableStateOf(false)
-    }
-    val moveSheetState = remember{
-        mutableStateOf(false)
-    }
-//    val result = rememberLauncherForActivityResult(
-//        contract = ActivityResultContracts.StartIntentSenderForResult(),
-//        onResult = {
-//            if (it.resultCode == Activity.RESULT_OK) {
-//                clearSelection()
-//                if (trashSheetState.isVisible) {
-//                    scope.launch {
-//                        trashSheetState.hide()
-//                    }
-//                }
-//            }
-//        }
-//    )
-    val windowSizeClass = calculateWindowSizeClass(LocalContext.current as Activity)
-    val tabletMode = windowSizeClass.widthSizeClass > WindowWidthSizeClass.Compact
     val sizeModifier = Modifier.fillMaxWidth()
-//        if (!tabletMode) Modifier.fillMaxWidth()
-   // else Modifier.wrapContentWidth()
+
     AnimatedVisibility(
-        modifier = modifier.windowInsetsPadding(WindowInsets.navigationBars),
-        visible = selectionState.value,
+        modifier = modifier,
+        visible = selectionState,
         enter = slideInVertically { it * 2 },
         exit = slideOutVertically { it * 2 }
     ) {
         Column(
             modifier = Modifier
                 .padding(horizontal = 16.dp)
-               // .navigationBarsPadding()
+                .navigationBarsPadding()
                 .then(sizeModifier)
                 .wrapContentHeight()
                 .clip(RoundedCornerShape(10.dp))
@@ -120,8 +86,7 @@ fun SelectionSheet(
                     shape = RoundedCornerShape(10.dp)
                 )
                 .background(MaterialTheme.colorScheme.surfaceColorAtElevation(2.dp))
-                .padding(16.dp)
-                    ,
+                .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Row(
@@ -136,12 +101,12 @@ fun SelectionSheet(
                 ) {
                     Image(
                         imageVector = Icons.Outlined.Close,
-                        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface),
+                        colorFilter = ColorFilter.tint(LocalContentColor.current),
                         contentDescription = "Close"
                     )
                 }
                 Text(
-                    text = "Selected count",
+                    text = "Selected count ${selectedMedia.size}",
                     style = MaterialTheme.typography.titleMedium,
                     modifier = Modifier.weight(1f, fill = false)
                 )
@@ -153,102 +118,19 @@ fun SelectionSheet(
                         color = MaterialTheme.colorScheme.surface,
                         shape = RoundedCornerShape(10.dp)
                     )
-                    //.horizontalScroll(rememberScrollState())
-                ,
+                    .horizontalScroll(rememberScrollState()),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                // Share Component
-                SelectionBarColumn(
-                  //  selectedMedia = selectedMedia,
-                    imageVector = Icons.Outlined.Share,
-                    title = "Share"
-                ) {
-                   //  TODO Share
+                ShareButton {
+                    //TODO
                 }
-//                val favoriteTitle =
-//                    if (target == TARGET_FAVORITES) stringResource(id = R.string.remove_selected)
-//                    else stringResource(id = R.string.favorites)
-                // Favorite Component
-                SelectionBarColumn(
-                //    selectedMedia = selectedMedia,
-                    imageVector = Icons.Outlined.FavoriteBorder,
-                    title = "Favorite title"
-                ) {
-                    scope.launch {
-                        //todo togle favorite
-//                        handler.toggleFavorite(result = result, it)
-                    }
+
+                DeleteButton {
+                    //TODO
                 }
-                // Move Component
-                SelectionBarColumn(
-                   // selectedMedia = selectedMedia,
-                    imageVector = Icons.Outlined.DriveFileMove,
-                    title = "Move"
-                ) {
-                    scope.launch {
-                       // moveSheetState.show()
-                    }
-                }
-                // Trash Component
-                SelectionBarColumn(
-                   // selectedMedia = selectedMedia,
-                    imageVector = Icons.Outlined.DeleteOutline,
-                    title = "Trash"
-                ) {
-                    scope.launch {
-                      //  trashSheetState.show()
-                    }
-                }
+
             }
         }
-    }
-
-
-//    TrashDialog(
-//        appBottomSheetState = trashSheetState,
-//        data = selectedMedia,
-//        action = TrashDialogAction.TRASH
-//    ) {
-//        handler.trashMedia(result, it, true)
-//    }
-}
-
-@Composable
-private fun SelectionBarColumn(
-   // selectedMedia: SnapshotStateList<ImageFavoriteUi>,
-    imageVector: ImageVector,
-    title: String,
-    onItemClick: (List<ImageFavoriteUi>) -> Unit
-) {
-    val tintColor = MaterialTheme.colorScheme.onSurface
-    Column(
-        modifier = Modifier
-            .clip(RoundedCornerShape(12.dp))
-            .height(80.dp)
-            .width(80.dp)
-            .clickable {
-                //   onItemClick.invoke(selectedMedia)
-            }
-            .padding(top = 12.dp, bottom = 16.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Image(
-            imageVector = imageVector,
-            colorFilter = ColorFilter.tint(tintColor),
-            contentDescription = title,
-            modifier = Modifier
-                .height(32.dp)
-        )
-        Spacer(modifier = Modifier.size(4.dp))
-        Text(
-            text = title,
-            modifier = Modifier,
-            fontWeight = FontWeight.Medium,
-            style = MaterialTheme.typography.bodyMedium,
-            color = tintColor,
-            textAlign = TextAlign.Center
-        )
     }
 }
