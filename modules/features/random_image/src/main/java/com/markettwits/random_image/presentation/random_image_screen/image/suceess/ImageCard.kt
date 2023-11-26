@@ -16,6 +16,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImagePainter
+import coil.compose.AsyncImagePainter.State.Empty.painter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
 import com.markettwits.core_ui.local_di.ApplicationViewModel
@@ -39,19 +40,15 @@ fun ImageCard(imageUrl: String, id: Int) {
     SubcomposeAsyncImage(
         model = LocalImageLoader.current.memorySingle(imageUrl),
         contentScale = ContentScale.FillWidth,
-        contentDescription = stringResource(R.string.waifu_image)
-    ) {
-        val state = painter.state
-        if (state is AsyncImagePainter.State.Success) {
-            viewModel.currentImage(state.result.drawable, imageUrl, id)
-        }
-        if (state is AsyncImagePainter.State.Loading || state is AsyncImagePainter.State.Error) {
+        contentDescription = stringResource(R.string.waifu_image),
+        loading = {
             ImageLoading()
             viewModel.imageLoading()
-        } else {
+        }, success = {
             SubcomposeAsyncImageContent(modifier = modifier)
+            viewModel.currentImage(it.result.drawable, imageUrl, id)
         }
-    }
+    )
     if (isDialogOpen) {
         FullScreenImageDialog(
             imageUrl = imageUrl,

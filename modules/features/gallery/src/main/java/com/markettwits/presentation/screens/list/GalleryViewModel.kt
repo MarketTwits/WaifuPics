@@ -24,6 +24,7 @@ interface GalleryViewModel {
     fun selected(): StateFlow<Boolean>
     fun selection(index: Int)
     fun shareImages()
+    fun delete()
     fun changeSelectedState()
 
     class Base(
@@ -40,6 +41,9 @@ interface GalleryViewModel {
         init {
             favoriteImages()
         }
+        override fun selectedPhotoState(): List<ImageFavoriteUi> = selectedImageCommunication.fetch()
+
+        override fun selected(): StateFlow<Boolean> = selectedModeCommunication.state()
 
         override fun toDetail(state: ImageFavoriteUi) {
             current.map(state)
@@ -62,11 +66,6 @@ interface GalleryViewModel {
             }
         }
 
-        override fun selectedPhotoState(): List<ImageFavoriteUi> = selectedImageCommunication.fetch()
-
-        override fun selected(): StateFlow<Boolean> = selectedModeCommunication.state()
-
-
         override fun selection(index: Int) {
             viewModelScope.launch(Dispatchers.IO) {
                 val selectedPhotoState = selectedImageCommunication.fetch()
@@ -85,6 +84,16 @@ interface GalleryViewModel {
             viewModelScope.launch {
                 imageIntentAction.shareImage(imageUrl)
             }
+        }
+
+        override fun delete() {
+            val selectedPhotoState = selectedImageCommunication.fetch()
+            val id = selectedPhotoState.map { it.id() }
+            val url = selectedPhotoState.map { it.imageUrl() }
+            viewModelScope.launch {
+                repository.delete(id, url)
+            }
+            changeSelectedState()
         }
 
         override fun changeSelectedState() {

@@ -12,6 +12,7 @@ interface GalleryRepository {
     @Deprecated("use observe method instead of this")
     suspend fun fetch(): List<ImageFavoriteUi>
     suspend fun delete(url: String, id: Long)
+    suspend fun delete(id: List<Long>, url : List<String>)
     suspend fun saveToGallery(url: String)
     fun infoAboutImage(url: String) : MediaInfoUiState
     class Base(
@@ -29,6 +30,10 @@ interface GalleryRepository {
         override suspend fun fetch() = dataSource.fetch().map { cacheToUiMapper.map(it) }
         override suspend fun delete(url: String, id: Long) {
             dataSource.delete(id, url)
+        }
+
+        override suspend fun delete(id: List<Long>, url: List<String>) {
+            dataSource.deleteList(id, url)
         }
 
         override suspend fun saveToGallery(url: String) {

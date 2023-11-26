@@ -23,6 +23,7 @@ import java.util.UUID
 
 interface ImageLoaderDataSource {
     suspend fun deleteImage(imageUrl: String)
+    suspend fun deleteImages(imageUrl: List<String>)
     suspend fun loadImage(imageUrl: String): String
     suspend fun loadImage(image: Drawable): String
     suspend fun saveToGallery(imageUrl: String)
@@ -36,6 +37,12 @@ interface ImageLoaderDataSource {
                 file.delete()
             } catch (e: Exception) {
                 throw RuntimeException("delete error :${e.cause}")
+            }
+        }
+
+        override suspend fun deleteImages(imageUrl: List<String>) {
+            imageUrl.forEach {
+                deleteImage(it)
             }
         }
 
