@@ -47,6 +47,19 @@ class ImagesCacheDataSource(
             }
         }
     }
+    fun delete(id: List<Long>){
+        realm.writeBlocking {
+            id.forEach {
+                val item =
+                    query<ImageFavoriteRealmCache>(query = "_id == $0", it).first().find()
+                try {
+                    item?.let { delete(item) }
+                } catch (e: Exception) {
+                    throw RuntimeException("ImagesCacheDataSource#delete" + e.localizedMessage)
+                }
+            }
+        }
+    }
 
 
     fun hasImageWithUrl(imageUrl: String): Boolean {

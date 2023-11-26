@@ -14,6 +14,7 @@ interface ImageRepository {
     suspend fun addToFavorite(drawable: Drawable, networkUrl : String,protected : Boolean)
     suspend fun addOrDelete(image: Drawable, url : String, protected: Boolean)
     suspend fun fetch(): List<ImageFavoriteCache>
+    suspend fun deleteList(id : List<Long>,url : List<String>)
     suspend fun delete(id: Long, url : String)
     suspend fun delete(imageUrl : String)
 
@@ -24,6 +25,11 @@ interface ImageRepository {
 
     ) : ImageRepository {
         override suspend fun fetch() = database.read().map { it.map() }
+        override suspend fun deleteList(id: List<Long>,url : List<String>) {
+            database.delete(id)
+            image.deleteImages(url)
+        }
+
         override suspend fun observe(): Flow<List<ImageFavoriteCache>> {
             return  database.observeFavoriteImages().map { it.map { it.map() } }
         }

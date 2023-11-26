@@ -90,7 +90,11 @@ fun ImageScreenFull(
                 imageUrl = state[index].imageUrl(),
                 uiEnabled = showUI.value,
                 setCurrentItem = {
-                    viewModel.setCurrentItem(state[pagerState.currentPage])
+                    //TODO crash when delete last item it list
+                    val item = state[pagerState.currentPage]
+                    viewModel.setCurrentItem(item)
+                    Log.d("mt06", index.toString())
+                    Log.d("mt06", item.toString())
                 },
                 onItemClick = {
                     showUI.value = !showUI.value

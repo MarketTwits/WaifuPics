@@ -34,7 +34,6 @@ fun GalleryScreen() {
     val view = LocalView.current
     val selected by viewModel.selected().collectAsState()
     val selectedMedia = viewModel.selectedPhotoState()
-
     rememberWindowInsetsController().toggleSystemBars(true)
     Box(
         modifier = Modifier
@@ -78,6 +77,9 @@ fun GalleryScreen() {
             },
             shareImages = {
                 viewModel.shareImages()
+            },
+            deleteImages = {
+                viewModel.delete()
             }
         )
     }
