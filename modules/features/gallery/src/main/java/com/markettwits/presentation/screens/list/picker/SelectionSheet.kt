@@ -41,7 +41,8 @@ fun SelectionSheet(
     modifier: Modifier = Modifier,
     selectedMedia: List<ImageFavoriteUi>,
     selectionState: Boolean,
-    clearSelection : () -> Unit
+    clearSelection : () -> Unit,
+    shareImages : () -> Unit
 ) {
     val sizeModifier = Modifier.fillMaxWidth()
 
@@ -100,7 +101,7 @@ fun SelectionSheet(
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 ShareButton {
-                    //TODO
+                    shareImages()
                 }
 
                 DeleteButton {

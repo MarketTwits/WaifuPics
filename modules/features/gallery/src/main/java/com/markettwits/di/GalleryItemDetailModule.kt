@@ -6,6 +6,7 @@ import com.markettwits.core.wrappers.AsyncViewModel
 import com.markettwits.core.wrappers.DispatchersList
 import com.markettwits.core.wrappers.RunAsync
 import com.markettwits.data.GalleryRepository
+import com.markettwits.image_action.api.ImageIntentAction
 import com.markettwits.image_action.impl.ImageFileWrapper
 import com.markettwits.image_action.impl.ImageIntentActionImpl
 import com.markettwits.presentation.navigation.GalleryRouter
@@ -19,6 +20,7 @@ class GalleryItemDetailModule(
     private val galleryCommunication: GalleryCommunication,
     private val repository: GalleryRepository,
     private val navigation: GalleryRouter,
+    private val image: ImageIntentAction.Mutable
 ) : Module<GalleryScreenViewModel.Base> {
 
     override fun viewModel(): GalleryScreenViewModel.Base {
@@ -27,7 +29,7 @@ class GalleryItemDetailModule(
             galleryCommunication,
             AsyncViewModel.Base(RunAsync.Base(DispatchersList.Base())),
             repository,
-            ImageIntentActionImpl(core.context(), ImageFileWrapper.Base(core.context())),
+            image,
             navigation,
         )
     }

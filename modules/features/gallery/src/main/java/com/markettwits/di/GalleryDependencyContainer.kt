@@ -14,6 +14,8 @@ import com.markettwits.data.media_info.ExifServiceWrapper
 import com.markettwits.data.media_info.ImageInfoToUiMapper
 import com.markettwits.data.store.ImageLoaderDataSource
 import com.markettwits.data.store.ImagesCacheDataSource
+import com.markettwits.image_action.impl.ImageFileWrapper
+import com.markettwits.image_action.impl.ImageIntentActionImpl
 import com.markettwits.presentation.navigation.GalleryRouter
 import com.markettwits.presentation.screens.detail.GalleryScreenViewModel
 import com.markettwits.presentation.screens.list.communication.DetailCommunication
@@ -39,13 +41,15 @@ class GalleryDependencyContainer(
         ExifServiceWrapper.Base(),
         ImageInfoToUiMapper.Base()
     )
+    private val imageIntentAction = ImageIntentActionImpl(core.context(), ImageFileWrapper.Base(core.context()))
 
     override fun module(className: Class<out ViewModel>) = when (className) {
         GalleryViewModel.Base::class.java -> GalleryScreenModule(
             communication,
             repository,
             galleryCommunication,
-            navigation
+            navigation,
+            imageIntentAction
         )
 
         GalleryScreenViewModel.Base::class.java -> GalleryItemDetailModule(
@@ -54,6 +58,7 @@ class GalleryDependencyContainer(
             galleryCommunication,
             repository,
             navigation,
+            imageIntentAction
         )
 
         else -> dependencyContainer.module(className)

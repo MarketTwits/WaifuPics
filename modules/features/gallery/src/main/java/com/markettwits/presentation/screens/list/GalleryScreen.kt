@@ -72,10 +72,14 @@ fun GalleryScreen() {
                 .align(Alignment.BottomEnd)
                 .windowInsetsPadding(WindowInsets.navigationBars),
             selectedMedia = selectedMedia,
-            selectionState = selected
-        ){
-            viewModel.changeSelectedState()
-        }
+            selectionState = selected,
+            clearSelection = {
+                viewModel.changeSelectedState()
+            },
+            shareImages = {
+                viewModel.shareImages()
+            }
+        )
     }
 
 }

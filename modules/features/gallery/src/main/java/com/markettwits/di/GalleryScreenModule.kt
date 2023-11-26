@@ -5,6 +5,7 @@ import com.markettwits.core.wrappers.AsyncViewModel
 import com.markettwits.core.wrappers.DispatchersList
 import com.markettwits.core.wrappers.RunAsync
 import com.markettwits.data.GalleryRepository
+import com.markettwits.image_action.api.ImageIntentAction
 import com.markettwits.presentation.navigation.GalleryRouter
 import com.markettwits.presentation.screens.list.communication.DetailCommunication
 import com.markettwits.presentation.screens.list.communication.GalleryCommunication
@@ -17,6 +18,7 @@ class GalleryScreenModule(
     private val repository: GalleryRepository,
     private val galleryCommunication: GalleryCommunication,
     private val navigation: GalleryRouter,
+    private val imageIntentAction: ImageIntentAction.ShareImage
 ) : Module<GalleryViewModel.Base> {
     override fun viewModel() = GalleryViewModel.Base(
         galleryCommunication,
@@ -25,6 +27,7 @@ class GalleryScreenModule(
         communication,
         SelectedModeCommunication.Base(),
         navigation,
-        SelectedImageCommunication.Base()
+        SelectedImageCommunication.Base(),
+        imageIntentAction
     )
 }
