@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable
 
 interface ImageIntentAction {
     interface ShareImage : ImageIntentAction {
+        suspend fun shareImage(imagePath: List<String>)
         suspend fun shareImage(imagePath: String)
         suspend fun shareImage(drawable: Drawable)
     }

@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.markettwits.core.communication.StateCommunication
 import com.markettwits.core.wrappers.AsyncViewModel
 import com.markettwits.data.GalleryRepository
+import com.markettwits.image_action.api.ImageIntentAction
 import com.markettwits.presentation.navigation.GalleryRouter
 import com.markettwits.presentation.screens.ImageFavoriteUi
 import com.markettwits.presentation.screens.list.communication.DetailCommunication
@@ -22,6 +23,7 @@ interface GalleryViewModel {
     fun selectedPhotoState() : List<ImageFavoriteUi>
     fun selected(): StateFlow<Boolean>
     fun selection(index: Int)
+    fun shareImages()
     fun changeSelectedState()
 
     class Base(
@@ -31,7 +33,8 @@ interface GalleryViewModel {
         private val current: DetailCommunication,
         private val selectedModeCommunication: SelectedModeCommunication,
         private val navigation: GalleryRouter,
-        private val selectedImageCommunication: SelectedImageCommunication
+        private val selectedImageCommunication: SelectedImageCommunication,
+        private val imageIntentAction: ImageIntentAction.ShareImage
     ) : ViewModel(), StateCommunication.State<List<ImageFavoriteUi>>, GalleryViewModel {
 
         init {
@@ -74,6 +77,13 @@ interface GalleryViewModel {
                 else
                     selectedImageCommunication.add(item)
                 if (selectedPhotoState.isEmpty()) changeSelectedState()
+            }
+        }
+
+        override fun shareImages() {
+            val imageUrl = selectedImageCommunication.fetch().map { it.imageUrl() }
+            viewModelScope.launch {
+                imageIntentAction.shareImage(imageUrl)
             }
         }
 
