@@ -9,6 +9,7 @@ import com.markettwits.presentation.navigation.GalleryRouter
 import com.markettwits.presentation.screens.list.DetailCommunication
 import com.markettwits.presentation.screens.list.GalleryCommunication
 import com.markettwits.presentation.screens.list.GalleryViewModel
+import com.markettwits.presentation.screens.list.SelectedImageCommunication
 
 class GalleryScreenModule(
     private val communication: DetailCommunication,
@@ -21,6 +22,7 @@ class GalleryScreenModule(
         repository,
         AsyncViewModel.Base(RunAsync.Base(DispatchersList.Base())),
         communication,
+        SelectedImageCommunication.Base(),
         navigation
     )
 }

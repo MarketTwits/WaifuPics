@@ -1,6 +1,7 @@
 package com.markettwits.waifupics.core
 
 import android.app.Application
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
@@ -17,9 +18,8 @@ class WaifuPicsApp : Application(), ProvideViewModel, SaveAndRestore {
     private val saveAndRestoreState : SaveAndRestoreState = SaveAndRestoreState.Base()
     override fun onCreate() {
         super.onCreate()
-        val make = MakeDependencies.Base(this, saveAndRestoreState)
+        val make = MakeDependencies.Base(this, saveAndRestoreState,)
         viewModelFactory = ViewModelsFactory(make.dependencies())
-
     }
     override fun <T : ViewModel> viewModel(owner: ViewModelStoreOwner, className: Class<T>): T {
         return ViewModelProvider(owner, viewModelFactory)[className]

@@ -1,6 +1,6 @@
 package com.markettwits.presentation.screens.list
 
-import com.markettwits.presentation.screens.detail.ImageFavoriteUi
+import com.markettwits.presentation.screens.ImageFavoriteUi
 
 interface ProtectedToBaseUiMapper {
     fun map(list : List<ImageFavoriteUi>) : List<ImageFavoriteUi>

@@ -1,6 +1,7 @@
 package com.markettwits.waifupics.core
 
 import android.content.Context
+import androidx.lifecycle.SavedStateHandle
 import com.markettwits.core.Core
 import com.markettwits.core.di.DependencyContainer
 import com.markettwits.core.wrappers.SaveAndRestoreState
@@ -20,7 +21,7 @@ interface MakeDependencies {
         override fun dependencies(): DependencyContainer {
             val core = Core(context, saveAndRestoreState)
             val error = DependencyContainer.Error()
-            val gallery = GalleryDependencyContainer(navigation(),error, core)
+            val gallery = GalleryDependencyContainer(navigation(),error, saveAndRestoreState, core,)
             val randomImage = RandomImageDependencyContainer(core, gallery)
             val navigation = NavigationDependencyContainer(randomImage, navigation())
             return BaseDependencyContainer(core, navigation)

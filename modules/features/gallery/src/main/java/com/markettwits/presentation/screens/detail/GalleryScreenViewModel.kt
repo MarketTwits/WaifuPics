@@ -6,6 +6,7 @@ import com.markettwits.core.wrappers.AsyncViewModel
 import com.markettwits.data.GalleryRepository
 import com.markettwits.image_action.api.ImageIntentAction
 import com.markettwits.presentation.navigation.GalleryRouter
+import com.markettwits.presentation.screens.ImageFavoriteUi
 import com.markettwits.presentation.screens.detail.info.MediaInfoUiState
 import com.markettwits.presentation.screens.list.DetailCommunication
 import com.markettwits.presentation.screens.list.GalleryCommunication
@@ -51,7 +52,7 @@ interface GalleryScreenViewModel {
         }
 
         override fun setImageAs() {
-            async.handleAsyncSingle{
+            async.handleAsyncSingle {
                 imageIntentAction.launchUseAs(item.state().value.imageUrl())
             }
         }
@@ -63,7 +64,7 @@ interface GalleryScreenViewModel {
         }
 
         override fun infoAboutImage(): MediaInfoUiState =
-             repository.infoAboutImage(item.state().value.imageUrl())
+            repository.infoAboutImage(item.state().value.imageUrl())
 
         override fun setCurrentItem(image: ImageFavoriteUi) {
             item.map(image)

@@ -1,10 +1,12 @@
 package com.markettwits.di
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.markettwits.core.Core
 import com.markettwits.core.RealmDatabaseProvider
 import com.markettwits.core.di.DependencyContainer
 import com.markettwits.core.wrappers.DispatchersList
+import com.markettwits.core.wrappers.SaveAndRestoreState
 import com.markettwits.data.FavoriteImageCacheToUiMapper
 import com.markettwits.data.GalleryRepository
 import com.markettwits.data.ImageRepository
@@ -22,6 +24,7 @@ import com.markettwits.presentation.screens.list.GalleryViewModel
 class GalleryDependencyContainer(
     private val navigation: GalleryRouter,
     private val dependencyContainer: DependencyContainer,
+    private val saveAndRestoreState: SaveAndRestoreState,
     private val core: Core
 ) : DependencyContainer {
     private val communication = DetailCommunication.Base()
@@ -51,7 +54,7 @@ class GalleryDependencyContainer(
             communication,
             galleryCommunication,
             repository,
-            navigation
+            navigation,
         )
 
         else -> dependencyContainer.module(className)

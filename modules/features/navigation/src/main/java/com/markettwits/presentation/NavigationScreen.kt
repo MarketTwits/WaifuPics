@@ -62,7 +62,8 @@ fun SurfaceLayout(
     CollapsingToolbarScaffold(
         modifier = modifier.background(MaterialTheme.colorScheme.background),
         state = collapsedState,
-        scrollStrategy = ScrollStrategy.EnterAlways,
+//        scrollStrategy = ScrollStrategy.EnterAlwaysCollapsed,
+        scrollStrategy = ScrollStrategy.ExitUntilCollapsed,
         toolbar = { toolbar() }) {
         content()
     }
