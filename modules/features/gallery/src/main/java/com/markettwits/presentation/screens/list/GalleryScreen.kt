@@ -20,8 +20,8 @@ import com.markettwits.core_ui.base_extensions.vibrate
 import com.markettwits.core_ui.local_di.ApplicationViewModel
 import com.markettwits.presentation.screens.detail.window_controller.rememberWindowInsetsController
 import com.markettwits.presentation.screens.detail.window_controller.toggleSystemBars
-import com.markettwits.presentation.screens.list.seledted.MediaComponent
-import com.markettwits.presentation.screens.list.seledted.SelectionSheet
+import com.markettwits.presentation.screens.list.picker.MediaComponent
+import com.markettwits.presentation.screens.list.picker.SelectionSheet
 import run.nabla.gallerypicker.picker.rememberGalleryPickerState
 
 
@@ -33,7 +33,7 @@ fun GalleryScreen() {
     val imageState = rememberGalleryPickerState()
     val view = LocalView.current
     val selected by viewModel.selected().collectAsState()
-    val selectedMedia = viewModel.selectedPhotoState
+    val selectedMedia = viewModel.selectedPhotoState()
 
     rememberWindowInsetsController().toggleSystemBars(true)
     Box(
