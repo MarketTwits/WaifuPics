@@ -1,26 +1,21 @@
-package com.markettwits.presentation.screens.list.seledted
+package com.markettwits.presentation.screens.list.picker
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.snapshots.SnapshotStateList
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -29,7 +24,6 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.markettwits.core_ui.image.LocalImageLoader
 import com.markettwits.presentation.animations.Animation
-import com.markettwits.presentation.animations.Dimens
 import com.markettwits.presentation.screens.ImageFavoriteUi
 import run.nabla.gallerypicker.picker.GalleryPickerState
 
@@ -40,7 +34,7 @@ fun MediaImage(
     imagePickerState : GalleryPickerState,
     //selectionState: MutableState<Boolean>,
     selectionState: Boolean,
-    selectedMedia: SnapshotStateList<ImageFavoriteUi>,
+    selectedMedia: List<ImageFavoriteUi>,
     isSelected: MutableState<Boolean>,
     modifier: Modifier = Modifier
 ) {

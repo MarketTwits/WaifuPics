@@ -1,4 +1,4 @@
-package com.markettwits.presentation.screens.list.seledted
+package com.markettwits.presentation.screens.list.picker
 
 import androidx.compose.foundation.Image
 import androidx.compose.material.icons.Icons

@@ -1,6 +1,5 @@
 package com.markettwits.di
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.markettwits.core.Core
 import com.markettwits.core.RealmDatabaseProvider
@@ -17,8 +16,8 @@ import com.markettwits.data.store.ImageLoaderDataSource
 import com.markettwits.data.store.ImagesCacheDataSource
 import com.markettwits.presentation.navigation.GalleryRouter
 import com.markettwits.presentation.screens.detail.GalleryScreenViewModel
-import com.markettwits.presentation.screens.list.DetailCommunication
-import com.markettwits.presentation.screens.list.GalleryCommunication
+import com.markettwits.presentation.screens.list.communication.DetailCommunication
+import com.markettwits.presentation.screens.list.communication.GalleryCommunication
 import com.markettwits.presentation.screens.list.GalleryViewModel
 
 class GalleryDependencyContainer(

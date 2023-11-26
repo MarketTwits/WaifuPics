@@ -8,8 +8,8 @@ import com.markettwits.image_action.api.ImageIntentAction
 import com.markettwits.presentation.navigation.GalleryRouter
 import com.markettwits.presentation.screens.ImageFavoriteUi
 import com.markettwits.presentation.screens.detail.info.MediaInfoUiState
-import com.markettwits.presentation.screens.list.DetailCommunication
-import com.markettwits.presentation.screens.list.GalleryCommunication
+import com.markettwits.presentation.screens.list.communication.DetailCommunication
+import com.markettwits.presentation.screens.list.communication.GalleryCommunication
 import kotlinx.coroutines.flow.StateFlow
 
 interface GalleryScreenViewModel {

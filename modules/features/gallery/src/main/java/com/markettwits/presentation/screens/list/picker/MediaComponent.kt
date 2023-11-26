@@ -1,14 +1,12 @@
-package com.markettwits.presentation.screens.list.seledted
+package com.markettwits.presentation.screens.list.picker
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.lazy.grid.LazyGridItemScope
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
@@ -19,10 +17,9 @@ import run.nabla.gallerypicker.picker.GalleryPickerState
 @Composable
 fun LazyGridItemScope.MediaComponent(
     media: ImageFavoriteUi,
-    //selectionState: MutableState<Boolean>,
     selectionState: Boolean,
     imagePickerState: GalleryPickerState,
-    selectedMedia: SnapshotStateList<ImageFavoriteUi>,
+    selectedMedia: List<ImageFavoriteUi>,
     onItemClick: (ImageFavoriteUi) -> Unit,
     onItemLongClick: (ImageFavoriteUi) -> Unit,
 ) {
@@ -39,15 +36,9 @@ fun LazyGridItemScope.MediaComponent(
             .combinedClickable(
                 onClick = {
                     onItemClick(media)
-//                    if (selectionState.value) {
-//                        isSelected.value = !isSelected.value
-//                    }
                 },
                 onLongClick = {
                     onItemLongClick(media)
-//                    if (selectionState.value) {
-//                        isSelected.value = !isSelected.value
-//                    }
                 },
             )
     )
