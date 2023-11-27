@@ -1,5 +1,6 @@
 package com.markettwits.presentation.screens.detail
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.markettwits.core.communication.StateCommunication
 import com.markettwits.core.wrappers.AsyncViewModel
@@ -20,6 +21,7 @@ interface GalleryScreenViewModel {
     fun setCurrentItem(image: ImageFavoriteUi)
     fun saveToGallery()
     fun currentImage(): StateFlow<ImageFavoriteUi>
+    fun setCurrentItem(index: Int)
     fun state(): StateFlow<List<ImageFavoriteUi>>
     fun shareImage()
     fun editImage()
@@ -59,8 +61,12 @@ interface GalleryScreenViewModel {
         }
 
         override fun delete() {
+            //TODO fix crash when delete last image
             async.handleAsyncSingle {
-                repository.delete(item.state().value.imageUrl, item.state().value.id)
+                val localItem = item.state().value
+                if (state().value.last() != localItem){
+                    repository.delete(item.state().value.imageUrl, item.state().value.id)
+                }
             }
         }
 
@@ -69,6 +75,10 @@ interface GalleryScreenViewModel {
 
         override fun setCurrentItem(image: ImageFavoriteUi) {
             item.map(image)
+        }
+
+        override fun setCurrentItem(index: Int) {
+            item.map(list.state().value[index])
         }
 
         override fun saveToGallery() {
