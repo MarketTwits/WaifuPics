@@ -18,6 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.blur
+import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -25,6 +26,7 @@ import coil.compose.rememberAsyncImagePainter
 import com.markettwits.core_ui.image.LocalImageLoader
 import com.markettwits.presentation.animations.Animation.DEFAULT_TOP_BAR_ANIMATION_DURATION
 import net.engawapg.lib.zoomable.rememberZoomState
+import net.engawapg.lib.zoomable.toggleScale
 import net.engawapg.lib.zoomable.zoomable
 
 
@@ -84,5 +86,4 @@ fun ZoomablePagerImage(
         )
     }
     setCurrentItem()
-
 }

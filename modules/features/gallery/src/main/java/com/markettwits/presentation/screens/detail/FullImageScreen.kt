@@ -37,7 +37,6 @@ import net.engawapg.lib.zoomable.zoomable
 fun ImageScreenFull(
     modifier: Modifier = Modifier,
 ) {
-    val zoomState = rememberZoomState()
     val viewModel: GalleryScreenViewModel.Base = ApplicationViewModel()
     val currentImage by viewModel.currentImage().collectAsState()
     val state by viewModel.state().collectAsState()
@@ -65,16 +64,9 @@ fun ImageScreenFull(
                 if (state.isNotEmpty()) {
                     state[it.coerceIn(state.indices)].toString()
                 } else "empty"
-            },
-            modifier = Modifier
-                .zoomable(zoomState)
-                .graphicsLayer(
-                    scaleX = zoomState.scale,
-                    scaleY = zoomState.scale
-                )
+            }
         ) { index ->
             val currentPage = pagerState.currentPage
-
             ZoomablePagerImage(
                 imageUrl = state[index].imageUrl,
                 uiEnabled = showUI.value,
