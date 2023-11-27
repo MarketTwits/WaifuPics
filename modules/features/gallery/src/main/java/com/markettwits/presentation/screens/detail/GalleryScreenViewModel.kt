@@ -34,6 +34,7 @@ interface GalleryScreenViewModel {
         private val navigation: GalleryRouter,
     ) : ViewModel(), GalleryScreenViewModel {
         override fun state() = list.state()
+        override fun currentImage() : StateFlow<ImageFavoriteUi> = item.state()
         override fun shareImage() {
             val imageUrl = item.state().value.imageUrl()
             async.handleAsyncSingle {
@@ -76,7 +77,7 @@ interface GalleryScreenViewModel {
             }
         }
 
-        override fun currentImage() = item.state()
+
 
     }
 }

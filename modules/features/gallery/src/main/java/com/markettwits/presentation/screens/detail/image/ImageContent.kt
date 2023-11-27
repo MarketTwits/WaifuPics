@@ -48,7 +48,6 @@ fun ZoomablePagerImage(
             zoomState.setContentSize(it.painter.intrinsicSize)
         }
     )
-//
 
     Box(modifier = Modifier.fillMaxSize()) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {

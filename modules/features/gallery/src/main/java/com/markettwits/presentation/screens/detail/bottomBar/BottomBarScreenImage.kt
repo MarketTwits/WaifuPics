@@ -22,10 +22,9 @@ import com.markettwits.presentation.screens.detail.button.ShareButton
 import com.markettwits.core_ui.theme.BlackScrim
 
 @Composable
-fun BoxScope.DownBarScreenImage(
+fun BoxScope.BottomBarScreenImage(
     viewModel: GalleryScreenViewModel,
     showUI: Boolean,
-    //paddingValues: PaddingValues
 ) {
     AnimatedVisibility(
         visible = showUI,
@@ -44,7 +43,6 @@ fun BoxScope.DownBarScreenImage(
                 )
                 .padding(
                     top = 24.dp,
-                   // bottom = paddingValues.calculateBottomPadding()
                 )
                 .fillMaxWidth()
                 .horizontalScroll(rememberScrollState())
