@@ -72,6 +72,7 @@ fun ZoomablePagerImage(
                 .combinedClickable(
                     interactionSource = remember { MutableInteractionSource() },
                     indication = null,
+                    onDoubleClick = {},
                     onClick = onItemClick
                 )
                 .zoomable(
