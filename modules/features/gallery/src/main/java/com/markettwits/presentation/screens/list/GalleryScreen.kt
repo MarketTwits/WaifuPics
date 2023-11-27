@@ -45,7 +45,7 @@ fun GalleryScreen() {
         LazyVerticalGrid(
             columns = GridCells.Adaptive(100.dp),
         ) {
-            items(state, key = { it.id() }) { image ->
+            items(state, key = { it.id }) { image ->
                 MediaComponent(
                     media = image,
                     selectionState = selected,

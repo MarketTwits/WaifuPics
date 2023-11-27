@@ -42,7 +42,7 @@ fun MediaImage(
     if (!selectionState) {
         isSelected.value = false
     } else {
-        isSelected.value = selectedMedia.find { it.id() == image.id() } != null
+        isSelected.value = selectedMedia.find { it.id == image.id } != null
     }
     val selectedSize by animateDpAsState(
         if (isSelected.value) 12.dp else 0.dp, label = "selectedSize"
@@ -85,7 +85,7 @@ fun MediaImage(
                 AsyncImage(
                     modifier = modifier
                         .fillMaxSize(),
-                    model = LocalImageLoader.current.single(image.imageUrl()),
+                    model = LocalImageLoader.current.single(image.imageUrl),
                     contentScale = ContentScale.Crop,
                     contentDescription = null
                 )

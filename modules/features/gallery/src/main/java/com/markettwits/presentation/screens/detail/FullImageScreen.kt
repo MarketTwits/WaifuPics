@@ -73,7 +73,7 @@ fun ImageScreenFull(
                 )
         ) { index ->
             ZoomablePagerImage(
-                imageUrl = state[index].imageUrl(),
+                imageUrl = state[index].imageUrl,
                 uiEnabled = showUI.value,
                 setCurrentItem = {
                     //TODO crash when delete last item it list

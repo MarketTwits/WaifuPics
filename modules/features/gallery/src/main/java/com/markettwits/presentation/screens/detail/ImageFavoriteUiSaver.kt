@@ -15,10 +15,10 @@ object ImageFavoriteUiSaver: Saver<ImageFavoriteUi, Map<String, Any>> {
 
     override fun SaverScope.save(value: ImageFavoriteUi): Map<String, Any> {
         return mapOf(
-            "id" to value.id(),
-            "created" to value.created(),
-            "imageUrl" to value.imageUrl(),
-            "protected" to value.protected()
+            "id" to value.id,
+            "created" to value.created,
+            "imageUrl" to value.imageUrl,
+            "protected" to value.protected
         )
     }
 }
