@@ -36,7 +36,7 @@ interface GalleryScreenViewModel {
         override fun state() = list.state()
         override fun currentImage() : StateFlow<ImageFavoriteUi> = item.state()
         override fun shareImage() {
-            val imageUrl = item.state().value.imageUrl()
+            val imageUrl = item.state().value.imageUrl
             async.handleAsyncSingle {
                 imageIntentAction.shareImage(imageUrl)
             }
@@ -44,7 +44,7 @@ interface GalleryScreenViewModel {
 
         override fun editImage() {
             async.handleAsyncSingle {
-                imageIntentAction.launchEditAs(item.state().value.imageUrl())
+                imageIntentAction.launchEditAs(item.state().value.imageUrl)
             }
         }
 
@@ -54,18 +54,18 @@ interface GalleryScreenViewModel {
 
         override fun setImageAs() {
             async.handleAsyncSingle {
-                imageIntentAction.launchUseAs(item.state().value.imageUrl())
+                imageIntentAction.launchUseAs(item.state().value.imageUrl)
             }
         }
 
         override fun delete() {
             async.handleAsyncSingle {
-                repository.delete(item.state().value.imageUrl(), item.state().value.id())
+                repository.delete(item.state().value.imageUrl, item.state().value.id)
             }
         }
 
         override fun infoAboutImage(): MediaInfoUiState =
-            repository.infoAboutImage(item.state().value.imageUrl())
+            repository.infoAboutImage(item.state().value.imageUrl)
 
         override fun setCurrentItem(image: ImageFavoriteUi) {
             item.map(image)
@@ -73,7 +73,7 @@ interface GalleryScreenViewModel {
 
         override fun saveToGallery() {
             async.handleAsyncSingle {
-                repository.saveToGallery(item.state().value.imageUrl())
+                repository.saveToGallery(item.state().value.imageUrl)
             }
         }
 

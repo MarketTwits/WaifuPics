@@ -70,7 +70,7 @@ interface GalleryViewModel {
             viewModelScope.launch(Dispatchers.IO) {
                 val selectedPhotoState = selectedImageCommunication.fetch()
                 val item = gallery.state().value[index]
-                val selectedPhoto = selectedPhotoState.find { it.id() == item.id() }
+                val selectedPhoto = selectedPhotoState.find { it.id == item.id }
                 if (selectedPhoto != null)
                     selectedImageCommunication.remove(selectedPhoto)
                 else
@@ -80,7 +80,7 @@ interface GalleryViewModel {
         }
 
         override fun shareImages() {
-            val imageUrl = selectedImageCommunication.fetch().map { it.imageUrl() }
+            val imageUrl = selectedImageCommunication.fetch().map { it.imageUrl }
             viewModelScope.launch {
                 imageIntentAction.shareImage(imageUrl)
             }
@@ -88,8 +88,8 @@ interface GalleryViewModel {
 
         override fun delete() {
             val selectedPhotoState = selectedImageCommunication.fetch()
-            val id = selectedPhotoState.map { it.id() }
-            val url = selectedPhotoState.map { it.imageUrl() }
+            val id = selectedPhotoState.map { it.id }
+            val url = selectedPhotoState.map { it.imageUrl }
             viewModelScope.launch {
                 repository.delete(id, url)
             }

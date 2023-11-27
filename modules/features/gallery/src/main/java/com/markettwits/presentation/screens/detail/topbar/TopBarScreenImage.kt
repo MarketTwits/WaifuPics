@@ -70,7 +70,7 @@ fun BoxScope.TopBarScreenImage(viewModel: GalleryScreenViewModel, showUI: Boolea
                 tint = Color.White
             )
             Text(
-                text = item.created(),
+                text = item.created,
                 modifier = Modifier.padding(start = 30.dp),
                 color = Color.White,
                 fontSize = 16.sp
