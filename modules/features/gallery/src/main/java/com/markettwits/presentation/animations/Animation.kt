@@ -2,9 +2,15 @@ package com.markettwits.presentation.animations
 
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.gestures.snapping.SnapFlingBehavior
+import androidx.compose.foundation.pager.PagerDefaults
+import androidx.compose.foundation.pager.PagerState
+import androidx.compose.runtime.Composable
 
 object Animation {
     /**
@@ -34,4 +40,15 @@ object Animation {
     fun exitAnimation(durationMillis: Int): ExitTransition =
         fadeOut(tween(durationMillis))
 
+}
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun rememberPagerFlingBehavior(pagerState : PagerState) : SnapFlingBehavior {
+    return PagerDefaults.flingBehavior(
+        state = pagerState,
+        lowVelocityAnimationSpec = tween(
+            easing = LinearEasing,
+            durationMillis = 150
+        )
+    )
 }

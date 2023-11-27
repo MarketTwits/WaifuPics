@@ -29,7 +29,7 @@ import com.markettwits.waifupics.view.main.ui.image.zoom.FullScreenImageDialog
 
 @Composable
 fun ImageCard(imageUrl: String, id: Int) {
-    var viewModel: ImageViewModel.Base = ApplicationViewModel()
+    val viewModel: ImageViewModel.Base = ApplicationViewModel()
     var isDialogOpen by remember { mutableStateOf(false) }
     val modifier = Modifier
         .padding(20.dp)
