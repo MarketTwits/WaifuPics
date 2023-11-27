@@ -76,13 +76,6 @@ fun ZoomablePagerImage(
                     onClick = onItemClick
                 )
                 .zoomable(
-                    onDoubleTap ={
-                        val targetScale = when {
-                            zoomState.scale < 4f -> 4f
-                            else -> 1f
-                        }
-                        zoomState.changeScale(targetScale, it)
-                    },
                     zoomState = zoomState,
                 ),
             painter = painter,
