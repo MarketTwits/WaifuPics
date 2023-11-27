@@ -1,7 +1,6 @@
 package com.markettwits.presentation.screens.detail
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -18,9 +17,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.markettwits.core_ui.local_di.ApplicationViewModel
 import com.markettwits.presentation.animations.rememberPagerFlingBehavior
 import com.markettwits.presentation.screens.detail.bottomBar.BottomBarScreenImage
@@ -28,8 +28,6 @@ import com.markettwits.presentation.screens.detail.image.ZoomablePagerImage
 import com.markettwits.presentation.screens.detail.topbar.TopBarScreenImage
 import com.markettwits.presentation.screens.detail.window_controller.rememberWindowInsetsController
 import com.markettwits.presentation.screens.detail.window_controller.toggleSystemBars
-import net.engawapg.lib.zoomable.rememberZoomState
-import net.engawapg.lib.zoomable.zoomable
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @OptIn(ExperimentalFoundationApi::class)
@@ -50,6 +48,13 @@ fun ImageScreenFull(
     if (state.isEmpty()) {
         viewModel.pop()
     }
+
+    LaunchedEffect(pagerState, state) {
+        snapshotFlow { pagerState.currentPage }.collect { page ->
+            viewModel.setCurrentItem(page)
+        }
+    }
+
     Box(
         modifier = Modifier
             .windowInsetsPadding(WindowInsets.navigationBars)
@@ -66,13 +71,10 @@ fun ImageScreenFull(
                 } else "empty"
             }
         ) { index ->
-            val currentPage = pagerState.currentPage
             ZoomablePagerImage(
                 imageUrl = state[index].imageUrl,
                 uiEnabled = showUI.value,
                 setCurrentItem = {
-                    //TODO crash when delete last item it list
-                    viewModel.setCurrentItem(currentPage)
                 },
                 onItemClick = {
                     showUI.value = !showUI.value
