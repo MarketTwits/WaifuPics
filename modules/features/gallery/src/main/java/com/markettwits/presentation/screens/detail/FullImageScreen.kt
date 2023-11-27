@@ -13,6 +13,7 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -72,15 +73,14 @@ fun ImageScreenFull(
                     scaleY = zoomState.scale
                 )
         ) { index ->
+            val currentPage = pagerState.currentPage
+
             ZoomablePagerImage(
                 imageUrl = state[index].imageUrl,
                 uiEnabled = showUI.value,
                 setCurrentItem = {
                     //TODO crash when delete last item it list
-                    val item = state[pagerState.currentPage]
-                    viewModel.setCurrentItem(item)
-                    Log.d("mt06", index.toString())
-                    Log.d("mt06", item.toString())
+                    viewModel.setCurrentItem(currentPage)
                 },
                 onItemClick = {
                     showUI.value = !showUI.value
@@ -92,3 +92,4 @@ fun ImageScreenFull(
         BottomBarScreenImage(viewModel = viewModel, showUI = showUI.value)
     }
 }
+
