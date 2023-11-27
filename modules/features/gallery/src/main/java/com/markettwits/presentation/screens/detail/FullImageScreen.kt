@@ -2,8 +2,6 @@ package com.markettwits.presentation.screens.detail
 
 import android.annotation.SuppressLint
 import android.util.Log
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -11,27 +9,20 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.PagerDefaults
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshots.SnapshotStateList
-import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import com.markettwits.core_ui.local_di.ApplicationViewModel
-import com.markettwits.core_ui.local_di.LocalBundle
 import com.markettwits.presentation.animations.rememberPagerFlingBehavior
-import com.markettwits.presentation.screens.detail.bottomBar.DownBarScreenImage
+import com.markettwits.presentation.screens.detail.bottomBar.BottomBarScreenImage
 import com.markettwits.presentation.screens.detail.image.ZoomablePagerImage
 import com.markettwits.presentation.screens.detail.topbar.TopBarScreenImage
 import com.markettwits.presentation.screens.detail.window_controller.rememberWindowInsetsController
@@ -98,6 +89,6 @@ fun ImageScreenFull(
             )
         }
         TopBarScreenImage(viewModel = viewModel, showUI = showUI.value)
-        DownBarScreenImage(viewModel = viewModel, showUI = showUI.value)
+        BottomBarScreenImage(viewModel = viewModel, showUI = showUI.value)
     }
 }
