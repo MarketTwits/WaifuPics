@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -27,21 +28,6 @@ import net.engawapg.lib.zoomable.rememberZoomState
 import net.engawapg.lib.zoomable.zoomable
 
 
-@Composable
-fun ImageContent(imageUrl: String, paddingValues: PaddingValues, setCurrentItem: () -> Unit) {
-    AsyncImage(
-        modifier = Modifier
-           // .padding(paddingValues)
-            .fillMaxSize(),
-        onState = {
-            Log.d("mt05", "#ImageContent $imageUrl")
-        },
-        model = LocalImageLoader.current.single(imageUrl),
-        contentScale = ContentScale.Fit,
-        contentDescription = ""
-    )
-    setCurrentItem()
-}
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ZoomablePagerImage(
@@ -62,6 +48,7 @@ fun ZoomablePagerImage(
             zoomState.setContentSize(it.painter.intrinsicSize)
         }
     )
+//
 
     Box(modifier = Modifier.fillMaxSize()) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -86,10 +73,16 @@ fun ZoomablePagerImage(
                 .combinedClickable(
                     interactionSource = remember { MutableInteractionSource() },
                     indication = null,
-                    onDoubleClick = {},
                     onClick = onItemClick
                 )
                 .zoomable(
+                    onDoubleTap ={
+                        val targetScale = when {
+                            zoomState.scale < 4f -> 4f
+                            else -> 1f
+                        }
+                        zoomState.changeScale(targetScale, it)
+                    },
                     zoomState = zoomState,
                 ),
             painter = painter,

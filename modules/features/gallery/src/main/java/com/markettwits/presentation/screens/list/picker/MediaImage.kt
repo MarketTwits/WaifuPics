@@ -18,6 +18,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
@@ -45,9 +46,6 @@ fun MediaImage(
     }
     val selectedSize by animateDpAsState(
         if (isSelected.value) 12.dp else 0.dp, label = "selectedSize"
-    )
-    val scale by animateFloatAsState(
-        if (isSelected.value) 0.5f else 1f, label = "scale"
     )
     val selectedShapeSize by animateDpAsState(
         if (isSelected.value) 16.dp else 0.dp, label = "selectedShapeSize"

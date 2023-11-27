@@ -30,6 +30,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import com.markettwits.core_ui.local_di.ApplicationViewModel
 import com.markettwits.core_ui.local_di.LocalBundle
+import com.markettwits.presentation.animations.rememberPagerFlingBehavior
 import com.markettwits.presentation.screens.detail.bottomBar.DownBarScreenImage
 import com.markettwits.presentation.screens.detail.image.ZoomablePagerImage
 import com.markettwits.presentation.screens.detail.topbar.TopBarScreenImage
@@ -67,13 +68,7 @@ fun ImageScreenFull(
         HorizontalPager(
             state = pagerState,
             pageSpacing = 16.dp,
-            flingBehavior = PagerDefaults.flingBehavior(
-                state = pagerState,
-                lowVelocityAnimationSpec = tween(
-                    easing = LinearEasing,
-                    durationMillis = 150
-                )
-            ),
+            flingBehavior = rememberPagerFlingBehavior(pagerState = pagerState),
             key = {
                 if (state.isNotEmpty()) {
                     state[it.coerceIn(state.indices)].toString()

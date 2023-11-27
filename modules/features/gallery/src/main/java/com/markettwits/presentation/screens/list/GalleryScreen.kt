@@ -31,9 +31,10 @@ fun GalleryScreen() {
     val viewModel: GalleryViewModel.Base = ApplicationViewModel()
     val state by viewModel.state().collectAsState()
     val imageState = rememberGalleryPickerState()
-    val view = LocalView.current
     val selected by viewModel.selected().collectAsState()
     val selectedMedia = viewModel.selectedPhotoState()
+    val view = LocalView.current
+
     rememberWindowInsetsController().toggleSystemBars(true)
     Box(
         modifier = Modifier
@@ -49,12 +50,12 @@ fun GalleryScreen() {
                     media = image,
                     selectionState = selected,
                     selectedMedia = selectedMedia,
+                    imagePickerState = imageState,
                     onItemLongClick = {
                         view.vibrate()
                         viewModel.selection(state.indexOf(it))
                         viewModel.changeSelectedState()
                     },
-                    imagePickerState = imageState,
                     onItemClick = {
                         if (selected) {
                             view.vibrate()
