@@ -36,7 +36,7 @@ interface GalleryScreenViewModel {
         private val navigation: GalleryRouter,
     ) : ViewModel(), GalleryScreenViewModel {
         override fun state() = list.state()
-        override fun currentImage() : StateFlow<ImageFavoriteUi> = item.state()
+        override fun currentImage(): StateFlow<ImageFavoriteUi> = item.state()
         override fun shareImage() {
             val imageUrl = item.state().value.imageUrl
             async.handleAsyncSingle {
@@ -61,12 +61,8 @@ interface GalleryScreenViewModel {
         }
 
         override fun delete() {
-            //TODO fix crash when delete last image
             async.handleAsyncSingle {
-                val localItem = item.state().value
-                if (state().value.last() != localItem){
-                    repository.delete(item.state().value.imageUrl, item.state().value.id)
-                }
+                repository.delete(item.state().value.imageUrl, item.state().value.id)
             }
         }
 
@@ -86,9 +82,6 @@ interface GalleryScreenViewModel {
                 repository.saveToGallery(item.state().value.imageUrl)
             }
         }
-
-
-
     }
 }
 
