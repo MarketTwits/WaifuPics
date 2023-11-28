@@ -3,10 +3,13 @@ package com.markettwits.presentation
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.rememberDrawerState
@@ -21,6 +24,7 @@ import me.onebone.toolbar.CollapsingToolbarScaffold
 import me.onebone.toolbar.ScrollStrategy
 import me.onebone.toolbar.rememberCollapsingToolbarScaffoldState
 
+@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("CoroutineCreationDuringComposition", "SuspiciousIndentation")
 @Composable
 fun NavigationScreen(
@@ -34,24 +38,26 @@ fun NavigationScreen(
     SurfaceLayout(
         toolbar = {
             TopBarPanel(
-                modifier = Modifier.windowInsetsPadding(WindowInsets.statusBars),
+                modifier = Modifier
+                    .windowInsetsPadding(WindowInsets.statusBars),
                 drawerState = drawerState,
             ) {
                 viewModel.toggleMenu(scope, drawerState)
             }
-        }) {
-        DrawerContent(
-            drawerState = drawerState,
-            onClick = {
-                viewModel.navigateTo(it)
-            },
-            content = {
-                content()
-            }
-        )
-    }
+        }, content = {
+            DrawerContent(
+                drawerState = drawerState,
+                onClick = {
+                    viewModel.navigateTo(it)
+                },
+                content = {
+                    content()
+                }
+            )
+        })
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SurfaceLayout(
     modifier: Modifier = Modifier,
@@ -60,13 +66,17 @@ fun SurfaceLayout(
 ) {
     val collapsedState = rememberCollapsingToolbarScaffoldState()
     CollapsingToolbarScaffold(
-        modifier = modifier.background(MaterialTheme.colorScheme.background),
+        modifier = modifier
+            .navigationBarsPadding()
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background),
         state = collapsedState,
-//        scrollStrategy = ScrollStrategy.EnterAlwaysCollapsed,
+         //scrollStrategy = ScrollStrategy.EnterAlwaysCollapsed,
         scrollStrategy = ScrollStrategy.ExitUntilCollapsed,
-        toolbar = { toolbar() }) {
-        content()
-    }
+        toolbar = { toolbar() },
+        body = {
+            content()
+        })
 }
 
 @Composable
@@ -88,5 +98,6 @@ fun DrawerContent(
         content()
     }
 }
+
 
 
