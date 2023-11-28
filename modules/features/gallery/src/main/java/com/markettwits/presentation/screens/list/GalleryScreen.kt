@@ -36,6 +36,7 @@ fun GalleryScreen() {
     val view = LocalView.current
 
     rememberWindowInsetsController().toggleSystemBars(true)
+
     Box(
         modifier = Modifier
             .windowInsetsPadding(WindowInsets.navigationBars)
