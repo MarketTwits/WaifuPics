@@ -14,7 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.markettwits.core_ui.R
+import com.markettwits.random_image.R
+
 
 @Composable
 fun RotationRefreshIcon(
