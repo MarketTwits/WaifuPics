@@ -20,8 +20,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.markettwits.core_ui.local_di.ApplicationViewModel
+import com.markettwits.core_ui.di.ApplicationViewModel
 import com.markettwits.presentation.animations.rememberPagerFlingBehavior
 import com.markettwits.presentation.screens.detail.bottomBar.BottomBarScreenImage
 import com.markettwits.presentation.screens.detail.image.ZoomablePagerImage

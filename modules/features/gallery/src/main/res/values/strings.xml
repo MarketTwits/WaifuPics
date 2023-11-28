@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="close">Close</string>
+    <string name="selected_count">Selected count %1$s</string>
+    <string name="edit">Edit</string>
+    <string name="use_as">Use as</string>
+    <string name="save_to_gallery">Save to gallery</string>
+    <string name="delete">Delete</string>
+    <string name="share">Share</string>
+    <string name="image">image</string>
+</resources>

@@ -25,7 +25,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.markettwits.core_ui.local_di.LocalRootPadding
+import com.markettwits.core_ui.di.LocalRootPadding
 import com.markettwits.core_ui.base_extensions.noRippleClickable
 import com.markettwits.presentation.animations.Animation
 import com.markettwits.presentation.screens.detail.GalleryScreenViewModel

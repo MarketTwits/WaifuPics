@@ -1,6 +1,6 @@
 package com.markettwits.random_image.domain
 
-import com.markettwits.random_image.presentation.features.filter.presentation.FilterItem
+import com.markettwits.random_image.presentation.components.filter.presentation.FilterItem
 
 interface FilterChecked {
     fun checked(selectedItem : FilterItem, currentList : List<FilterItem>) : List<FilterItem>

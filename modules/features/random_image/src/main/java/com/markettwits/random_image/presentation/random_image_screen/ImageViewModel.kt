@@ -7,8 +7,8 @@ import com.markettwits.core.communication.StateCommunication
 import com.markettwits.core.wrappers.AsyncViewModel
 import com.markettwits.image_action.api.ImageIntentAction
 import com.markettwits.random_image.data.RandomImageRepository
-import com.markettwits.random_image.presentation.features.filter.ProtectedMapper
-import com.markettwits.random_image.presentation.features.filter.presentation.FilterCommunication
+import com.markettwits.random_image.presentation.components.filter.ProtectedMapper
+import com.markettwits.random_image.presentation.components.filter.presentation.FilterCommunication
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 

@@ -3,7 +3,7 @@ package com.markettwits.random_image.presentation.random_image_screen
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import com.markettwits.core_ui.local_di.ApplicationViewModel
+import com.markettwits.core_ui.di.ApplicationViewModel
 
 @Composable
 fun MainScreen(

@@ -13,9 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,14 +24,16 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.markettwits.core_ui.local_di.ApplicationViewModel
+import com.markettwits.core_ui.components.Shapes
+import com.markettwits.core_ui.di.ApplicationViewModel
+import com.markettwits.core_ui.theme.FontRubik
+import com.markettwits.core_ui.theme.LightPink
 import com.markettwits.core_ui.theme.WaifuPicsTheme
 import com.markettwits.presentation.screens.detail.GalleryScreenViewModel
 import com.markettwits.presentation.screens.detail.button.EditButton
 import com.markettwits.presentation.screens.detail.button.OpenAsButton
 import com.markettwits.presentation.screens.detail.button.SaveButton
 import com.markettwits.presentation.screens.detail.button.ShareButton
-import com.markettwits.core_ui.theme.LightPink
 
 @Composable
 @Preview
@@ -59,9 +58,7 @@ fun InfoImageContent(onDismiss: () -> Unit) {
     Box(
         modifier = Modifier
             .padding(10.dp)
-            .clip(RoundedCornerShape(10.dp))
-            // .fillMaxWidth()
-            // .fillMaxSize()
+            .clip(Shapes.medium)
             .wrapContentSize()
             .animateContentSize()
             .windowInsetsPadding(WindowInsets.navigationBars),
@@ -96,13 +93,12 @@ fun InfoImageContent(onDismiss: () -> Unit) {
 @Composable
 private fun ImageInfoDate(date: String) {
     Box(
-        modifier = Modifier
-            .clip(CircleShape.copy(CornerSize(10.dp)))
+        modifier = Modifier.clip(Shapes.medium)
     ) {
         Text(
             text = date,
             color = LightPink,
-            fontFamily = FontFamily(Font(com.markettwits.core_ui.R.font.rubik_medium)),
+            fontFamily = FontRubik.medium,
             fontSize = 14.sp
         )
     }

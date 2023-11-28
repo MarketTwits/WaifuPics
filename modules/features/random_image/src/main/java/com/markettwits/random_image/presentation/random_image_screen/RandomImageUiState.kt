@@ -1,13 +1,13 @@
 package com.markettwits.random_image.presentation.random_image_screen
 
 import androidx.compose.runtime.Composable
-import com.markettwits.random_image.presentation.features.bottom_pannel.BottomPanel
-import com.markettwits.random_image.presentation.features.filter.presentation.BottomSheetFilter
-import com.markettwits.random_image.presentation.random_image_screen.image.fuckup.ImageFuckup
-import com.markettwits.random_image.presentation.random_image_screen.image.loading.ImageLoading
-import com.markettwits.random_image.presentation.random_image_screen.image.suceess.ImageCard
-import com.markettwits.random_image.presentation.random_image_screen.image_info.image_card_info.success.ImageInfoCardEmptyAuthor
-import com.markettwits.random_image.presentation.random_image_screen.image_info.image_card_info.success.ImageInfoCardWitAuthor
+import com.markettwits.random_image.presentation.components.bottom_pannel.BottomPanel
+import com.markettwits.random_image.presentation.components.filter.presentation.BottomSheetFilter
+import com.markettwits.random_image.presentation.components.image.fuckup.ImageFuckup
+import com.markettwits.random_image.presentation.components.image.loading.ImageLoading
+import com.markettwits.random_image.presentation.components.image.suceess.ImageCard
+import com.markettwits.random_image.presentation.components.image_info.image_card_info.success.ImageInfoCardEmptyAuthor
+import com.markettwits.random_image.presentation.components.image_info.image_card_info.success.ImageInfoCardWitAuthor
 import com.markettwits.waifupics.view.main.ui.image_info.image_card_info.loading.ImageCardInfoLoading
 
 interface RandomImageUiState {

@@ -16,7 +16,7 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import com.markettwits.core_ui.local_di.ApplicationViewModel
+import com.markettwits.core_ui.di.ApplicationViewModel
 import com.markettwits.presentation.menu.NavigationBody
 import com.markettwits.presentation.menu.TopBarPanel
 import kotlinx.coroutines.launch

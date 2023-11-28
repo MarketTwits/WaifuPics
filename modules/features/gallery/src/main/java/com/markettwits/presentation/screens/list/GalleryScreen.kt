@@ -17,12 +17,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.dp
 import com.markettwits.core_ui.base_extensions.vibrate
-import com.markettwits.core_ui.local_di.ApplicationViewModel
+import com.markettwits.core_ui.di.ApplicationViewModel
 import com.markettwits.presentation.screens.detail.window_controller.rememberWindowInsetsController
 import com.markettwits.presentation.screens.detail.window_controller.toggleSystemBars
-import com.markettwits.presentation.screens.list.picker.MediaComponent
+import com.markettwits.presentation.screens.list.list_item.MediaComponent
 import com.markettwits.presentation.screens.list.picker.SelectionSheet
-import run.nabla.gallerypicker.picker.rememberGalleryPickerState
 
 
 @Composable
@@ -30,11 +29,9 @@ fun GalleryScreen() {
 
     val viewModel: GalleryViewModel.Base = ApplicationViewModel()
     val state by viewModel.state().collectAsState()
-    val imageState = rememberGalleryPickerState()
     val selected by viewModel.selected().collectAsState()
     val selectedMedia = viewModel.selectedPhotoState()
     val view = LocalView.current
-
     rememberWindowInsetsController().toggleSystemBars(true)
 
     Box(
@@ -51,7 +48,6 @@ fun GalleryScreen() {
                     media = image,
                     selectionState = selected,
                     selectedMedia = selectedMedia,
-                    imagePickerState = imageState,
                     onItemLongClick = {
                         view.vibrate()
                         viewModel.selection(state.indexOf(it))

@@ -1,13 +1,8 @@
 package com.markettwits.presentation.screens
 
 import android.os.Parcelable
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
-import androidx.compose.ui.Modifier
-import com.markettwits.presentation.screens.list.item.GalleryItemBase
-import com.markettwits.presentation.screens.list.item.GalleryItemProtected
 import kotlinx.parcelize.Parcelize
-import run.nabla.gallerypicker.picker.GalleryPickerState
 
 @Immutable
 @Parcelize

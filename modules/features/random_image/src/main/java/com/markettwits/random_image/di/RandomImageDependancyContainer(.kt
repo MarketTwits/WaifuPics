@@ -3,9 +3,9 @@ package com.markettwits.random_image.di
 import androidx.lifecycle.ViewModel
 import com.markettwits.core.Core
 import com.markettwits.core.di.DependencyContainer
-import com.markettwits.random_image.presentation.features.filter.AgeRatingFilterModule
-import com.markettwits.random_image.presentation.features.filter.presentation.AgeRatingFilterViewModel
-import com.markettwits.random_image.presentation.features.filter.presentation.FilterCommunication
+import com.markettwits.random_image.presentation.components.filter.AgeRatingFilterModule
+import com.markettwits.random_image.presentation.components.filter.presentation.AgeRatingFilterViewModel
+import com.markettwits.random_image.presentation.components.filter.presentation.FilterCommunication
 import com.markettwits.random_image.presentation.random_image_screen.ImageViewModel
 
 class RandomImageDependencyContainer(

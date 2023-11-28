@@ -5,27 +5,19 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.ScrollableState
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Close
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
@@ -37,7 +29,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.markettwits.core_ui.components.Shapes
+import com.markettwits.gallery.R
 import com.markettwits.presentation.screens.ImageFavoriteUi
 import com.markettwits.presentation.screens.detail.button.DeleteButton
 import com.markettwits.presentation.screens.detail.button.ShareButton
@@ -67,10 +62,10 @@ fun SelectionSheet(
                 .navigationBarsPadding()
                 .then(sizeModifier)
                 .wrapContentHeight()
-                .clip(RoundedCornerShape(10.dp))
+                .clip(Shapes.medium)
                 .shadow(
                     elevation = 4.dp,
-                    shape = RoundedCornerShape(10.dp)
+                    shape = Shapes.medium
                 )
                 .background(MaterialTheme.colorScheme.surfaceColorAtElevation(2.dp))
                 .padding(16.dp),
@@ -89,11 +84,11 @@ fun SelectionSheet(
                     Image(
                         imageVector = Icons.Outlined.Close,
                         colorFilter = ColorFilter.tint(LocalContentColor.current),
-                        contentDescription = "Close"
+                        contentDescription = stringResource(R.string.close)
                     )
                 }
                 Text(
-                    text = "Selected count ${selectedMedia.size}",
+                    text = stringResource(R.string.selected_count, selectedMedia.size),
                     style = MaterialTheme.typography.titleMedium,
                     modifier = Modifier.weight(1f, fill = false)
                 )
@@ -103,7 +98,7 @@ fun SelectionSheet(
                     .then(sizeModifier)
                     .background(
                         color = MaterialTheme.colorScheme.surface,
-                        shape = RoundedCornerShape(10.dp)
+                        shape = Shapes.medium
                     )
                     .horizontalScroll(rememberScrollState()),
                 verticalAlignment = Alignment.CenterVertically,

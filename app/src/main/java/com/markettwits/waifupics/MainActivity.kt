@@ -9,11 +9,9 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import com.markettwits.core.wrappers.SaveAndRestore
 import com.markettwits.core.wrappers.WrapBundle
-import com.markettwits.core_ui.local_di.ApplicationViewModel
-import com.markettwits.core_ui.local_di.LocalRootPadding
-import com.markettwits.core_ui.local_di.setContentLocal
+import com.markettwits.core_ui.di.LocalRootPadding
+import com.markettwits.core_ui.di.setContentLocal
 import com.markettwits.core_ui.theme.WaifuPicsTheme
-import com.markettwits.presentation.screens.detail.GalleryScreenViewModel
 import com.markettwits.waifupics.core.MenuNavGraph
 
 

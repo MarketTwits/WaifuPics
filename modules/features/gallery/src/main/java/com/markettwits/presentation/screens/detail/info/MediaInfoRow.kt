@@ -1,15 +1,10 @@
 package com.markettwits.presentation.screens.detail.info
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
-import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,13 +12,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.ClipboardManager
-import androidx.compose.ui.platform.LocalClipboardManager
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
+import com.markettwits.core_ui.components.Shapes
 
-@OptIn(ExperimentalFoundationApi::class)
+
 @Composable
 fun MediaInfoRow(
     modifier: Modifier = Modifier,
@@ -37,8 +29,9 @@ fun MediaInfoRow(
     ListItem(
         modifier = modifier
             .fillMaxWidth()
-            .clip(CircleShape.copy(CornerSize(10.dp)))
-            .clickable {}
+            .clip(Shapes.medium)
+            .clickable {
+            }
         ,
         colors = ListItemDefaults.colors(
             containerColor = Color.Transparent
