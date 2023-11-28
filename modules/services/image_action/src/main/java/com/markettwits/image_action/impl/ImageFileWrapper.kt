@@ -12,10 +12,10 @@ import java.io.IOException
 import java.io.OutputStream
 
 interface ImageFileWrapper {
-    fun drawableToUri(drawable: Drawable): Uri
-    fun pathToUri(imagePath: String): Uri
+    suspend fun drawableToUri(drawable: Drawable): Uri
+    suspend fun pathToUri(imagePath: String): Uri
     class Base(private val context: Context) : ImageFileWrapper {
-        override fun drawableToUri(drawable: Drawable): Uri {
+        override suspend fun drawableToUri(drawable: Drawable): Uri {
             val bitmap = drawable.toBitmap()
             val tempFile = File(context.filesDir, LOCAL_IMAGE_NAME)
             try {
@@ -33,11 +33,12 @@ interface ImageFileWrapper {
             )
         }
 
-        override fun pathToUri(imagePath: String): Uri {
+        override suspend fun pathToUri(imagePath: String): Uri {
             val imageFile = File(imagePath)
             return FileProvider.getUriForFile(context, LOCAL_FILE_PROVIDER, imageFile)
         }
     }
+
     companion object {
         const val LOCAL_FILE_PROVIDER = "com.markettwits.waifupics.fileprovider"
         const val LOCAL_IMAGE_NAME = "images/shared_image_temp.png"
