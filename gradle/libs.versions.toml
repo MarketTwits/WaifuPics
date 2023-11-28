@@ -23,7 +23,7 @@ compose-navigation = "2.7.1"
 compose-preview = "1.5.1"
 compose-coil = "2.4.0"
 accompanist = "0.27.0"
-onebone-toolbar = "2.3.2"
+onebone-toolbar = "2.3.5"
 realm-gradle-plugin = "10.2.0"
 zoomable = "1.5.1"
 # Android
