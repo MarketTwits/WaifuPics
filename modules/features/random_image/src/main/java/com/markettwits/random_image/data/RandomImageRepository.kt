@@ -5,7 +5,7 @@ import com.markettwits.data.ImageRepository
 import com.markettwits.random_image.data.cloud.HandleNetworkResult
 import com.markettwits.random_image.data.net.NekoService
 import com.markettwits.random_image.data.net.RandomImageMapperCloud
-import com.markettwits.random_image.presentation.features.report_image.ImageReportUi
+import com.markettwits.random_image.presentation.components.report_image.ImageReportUi
 import com.markettwits.random_image.presentation.random_image_screen.RandomImageUiState
 
 interface RandomImageRepository {

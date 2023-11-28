@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -25,10 +24,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.markettwits.core_ui.R
+import com.markettwits.core_ui.components.Shapes
 import com.markettwits.core_ui.theme.Purple40
 import com.markettwits.core_ui.theme.Purple80
 import com.markettwits.core_ui.theme.PurpleGrey40
+import com.markettwits.core_ui.R
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 
@@ -46,7 +47,7 @@ private fun ProtectedAlertDialogLayout(
     onDismiss: () -> Unit
 ) {
     Card(
-        shape = RoundedCornerShape(10.dp),
+        shape = Shapes.medium,
         modifier = Modifier.padding(10.dp, 5.dp, 10.dp, 10.dp),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp

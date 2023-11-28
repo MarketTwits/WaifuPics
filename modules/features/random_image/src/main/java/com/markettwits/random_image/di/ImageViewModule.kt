@@ -20,8 +20,8 @@ import com.markettwits.random_image.data.cloud.OkkHttpWrapper
 import com.markettwits.random_image.data.cloud.RetrofitFactory
 import com.markettwits.random_image.data.net.NekoService
 import com.markettwits.random_image.data.net.RandomImageMapperCloud
-import com.markettwits.random_image.presentation.features.filter.ProtectedMapper
-import com.markettwits.random_image.presentation.features.filter.presentation.FilterCommunication
+import com.markettwits.random_image.presentation.components.filter.ProtectedMapper
+import com.markettwits.random_image.presentation.components.filter.presentation.FilterCommunication
 import com.markettwits.random_image.presentation.random_image_screen.ImageViewModel
 import com.markettwits.random_image.presentation.random_image_screen.LoadedImageCommunication
 import com.markettwits.random_image.presentation.random_image_screen.RandomImageCommunication

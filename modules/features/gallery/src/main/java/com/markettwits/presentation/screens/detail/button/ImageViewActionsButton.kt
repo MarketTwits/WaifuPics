@@ -7,6 +7,8 @@ import androidx.compose.material.icons.outlined.DeleteOutline
 import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.Share
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.markettwits.gallery.R
 
 @Composable
 fun ShareButton(
@@ -16,7 +18,7 @@ fun ShareButton(
     BottomBarColumn(
         imageVector = Icons.Outlined.Share,
         followTheme = followTheme,
-        title = "Share"
+        title = stringResource(R.string.share)
     ) {
         onItemClick()
     }
@@ -31,7 +33,7 @@ fun ShareButton(
     BottomBarColumn(
         imageVector = Icons.Outlined.Edit,
         followTheme = followTheme,
-        title = "Edit"
+        title = stringResource(R.string.edit)
     ) {
         onItemClick()
     }
@@ -45,7 +47,7 @@ fun ShareButton(
     BottomBarColumn(
         imageVector = Icons.Default.OpenInNew,
         followTheme = followTheme,
-        title = "Use as"
+        title = stringResource(R.string.use_as)
     ) {
         onItemClick()
     }
@@ -58,7 +60,7 @@ fun SaveButton(
     BottomBarColumn(
         imageVector = Icons.Default.Save,
         followTheme = followTheme,
-        title = "Save to gallery"
+        title = stringResource(R.string.save_to_gallery)
     ) {
         onItemClick()
     }
@@ -72,7 +74,7 @@ fun DeleteButton(
     BottomBarColumn(
         imageVector = Icons.Outlined.DeleteOutline,
         followTheme = followTheme,
-        title = "Delete"
+        title = stringResource(R.string.delete)
     ) {
         onItemClick()
     }

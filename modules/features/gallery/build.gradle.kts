@@ -12,6 +12,5 @@ dependencies {
     implementation(project(":modules:services:cache-datasource"))
     implementation(project(":modules:services:core-ui"))
     implementation(project(":modules:services:image_action"))
-    implementation(libs.nabla.gallery)
     implementation(libs.zoomable)
 }

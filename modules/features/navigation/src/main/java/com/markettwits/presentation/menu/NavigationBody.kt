@@ -17,15 +17,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.markettwits.core_ui.R
+import com.markettwits.core_ui.theme.FontRubik
+import com.markettwits.core_ui.theme.LightPink
 import com.markettwits.core_ui.theme.WaifuPicsTheme
 import com.markettwits.presentation.NavigationItem
-import com.markettwits.core_ui.theme.LightPink
 
 @Composable
 @Preview
@@ -52,7 +50,7 @@ fun NavigationBody(modifier: Modifier = Modifier, onClick: (NavigationItem) -> U
                 text = "Menu",
                 color = LightPink,
                 fontSize = 14.sp,
-                fontFamily = FontFamily(Font(R.font.rubik_medium))
+                fontFamily = FontRubik.medium
             )
             list.forEach {
                 MenuItem(
@@ -85,9 +83,7 @@ private fun MenuItem(
             text = stringResource(id = item.title),
             color = MaterialTheme.colorScheme.onBackground,
             fontSize = 18.sp,
-            fontFamily = FontFamily(
-                Font(R.font.rubik_medium)
-            )
+            fontFamily = FontRubik.medium
         )
     }
 }

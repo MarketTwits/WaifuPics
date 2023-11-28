@@ -11,14 +11,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-import com.markettwits.core_ui.R
 import com.markettwits.core_ui.base_extensions.extractSiteName
-import com.markettwits.core_ui.theme.WaifuPicsTheme
+import com.markettwits.core_ui.theme.FontRubik
 import com.markettwits.core_ui.theme.LightPink
+import com.markettwits.core_ui.theme.WaifuPicsTheme
 import java.util.Locale
 
 
@@ -36,13 +34,13 @@ fun ImageParametersText(
             Text(
                 text = "$title : ",
                 color = LightPink,
-                fontFamily = FontFamily(Font(R.font.rubik_medium)),
+                fontFamily = FontRubik.medium,
                 fontSize = 14.sp,
             )
             Text(
                 text = content,
                 color = MaterialTheme.colorScheme.onPrimary,
-                fontFamily = FontFamily(Font(R.font.rubik_medium)),
+                fontFamily = FontRubik.medium,
                 fontSize = 14.sp,
             )
         }
@@ -88,7 +86,7 @@ fun UnlinkMultiText(
         Text(
             text = title,
             color = LightPink,
-            fontFamily = FontFamily(Font(R.font.rubik_medium)),
+            fontFamily = FontRubik.medium,
             fontSize = 14.sp
         )
         FlowRow {
@@ -96,7 +94,7 @@ fun UnlinkMultiText(
                 Text(
                     text = it,
                     color = MaterialTheme.colorScheme.onPrimary,
-                    fontFamily = FontFamily(Font(R.font.rubik_medium)),
+                    fontFamily = FontRubik.medium,
                     fontSize = 14.sp,
                 )
             }
@@ -113,7 +111,7 @@ fun MultyLinksText(
         Text(
             text = title,
             color = LightPink,
-            fontFamily = FontFamily(Font(R.font.rubik_medium)),
+            fontFamily = FontRubik.medium,
             fontSize = 14.sp
         )
         LazyRow() {
@@ -126,7 +124,7 @@ fun MultyLinksText(
                     }),
                     text = text,
                     color = MaterialTheme.colorScheme.onPrimary,
-                    fontFamily = FontFamily(Font(R.font.rubik_medium)),
+                    fontFamily = FontRubik.medium,
                     fontSize = 14.sp,
                 )
             }
@@ -143,7 +141,7 @@ fun SingleLinkText(
         Text(
             text = title,
             color = LightPink,
-            fontFamily = FontFamily(Font(R.font.rubik_medium)),
+            fontFamily = FontRubik.medium,
             fontSize = 14.sp
         )
         val text = if (link.isNullOrEmpty()) "No data source" else formatUrl(link)
@@ -154,7 +152,7 @@ fun SingleLinkText(
             }),
             text = text,
             color = MaterialTheme.colorScheme.onPrimary,
-            fontFamily = FontFamily(Font(R.font.rubik_medium)),
+            fontFamily = FontRubik.medium,
             fontSize = 14.sp,
         )
     }
