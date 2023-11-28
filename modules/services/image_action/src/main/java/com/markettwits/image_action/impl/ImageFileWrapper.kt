@@ -6,6 +6,8 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import androidx.core.content.FileProvider
 import androidx.core.graphics.drawable.toBitmap
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -19,16 +21,21 @@ interface ImageFileWrapper {
             val bitmap = drawable.toBitmap()
             val tempFile = File(context.filesDir, LOCAL_IMAGE_NAME)
             try {
-                val tempStream: OutputStream = FileOutputStream(tempFile)
+                val tempStream: OutputStream =
+                    withContext(Dispatchers.IO) {
+                        FileOutputStream(tempFile)
+                    }
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, tempStream)
-                tempStream.flush()
-                tempStream.close()
+                withContext(Dispatchers.IO){
+                    tempStream.flush()
+                    tempStream.close()
+                }
             } catch (e: IOException) {
                 e.printStackTrace()
             }
             return FileProvider.getUriForFile(
                 context,
-                LOCAL_FILE_PROVIDER,
+               LOCAL_FILE_PROVIDER,
                 tempFile
             )
         }
@@ -40,7 +47,7 @@ interface ImageFileWrapper {
     }
 
     companion object {
-        const val LOCAL_FILE_PROVIDER = "com.markettwits.waifupics.fileprovider"
-        const val LOCAL_IMAGE_NAME = "images/shared_image_temp.png"
+        private const val LOCAL_FILE_PROVIDER = "com.markettwits.waifupics.fileprovider"
+        private const val LOCAL_IMAGE_NAME = "images/shared_image_temp.png"
     }
 }
