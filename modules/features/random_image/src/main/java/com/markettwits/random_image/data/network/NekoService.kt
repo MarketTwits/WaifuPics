@@ -1,6 +1,6 @@
-package com.markettwits.random_image.data.net
+package com.markettwits.random_image.data.network
 
-import com.markettwits.random_image.data.net.models.RandomImageCloud
+import com.markettwits.random_image.data.network.models.RandomImageCloud
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path

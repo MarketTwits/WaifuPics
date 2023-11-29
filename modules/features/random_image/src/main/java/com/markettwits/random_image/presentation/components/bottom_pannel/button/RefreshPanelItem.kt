@@ -41,7 +41,7 @@ fun RefreshPanelItem(
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            RotationRefreshIcon(!isLoading)
+            RotationRefreshIcon(isLoading)
             Spacer(modifier = Modifier.width(5.dp))
             Text(
                 text = stringResource(R.string.refresh),

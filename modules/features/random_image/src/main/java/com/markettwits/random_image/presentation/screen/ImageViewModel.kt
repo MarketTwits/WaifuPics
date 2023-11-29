@@ -1,4 +1,4 @@
-package com.markettwits.random_image.presentation.random_image_screen
+package com.markettwits.random_image.presentation.screen
 
 import android.graphics.drawable.Drawable
 import androidx.lifecycle.ViewModel
@@ -9,18 +9,19 @@ import com.markettwits.image_action.api.ImageIntentAction
 import com.markettwits.random_image.data.RandomImageRepository
 import com.markettwits.random_image.presentation.components.filter.ProtectedMapper
 import com.markettwits.random_image.presentation.components.filter.presentation.FilterCommunication
+import com.markettwits.random_image.presentation.components.image.ImageState
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 interface ImageViewModel {
 
-    fun loadedImageState(): StateFlow<LoadedImage>
+    fun loadedImageState(): StateFlow<ImageState>
     fun currentImage(image: Drawable, networkUrl: String, id: Int)
     fun shareImage()
     fun fetchRandomImage()
     fun addToFavorite()
     fun reported()
-    fun imageLoading()
+    fun obtainImageState(state: ImageState)
 
     class Base(
         private val filterResult: FilterCommunication,
@@ -41,7 +42,7 @@ interface ImageViewModel {
 
         override fun currentImage(image: Drawable, networkUrl: String, id: Int) {
             loadedImageCommunication.map(
-                LoadedImage.Loaded(
+                ImageState.Success(
                     id,
                     image,
                     networkUrl,
@@ -52,45 +53,50 @@ interface ImageViewModel {
 
         override fun shareImage() {
             viewModelScope.launch {
-                shareImageAction.shareImage((loadedImageCommunication.state().value as LoadedImage.Loaded).image)
+                shareImageAction.shareImage((loadedImageCommunication.state().value as ImageState.Success).image)
             }
         }
 
         override fun fetchRandomImage() {
             randomImageCommunication.map(RandomImageUiState.Progress)
-            loadedImageCommunication.map(LoadedImage.Loading)
+            loadedImageCommunication.map(ImageState.Loading)
             async.handleAsync({
                 repository.fetchRandomImage(filterResult.fetch() ?: listOf("safe"))
             }) {
-                if (it is RandomImageUiState.Error){
-                    loadedImageCommunication.map(LoadedImage.LoadedError)
+                if (it is RandomImageUiState.Error) {
+                    loadedImageCommunication.map(ImageState.Error())
                 }
                 randomImageCommunication.map(it)
             }
         }
 
         override fun addToFavorite() {
-            val state = loadedImageCommunication.state().value as LoadedImage.Loaded
+            val success = loadedImageCommunication.state().value as ImageState.Success
             async.handleAsync({
                 repository.addToFavorite(
-                    state.image,
-                    state.networkUrl,
-                    state.protected
+                    success.image,
+                    success.networkUrl,
+                    success.protected
                 )
             }) {}
         }
 
         override fun reported() {
-            val state = loadedImageCommunication.state().value as LoadedImage.Loaded
+            val success = loadedImageCommunication.state().value as ImageState.Success
             async.handleAsync({
-                repository.reportImage(state.id)
+                repository.reportImage(success.id)
             }) {
                 //TODO add request
             }
         }
 
-        override fun imageLoading() {
-            loadedImageCommunication.map(LoadedImage.Loading)
+        override fun obtainImageState(state: ImageState) {
+            loadedImageCommunication.map(state)
+            if (state is ImageState.Error) randomImageCommunication.map(
+                RandomImageUiState.Error(
+                    state.message
+                )
+            )
         }
 
         override fun state() = randomImageCommunication.state()
@@ -102,22 +108,10 @@ interface RandomImageCommunication : StateCommunication.Mutable<RandomImageUiSta
         RandomImageCommunication
 }
 
-sealed class LoadedImage {
-    data class Loaded(
-        val id: Int,
-        val image: Drawable,
-        val networkUrl: String,
-        val protected: Boolean,
-    ) : LoadedImage()
-
-    data object Loading : LoadedImage()
-    data object LoadedError : LoadedImage()
-}
-
-interface LoadedImageCommunication : StateCommunication.Mutable<LoadedImage> {
+interface LoadedImageCommunication : StateCommunication.Mutable<ImageState> {
     class Base :
-        StateCommunication.Abstract<LoadedImage>(
-            LoadedImage.Loading,
+        StateCommunication.Abstract<ImageState>(
+            ImageState.Loading,
         ),
         LoadedImageCommunication
 }

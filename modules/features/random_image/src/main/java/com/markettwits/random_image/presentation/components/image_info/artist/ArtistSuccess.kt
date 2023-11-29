@@ -27,7 +27,7 @@ import com.markettwits.core_ui.components.Shapes
 import com.markettwits.core_ui.components.UnlinkMultiText
 import com.markettwits.core_ui.theme.FontRubik
 import com.markettwits.core_ui.theme.LightGrey
-import com.markettwits.random_image.presentation.random_image_screen.AuthorUi
+import com.markettwits.random_image.presentation.screen.AuthorUi
 
 @Preview
 @Composable

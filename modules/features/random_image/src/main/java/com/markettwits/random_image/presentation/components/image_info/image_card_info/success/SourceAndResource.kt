@@ -12,7 +12,7 @@ import com.markettwits.core_ui.components.ImageParametersText
 import com.markettwits.core_ui.components.MultyLinksText
 import com.markettwits.core_ui.components.SingleLinkText
 import com.markettwits.core_ui.theme.WaifuPicsTheme
-import com.markettwits.random_image.presentation.random_image_screen.ImageSourceUi
+import com.markettwits.random_image.presentation.screen.ImageSourceUi
 
 @Composable
 fun SourceAndResource(source : ImageSourceUi) {

@@ -1,4 +1,4 @@
-package com.markettwits.random_image.presentation.random_image_screen
+package com.markettwits.random_image.presentation.screen
 
 import androidx.compose.runtime.Composable
 import com.markettwits.random_image.presentation.components.bottom_pannel.BottomPanel

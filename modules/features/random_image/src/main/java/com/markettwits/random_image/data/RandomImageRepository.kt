@@ -3,10 +3,11 @@ package com.markettwits.random_image.data
 import android.graphics.drawable.Drawable
 import com.markettwits.data.ImageRepository
 import com.markettwits.random_image.data.cloud.HandleNetworkResult
-import com.markettwits.random_image.data.net.NekoService
-import com.markettwits.random_image.data.net.RandomImageMapperCloud
+import com.markettwits.random_image.data.mapper.RandomImageMapperCloud
+import com.markettwits.random_image.data.mapper.ReportedImageMapperCloud
+import com.markettwits.random_image.data.network.NekoService
 import com.markettwits.random_image.presentation.components.report_image.ImageReportUi
-import com.markettwits.random_image.presentation.random_image_screen.RandomImageUiState
+import com.markettwits.random_image.presentation.screen.RandomImageUiState
 
 interface RandomImageRepository {
     suspend fun reportImage(id : Int) : ImageReportUi

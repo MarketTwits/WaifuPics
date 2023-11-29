@@ -7,10 +7,7 @@ interface OkkHttpWrapper {
     fun client(): OkHttpClient
     class Base() : OkkHttpWrapper {
         override fun client() = OkHttpClient.Builder()
-            .addInterceptor(
-                HttpLoggingInterceptor()
-                    .setLevel(HttpLoggingInterceptor.Level.BASIC)
-            )
+            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
             .build()
     }
 }
