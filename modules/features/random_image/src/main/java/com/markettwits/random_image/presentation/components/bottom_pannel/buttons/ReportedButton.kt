@@ -1,4 +1,4 @@
-package com.markettwits.random_image.presentation.components.bottom_pannel.button
+package com.markettwits.random_image.presentation.components.bottom_pannel.buttons
 
 import android.util.Log
 import androidx.compose.runtime.Composable
@@ -7,7 +7,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import com.markettwits.random_image.R
 
-import com.markettwits.random_image.presentation.components.bottom_pannel.button.BasePanelItem
 import com.markettwits.random_image.presentation.components.report_image.ReportedAlertDialog
 
 @Composable

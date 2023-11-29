@@ -2,7 +2,6 @@ package com.markettwits.random_image.presentation.screen
 
 import android.graphics.drawable.Drawable
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.markettwits.core.communication.StateCommunication
 import com.markettwits.core.wrappers.AsyncViewModel
 import com.markettwits.image_action.api.ImageIntentAction
@@ -11,7 +10,6 @@ import com.markettwits.random_image.presentation.components.filter.ProtectedMapp
 import com.markettwits.random_image.presentation.components.filter.presentation.FilterCommunication
 import com.markettwits.random_image.presentation.components.image.ImageState
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
 
 interface ImageViewModel {
 
@@ -52,9 +50,9 @@ interface ImageViewModel {
         }
 
         override fun shareImage() {
-            viewModelScope.launch {
-                shareImageAction.shareImage((loadedImageCommunication.state().value as ImageState.Success).image)
-            }
+           async.handleAsyncSingle {
+               shareImageAction.shareImage((loadedImageCommunication.state().value as ImageState.Success).image)
+           }
         }
 
         override fun fetchRandomImage() {

@@ -1,7 +1,6 @@
 package com.markettwits.presentation.screens.list
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.markettwits.core.communication.StateCommunication
 import com.markettwits.core.wrappers.AsyncViewModel
 import com.markettwits.data.GalleryRepository
@@ -12,16 +11,14 @@ import com.markettwits.presentation.screens.list.communication.DetailCommunicati
 import com.markettwits.presentation.screens.list.communication.GalleryCommunication
 import com.markettwits.presentation.screens.list.communication.SelectedImageCommunication
 import com.markettwits.presentation.screens.list.communication.SelectedModeCommunication
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
 
 interface GalleryViewModel {
     fun toDetail(state: ImageFavoriteUi)
     fun favoriteImages()
     fun deleteImage(item: String, id: Long)
-    fun selectedPhotoState() : List<ImageFavoriteUi>
-    fun selected(): StateFlow<Boolean>
+    fun selectedPhotoState(): List<ImageFavoriteUi>
+    fun selectedState(): StateFlow<Boolean>
     fun selection(index: Int)
     fun shareImages()
     fun delete()
@@ -41,9 +38,11 @@ interface GalleryViewModel {
         init {
             favoriteImages()
         }
-        override fun selectedPhotoState(): List<ImageFavoriteUi> = selectedImageCommunication.fetch()
 
-        override fun selected(): StateFlow<Boolean> = selectedModeCommunication.state()
+        override fun selectedPhotoState(): List<ImageFavoriteUi> =
+            selectedImageCommunication.fetch()
+
+        override fun selectedState(): StateFlow<Boolean> = selectedModeCommunication.state()
 
         override fun toDetail(state: ImageFavoriteUi) {
             current.map(state)
@@ -51,7 +50,7 @@ interface GalleryViewModel {
         }
 
         override fun favoriteImages() {
-            viewModelScope.launch {
+            async.handleAsyncSingle {
                 repository.observe().collect {
                     gallery.map(it)
                 }
@@ -67,7 +66,7 @@ interface GalleryViewModel {
         }
 
         override fun selection(index: Int) {
-            viewModelScope.launch(Dispatchers.IO) {
+            async.handleAsyncSingle {
                 val selectedPhotoState = selectedImageCommunication.fetch()
                 val item = gallery.state().value[index]
                 val selectedPhoto = selectedPhotoState.find { it.id == item.id }
@@ -81,7 +80,7 @@ interface GalleryViewModel {
 
         override fun shareImages() {
             val imageUrl = selectedImageCommunication.fetch().map { it.imageUrl }
-            viewModelScope.launch {
+            async.handleAsyncSingle {
                 imageIntentAction.shareImage(imageUrl)
             }
         }
@@ -90,7 +89,7 @@ interface GalleryViewModel {
             val selectedPhotoState = selectedImageCommunication.fetch()
             val id = selectedPhotoState.map { it.id }
             val url = selectedPhotoState.map { it.imageUrl }
-            viewModelScope.launch {
+            async.handleAsyncSingle {
                 repository.delete(id, url)
             }
             changeSelectedState()

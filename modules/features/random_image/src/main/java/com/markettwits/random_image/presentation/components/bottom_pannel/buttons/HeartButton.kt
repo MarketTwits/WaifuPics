@@ -1,4 +1,4 @@
-package com.markettwits.random_image.presentation.components.bottom_pannel.button
+package com.markettwits.random_image.presentation.components.bottom_pannel.buttons
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue

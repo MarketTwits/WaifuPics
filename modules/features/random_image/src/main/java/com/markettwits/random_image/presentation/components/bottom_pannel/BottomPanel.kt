@@ -9,10 +9,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.markettwits.core_ui.di.ApplicationViewModel
 import com.markettwits.random_image.R
-import com.markettwits.random_image.presentation.components.bottom_pannel.button.BasePanelItem
-import com.markettwits.random_image.presentation.components.bottom_pannel.button.HeartButton
-import com.markettwits.random_image.presentation.components.bottom_pannel.button.RefreshPanelItem
-import com.markettwits.random_image.presentation.components.bottom_pannel.button.ReportedButton
+import com.markettwits.random_image.presentation.components.bottom_pannel.buttons.BasePanelItem
+import com.markettwits.random_image.presentation.components.bottom_pannel.buttons.HeartButton
+import com.markettwits.random_image.presentation.components.bottom_pannel.buttons.RefreshPanelItem
+import com.markettwits.random_image.presentation.components.bottom_pannel.buttons.ReportedButton
 import com.markettwits.random_image.presentation.components.image.ImageState
 import com.markettwits.random_image.presentation.screen.ImageViewModel
 

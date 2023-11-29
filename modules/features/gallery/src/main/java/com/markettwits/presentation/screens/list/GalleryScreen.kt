@@ -29,7 +29,7 @@ fun GalleryScreen() {
 
     val viewModel: GalleryViewModel.Base = ApplicationViewModel()
     val state by viewModel.state().collectAsState()
-    val selected by viewModel.selected().collectAsState()
+    val selected by viewModel.selectedState().collectAsState()
     val selectedMedia = viewModel.selectedPhotoState()
     val view = LocalView.current
     rememberWindowInsetsController().toggleSystemBars(true)
