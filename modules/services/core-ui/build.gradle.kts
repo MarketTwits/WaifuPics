@@ -13,4 +13,5 @@ dependencies {
     api(libs.bundles.composeUiBundle)
     api(libs.junit.ext.ktx)
     debugApi(libs.bundles.composeUiBundleDebug)
+    debugApi(libs.leakcanary)
 }

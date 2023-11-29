@@ -36,6 +36,8 @@ junit-ext-ktx = "1.1.5"
 testing = "6.9.6"
 androidx-test-ext-junit = "1.1.5"
 espresso-core = "3.5.1"
+leakcanary = "2.12"
+
 #Network
 retrofit = "2.9.0"
 okkhttp = "4.11.0"
@@ -78,9 +80,11 @@ realm-gradle-plugin = { module = "io.realm:realm-gradle-plugin", version.ref = "
 zoomable = { group = "net.engawapg.lib", name = "zoomable", version.ref = "zoomable" }
 #androidx-exifinterface = { group = "androidx.exifinterface", name = "exifinterface", version.ref = "exifinterface" }
 
+#Test
 junit = {group = "junit", name = "junit",version.ref = "junit"}
 junit-ext-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junit-ext-ktx" }
 testing = { group = "org.testng", name = "testing", version.ref = "testing" }
+leakcanary = {group = "com.squareup.leakcanary", name = "leakcanary-android", version.ref = "leakcanary"}
 
 #Serialization
 kotlinx-serialization-core = {group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-core", version.ref = "kotlinx-serialization"}
@@ -103,8 +107,8 @@ nabla-gallery = {group = "run.nabla", name = "gallery-picker", version.ref = "na
 
 android-gradle = {module = "com.android.tools.build:gradle", version.ref = "gradle"}
 kotlin-gradle = {module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin"}
-[plugins]
 
+[plugins]
 kotlin-serialization =  {id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin"}
 android-library = { id = "com.android.library", version.ref = "gradle" }
 android-application = {id = "com.android.application", version.ref = "gradle"}
