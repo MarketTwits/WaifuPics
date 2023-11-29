@@ -1,4 +1,4 @@
-package com.markettwits.random_image.presentation.random_image_screen
+package com.markettwits.random_image.presentation.screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

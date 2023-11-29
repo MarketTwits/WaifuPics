@@ -1,4 +1,4 @@
-package com.markettwits.random_image.data
+package com.markettwits.random_image.data.mapper
 
 import com.markettwits.random_image.data.cloud.NetworkResult
 import com.markettwits.random_image.presentation.components.report_image.ImageReportUi

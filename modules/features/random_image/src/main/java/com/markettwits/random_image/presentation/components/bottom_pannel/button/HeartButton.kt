@@ -7,7 +7,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.markettwits.random_image.R
-import com.markettwits.random_image.presentation.random_image_screen.ImageViewModel
+import com.markettwits.random_image.presentation.screen.ImageViewModel
 
 @Composable
 fun HeartButton(

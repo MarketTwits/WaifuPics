@@ -10,18 +10,20 @@ import androidx.compose.ui.Modifier
 import com.markettwits.core_ui.di.ApplicationViewModel
 import com.markettwits.random_image.R
 import com.markettwits.random_image.presentation.components.bottom_pannel.button.BasePanelItem
-import com.markettwits.random_image.presentation.components.bottom_pannel.button.RefreshPanelItem
 import com.markettwits.random_image.presentation.components.bottom_pannel.button.HeartButton
+import com.markettwits.random_image.presentation.components.bottom_pannel.button.RefreshPanelItem
 import com.markettwits.random_image.presentation.components.bottom_pannel.button.ReportedButton
-import com.markettwits.random_image.presentation.random_image_screen.ImageViewModel
-import com.markettwits.random_image.presentation.random_image_screen.LoadedImage
+import com.markettwits.random_image.presentation.components.image.ImageState
+import com.markettwits.random_image.presentation.screen.ImageViewModel
+
 
 
 @Composable
 fun BottomPanel() {
     val viewModel: ImageViewModel.Base = ApplicationViewModel()
     val panelState = viewModel.loadedImageState().collectAsState()
-    val enabled = panelState.value !is LoadedImage.Loading
+    val enabled = panelState.value is ImageState.Success
+    val refresh = panelState.value is ImageState.Loading
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
@@ -37,7 +39,7 @@ fun BottomPanel() {
             enabled = enabled,
             viewModel = viewModel
         )
-        RefreshPanelItem(modifier = Modifier.weight(2f), isLoading = enabled) {
+        RefreshPanelItem(modifier = Modifier.weight(2f), isLoading = refresh) {
             viewModel.fetchRandomImage()
         }
         BasePanelItem(

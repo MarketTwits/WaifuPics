@@ -1,4 +1,4 @@
-package com.markettwits.random_image.data.net.models
+package com.markettwits.random_image.data.network.models
 
 import kotlinx.serialization.Serializable
 

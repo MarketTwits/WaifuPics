@@ -6,7 +6,7 @@ import com.markettwits.core.di.DependencyContainer
 import com.markettwits.random_image.presentation.components.filter.AgeRatingFilterModule
 import com.markettwits.random_image.presentation.components.filter.presentation.AgeRatingFilterViewModel
 import com.markettwits.random_image.presentation.components.filter.presentation.FilterCommunication
-import com.markettwits.random_image.presentation.random_image_screen.ImageViewModel
+import com.markettwits.random_image.presentation.screen.ImageViewModel
 
 class RandomImageDependencyContainer(
     private val core: Core,

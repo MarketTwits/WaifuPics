@@ -1,10 +1,10 @@
-package com.markettwits.random_image.data.net
+package com.markettwits.random_image.data.mapper
 
 import com.markettwits.random_image.data.cloud.NetworkResult
-import com.markettwits.random_image.data.net.models.RandomImageItemCloud
-import com.markettwits.random_image.presentation.random_image_screen.AuthorUi
-import com.markettwits.random_image.presentation.random_image_screen.ImageSourceUi
-import com.markettwits.random_image.presentation.random_image_screen.RandomImageUiState
+import com.markettwits.random_image.data.network.models.RandomImageItemCloud
+import com.markettwits.random_image.presentation.screen.AuthorUi
+import com.markettwits.random_image.presentation.screen.ImageSourceUi
+import com.markettwits.random_image.presentation.screen.RandomImageUiState
 
 class RandomImageMapperCloud : NetworkResult.Mapper<RandomImageItemCloud, RandomImageUiState> {
     override fun map(item: RandomImageItemCloud): RandomImageUiState {

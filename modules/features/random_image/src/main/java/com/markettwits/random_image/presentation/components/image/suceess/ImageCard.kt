@@ -18,11 +18,12 @@ import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
 import com.markettwits.core_ui.R
 import com.markettwits.core_ui.components.Shapes
-import com.markettwits.core_ui.image.LocalImageLoader
 import com.markettwits.core_ui.di.ApplicationViewModel
+import com.markettwits.core_ui.image.LocalImageLoader
+import com.markettwits.random_image.presentation.components.image.ImageState
 import com.markettwits.random_image.presentation.components.image.loading.ImageLoading
 import com.markettwits.random_image.presentation.components.image.zoom.FullScreenImageDialog
-import com.markettwits.random_image.presentation.random_image_screen.ImageViewModel
+import com.markettwits.random_image.presentation.screen.ImageViewModel
 
 
 @Composable
@@ -41,10 +42,15 @@ fun ImageCard(imageUrl: String, id: Int) {
         contentDescription = stringResource(R.string.waifu_image),
         loading = {
             ImageLoading()
-            viewModel.imageLoading()
+            viewModel.obtainImageState(ImageState.Loading)
         }, success = {
             SubcomposeAsyncImageContent(modifier = modifier)
             viewModel.currentImage(it.result.drawable, imageUrl, id)
+        },
+        error = {
+            val message = it.result.throwable.message ?: ""
+            viewModel.obtainImageState(ImageState.Error(message))
+
         }
     )
     if (isDialogOpen) {
