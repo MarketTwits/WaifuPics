@@ -13,13 +13,13 @@ import com.markettwits.data.store.ImagesCacheDataSource
 import com.markettwits.image_action.impl.ImageFileWrapper
 import com.markettwits.image_action.impl.ImageIntentActionImpl
 import com.markettwits.random_image.data.RandomImageRepository
-import com.markettwits.random_image.data.mapper.ReportedImageMapperCloud
-import com.markettwits.random_image.data.cloud.exceptions.ExceptionMapper
 import com.markettwits.random_image.data.cloud.HandleNetworkResult
 import com.markettwits.random_image.data.cloud.OkkHttpWrapper
 import com.markettwits.random_image.data.cloud.RetrofitFactory
-import com.markettwits.random_image.data.network.NekoService
+import com.markettwits.random_image.data.cloud.exceptions.ExceptionMapper
 import com.markettwits.random_image.data.mapper.RandomImageMapperCloud
+import com.markettwits.random_image.data.mapper.ReportedImageMapperCloud
+import com.markettwits.random_image.data.network.NekoService
 import com.markettwits.random_image.presentation.components.filter.ProtectedMapper
 import com.markettwits.random_image.presentation.components.filter.presentation.FilterCommunication
 import com.markettwits.random_image.presentation.screen.ImageViewModel
@@ -37,7 +37,7 @@ class ImageViewModule(
         ImageRepository.Base(
             ImagesCacheDataSource(RealmDatabaseProvider.Base()),
             ImageUiToCacheMapper.Base(),
-            ImageLoaderDataSource.Base(core.context(),DispatchersList.Base())
+            ImageLoaderDataSource.Base(core.context(),core.dispatchers())
         )
 
     override fun viewModel() =
