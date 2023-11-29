@@ -67,7 +67,7 @@ class ImageIntentActionImpl(
             }
             context.startActivity(
                 Intent
-                    .createChooser(intent, "Open With")
+                    .createChooser(intent, INTENT_ACTION_OPEN_WITH)
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             )
         }
@@ -83,7 +83,7 @@ class ImageIntentActionImpl(
             }
             context.startActivity(
                 Intent
-                    .createChooser(intent, "Set As")
+                    .createChooser(intent, INTENT_ACTION_SET_AS)
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             )
         }
@@ -99,13 +99,16 @@ class ImageIntentActionImpl(
                 addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             }
             context.startActivity(
-                Intent.createChooser(intent, "Edit").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                Intent.createChooser(intent, INTENT_ACTION_EDIT_IMAGE).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             )
         }
     }
 
     companion object {
         const val INTENT_ACTION_SHARE_IMAGE = "Share Image"
+        const val INTENT_ACTION_EDIT_IMAGE = "Edit"
+        const val INTENT_ACTION_SET_AS = "Set as"
+        const val INTENT_ACTION_OPEN_WITH = "Set as"
         const val TYPE_IMAGE = "image/*"
         const val MIME_TYPE = "mimeType"
     }
