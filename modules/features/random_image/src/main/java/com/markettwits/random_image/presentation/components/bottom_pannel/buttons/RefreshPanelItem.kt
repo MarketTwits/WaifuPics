@@ -14,7 +14,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.markettwits.core_ui.components.Shapes
@@ -28,6 +30,11 @@ fun RefreshPanelItem(
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
+    val configuration = LocalConfiguration.current
+
+    val screenHeight = configuration.screenHeightDp.dp
+    val screenWidth = configuration.screenWidthDp.dp
+
     Box(
         modifier = modifier
             .padding(5.dp)
@@ -46,6 +53,7 @@ fun RefreshPanelItem(
             Text(
                 text = stringResource(R.string.refresh),
                 color = MaterialTheme.colorScheme.surfaceTint,
+                overflow = TextOverflow.Clip,
                 fontFamily = FontRubik.medium,
                 fontSize = 16.sp
             )
