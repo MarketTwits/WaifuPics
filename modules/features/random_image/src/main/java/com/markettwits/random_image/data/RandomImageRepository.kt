@@ -20,6 +20,8 @@ interface RandomImageRepository {
         private val async : HandleNetworkResult,
         private val cache : ImageRepository
     ) : RandomImageRepository {
+
+
         override suspend fun reportImage(id: Int): ImageReportUi {
             val result = async.tryRequest {
                 service.report(id)

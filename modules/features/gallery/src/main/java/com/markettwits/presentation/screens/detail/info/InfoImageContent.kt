@@ -1,5 +1,6 @@
 package com.markettwits.presentation.screens.detail.info
 
+import android.widget.Toast
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -19,42 +20,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.markettwits.core_ui.components.Shapes
 import com.markettwits.core_ui.di.ApplicationViewModel
 import com.markettwits.core_ui.theme.FontRubik
 import com.markettwits.core_ui.theme.LightPink
-import com.markettwits.core_ui.theme.WaifuPicsTheme
+import com.markettwits.gallery.R
 import com.markettwits.presentation.screens.detail.GalleryScreenViewModel
 import com.markettwits.presentation.screens.detail.button.EditButton
 import com.markettwits.presentation.screens.detail.button.OpenAsButton
 import com.markettwits.presentation.screens.detail.button.SaveButton
 import com.markettwits.presentation.screens.detail.button.ShareButton
 
-@Composable
-@Preview
-private fun InfoImageContentPreviewLight() {
-    WaifuPicsTheme {
-        InfoImageContent {}
-    }
-}
-
-@Composable
-@Preview
-private fun InfoImageContentPreviewDark() {
-    WaifuPicsTheme(darkTheme = true) {
-        InfoImageContent {}
-    }
-}
 
 @Composable
 fun InfoImageContent(onDismiss: () -> Unit) {
     val viewModel: GalleryScreenViewModel.Base = ApplicationViewModel()
     val image = viewModel.infoAboutImage()
+    val context = LocalContext.current
     Box(
         modifier = Modifier
             .padding(10.dp)
@@ -85,7 +70,10 @@ fun InfoImageContent(onDismiss: () -> Unit) {
                 }
             )
             ImageInfoDate(image.created)
-            ImageInfoColum(image.mediaInfo)
+            ImageInfoColum(image.mediaInfo){
+                viewModel.copy(it)
+                Toast.makeText(context, context.getString(R.string.text_copied_to_clipboard), Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }
@@ -105,9 +93,11 @@ private fun ImageInfoDate(date: String) {
 }
 
 @Composable
-private fun ImageInfoColum(mediaInfoList: List<MediaInfo>) {
+private fun ImageInfoColum(mediaInfoList: List<MediaInfo>, onLongClick: (String) -> Unit) {
     mediaInfoList.forEach {
-        MediaInfoRow(label = it.label, content = it.content, icon = it.icon)
+        MediaInfoRow(label = it.label, content = it.content, icon = it.icon, onLongClick = {
+            onLongClick(it)
+        })
     }
 }
 

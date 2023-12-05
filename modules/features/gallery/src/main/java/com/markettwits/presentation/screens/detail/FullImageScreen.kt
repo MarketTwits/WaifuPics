@@ -73,8 +73,7 @@ fun ImageScreenFull(
             ZoomablePagerImage(
                 imageUrl = state[index].imageUrl,
                 uiEnabled = showUI.value,
-                setCurrentItem = {
-                },
+                setCurrentItem = {},
                 onItemClick = {
                     showUI.value = !showUI.value
                     windowState.toggleSystemBars(showUI.value)

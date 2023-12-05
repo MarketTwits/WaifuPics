@@ -1,11 +1,11 @@
 package com.markettwits.presentation.screens.detail
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.markettwits.core.communication.StateCommunication
 import com.markettwits.core.wrappers.AsyncViewModel
 import com.markettwits.data.GalleryRepository
 import com.markettwits.image_action.api.ImageIntentAction
+import com.markettwits.presentation.copy.SystemService
 import com.markettwits.presentation.navigation.GalleryRouter
 import com.markettwits.presentation.screens.ImageFavoriteUi
 import com.markettwits.presentation.screens.detail.info.MediaInfoUiState
@@ -26,6 +26,7 @@ interface GalleryScreenViewModel {
     fun shareImage()
     fun editImage()
     fun pop()
+    fun copy(text : String)
 
     class Base(
         private val item: DetailCommunication,
@@ -34,6 +35,7 @@ interface GalleryScreenViewModel {
         private val repository: GalleryRepository,
         private val imageIntentAction: ImageIntentAction.Mutable,
         private val navigation: GalleryRouter,
+        private val systemService: SystemService,
     ) : ViewModel(), GalleryScreenViewModel {
         override fun state() = list.state()
         override fun currentImage(): StateFlow<ImageFavoriteUi> = item.state()
@@ -52,6 +54,10 @@ interface GalleryScreenViewModel {
 
         override fun pop() {
             navigation.pop()
+        }
+
+        override fun copy(text: String) {
+            systemService.copy(text)
         }
 
         override fun setImageAs() {

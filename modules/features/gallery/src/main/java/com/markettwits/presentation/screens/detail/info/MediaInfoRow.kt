@@ -1,6 +1,7 @@
 package com.markettwits.presentation.screens.detail.info
 
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
@@ -16,6 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import com.markettwits.core_ui.components.Shapes
 
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MediaInfoRow(
     modifier: Modifier = Modifier,
@@ -24,14 +26,18 @@ fun MediaInfoRow(
     icon: ImageVector,
     contentDescription: String? = null,
     onClick: (() -> Unit)? = null,
-    onLongClick: (() -> Unit)? = null,
+    onLongClick: ((value : String) -> Unit),
 ) {
     ListItem(
         modifier = modifier
             .fillMaxWidth()
             .clip(Shapes.medium)
-            .clickable {
-            }
+            .combinedClickable(
+                onLongClick = {
+                    onLongClick(content)
+                },
+                onClick = {}
+            )
         ,
         colors = ListItemDefaults.colors(
             containerColor = Color.Transparent
