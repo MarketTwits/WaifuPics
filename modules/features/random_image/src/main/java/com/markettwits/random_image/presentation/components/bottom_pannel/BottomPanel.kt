@@ -39,7 +39,7 @@ fun BottomPanel() {
             enabled = enabled,
             viewModel = viewModel
         )
-        RefreshPanelItem(modifier = Modifier.weight(2f), isLoading = refresh) {
+        RefreshPanelItem(modifier = Modifier.weight(2.5f), isLoading = refresh) {
             viewModel.fetchRandomImage()
         }
         BasePanelItem(
