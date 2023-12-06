@@ -25,4 +25,5 @@ dependencies {
     implementation(project(path = ":modules:services:core-ui"))
     implementation(project(path = ":modules:features:navigation"))
     implementation(project(path = ":modules:features:gallery"))
+    implementation(project(path = ":modules:features:about"))
 }
