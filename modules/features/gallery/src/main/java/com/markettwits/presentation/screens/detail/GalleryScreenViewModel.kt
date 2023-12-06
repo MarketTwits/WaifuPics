@@ -19,7 +19,6 @@ interface GalleryScreenViewModel {
     fun setImageAs()
     fun delete()
     fun infoAboutImage(): MediaInfoUiState
-    fun setCurrentItem(image: ImageFavoriteUi)
     fun saveToGallery()
     fun currentImage(): StateFlow<ImageFavoriteUi>
     fun setCurrentItem(index: Int)
@@ -75,10 +74,6 @@ interface GalleryScreenViewModel {
 
         override fun infoAboutImage(): MediaInfoUiState =
             repository.infoAboutImage(item.state().value.imageUrl)
-
-        override fun setCurrentItem(image: ImageFavoriteUi) {
-            item.map(image)
-        }
 
         override fun setCurrentItem(index: Int) {
             if (index < 0 || list.state().value.items.isEmpty()){
