@@ -7,6 +7,7 @@ import com.markettwits.data.GalleryRepository
 import com.markettwits.image_action.api.ImageIntentAction
 import com.markettwits.presentation.navigation.GalleryRouter
 import com.markettwits.presentation.screens.ImageFavoriteUi
+import com.markettwits.presentation.screens.ImageFavoriteUiState
 import com.markettwits.presentation.screens.list.communication.DetailCommunication
 import com.markettwits.presentation.screens.list.communication.GalleryCommunication
 import com.markettwits.presentation.screens.list.communication.SelectedImageCommunication
@@ -33,7 +34,7 @@ interface GalleryViewModel {
         private val navigation: GalleryRouter,
         private val selectedImageCommunication: SelectedImageCommunication,
         private val imageIntentAction: ImageIntentAction.ShareImage
-    ) : ViewModel(), StateCommunication.State<List<ImageFavoriteUi>>, GalleryViewModel {
+    ) : ViewModel(), StateCommunication.State<ImageFavoriteUiState>, GalleryViewModel {
 
         init {
             favoriteImages()
@@ -68,7 +69,7 @@ interface GalleryViewModel {
         override fun selection(index: Int) {
             async.handleAsyncSingle {
                 val selectedPhotoState = selectedImageCommunication.fetch()
-                val item = gallery.state().value[index]
+                val item = gallery.state().value.items[index]
                 val selectedPhoto = selectedPhotoState.find { it.id == item.id }
                 if (selectedPhoto != null)
                     selectedImageCommunication.remove(selectedPhoto)

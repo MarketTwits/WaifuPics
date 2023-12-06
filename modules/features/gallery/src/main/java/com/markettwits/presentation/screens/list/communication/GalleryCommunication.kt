@@ -4,9 +4,10 @@ import androidx.compose.runtime.mutableStateListOf
 import com.markettwits.core.communication.ListCommunication
 import com.markettwits.core.communication.StateCommunication
 import com.markettwits.presentation.screens.ImageFavoriteUi
+import com.markettwits.presentation.screens.ImageFavoriteUiState
 
-interface GalleryCommunication : StateCommunication.Mutable<List<ImageFavoriteUi>> {
-    class Base : StateCommunication.Abstract<List<ImageFavoriteUi>>(listOf()), GalleryCommunication
+interface GalleryCommunication : StateCommunication.Mutable<ImageFavoriteUiState> {
+    class Base : StateCommunication.Abstract<ImageFavoriteUiState>(ImageFavoriteUiState.Empty), GalleryCommunication
 }
 interface DetailCommunication : StateCommunication.Mutable<ImageFavoriteUi> {
     class Base : StateCommunication.Abstract<ImageFavoriteUi>(ImageFavoriteUi.Initial),
