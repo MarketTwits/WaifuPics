@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nekosapi_logo">NekosAPI logo</string>
+    <string name="nekosapi">NekosAPI</string>
+    <string name="a_simple_api_for_nekos">A simple API for Nekos</string>
+    <string name="description_text">NekosAPI is a simple and easy to use API that provides various endpoints for Nekos. You can use it to get random images, facts, quotes, and more about Nekos. NekosAPI is free and open source, and you can contribute to it on GitHub.</string>
+    <string name="usage_text">To use NekosAPI, you just need to make a GET request to the endpoint you want. For example, to get a random Neko image, you can use this URL: https://nekosapi.com/api/v1/image</string>
+    <string name="documentation_text">You can find the full documentation of NekosAPI on this page. It contains the list of all the endpoints, the parameters, the responses, and the examples.</string>
+    <string name="this_page">this page</string>
+    <string name="freecodecamp_url">https://www.freecodecamp.org/news/how-to-turn-your-website-into-a-mobile-app-with-7-lines-of-json-631c9c9895f5/</string>
+    <string name="documentation">Documentation</string>
+    <string name="source_code">Source Code</string>
+    <string name="source_code_link_text">NekosAPI is open source and you can find the source code on GitHub. You can also contribute to the project by reporting issues, suggesting features, or making pull requests.</string>
+    <string name="github">GitHub</string>
+    <string name="https_github_com_nekos_api_nekos_api">https://github.com/Nekos-API/Nekos-API</string>
+</resources>
