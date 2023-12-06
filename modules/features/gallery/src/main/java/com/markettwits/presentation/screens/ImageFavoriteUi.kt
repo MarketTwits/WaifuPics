@@ -23,5 +23,10 @@ sealed class ImageFavoriteUi(
         override val imageUrl: String,
         override val created: String,
         override val protected: Boolean): ImageFavoriteUi(id, imageUrl, created, protected)
+    data object Empty : ImageFavoriteUi(0, "", "", false)
     data object Initial : ImageFavoriteUi(0, "", "", false)
+}
+sealed class ImageFavoriteUiState(val items : List<ImageFavoriteUi>){
+    data class Base(val imageFavoriteUi : List<ImageFavoriteUi>) : ImageFavoriteUiState(imageFavoriteUi)
+    data object Empty : ImageFavoriteUiState(emptyList())
 }

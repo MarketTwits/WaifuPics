@@ -8,6 +8,7 @@ import com.markettwits.image_action.api.ImageIntentAction
 import com.markettwits.presentation.copy.SystemService
 import com.markettwits.presentation.navigation.GalleryRouter
 import com.markettwits.presentation.screens.ImageFavoriteUi
+import com.markettwits.presentation.screens.ImageFavoriteUiState
 import com.markettwits.presentation.screens.detail.info.MediaInfoUiState
 import com.markettwits.presentation.screens.list.communication.DetailCommunication
 import com.markettwits.presentation.screens.list.communication.GalleryCommunication
@@ -22,7 +23,7 @@ interface GalleryScreenViewModel {
     fun saveToGallery()
     fun currentImage(): StateFlow<ImageFavoriteUi>
     fun setCurrentItem(index: Int)
-    fun state(): StateFlow<List<ImageFavoriteUi>>
+    fun state(): StateFlow<ImageFavoriteUiState>
     fun shareImage()
     fun editImage()
     fun pop()
@@ -80,7 +81,11 @@ interface GalleryScreenViewModel {
         }
 
         override fun setCurrentItem(index: Int) {
-            item.map(list.state().value[index])
+            if (index < 0 || list.state().value.items.isEmpty()){
+                pop()
+            }else{
+                item.map(list.state().value.items[index])
+            }
         }
 
         override fun saveToGallery() {

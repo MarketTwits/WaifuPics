@@ -18,8 +18,11 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.dp
 import com.markettwits.core_ui.base_extensions.vibrate
 import com.markettwits.core_ui.di.ApplicationViewModel
+import com.markettwits.presentation.screens.ImageFavoriteUi
+import com.markettwits.presentation.screens.ImageFavoriteUiState
 import com.markettwits.presentation.screens.detail.window_controller.rememberWindowInsetsController
 import com.markettwits.presentation.screens.detail.window_controller.toggleSystemBars
+import com.markettwits.presentation.screens.list.empty_item.EmptyGalleryItem
 import com.markettwits.presentation.screens.list.list_item.MediaComponent
 import com.markettwits.presentation.screens.list.picker.SelectionSheet
 
@@ -40,30 +43,38 @@ fun GalleryScreen() {
             .fillMaxSize()
             .padding(10.dp)
     ) {
-        LazyVerticalGrid(
-            columns = GridCells.Adaptive(100.dp),
-        ) {
-            items(state, key = { it.id }) { image ->
-                MediaComponent(
-                    media = image,
-                    selectionState = selected,
-                    selectedMedia = selectedMedia,
-                    onItemLongClick = {
-                        view.vibrate()
-                        viewModel.selection(state.indexOf(it))
-                        viewModel.changeSelectedState()
-                    },
-                    onItemClick = {
-                        if (selected) {
-                            view.vibrate()
-                            viewModel.selection(state.indexOf(it))
-                        } else {
-                            viewModel.toDetail(image)
-                        }
+        if (state is ImageFavoriteUiState.Base){
+            LazyVerticalGrid(
+                columns = GridCells.Adaptive(100.dp),
+            ) {
+                items(state.items, key = { it.id }) { image ->
+                    if (image is ImageFavoriteUi.Base){
+                        MediaComponent(
+                            media = image,
+                            selectionState = selected,
+                            selectedMedia = selectedMedia,
+                            onItemLongClick = {
+                                view.vibrate()
+                                viewModel.selection(state.items.indexOf(it))
+                                viewModel.changeSelectedState()
+                            },
+                            onItemClick = {
+                                if (selected) {
+                                    view.vibrate()
+                                    viewModel.selection(state.items.indexOf(it))
+                                } else {
+                                    viewModel.toDetail(image)
+                                }
+                            }
+                        )
                     }
-                )
+                }
             }
         }
+        if (state is ImageFavoriteUiState.Empty){
+            EmptyGalleryItem()
+        }
+
         SelectionSheet(
             modifier = Modifier
                 .align(Alignment.BottomEnd)

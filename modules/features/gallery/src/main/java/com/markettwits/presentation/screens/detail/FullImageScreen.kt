@@ -38,15 +38,15 @@ fun ImageScreenFull(
     val currentImage by viewModel.currentImage().collectAsState()
     val state by viewModel.state().collectAsState()
     val pagerState = rememberPagerState(pageCount = {
-        state.size
-    }, initialPage = state.indexOf(currentImage))
+        state.items.size
+    }, initialPage = state.items.indexOf(currentImage))
     val windowState = rememberWindowInsetsController()
     val showUI = rememberSaveable {
         mutableStateOf(true)
     }
-    if (state.isEmpty()) {
-        viewModel.pop()
-    }
+//    if (state.items.isEmpty()) {
+//        viewModel.pop()
+//    }
 
     LaunchedEffect(pagerState, state) {
         snapshotFlow { pagerState.currentPage }.collect { page ->
@@ -65,13 +65,13 @@ fun ImageScreenFull(
             pageSpacing = 16.dp,
             flingBehavior = rememberPagerFlingBehavior(pagerState = pagerState),
             key = {
-                if (state.isNotEmpty()) {
-                    state[it.coerceIn(state.indices)].toString()
+                if (state.items.isNotEmpty()) {
+                    state.items[it.coerceIn(state.items.indices)].toString()
                 } else "empty"
             }
         ) { index ->
             ZoomablePagerImage(
-                imageUrl = state[index].imageUrl,
+                imageUrl = state.items[index].imageUrl,
                 uiEnabled = showUI.value,
                 setCurrentItem = {},
                 onItemClick = {
