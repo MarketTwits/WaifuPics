@@ -6,10 +6,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
 import com.markettwits.navigation.Screen
+import com.markettwits.AboutScreen
 import com.markettwits.presentation.screens.detail.ImageScreenFull
 import com.markettwits.presentation.screens.list.GalleryScreen
 import com.markettwits.random_image.presentation.screen.MainScreen
-import com.markettwits.waifupics.about.AboutScreen
 
 fun NavGraphBuilder.baseTabNavGraph(
     route: String,

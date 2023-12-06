@@ -26,7 +26,7 @@ interface GalleryScreenViewModel {
     fun shareImage()
     fun editImage()
     fun pop()
-    fun copy(text : String)
+    fun copy(text: String)
 
     class Base(
         private val item: DetailCommunication,
@@ -76,9 +76,9 @@ interface GalleryScreenViewModel {
             repository.infoAboutImage(item.state().value.imageUrl)
 
         override fun setCurrentItem(index: Int) {
-            if (index < 0 || list.state().value.items.isEmpty()){
+            if (index < 0 || list.state().value.items.isEmpty()) {
                 pop()
-            }else{
+            } else {
                 item.map(list.state().value.items[index])
             }
         }
