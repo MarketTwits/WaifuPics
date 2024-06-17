@@ -1,10 +1,19 @@
 plugins {
-    alias(libs.plugins.android.library.convention)
+    id("kotlin-multiplatform-convention")
 }
 
 android {
     namespace = "com.markettwits.core"
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
 }
-dependencies {
-    api("androidx.appcompat:appcompat:1.6.1")
+
+kotlin{
+    sourceSets.commonMain.dependencies {
+        api(libs.kotlinx.coroutines.core)
+        api(libs.lifecycle.viewmodel)
+    }
 }

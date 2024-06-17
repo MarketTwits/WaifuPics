@@ -1,4 +1,6 @@
 plugins {
     id("kotlin")
-    id("base-kotlin-convention")
+}
+kotlin {
+    jvmToolchain(localLibs.findVersion("jvm").get().toString().toInt())
 }
