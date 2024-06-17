@@ -5,11 +5,13 @@ import com.markettwits.presentation.NavigationRouter
 import com.markettwits.presentation.navigation.GalleryRouter
 
 class BaseRouter: GalleryRouter, NavigationRouter {
+
     override fun toDetailImageScreen() {
         LocalNavigationState.rootNavigation.getNavController.navigate(
            Screen.GalleryItem.route()
         )
     }
+
     override fun pop() {
         LocalNavigationState.rootNavigation.getNavController.popBackStack()
     }

@@ -1,17 +1,31 @@
+
 plugins {
-    alias(libs.plugins.android.library.convention)
+   // id("kotlin-multiplatform-convention")
+    id("kotlin-jvm-convention")
+
     alias(libs.plugins.realm)
 }
 
+//android {
+//    namespace = "com.markettwits.cache_datasource"
+//
+//    compileOptions {
+//        sourceCompatibility = JavaVersion.VERSION_17
+//        targetCompatibility = JavaVersion.VERSION_17
+//    }
+//}
+kotlin{
 
-android {
-    namespace = "com.markettwits.cache_datasource"
-}
+    dependencies {
+        implementation(libs.realm)
+        implementation(libs.kotlinx.coroutines.core)
+      //  implementation(libs.core.ktx)
+    }
 
-dependencies {
-    implementation(project(":modules:services:core"))
-    implementation(libs.realm)
-    implementation(libs.core.ktx)
-    implementation(libs.compose.coil)
-    testImplementation(libs.junit)
+//    sourceSets.androidMain.dependencies {
+//        implementation(project(":modules:services:core"))
+//        implementation(libs.realm)
+//        implementation(libs.core.ktx)
+//        implementation(libs.compose.coil)
+//    }
 }

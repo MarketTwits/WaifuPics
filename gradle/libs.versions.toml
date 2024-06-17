@@ -1,33 +1,37 @@
 [versions]
 #plugins
-kotlin = "1.9.10"
-gradle = "8.1.1"
+coilCompose = "3.0.0-alpha06"
+coreSplashscreen = "1.0.1"
+kotlin = "2.0.0"
+gradle = "8.1.4"
 
 #SDK
 
 compileSdk = "34"
+ktorClientOkhttp = "2.3.10"
+ktorfitLib = "2.0.0"
 minSdk = "24"
 targetSdk = "34"
+versionName = "0.1.0"
 namespace = "com.markettwits.waifupics"
-jvm = "8"
-jvm-dot = "1.8"
+jvm = "17"
 
 # Compose
-compose = "1.5.3"
-compose-ui = "1.5.1"
-compose-bom = "2023.03.00"
-compose-activity = "1.8.1"
-compose-lifecycle = "2.6.1"
-compose-material3 = "1.2.0-alpha11"
-compose-navigation = "2.7.1"
-compose-preview = "1.5.1"
-compose-coil = "2.4.0"
-accompanist = "0.27.0"
+compose = "1.6.10"
+compose-ui = "1.6.8"
+compose-bom = "2024.06.00"
+compose-activity = "1.9.0"
+compose-lifecycle = "2.8.2"
+compose-material3 = "1.2.1"
+compose-navigation = "2.7.7"
+compose-preview = "1.6.8"
+compose-coil = "2.6.0"
+accompanist = "0.32.0"
 onebone-toolbar = "2.3.5"
 realm-gradle-plugin = "10.2.0"
 zoomable = "1.5.1"
 # Android
-android-lifecycle-ktx = "2.6.1"
+android-lifecycle-ktx = "2.8.0"
 exifinterface = "1.3.6"
 
 #Ui/Unit test
@@ -43,22 +47,27 @@ retrofit = "2.9.0"
 okkhttp = "4.11.0"
 core-ktx = "1.9.0"
 #UI
-appcompat = "1.6.1"
-material = "1.9.0"
+appcompat = "1.7.0"
+material = "1.12.0"
 nabla-gallery = "1.4.5"
 
 #Database
-realm = "1.11.0"
+realm = "2.0.0"
 #Codegen
-ksp = "1.9.10-1.0.13"
+ksp = "2.0.0-1.0.21"
 
 #Serialization
-kotlinx-serialization = "1.4.1"
+kotlinx-serialization = "1.6.3"
 jakewharton = "0.8.0"
 
 org-jetbrains-kotlin-jvm = "1.8.0"
 
+#Ktor
+ktor = "2.3.10"
+
 [libraries]
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilCompose" }
+coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor", version.ref = "coilCompose" }
 compose-ui = { group = "androidx.compose", name = "ui:ui", version.ref = "compose" }
 compose-graphics = { group = "androidx.compose.ui", name = "ui-graphics", version.ref = "compose-ui" }
 compose-runtime = { group = "androidx.compose.runtime", name = "runtime", version.ref = "compose-ui" }
@@ -67,18 +76,26 @@ compose-activity = { group = "androidx.activity", name = "activity-compose", ver
 compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "compose-material3" }
 compose-material3-window-size = { group = "androidx.compose.material3", name = "material3-window-size-class", version.ref = "compose-material3" }
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
-compose-material-icons = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "compose-ui" }
 compose-accomponist = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "accompanist" }
 compose-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "compose-navigation" }
 compose-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview", version.ref = "compose-preview" }
 compose-preview = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "compose-preview" }
 compose-coil = {group = "io.coil-kt", name = "coil-compose", version.ref = "compose-coil"}
 compose-icons = {group = "androidx.compose.material", name = "material-icons-extended", version.ref = "compose-ui"}
+core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
+ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktorClientOkhttp" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktorClientOkhttp" }
+ktor-client-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktorfit-lib = { module = "de.jensklingenberg.ktorfit:ktorfit-lib", version.ref = "ktorfitLib" }
 onebone-toolbar = {group = "me.onebone", name = "toolbar-compose", version.ref = "onebone-toolbar"}
 android-lifecycle-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "android-lifecycle-ktx" }
 realm-gradle-plugin = { module = "io.realm:realm-gradle-plugin", version.ref = "realm-gradle-plugin" }
 zoomable = { group = "net.engawapg.lib", name = "zoomable", version.ref = "zoomable" }
 #androidx-exifinterface = { group = "androidx.exifinterface", name = "exifinterface", version.ref = "exifinterface" }
+
+lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel", version.ref = "android-lifecycle-ktx"}
+lifecycle-viewmodel-compose = { module =  "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "android-lifecycle-ktx"}
 
 #Test
 junit = {group = "junit", name = "junit",version.ref = "junit"}
@@ -87,6 +104,7 @@ testing = { group = "org.testng", name = "testing", version.ref = "testing" }
 leakcanary = {group = "com.squareup.leakcanary", name = "leakcanary-android", version.ref = "leakcanary"}
 
 #Serialization
+kotlinx-coroutines-core = {group = "org.jetbrains.kotlinx", name  = "kotlinx-coroutines-core", version.ref = "kotlinx-serialization"}
 kotlinx-serialization-core = {group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-core", version.ref = "kotlinx-serialization"}
 kotlinx-serialization-json = {group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinx-serialization"}
 jakewharton = {group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version.ref = "jakewharton"}
@@ -98,8 +116,7 @@ okkhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okkh
 okkhttp-interceptor = {group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref ="okkhttp"}
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
 realm = {group =  "io.realm.kotlin", name = "library-base", version.ref = "realm"}
-androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
+
 #UI
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
@@ -110,6 +127,10 @@ kotlin-gradle = {module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.r
 
 [plugins]
 kotlin-serialization =  {id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin"}
+kotlin-kmp = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlin-kmp-compose = { id = "org.jetbrains.compose", version.ref = "compose" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+
 android-library = { id = "com.android.library", version.ref = "gradle" }
 android-application = {id = "com.android.application", version.ref = "gradle"}
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
@@ -126,7 +147,7 @@ android-library-compose-convention = {id = "android-library-compose-convention",
 [bundles]
 composeUiBundle = [
     "compose-graphics",
-    "compose-runtime",
+  #  "compose-runtime",
     "compose-lifecycle-viewmodel",
     "compose-activity",
     "compose-material3",

@@ -1,12 +1,18 @@
 plugins {
-    alias(libs.plugins.android.library.compose.convention)
+    id("kotlin-multiplatform-compose-convetion")
 }
 
 android {
     namespace = "com.markettwits.about"
 
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
 }
-
-dependencies {
-    implementation(project(":modules:services:core-ui"))
+kotlin{
+    sourceSets.commonMain.dependencies {
+        implementation(project(":modules:services:core-ui"))
+        implementation(compose.components.resources)
+    }
 }

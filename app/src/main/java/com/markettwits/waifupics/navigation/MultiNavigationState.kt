@@ -39,6 +39,7 @@ class MultiNavigationAppState(
     fun setStartDestination(route: String) {
         getStartDestination = route
     }
+
     @Composable
     fun isRouteActive(route: String): Boolean {
         var navHostController = navController
