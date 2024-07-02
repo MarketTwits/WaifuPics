@@ -1,6 +1,6 @@
 plugins {
     id("kotlin-multiplatform-compose-convetion")
-    alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -13,10 +13,11 @@ android {
 }
 
 kotlin{
-    sourceSets.androidMain.dependencies {
+    sourceSets.commonMain.dependencies {
         implementation(project(":modules:services:core-ui"))
         implementation(project(":modules:services:core"))
-        implementation(libs.onebone.toolbar)
+        implementation(libs.kotlinx.serialization.core)
+        implementation(compose.components.resources)
     }
 
 }

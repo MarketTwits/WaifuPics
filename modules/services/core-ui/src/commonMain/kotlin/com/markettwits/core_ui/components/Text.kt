@@ -13,9 +13,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.sp
 import com.markettwits.core_ui.base_extensions.extractSiteName
+import com.markettwits.core_ui.base_extensions.noRippleClickable
 import com.markettwits.core_ui.theme.FontRubik
 import com.markettwits.core_ui.theme.LightPink
-import java.util.Locale
+
 
 
 @Composable
@@ -116,7 +117,7 @@ fun SingleLinkText(
         val text = if (link.isEmpty()) "No data source" else formatUrl(link)
         val uriHandler = LocalUriHandler.current
         Text(
-            modifier = Modifier.clickable(onClick = {
+            modifier = Modifier.noRippleClickable(onClick = {
                 uriHandler.openUri(link)
             }),
             text = text,
@@ -129,5 +130,5 @@ fun SingleLinkText(
 
 private fun formatUrl(url: String): String {
     val modified = url.extractSiteName()
-    return "🔗 ${modified.substring(0, 1).uppercase(Locale.ROOT) + modified.substring(1)} "
+    return "🔗 ${modified.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }} "
 }

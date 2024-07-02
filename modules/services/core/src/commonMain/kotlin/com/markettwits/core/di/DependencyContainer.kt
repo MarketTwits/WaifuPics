@@ -1,17 +1,16 @@
 package com.markettwits.core.di
 
 import androidx.lifecycle.ViewModel
+import kotlin.reflect.KClass
 
 interface DependencyContainer {
 
-    fun <T> module(className: Class<out T>): Module<ViewModel>
+    fun <T : Any> module(className: KClass<out T >): Module<ViewModel>
 
     class Error : DependencyContainer {
 
-//        override fun module(className: Class<out ViewModel>): Module<ViewModel> =
-//            throw IllegalArgumentException("unknown className ${className.name}")
-
-        override fun <T> module(className: Class<out T>): Module<ViewModel> =
-            throw IllegalArgumentException("unknown className ${className.name}")
+        override fun <T : Any> module(className: KClass<out T>): Module<ViewModel> {
+            throw IllegalArgumentException("unknown className ${className.simpleName}")
+        }
     }
 }
