@@ -1,6 +1,5 @@
 plugins {
     id("kotlin-multiplatform-compose-convetion")
-    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
@@ -12,14 +11,13 @@ android {
     }
 
 }
-
-
 kotlin{
-    sourceSets.androidMain.dependencies {
+    sourceSets.commonMain.dependencies {
         implementation(project(":modules:services:cache-datasource"))
         implementation(project(":modules:services:core-ui"))
         implementation(project(":modules:services:core"))
-        implementation(project(":modules:services:image_action"))
-        implementation(libs.zoomable)
+        implementation(project(":modules:services:image_action:core"))
+        implementation(compose.components.resources)
+        implementation(libs.kotlinx.datetime)
     }
 }

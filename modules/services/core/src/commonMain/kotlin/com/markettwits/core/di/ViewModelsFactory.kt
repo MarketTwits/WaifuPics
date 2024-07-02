@@ -11,6 +11,6 @@ class ViewModelsFactory(
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: KClass<T>, extras: CreationExtras): T =
-        dependencyContainer.module(modelClass.java).viewModel() as T
+        dependencyContainer.module(modelClass).viewModel() as T
 
 }

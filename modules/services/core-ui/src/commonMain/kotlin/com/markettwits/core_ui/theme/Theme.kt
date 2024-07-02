@@ -44,16 +44,6 @@ fun WaifuPicsTheme(
     dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
-//    val systemUiController = rememberSystemUiController()
-//    SideEffect {
-//        systemUiController.setNavigationBarColor(
-//            color = if (darkTheme) Color.Black else Color.White
-//        )
-//        systemUiController.setStatusBarColor(
-//            color = if (darkTheme) Color.Transparent else Color.White
-//        )
-//    }
-
     MaterialTheme(
         colorScheme = if(darkTheme) DarkColorScheme else LightColorScheme,
         typography = Typography,

@@ -2,8 +2,6 @@ import com.android.build.gradle.BaseExtension
 
 configure<BaseExtension> {
 
-    buildFeatures.buildConfig = true
-
     compileSdkVersion(localLibs.findVersion("compileSdk").get().toString().toInt())
 
     defaultConfig {

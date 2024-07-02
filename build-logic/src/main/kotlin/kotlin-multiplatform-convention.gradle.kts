@@ -1,23 +1,33 @@
+import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
+
 plugins {
     id("com.android.library")
     id("base-android-convention")
     id("org.jetbrains.kotlin.multiplatform")
-    id("com.github.gmazzo.buildconfig")
+    //  id("com.github.gmazzo.buildconfig")
 }
 
 kotlin {
     jvm()
     jvmToolchain(localLibs.findVersion("jvm").get().toString().toInt())
     androidTarget()
-}
-buildConfig {
-    val version = localLibs.findVersion("versionName").get().toString()
-    generateAtSync = false
-    buildConfigField("APP_NAME", project.name)
-    buildConfigField("APP_VERSION", version)
-    buildConfigField("APP_VERSION_NUMBER", versionCode(version))
-    buildConfigField("BUILD_TIME", System.currentTimeMillis())
-    buildConfigField("FEATURE_ENABLED", true)
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs() {
+        browser()
+        binaries.executable()
+    }
+
+    js() {
+        browser()
+        nodejs()
+        binaries.executable()
+    }
+
+    sourceSets {
+        all {
+            languageSettings.optIn("kotlinx.cinterop.ExperimentalForeignApi")
+        }
+    }
 }
 
 fun versionCode(versionName: String): Int {

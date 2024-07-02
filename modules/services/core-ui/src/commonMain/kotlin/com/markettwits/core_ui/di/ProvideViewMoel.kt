@@ -9,5 +9,5 @@ inline fun <reified T : ViewModel> ApplicationViewModel(): T =
     LocalViewModelProvider.current.viewModel(
         checkNotNull(
             LocalViewModelStoreOwner.current
-        ), T::class.java
+        ), T::class
     )

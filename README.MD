@@ -28,5 +28,19 @@ Here are some screenshots of NekosApp:
 ### Installation
 To install NekosApp, you can download the APK file from [this link] and install it on your Android device. Alternatively, you can clone this repository and build the app using Android Studio.
 
+### Run 
+
+Android:
+`./gradlew :modules:instances:app:run`
+
+Desktop (Windows):
+`./gradlew :modules:instances:desktop:run`
+
+Web (Js):
+`./gradlew :modules:instances:web:jsRun`
+
+Web (WASM):
+`./gradlew :modules:instances:web:wasmJsBrowserRun`
+
 ### License
 NekosApp is licensed under the MIT License. See [LICENSE] for more details.

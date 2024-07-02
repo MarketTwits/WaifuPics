@@ -1,6 +1,7 @@
 
 plugins {
     id("kotlin-multiplatform-compose-convetion")
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -11,19 +12,11 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 }
-
 kotlin {
     sourceSets{
-        all {
-            languageSettings {
-                optIn("org.jetbrains.compose.resources.ExperimentalResourceApi")
-            }
-        }
-
         androidMain.dependencies {
             api(libs.ktor.client.okhttp)
         }
-
         commonMain.dependencies {
             api(compose.runtime)
             api(compose.foundation)
@@ -31,12 +24,19 @@ kotlin {
             api(compose.materialIconsExtended)
             api(compose.ui)
             api(compose.components.uiToolingPreview)
-            api(libs.coil.compose)
-            api(libs.coil.network.ktor)
-            api(libs.lifecycle.viewmodel)
             api(libs.lifecycle.viewmodel.compose)
             implementation(compose.components.resources)
             implementation(project(":modules:services:core"))
+            api(libs.ktor.core)
+            api(libs.coil.compose.core)
+            api(libs.coil.compose)
+            api(libs.coil.mp)
+            api(libs.coil.network.ktor)
+            api(libs.kotlinx.serialization.json)
+        }
+        jvmMain.dependencies {
+            api(libs.ktor.client.okhttp)
+            api(libs.coil.network.ktor)
         }
 
     }
