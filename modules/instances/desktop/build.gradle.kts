@@ -15,12 +15,12 @@ kotlin {
 
     jvm {
         compilations.all {
-            kotlinOptions.jvmTarget = "20"
+            kotlinOptions.jvmTarget = "17"
         }
         withJava()
     }
 
-    jvmToolchain(20)
+    jvmToolchain(17)
 
     sourceSets.jvmMain.dependencies {
         implementation(project(path = ":modules:features:root"))
