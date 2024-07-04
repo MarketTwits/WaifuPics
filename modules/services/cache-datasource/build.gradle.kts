@@ -32,5 +32,8 @@ kotlin {
         jsMain.dependencies {
             implementation(libs.kstore.storage)
         }
+        iosMain.dependencies {
+            implementation(libs.kstore.file)
+        }
     }
 }
