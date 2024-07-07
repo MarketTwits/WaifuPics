@@ -10,6 +10,7 @@ import com.markettwits.core.di.ProvideViewModel
 import com.markettwits.core_ui.image.ImageLoader
 import com.markettwits.core_ui.image.LocalImageLoader
 import com.markettwits.core_ui.image.asyncImageLoader
+import com.markettwits.core_ui.theme.WaifuPicsTheme
 
 
 //val LocalRootPadding = compositionLocalOf<PaddingValues> { error("Padding is not available") }
@@ -29,6 +30,8 @@ fun SetContentLocal(
         setSingletonImageLoaderFactory { context ->
             context.asyncImageLoader()
         }
-        content()
+        WaifuPicsTheme {
+            content()
+        }
     }
 }

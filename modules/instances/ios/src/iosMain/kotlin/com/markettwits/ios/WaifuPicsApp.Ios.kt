@@ -13,9 +13,7 @@ import platform.Foundation.NSFileManager
 fun MainViewController() = ComposeUIViewController {
     InitStorage()
     SetContentLocal(DefaultWaifuPicsApp()) {
-        WaifuPicsTheme {
-            MenuNavGraph()
-        }
+        MenuNavGraph()
     }
 }
 

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
@@ -35,16 +36,21 @@ import com.markettwits.presentation.screens.detail.button.ShareButton
 
 
 @Composable
-fun InfoImageContent(onDismiss: () -> Unit) {
+fun InfoImageContent(
+    modifier: Modifier = Modifier,
+    onDismiss: () -> Unit
+) {
     val viewModel: GalleryScreenViewModel.Base = ApplicationViewModel()
     val image by viewModel.currentImage().collectAsState()
     Box(
-        modifier = Modifier
+        modifier = modifier
             .padding(10.dp)
+//            .padding(
+//                bottom = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
+//            )
             .clip(Shapes.medium)
-            .wrapContentSize()
-            .animateContentSize()
-            .windowInsetsPadding(WindowInsets.navigationBars),
+//            .wrapContentSize()
+            .animateContentSize(),
         contentAlignment = Alignment.CenterEnd
     ) {
         Column(
@@ -68,9 +74,6 @@ fun InfoImageContent(onDismiss: () -> Unit) {
                 }
             )
             ImageInfoDate(image.created)
-//            ImageInfoColum(image.){
-//                viewModel.onClickCopy(it)
-//            }
         }
     }
 }

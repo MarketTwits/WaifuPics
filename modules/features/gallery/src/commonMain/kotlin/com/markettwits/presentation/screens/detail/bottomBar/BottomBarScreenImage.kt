@@ -6,7 +6,10 @@ import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
@@ -23,8 +26,9 @@ import com.markettwits.presentation.screens.detail.button.ShareButton
 
 @Composable
 fun BoxScope.BottomBarScreenImage(
-    viewModel: GalleryScreenViewModel,
     showUI: Boolean,
+    onClickShareImage: () -> Unit,
+    onClickDeleteImage: () -> Unit
 ) {
     AnimatedVisibility(
         visible = showUI,
@@ -44,19 +48,18 @@ fun BoxScope.BottomBarScreenImage(
                 .padding(
                     top = 24.dp,
                 )
+                .padding(
+                    bottom = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
+                )
                 .fillMaxWidth()
                 .horizontalScroll(rememberScrollState())
                 .align(Alignment.BottomCenter),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceEvenly,
-            )
+        )
         {
-            ShareButton(followTheme = true) {
-                viewModel.onClickShareImage()
-            }
-            DeleteButton(followTheme = true) {
-                viewModel.onClickDelete()
-            }
+            ShareButton(followTheme = true, onItemClick = onClickShareImage)
+            DeleteButton(followTheme = true, onItemClick = onClickDeleteImage)
         }
     }
 }
