@@ -60,6 +60,4 @@ sealed interface NavigationItem {
         @Composable
         override fun icon(): Painter = painterResource(Res.drawable.about_menu_icon)
     }
-
-
 }

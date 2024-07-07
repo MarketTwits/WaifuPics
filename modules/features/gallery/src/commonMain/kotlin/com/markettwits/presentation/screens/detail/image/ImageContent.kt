@@ -4,6 +4,7 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
@@ -17,6 +18,7 @@ import androidx.compose.ui.draw.blur
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.rememberAsyncImagePainter
+import com.markettwits.core_ui.base_extensions.noRippleClickable
 import com.markettwits.core_ui.image.LocalImageLoader
 import com.markettwits.presentation.animations.Animation.DEFAULT_TOP_BAR_ANIMATION_DURATION
 import net.engawapg.lib.zoomable.rememberZoomState
@@ -26,7 +28,6 @@ import waifupics.modules.features.gallery.generated.resources.Res
 import waifupics.modules.features.gallery.generated.resources.image
 
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ZoomablePagerImage(
     modifier: Modifier = Modifier,
@@ -65,13 +66,10 @@ fun ZoomablePagerImage(
         Image(
             modifier = modifier
                 .fillMaxSize()
-                .combinedClickable(
-                    interactionSource = remember { MutableInteractionSource() },
-                    indication = null,
-                    onDoubleClick = {},
-                    onClick = onItemClick
-                )
                 .zoomable(
+                    onTap = {
+                        onItemClick()
+                    },
                     zoomState = zoomState,
                 ),
             painter = painter,

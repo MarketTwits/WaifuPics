@@ -7,5 +7,6 @@ import com.markettwits.core.di.Module
 class NavigationModule(
     private val navigation: NavigationRouter
 ) : Module<NavigationViewModel.Base> {
+
     override fun viewModel() = NavigationViewModel.Base(navigation)
 }

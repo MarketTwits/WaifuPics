@@ -4,8 +4,12 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeContent
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -37,7 +41,6 @@ fun ImageScreenFull(
     val pagerState = rememberPagerState(pageCount = {
         state.items.size
     }, initialPage = state.items.indexOf(currentImage))
-   // val windowState = rememberWindowInsetsController()
     val showUI = rememberSaveable {
         mutableStateOf(true)
     }
@@ -50,8 +53,7 @@ fun ImageScreenFull(
     }
 
     Box(
-        modifier = Modifier
-            .windowInsetsPadding(WindowInsets.navigationBars)
+        modifier = modifier
             .background(MaterialTheme.colorScheme.background)
             .fillMaxSize(),
     ) {
@@ -71,12 +73,19 @@ fun ImageScreenFull(
                 setCurrentItem = {},
                 onItemClick = {
                     showUI.value = !showUI.value
-                   // windowState.toggleSystemBars(showUI.value)
                 },
             )
         }
         TopBarScreenImage(viewModel = viewModel, showUI = showUI.value)
-        BottomBarScreenImage(viewModel = viewModel, showUI = showUI.value)
+        BottomBarScreenImage(
+            showUI = showUI.value,
+            onClickDeleteImage = {
+                viewModel.onClickDelete()
+            },
+            onClickShareImage = {
+                viewModel.onClickShareImage()
+            }
+        )
     }
 }
 
