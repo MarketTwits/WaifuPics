@@ -19,5 +19,6 @@ kotlin{
         implementation(project(":modules:services:image_action:core"))
         implementation(compose.components.resources)
         implementation(libs.kotlinx.datetime)
+        implementation(libs.koin.core)
     }
 }

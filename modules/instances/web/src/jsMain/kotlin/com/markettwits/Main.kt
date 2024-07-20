@@ -12,7 +12,8 @@ import org.jetbrains.skiko.wasm.onWasmReady
 fun main() {
     onWasmReady {
         CanvasBasedWindow(title = "NYTime-KMP") {
-                SetContentLocal(DefaultWaifuPicsApp()){
+                DefaultWaifuPicsApp({})
+                SetContentLocal(){
                     WaifuPicsTheme {
                         MenuNavGraph()
                     }

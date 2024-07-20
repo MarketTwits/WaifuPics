@@ -18,6 +18,7 @@ kotlin {
             api(libs.ktor.client.okhttp)
         }
         commonMain.dependencies {
+            api(libs.koin.compose)
             api(compose.runtime)
             api(compose.foundation)
             api(compose.material3)

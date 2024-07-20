@@ -6,7 +6,7 @@ import com.markettwits.core_ui.di.ApplicationViewModel
 
 @Composable
 fun MainScreen() {
-    val viewModel: ImageViewModel.Base = ApplicationViewModel()
+    val viewModel: ImageViewModel = ApplicationViewModel()
 
     val state = viewModel.state().collectAsState()
 

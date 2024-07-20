@@ -14,7 +14,7 @@ import com.markettwits.presentation.screens.list.communication.SelectedImageComm
 import com.markettwits.presentation.screens.list.communication.SelectedModeCommunication
 import kotlinx.coroutines.flow.StateFlow
 
-interface GalleryViewModel {
+interface GalleryViewModel : StateCommunication.State<ImageFavoriteUiState> {
 
     fun toDetail(state: ImageFavoriteUi)
 

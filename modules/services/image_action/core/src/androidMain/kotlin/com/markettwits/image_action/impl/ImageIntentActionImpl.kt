@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.core.app.ShareCompat
 import com.markettwits.image_action.api.ImageIntentAction
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 
 class ImageIntentActionImpl(
@@ -18,7 +19,9 @@ class ImageIntentActionImpl(
                 .IntentBuilder(context)
                 .setType(TYPE_IMAGE)
             imagePath.forEach {
-                intent.addStream(imageFileWrapper.pathToUri(it))
+                imageFileWrapper.imageUrlToUri(it){
+                    intent.addStream(it)
+                }
             }
             context.startActivity(intent
                 .createChooserIntent()
@@ -27,17 +30,17 @@ class ImageIntentActionImpl(
     }
 
     override suspend fun shareImage(imagePath: String) {
-        withContext(Dispatchers.Default){
+        imageFileWrapper.imageUrlToUri(imagePath){ uri ->
             val intent = ShareCompat
-                .IntentBuilder(context)
-                .setType(TYPE_IMAGE)
-                .addStream(imageFileWrapper.pathToUri(imagePath))
-                .intent
-            context.startActivity(
-                Intent
-                    .createChooser(intent, "Share Image")
-                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            )
+                    .IntentBuilder(context)
+                    .setType(TYPE_IMAGE)
+                    .addStream(uri)
+                    .intent
+                context.startActivity(
+                    Intent
+                        .createChooser(intent, "Share Image")
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                )
         }
     }
 
@@ -45,7 +48,9 @@ class ImageIntentActionImpl(
         withContext(Dispatchers.Default) {
             val intent = Intent(Intent.ACTION_VIEW).apply {
                 addCategory(Intent.CATEGORY_DEFAULT)
-                setDataAndType(imageFileWrapper.pathToUri(imagePath), TYPE_IMAGE)
+                imageFileWrapper.imageUrlToUri(imagePath){ uri ->
+                    setDataAndType(uri, TYPE_IMAGE)
+                }
                 putExtra(MIME_TYPE, TYPE_IMAGE)
                 addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             }
@@ -61,7 +66,9 @@ class ImageIntentActionImpl(
         withContext(Dispatchers.Default) {
             val intent = Intent(Intent.ACTION_ATTACH_DATA).apply {
                 addCategory(Intent.CATEGORY_DEFAULT)
-                setDataAndType(imageFileWrapper.pathToUri(imagePath), TYPE_IMAGE)
+                imageFileWrapper.imageUrlToUri(imagePath){ uri->
+                    setDataAndType(uri, TYPE_IMAGE)
+                }
                 putExtra(MIME_TYPE, TYPE_IMAGE)
                 addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             }
@@ -75,10 +82,11 @@ class ImageIntentActionImpl(
 
     override suspend fun launchEditAs(imagePath: String) {
         withContext(Dispatchers.Default) {
-            val uri = imageFileWrapper.pathToUri(imagePath)
             val intent = Intent(Intent.ACTION_EDIT).apply {
                 addCategory(Intent.CATEGORY_DEFAULT)
-                setDataAndType(uri, TYPE_IMAGE)
+                imageFileWrapper.imageUrlToUri(imagePath){ uri->
+                    setDataAndType(uri, TYPE_IMAGE)
+                }
                 putExtra(MIME_TYPE, TYPE_IMAGE)
                 addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             }

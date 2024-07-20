@@ -12,20 +12,13 @@ import com.markettwits.core_ui.image.LocalImageLoader
 import com.markettwits.core_ui.image.asyncImageLoader
 import com.markettwits.core_ui.theme.WaifuPicsTheme
 
-
-//val LocalRootPadding = compositionLocalOf<PaddingValues> { error("Padding is not available") }
-val LocalViewModelProvider =
-    compositionLocalOf<ProvideViewModel> { error("ProvideViewModel is not available") }
-
 @OptIn(ExperimentalCoilApi::class)
 @Composable
 fun SetContentLocal(
-    provideViewModel: ProvideViewModel,
     content: @Composable () -> Unit,
 ) {
     CompositionLocalProvider(
         LocalImageLoader provides ImageLoader.Base(LocalPlatformContext.current),
-        LocalViewModelProvider provides provideViewModel
     ) {
         setSingletonImageLoaderFactory { context ->
             context.asyncImageLoader()

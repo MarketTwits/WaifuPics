@@ -54,6 +54,5 @@ interface RandomImageRepository {
         ) {
             cache.addOrDelete(id, width, height, url, isProtected)
         }
-
     }
 }

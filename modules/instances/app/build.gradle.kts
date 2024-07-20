@@ -15,6 +15,9 @@ android {
 
     buildTypes {
         debug {
+            isDebuggable = false
+            isMinifyEnabled = true
+          //  isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android.txt"),
                 "proguard-rules.pro"
@@ -34,11 +37,13 @@ android {
 }
 
 dependencies {
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
     implementation(libs.compose.activity)
     implementation(libs.compose.navigation)
     implementation(libs.core.splashscreen)
     implementation(project(path = ":modules:services:core-ui"))
     implementation(project(path = ":modules:services:core"))
     implementation(project(path = ":modules:features:root"))
-    implementation(project(":modules:services:cache-datasource"))
+    implementation(project(path = ":modules:services:cache-datasource"))
 }

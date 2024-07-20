@@ -23,6 +23,10 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import coil3.compose.LocalPlatformContext
+import coil3.request.CachePolicy
+import coil3.request.ImageRequest
+import coil3.toBitmap
 import com.markettwits.core_ui.di.ApplicationViewModel
 import com.markettwits.presentation.animations.rememberPagerFlingBehavior
 import com.markettwits.presentation.screens.detail.bottomBar.BottomBarScreenImage
@@ -35,7 +39,7 @@ import com.markettwits.presentation.screens.detail.topbar.TopBarScreenImage
 fun ImageScreenFull(
     modifier: Modifier = Modifier,
 ) {
-    val viewModel: GalleryScreenViewModel.Base = ApplicationViewModel()
+    val viewModel: GalleryScreenViewModel = ApplicationViewModel()
     val currentImage by viewModel.currentImage().collectAsState()
     val state by viewModel.state().collectAsState()
     val pagerState = rememberPagerState(pageCount = {
@@ -77,11 +81,13 @@ fun ImageScreenFull(
             )
         }
         TopBarScreenImage(viewModel = viewModel, showUI = showUI.value)
-        BottomBarScreenImage(
+        val context = LocalPlatformContext.current
+            BottomBarScreenImage(
             showUI = showUI.value,
             onClickDeleteImage = {
                 viewModel.onClickDelete()
             },
+
             onClickShareImage = {
                 viewModel.onClickShareImage()
             }

@@ -12,6 +12,8 @@ android {
 }
 kotlin{
     sourceSets.commonMain.dependencies {
+        implementation(libs.koin.core)
+        implementation(libs.koin.compose)
         implementation("org.jetbrains.androidx.navigation:navigation-compose:2.7.0-alpha07")
         implementation(project(path = ":modules:features:random_image"))
         implementation(project(path = ":modules:services:core-ui"))

@@ -27,7 +27,7 @@ import com.markettwits.core_ui.image.LocalImageLoader
 @OptIn(ExperimentalCoilApi::class)
 @Composable
 fun ImageCard(imageUrl: String, id: Int) {
-    val viewModel: ImageViewModel.Base = ApplicationViewModel()
+    val viewModel: ImageViewModel = ApplicationViewModel()
     var isDialogOpen by remember { mutableStateOf(false) }
     val modifier = Modifier
         .sizeIn(minWidth = 200.dp, minHeight = 300.dp, maxHeight = 1080.dp, maxWidth = 1920.dp)

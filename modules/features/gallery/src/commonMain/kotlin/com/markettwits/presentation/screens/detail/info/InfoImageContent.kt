@@ -40,7 +40,7 @@ fun InfoImageContent(
     modifier: Modifier = Modifier,
     onDismiss: () -> Unit
 ) {
-    val viewModel: GalleryScreenViewModel.Base = ApplicationViewModel()
+    val viewModel: GalleryScreenViewModel = ApplicationViewModel()
     val image by viewModel.currentImage().collectAsState()
     Box(
         modifier = modifier
