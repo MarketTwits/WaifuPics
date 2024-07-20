@@ -10,7 +10,7 @@ import com.markettwits.core.wrappers.AsyncViewModel
 import com.markettwits.image_action.api.ImageIntentAction
 import kotlinx.coroutines.flow.StateFlow
 
-interface ImageViewModel {
+interface ImageViewModel : StateCommunication.State<RandomImageUiState> {
 
     fun loadedImageState(): StateFlow<ImageState>
 

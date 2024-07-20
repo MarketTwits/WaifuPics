@@ -18,6 +18,7 @@ kotlin{
         implementation(project(":modules:services:core"))
         implementation(libs.kotlinx.serialization.core)
         implementation(compose.components.resources)
+        implementation(libs.koin.core)
     }
 
 }

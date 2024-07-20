@@ -13,20 +13,16 @@ import java.io.File
 fun main() {
 
     InStorageFileDirectory.path = File(System.getProperty("java.io.tmpdir")).absolutePath
-
+    DefaultWaifuPicsApp({})
     JVMExceptionWindowHandler()
 
     application {
         Window(
-            title = "Спорт Союз",
+            title = "WaifuPics",
             onCloseRequest = { exitApplication() }
         ) {
-            SetContentLocal(DefaultWaifuPicsApp()) {
-                WaifuPicsTheme {
-                    Scaffold {
-                        MenuNavGraph()
-                    }
-                }
+            SetContentLocal {
+                 MenuNavGraph()
             }
         }
     }

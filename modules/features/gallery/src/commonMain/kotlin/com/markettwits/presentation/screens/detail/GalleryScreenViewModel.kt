@@ -1,8 +1,13 @@
 package com.markettwits.presentation.screens.detail
 
 import androidx.lifecycle.ViewModel
+import coil3.ImageLoader
+import coil3.request.CachePolicy
+import coil3.request.ImageRequest
+import coil3.request.crossfade
 import com.markettwits.core.communication.StateCommunication
 import com.markettwits.core.wrappers.AsyncViewModel
+import com.markettwits.core_ui.image.LocalImageLoader
 import com.markettwits.data.GalleryRepository
 import com.markettwits.image_action.api.ImageIntentAction
 import com.markettwits.presentation.copy.SystemService
@@ -40,7 +45,7 @@ interface GalleryScreenViewModel {
         private val list: GalleryCommunication,
         private val async: AsyncViewModel<Unit>,
         private val repository: GalleryRepository,
-        private val imageIntentAction: ImageIntentAction.ShareImage,
+        private val imageIntentAction: ImageIntentAction.Mutable,
         private val navigation: GalleryRouter,
         private val systemService: SystemService,
     ) : ViewModel(), GalleryScreenViewModel {
@@ -64,20 +69,26 @@ interface GalleryScreenViewModel {
         }
 
         override fun onClickEditImage() {
-            TODO("Not yet implemented")
+            async.handleAsyncSingle {
+                imageIntentAction.launchOpenWith(item.state().value.imageUrl)
+            }
         }
 
         override fun onClickSetImageAs() {
-            TODO("Not yet implemented")
+            async.handleAsyncSingle {
+                imageIntentAction.launchUseAs(item.state().value.imageUrl)
+            }
         }
 
         override fun onClickSaveToGallery() {
-            TODO("Not yet implemented")
+           async.handleAsyncSingle {
+               repository.saveToGallery(item.state().value.imageUrl)
+           }
         }
 
         override fun onClickShareImage() {
             async.handleAsyncSingle {
-                imageIntentAction.shareImage("")
+                imageIntentAction.shareImage(item.state().value.imageUrl)
             }
         }
 

@@ -6,7 +6,6 @@ kotlin = "2.0.0"
 gradle = "8.1.4"
 
 #SDK
-
 compileSdk = "34"
 ktorClientOkhttp = "2.3.10"
 ktorfitLib = "2.0.0"
@@ -19,8 +18,7 @@ jvm = "17"
 # Compose
 compose = "1.6.11"
 compose-activity = "1.9.0"
-compose-lifecycle = "2.8.2"
-compose-material3 = "1.2.1"
+compose-lifecycle = "2.8.3"
 compose-navigation = "2.7.7"
 
 # Android
@@ -29,7 +27,7 @@ android-lifecycle-ktx = "2.8.0"
 core-ktx = "1.9.0"
 #UI
 appcompat = "1.7.0"
-coilCompose = "3.0.0-alpha06"
+coilCompose = "3.0.0-alpha08"
 
 #Serialization
 kotlinx-serialization = "1.6.3"
@@ -39,6 +37,8 @@ org-jetbrains-kotlin-jvm = "1.8.0"
 
 #Ktor
 ktor = "3.0.0-wasm2"
+#Koin
+koin = "3.6.0-wasm-alpha2"
 
 #Database
 kstore = "0.8.0"
@@ -66,6 +66,10 @@ ktor-client-serialization = { group = "io.ktor", name = "ktor-client-serializati
 ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 
 lifecycle-viewmodel-compose = { module =  "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "android-lifecycle-ktx"}
+
+koin-core = {group = "io.insert-koin", name = "koin-core",version.ref = "koin"}
+koin-compose = {group = "io.insert-koin", name = "koin-compose",version.ref = "koin"}
+koin-android = {group = "io.insert-koin", name = "koin-android",version.ref = "koin"}
 
 kstore = { module = "io.github.xxfast:kstore", version.ref = "kstore" }
 kstore-file = { module = "io.github.xxfast:kstore-file", version.ref = "kstore" }

@@ -21,7 +21,7 @@ import waifupics.modules.features.random_image.generated.resources.ic_share
 
 @Composable
 fun BottomPanel() {
-    val viewModel: ImageViewModel.Base = ApplicationViewModel()
+    val viewModel: ImageViewModel = ApplicationViewModel()
     val panelState = viewModel.loadedImageState().collectAsState()
     val enabled = panelState.value is ImageState.Success
     val refresh = panelState.value is ImageState.Loading

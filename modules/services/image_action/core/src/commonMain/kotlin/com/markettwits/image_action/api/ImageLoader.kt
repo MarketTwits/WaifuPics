@@ -4,4 +4,10 @@ interface ImageLoader {
 
     suspend fun saveToGallery(imageUrl:String)
 
+    class Empty : ImageLoader{
+
+        override suspend fun saveToGallery(imageUrl: String)  = Unit
+
+    }
+
 }

@@ -26,7 +26,7 @@ import com.markettwits.presentation.screens.list.picker.SelectionSheet
 @Composable
 fun GalleryScreen() {
 
-    val viewModel: GalleryViewModel.Base = ApplicationViewModel()
+    val viewModel: GalleryViewModel = ApplicationViewModel()
     val state by viewModel.state().collectAsState()
     val selected by viewModel.selectedState().collectAsState()
     val selectedMedia = viewModel.selectedPhotoState()

@@ -1,7 +1,9 @@
 package com.markettwits.navigation
 
 interface Graph {
+
     fun graph() : String
+
     object Main : Graph {
         override fun graph() = "MAIN"
     }

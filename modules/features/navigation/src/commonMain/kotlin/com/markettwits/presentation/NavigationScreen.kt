@@ -28,7 +28,7 @@ fun NavigationScreen(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) {
-    val viewModel: NavigationViewModel.Base = ApplicationViewModel()
+    val viewModel: NavigationViewModel = ApplicationViewModel<NavigationViewModel.Base>()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
