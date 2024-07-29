@@ -1,14 +1,9 @@
 package com.markettwits.presentation.screens.detail
 
 import androidx.lifecycle.ViewModel
-import coil3.ImageLoader
-import coil3.request.CachePolicy
-import coil3.request.ImageRequest
-import coil3.request.crossfade
+import com.markettwits.cache_datasource.GalleryRepository
 import com.markettwits.core.communication.StateCommunication
 import com.markettwits.core.wrappers.AsyncViewModel
-import com.markettwits.core_ui.image.LocalImageLoader
-import com.markettwits.data.GalleryRepository
 import com.markettwits.image_action.api.ImageIntentAction
 import com.markettwits.presentation.copy.SystemService
 import com.markettwits.presentation.navigation.GalleryRouter

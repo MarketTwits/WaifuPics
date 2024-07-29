@@ -19,6 +19,7 @@ kotlin{
             implementation(compose.components.resources)
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.kotlinx.serialization.core)
+            implementation("media.kamel:kamel-image:1.0.0-beta.4")
         }
     }
 

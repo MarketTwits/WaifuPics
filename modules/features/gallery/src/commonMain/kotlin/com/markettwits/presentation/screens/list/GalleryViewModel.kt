@@ -3,7 +3,7 @@ package com.markettwits.presentation.screens.list
 import androidx.lifecycle.ViewModel
 import com.markettwits.core.communication.StateCommunication
 import com.markettwits.core.wrappers.AsyncViewModel
-import com.markettwits.data.GalleryRepository
+import com.markettwits.cache_datasource.GalleryRepository
 import com.markettwits.image_action.api.ImageIntentAction
 import com.markettwits.presentation.navigation.GalleryRouter
 import com.markettwits.presentation.screens.ImageFavoriteUi

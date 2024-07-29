@@ -10,11 +10,13 @@ kotlin{
     sourceSets.commonMain.dependencies {
         implementation(libs.koin.core)
         implementation(libs.coil.mp)
-       // implementation(libs.coil.network.ktor)
     }
     sourceSets.androidMain.dependencies {
-      //  implementation(libs.coil.network.okkhttp)
         implementation(libs.core.ktx)
         implementation(libs.appcompat)
+    }
+    sourceSets.jvmMain.dependencies {
+        implementation("com.sun.jna:jna:3.0.9")
+        implementation("net.java.dev.jna:jna-platform:4.0.0")
     }
 }

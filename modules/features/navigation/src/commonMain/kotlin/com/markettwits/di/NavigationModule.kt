@@ -1,18 +1,25 @@
 package com.markettwits.di
 
-import com.markettwits.presentation.NavigationRouter
+import com.markettwits.cache_datasource.settings.applicationSettingsModule
+import com.markettwits.core.wrappers.AsyncViewModel
+import com.markettwits.core.wrappers.RunAsync
+import com.markettwits.core.wrappers.dispatchersList
+import com.markettwits.presentation.ApplicationThemeCommunication
 import com.markettwits.presentation.NavigationViewModel
-import com.markettwits.core.di.Module
 import org.koin.dsl.module
 
-class NavigationModule(
-    private val navigation: NavigationRouter
-) : Module<NavigationViewModel.Base> {
 
-    override fun viewModel() = NavigationViewModel.Base(navigation)
-}
-val navigationModule = module{
+val navigationModule = module {
+    includes(applicationSettingsModule)
     single<NavigationViewModel.Base> {
-        NavigationViewModel.Base(get())
+        NavigationViewModel.Base(
+            get(), get(),
+            ApplicationThemeCommunication.Base(),
+            AsyncViewModel.Base(
+                RunAsync.Base(
+                    dispatchersList
+                )
+            )
+        )
     }
 }

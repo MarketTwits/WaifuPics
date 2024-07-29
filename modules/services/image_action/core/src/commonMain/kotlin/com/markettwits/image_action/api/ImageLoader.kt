@@ -7,7 +7,6 @@ interface ImageLoader {
     class Empty : ImageLoader{
 
         override suspend fun saveToGallery(imageUrl: String)  = Unit
-
     }
 
 }

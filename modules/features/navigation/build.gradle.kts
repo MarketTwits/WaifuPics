@@ -16,6 +16,7 @@ kotlin{
     sourceSets.commonMain.dependencies {
         implementation(project(":modules:services:core-ui"))
         implementation(project(":modules:services:core"))
+        implementation(project(":modules:services:cache-datasource"))
         implementation(libs.kotlinx.serialization.core)
         implementation(compose.components.resources)
         implementation(libs.koin.core)

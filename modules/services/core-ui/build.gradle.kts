@@ -34,11 +34,10 @@ kotlin {
             api(libs.coil.mp)
             api(libs.coil.network.ktor)
             api(libs.kotlinx.serialization.json)
+            implementation(project(":modules:services:cache-datasource"))
         }
         jvmMain.dependencies {
             api(libs.ktor.client.okhttp)
-            api(libs.coil.network.ktor)
         }
-
     }
 }

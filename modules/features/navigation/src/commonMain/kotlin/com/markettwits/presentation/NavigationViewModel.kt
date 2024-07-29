@@ -1,30 +1,46 @@
 package com.markettwits.presentation
 
-import androidx.compose.material3.DrawerState
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
+import com.markettwits.cache_datasource.settings.ColorTheme
+import com.markettwits.cache_datasource.settings.WaifuPicsAppSettings
+import com.markettwits.core.communication.StateCommunication
+import com.markettwits.core.wrappers.AsyncViewModel
+import kotlinx.coroutines.flow.StateFlow
 
-interface NavigationViewModel{
+interface NavigationViewModel {
 
-    fun toggleMenu(coroutineScope : CoroutineScope, drawerState: DrawerState)
+    fun isDarkTheme(): StateFlow<Boolean>
 
     fun navigateTo(route: String)
 
-    class Base(private val navigation : NavigationRouter) : NavigationViewModel, ViewModel(){
+    fun onClickChangeTheme()
 
-        override fun toggleMenu(coroutineScope : CoroutineScope, drawerState: DrawerState){
-            coroutineScope.launch {
-                if (drawerState.isClosed) {
-                    drawerState.open()
-                } else {
-                    drawerState.close()
-                }
-            }
-        }
+    class Base(
+        private val navigation: NavigationRouter,
+        private val settings: WaifuPicsAppSettings,
+        private val themeCommunication: ApplicationThemeCommunication,
+        private val runAsync: AsyncViewModel<Unit>,
+    ) : NavigationViewModel, ViewModel() {
+
+        override fun isDarkTheme(): StateFlow<Boolean> = themeCommunication.state()
 
         override fun navigateTo(route: String) {
             navigation.navigateTo(route)
         }
+
+        override fun onClickChangeTheme() {
+            runAsync.handleAsyncSingle {
+                val currentSettings = settings.settings()
+                if (currentSettings.theme is ColorTheme.DarkTheme)
+                    settings.updateSettings(currentSettings.copy(ColorTheme.LightTheme))
+                else
+                    settings.updateSettings(currentSettings.copy(ColorTheme.DarkTheme))
+            }
+        }
     }
+}
+
+interface ApplicationThemeCommunication : StateCommunication.Mutable<Boolean> {
+    class Base : StateCommunication.Abstract<Boolean>(false),
+        ApplicationThemeCommunication
 }

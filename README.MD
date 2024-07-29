@@ -11,6 +11,7 @@ Here is a possible readme file for a mobile application that is based on https:/
 * Random Neko wallpapers: You can set beautiful and adorable Neko wallpapers for your home screen or lock screen.
 * Random Neko emojis: You can express your emotions with cute and funny Neko emojis, such as 😻, 🐱, 😼, etc.
 And more…: Coming soon
+* 
 ### Technologies
 NekosApp is developed using the following technologies:
 
@@ -41,6 +42,8 @@ Web (Js):
 
 Web (WASM):
 `./gradlew :modules:instances:web:wasmJsBrowserRun`
+
+`./gradlew :modules:instances:web:wasmJsBrowserDevelopmentRun --continue`
 
 ### License
 NekosApp is licensed under the MIT License. See [LICENSE] for more details.
