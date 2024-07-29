@@ -15,7 +15,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.DensityMedium
-import androidx.compose.material3.DrawerState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -29,7 +28,7 @@ import com.markettwits.core_ui.image.DefaultImages
 @Composable
 fun TopBarPanel(
     modifier: Modifier = Modifier,
-    drawerState: DrawerState,
+    isOpened : Boolean,
     onClick: () -> Unit,
 ) {
     Row(
@@ -40,7 +39,7 @@ fun TopBarPanel(
             .background(MaterialTheme.colorScheme.background)
     ) {
         Spacer(modifier = Modifier.width(10.dp))
-        MenuButton(drawerState = drawerState) { onClick() }
+        MenuButton(isOpened = isOpened) { onClick() }
         Spacer(modifier = Modifier.width(10.dp))
         Image(
             modifier = Modifier
@@ -55,7 +54,7 @@ fun TopBarPanel(
 @Composable
 private fun MenuButton(
     modifier: Modifier = Modifier,
-    drawerState: DrawerState,
+    isOpened: Boolean,
     onClick: () -> Unit
 ) {
     Box(
@@ -68,7 +67,7 @@ private fun MenuButton(
             .padding(7.dp)
     ) {
         Icon(
-            imageVector = if (drawerState.isClosed) Icons.Filled.DensityMedium else Icons.Filled.Close,
+            imageVector = if (isOpened) Icons.Filled.Close else  Icons.Filled.DensityMedium,
             tint = MaterialTheme.colorScheme.surfaceTint,
             contentDescription = null
         )

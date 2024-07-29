@@ -45,9 +45,11 @@ kstore = "0.8.0"
 
 [libraries]
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilCompose" }
+coil-network = { module = "io.coil-kt.coil3:coil-network", version.ref = "coilCompose" }
 coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor", version.ref = "coilCompose" }
-coil-network-okkhttp = {module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coilCompose"}
+coil-network-okkhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coilCompose" }
 coil-compose-core = { module = "io.coil-kt.coil3:coil-compose-core", version.ref = "coilCompose" }
+coil-wasm = { module = "io.coil-kt.coil3:coil-wasm-js", version.ref = "coilCompose" }
 coil-mp = { module = "io.coil-kt.coil3:coil", version.ref = "coilCompose" }
 
 compose-lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "compose-lifecycle" }
@@ -65,22 +67,23 @@ ktor-client-serialization-json = { module = "io.ktor:ktor-serialization-kotlinx-
 ktor-client-serialization = { group = "io.ktor", name = "ktor-client-serialization", version.ref = "ktor" }
 ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 
-lifecycle-viewmodel-compose = { module =  "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "android-lifecycle-ktx"}
+lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "android-lifecycle-ktx" }
 
-koin-core = {group = "io.insert-koin", name = "koin-core",version.ref = "koin"}
-koin-compose = {group = "io.insert-koin", name = "koin-compose",version.ref = "koin"}
-koin-android = {group = "io.insert-koin", name = "koin-android",version.ref = "koin"}
+koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
+koin-compose = { group = "io.insert-koin", name = "koin-compose", version.ref = "koin" }
+koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 
 kstore = { module = "io.github.xxfast:kstore", version.ref = "kstore" }
 kstore-file = { module = "io.github.xxfast:kstore-file", version.ref = "kstore" }
 kstore-storage = { module = "io.github.xxfast:kstore-storage", version.ref = "kstore" }
 
 #Serialization
-kotlinx-coroutines-core = {group = "org.jetbrains.kotlinx", name  = "kotlinx-coroutines-core", version = "1.8.1"}
-kotlinx-serialization-core = {group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-core", version.ref = "kotlinx-serialization"}
-kotlinx-serialization-json = {group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinx-serialization"}
+kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version = "1.8.1" }
+kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version = "1.8.1" }
+kotlinx-serialization-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-core", version.ref = "kotlinx-serialization" }
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 #Time
-kotlinx-datetime = {group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinx-datetime"}
+kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinx-datetime" }
 
 #Data
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -88,24 +91,24 @@ core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx
 #UI
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 
-android-gradle = {module = "com.android.tools.build:gradle", version.ref = "gradle"}
-kotlin-gradle = {module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin"}
+android-gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
+kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 
 [plugins]
-kotlin-serialization =  {id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin"}
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kotlin-kmp = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlin-kmp-compose = { id = "org.jetbrains.compose", version.ref = "compose" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 
 android-library = { id = "com.android.library", version.ref = "gradle" }
-android-application = {id = "com.android.application", version.ref = "gradle"}
+android-application = { id = "com.android.application", version.ref = "gradle" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize",  version.ref = "kotlin"}
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "org-jetbrains-kotlin-jvm" }
 
 #Convention Plugins
-android-library-convention = {id = "android-library-convention", version = "unspecified"}
-android-library-compose-convention = {id = "android-library-compose-convention", version = "unspecified"}
+android-library-convention = { id = "android-library-convention", version = "unspecified" }
+android-library-compose-convention = { id = "android-library-compose-convention", version = "unspecified" }
 
 [bundles]
 ktor-common = ["ktor-core", "ktor-client-serialization-json", "ktor-client-logging", "ktor-client-content-negotiation", "ktor-client-serialization"]

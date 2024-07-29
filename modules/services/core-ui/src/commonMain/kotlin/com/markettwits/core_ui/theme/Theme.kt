@@ -5,9 +5,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.graphics.Color
+import com.markettwits.core_ui.di.ApplicationViewModel
+import com.markettwits.core_ui.theme.theme.components.isDark
+import com.markettwits.core_ui.theme.theme.components.systemColorPallet
+import com.markettwits.core_ui.theme.theme.viewmodel.ThemeViewModel
 
-private val DarkColorScheme = darkColorScheme(
+internal val DarkColorScheme = darkColorScheme(
     primary = Color.Black,
     secondary = DarkGrey,
     surfaceTint = Color.White,
@@ -22,7 +27,7 @@ private val DarkColorScheme = darkColorScheme(
     background = Color.Black,
 )
 
-private val LightColorScheme = lightColorScheme(
+internal val LightColorScheme = lightColorScheme(
     primary = Color.White,
     secondary = PinkMilk,
     surfaceTint = LightPink,
@@ -41,13 +46,15 @@ private val LightColorScheme = lightColorScheme(
 @Composable
 fun WaifuPicsTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
+    val viewModel = ApplicationViewModel<ThemeViewModel>()
+    val theme = viewModel.theme().collectAsState()
+    val isDark = isDark(theme = theme.value)
+    val palette = systemColorPallet(theme = theme.value, systemIsDark = isSystemInDarkTheme())
     MaterialTheme(
-        colorScheme = if(darkTheme) DarkColorScheme else LightColorScheme,
+        colorScheme = palette,
         typography = Typography,
         content = content
     )
 }
-

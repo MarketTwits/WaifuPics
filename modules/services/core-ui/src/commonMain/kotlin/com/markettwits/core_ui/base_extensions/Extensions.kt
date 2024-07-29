@@ -22,7 +22,8 @@ inline fun Modifier.noRippleClickable(
 
 fun String.extractSiteName(): String {
     return try {
-        val uri = if (this.startsWith("http://") || this.startsWith("https://")) this else "http://$this"
+        val uri =
+            if (this.startsWith("http://") || this.startsWith("https://")) this else "http://$this"
         val url = Url(uri)
         val host = url.host
         run {
@@ -32,16 +33,4 @@ fun String.extractSiteName(): String {
     } catch (e: Exception) {
         ""
     }
-//    return try {
-//            URI(if (this.startsWith("http://") || this.startsWith("https://")) this else "http://$this")
-//        var host = uri.host
-//        if (host != null) {
-//            host = if (host.startsWith("www.")) host.substring(4) else host
-//            host = host.substringBefore('.')
-//        }
-//        host
-//    } catch (e: Exception) {
-//        ""
-//    }
 }
-

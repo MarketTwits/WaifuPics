@@ -1,12 +1,12 @@
 package com.markettwits.cloud_datasource.domain
 
 import com.markettwits.cloud_datasource.data.cloud.HandleNetworkResult
-import com.markettwits.cloud_datasource.data.mapper.RandomImageMapperCloud
-import com.markettwits.cloud_datasource.data.mapper.ReportedImageMapperCloud
+import com.markettwits.cloud_datasource.data.RandomImageMapperCloud
+import com.markettwits.cloud_datasource.data.ReportedImageMapperCloud
 import com.markettwits.cloud_datasource.data.network.NekoService
-import com.markettwits.cloud_datasource.presentation.components.report_image.ImageReportUi
-import com.markettwits.cloud_datasource.presentation.screen.RandomImageUiState
-import com.markettwits.data.ImageRepository
+import com.markettwits.cloud_datasource.presentation.random_image.components.report_image.ImageReportUi
+import com.markettwits.cloud_datasource.presentation.random_image.model.RandomImageUiState
+import com.markettwits.cache_datasource.image.ImageRepository
 
 interface RandomImageRepository {
 

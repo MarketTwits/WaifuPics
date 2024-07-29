@@ -10,11 +10,16 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DarkMode
+import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.markettwits.core_ui.theme.FontRubik
@@ -22,7 +27,12 @@ import com.markettwits.core_ui.theme.LightPink
 import com.markettwits.presentation.NavigationItem
 
 @Composable
-fun NavigationBody(modifier: Modifier = Modifier, onClick: (NavigationItem) -> Unit) {
+fun NavigationBody(
+    modifier: Modifier = Modifier,
+    isDarkTheme: Boolean,
+    onClick: (NavigationItem) -> Unit,
+    onClickChangeTheme : () -> Unit
+) {
     Box(
         modifier = modifier
             .background(MaterialTheme.colorScheme.background)
@@ -30,7 +40,7 @@ fun NavigationBody(modifier: Modifier = Modifier, onClick: (NavigationItem) -> U
             .fillMaxHeight()
             .padding(10.dp)
     ) {
-        Column{
+        Column {
             Text(
                 modifier = Modifier.padding(10.dp),
                 text = "Menu",
@@ -38,10 +48,16 @@ fun NavigationBody(modifier: Modifier = Modifier, onClick: (NavigationItem) -> U
                 fontSize = 14.sp,
                 fontFamily = FontRubik.medium()
             )
+            MenuItem(
+                modifier = Modifier.clickable { onClickChangeTheme() },
+                imageVector = if (isDarkTheme) Icons.Filled.DarkMode else Icons.Filled.LightMode,
+                title = "",
+            )
             list.forEach {
                 MenuItem(
                     modifier = Modifier.clickable { onClick(it) },
-                    item = it
+                    icon = it.icon(),
+                    title = it.title,
                 )
             }
         }
@@ -51,7 +67,9 @@ fun NavigationBody(modifier: Modifier = Modifier, onClick: (NavigationItem) -> U
 @Composable
 private fun MenuItem(
     modifier: Modifier = Modifier,
-    item: NavigationItem,
+    icon: Painter? = null,
+    imageVector: ImageVector? = null,
+    title: String,
 ) {
     Row(
         modifier
@@ -59,14 +77,23 @@ private fun MenuItem(
             .padding(end = 80.dp)
 
     ) {
-        Icon(
-            painter = item.icon(),
-            contentDescription = item.title,
-            tint = MaterialTheme.colorScheme.onBackground
-        )
+        if (icon != null) {
+            Icon(
+                painter = icon,
+                contentDescription = title,
+                tint = MaterialTheme.colorScheme.onBackground
+            )
+        }
+        if (imageVector != null) {
+            Icon(
+                imageVector = imageVector,
+                contentDescription = title,
+                tint = MaterialTheme.colorScheme.onBackground
+            )
+        }
         Spacer(modifier = modifier.width(10.dp))
         Text(
-            text = item.title,
+            text = title,
             color = MaterialTheme.colorScheme.onBackground,
             fontSize = 18.sp,
             fontFamily = FontRubik.medium()

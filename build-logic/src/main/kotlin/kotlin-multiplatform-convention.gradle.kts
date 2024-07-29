@@ -1,11 +1,9 @@
-import org.gradle.kotlin.dsl.support.kotlinCompilerOptions
 import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 
 plugins {
     id("com.android.library")
     id("base-android-convention")
     id("org.jetbrains.kotlin.multiplatform")
-    //  id("com.github.gmazzo.buildconfig")
 }
 
 kotlin {
