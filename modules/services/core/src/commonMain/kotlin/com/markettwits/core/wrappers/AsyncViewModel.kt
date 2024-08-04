@@ -19,7 +19,7 @@ interface AsyncViewModel<T : Any> {
     abstract class Abstract<T : Any>(
         private val runAsync: RunAsync
     ) : AsyncViewModel<T> {
-        private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+        private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
         protected fun clearAsync() = runAsync.clear()
 
         override fun <T : Any> handleAsync(
