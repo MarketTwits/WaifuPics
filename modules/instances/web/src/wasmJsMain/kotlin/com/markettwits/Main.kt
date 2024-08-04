@@ -9,12 +9,10 @@ import com.markettwits.core_ui.theme.WaifuPicsTheme
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
-    CanvasBasedWindow(title = "Waifupics") {
+    CanvasBasedWindow(title = "WaifuPics") {
         DefaultWaifuPicsApp()
-        SetContentLocal {
-            WaifuPicsTheme {
-                MenuNavGraph()
-            }
+        SetContentLocal({}) {
+            MenuNavGraph()
         }
     }
 }

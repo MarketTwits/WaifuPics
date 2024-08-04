@@ -12,6 +12,7 @@ data class ApplicationSettings( val theme: ColorTheme){
 }
 @Serializable
 sealed interface ColorTheme {
+
     @Serializable
     data object DarkTheme : ColorTheme
 

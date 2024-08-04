@@ -13,6 +13,7 @@ import com.markettwits.core_ui.theme.WaifuPicsTheme
 @OptIn(ExperimentalCoilApi::class)
 @Composable
 fun SetContentLocal(
+    isDarkTheme : (Boolean) -> Unit,
     content: @Composable () -> Unit,
 ) {
     CompositionLocalProvider(
@@ -21,8 +22,9 @@ fun SetContentLocal(
         setSingletonImageLoaderFactory { context ->
             context.asyncImageLoader()
         }
-        WaifuPicsTheme {
+        WaifuPicsTheme(isDarkTheme) {
             content()
         }
+
     }
 }

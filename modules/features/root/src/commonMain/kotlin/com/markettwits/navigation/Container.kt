@@ -34,9 +34,6 @@ fun NavGraphBuilder.baseTabNavGraph(
 fun NavGraphBuilder.detailsImage() {
     composable(
         route = Screen.GalleryItem.route(),
-        arguments = listOf(navArgument(Screen.GalleryItem.route()) {
-            type = NavType.StringType
-        }),
     ) { backStackEntry ->
         ImageScreenFull()
     }

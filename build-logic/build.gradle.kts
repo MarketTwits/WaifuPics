@@ -15,7 +15,7 @@ repositories {
 dependencies {
     implementation(libs.android.gradle)
     implementation(libs.kotlin.gradle)
-    implementation("org.jetbrains.compose:org.jetbrains.compose.gradle.plugin:1.6.10")
-    implementation("org.jetbrains.kotlin.multiplatform:org.jetbrains.kotlin.multiplatform.gradle.plugin:2.0.0")
-    implementation("org.jetbrains.kotlin.plugin.compose:org.jetbrains.kotlin.plugin.compose.gradle.plugin:2.0.0")
+    implementation("org.jetbrains.compose:org.jetbrains.compose.gradle.plugin:1.7.0-alpha02")
+    implementation("org.jetbrains.kotlin.multiplatform:org.jetbrains.kotlin.multiplatform.gradle.plugin:2.0.20-RC")
+    implementation("org.jetbrains.kotlin.plugin.compose:org.jetbrains.kotlin.plugin.compose.gradle.plugin:2.0.20-RC")
 }

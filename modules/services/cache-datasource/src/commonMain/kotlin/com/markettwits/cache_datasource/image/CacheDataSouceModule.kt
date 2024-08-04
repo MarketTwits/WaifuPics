@@ -7,17 +7,13 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
 val cacheDataSourceModule = module {
-    singleOf(::ImagesCacheDataSource)
-    single<ImageRepository>{
-        ImageRepository.Base(get(),get() )
-    }
-    single<ImageUiToCacheMapper> {
-        ImageUiToCacheMapper.Base()
-    }
-    single<KStore<List<ImageFavoriteCache>>>{
+    val imagesCacheDataSource = ImagesCacheDataSource(
         listStoreOfWrapper(
             path = InStorageFileDirectory.path,
             fileName = "nekosApiImages"
         )
+    )
+    single<ImageRepository>{
+        ImageRepository.Base(database = imagesCacheDataSource,ImageUiToCacheMapper.Base() )
     }
 }
