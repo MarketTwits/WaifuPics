@@ -8,8 +8,9 @@ import com.markettwits.cache_datasource.kstore.InStorageFileDirectory
 import io.github.xxfast.kstore.file.utils.CachesDirectory
 import io.github.xxfast.kstore.utils.ExperimentalKStoreApi
 import platform.Foundation.NSFileManager
+import platform.UIKit.UIViewController
 
-fun MainViewController() = ComposeUIViewController {
+fun MainViewController() : UIViewController = ComposeUIViewController {
     InitStorage()
     initKoinApp()
     SetContentLocal({}) {
