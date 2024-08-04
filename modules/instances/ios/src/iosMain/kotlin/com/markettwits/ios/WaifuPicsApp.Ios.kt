@@ -12,7 +12,7 @@ import platform.Foundation.NSFileManager
 fun MainViewController() = ComposeUIViewController {
     InitStorage()
     initKoinApp()
-    SetContentLocal() {
+    SetContentLocal({}) {
         MenuNavGraph()
     }
 }

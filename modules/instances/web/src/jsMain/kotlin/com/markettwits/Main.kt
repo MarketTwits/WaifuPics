@@ -10,9 +10,9 @@ import org.jetbrains.skiko.wasm.onWasmReady
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
     onWasmReady {
-        CanvasBasedWindow(title = "NYTime-KMP") {
+        CanvasBasedWindow(title = "WaifuPics") {
             DefaultWaifuPicsApp()
-            SetContentLocal {
+            SetContentLocal({}) {
                 MenuNavGraph()
             }
         }

@@ -45,12 +45,12 @@ internal val LightColorScheme = lightColorScheme(
 
 @Composable
 fun WaifuPicsTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit
+    isDarkTheme : (Boolean) -> Unit,
+    content: @Composable () -> Unit,
 ) {
     val viewModel = ApplicationViewModel<ThemeViewModel>()
     val theme = viewModel.theme().collectAsState()
-    val isDark = isDark(theme = theme.value)
+    isDarkTheme(isDark(theme = theme.value))
     val palette = systemColorPallet(theme = theme.value, systemIsDark = isSystemInDarkTheme())
     MaterialTheme(
         colorScheme = palette,

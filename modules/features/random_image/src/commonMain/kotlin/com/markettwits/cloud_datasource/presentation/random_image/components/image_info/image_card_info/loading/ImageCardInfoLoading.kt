@@ -31,9 +31,3 @@ fun ImageCardInfoLoading(){
         ColorPaletteLoading()
     }
 }
-@Composable
-private fun ImageCardInfoLoadingPreview(){
-    WaifuPicsTheme {
-        ImageCardInfoLoading()
-    }
-}

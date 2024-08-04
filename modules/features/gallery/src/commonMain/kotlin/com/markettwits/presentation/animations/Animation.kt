@@ -7,6 +7,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.gestures.TargetedFlingBehavior
 import androidx.compose.foundation.gestures.snapping.SnapFlingBehavior
 import androidx.compose.foundation.pager.PagerDefaults
 import androidx.compose.foundation.pager.PagerState
@@ -43,12 +44,10 @@ object Animation {
 }
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun rememberPagerFlingBehavior(pagerState : PagerState) : SnapFlingBehavior {
+fun rememberPagerFlingBehavior(pagerState : PagerState) : TargetedFlingBehavior {
     return PagerDefaults.flingBehavior(
         state = pagerState,
-        lowVelocityAnimationSpec = tween(
-            easing = LinearEasing,
-            durationMillis = 150
-        )
+        snapAnimationSpec = tween(easing = LinearEasing,
+            durationMillis = 150),
     )
 }

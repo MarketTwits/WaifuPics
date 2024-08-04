@@ -2,7 +2,7 @@
 
 #plugins
 coreSplashscreen = "1.0.1"
-kotlin = "2.0.0"
+kotlin = "2.0.20-RC"
 gradle = "8.1.4"
 
 #SDK
@@ -16,7 +16,7 @@ namespace = "com.markettwits.waifupics"
 jvm = "17"
 
 # Compose
-compose = "1.6.11"
+compose = "1.7.0-alpha02"
 compose-activity = "1.9.0"
 compose-lifecycle = "2.8.3"
 compose-navigation = "2.7.7"
@@ -38,7 +38,7 @@ org-jetbrains-kotlin-jvm = "1.8.0"
 #Ktor
 ktor = "3.0.0-wasm2"
 #Koin
-koin = "3.6.0-wasm-alpha2"
+koin = "4.0.0-RC1"
 
 #Database
 kstore = "0.8.0"

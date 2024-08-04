@@ -18,7 +18,7 @@ fun main() {
             title = "WaifuPics",
             onCloseRequest = { exitApplication() }
         ) {
-            SetContentLocal {
+            SetContentLocal({}) {
                  MenuNavGraph()
             }
         }
