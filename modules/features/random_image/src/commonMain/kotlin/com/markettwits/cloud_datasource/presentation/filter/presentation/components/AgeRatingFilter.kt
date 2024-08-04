@@ -67,6 +67,7 @@ fun BottomSheetFilter(
             ModalBottomSheet(
                 onDismissRequest = { viewModel.toggle() },
                 sheetState = bottomSheetState,
+                containerColor = MaterialTheme.colorScheme.background
             ) {
                 BottomScreenContent(
                     filterState = filterState,
