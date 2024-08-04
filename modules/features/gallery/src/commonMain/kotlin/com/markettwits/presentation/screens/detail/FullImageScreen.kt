@@ -33,8 +33,7 @@ import com.markettwits.presentation.screens.detail.bottomBar.BottomBarScreenImag
 import com.markettwits.presentation.screens.detail.image.ZoomablePagerImage
 import com.markettwits.presentation.screens.detail.topbar.TopBarScreenImage
 
-//@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
-@OptIn(ExperimentalFoundationApi::class)
+
 @Composable
 fun ImageScreenFull(
     modifier: Modifier = Modifier,
@@ -81,7 +80,6 @@ fun ImageScreenFull(
             )
         }
         TopBarScreenImage(viewModel = viewModel, showUI = showUI.value)
-        val context = LocalPlatformContext.current
             BottomBarScreenImage(
             showUI = showUI.value,
             onClickDeleteImage = {

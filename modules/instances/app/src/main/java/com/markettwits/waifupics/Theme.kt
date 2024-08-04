@@ -10,21 +10,21 @@ internal fun ComponentActivity.enableEdgeToEdgeWithSafeArea(isDarkTheme : Boolea
     if (isDarkTheme) {
         enableEdgeToEdge(
             statusBarStyle = SystemBarStyle.dark(
-                android.graphics.Color.TRANSPARENT
+                android.graphics.Color.BLACK
             ),
             navigationBarStyle = SystemBarStyle.dark(
-                android.graphics.Color.TRANSPARENT
+                android.graphics.Color.BLACK
             ),
         )
     } else {
         enableEdgeToEdge(
             statusBarStyle = SystemBarStyle.light(
-                android.graphics.Color.TRANSPARENT,
-                android.graphics.Color.TRANSPARENT
+                android.graphics.Color.WHITE,
+                android.graphics.Color.WHITE
             ),
             navigationBarStyle = SystemBarStyle.light(
-                android.graphics.Color.TRANSPARENT,
-                android.graphics.Color.TRANSPARENT
+                android.graphics.Color.WHITE,
+                android.graphics.Color.WHITE
             ),
         )
     }
