@@ -2,8 +2,8 @@ package com.markettwits
 
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.window.CanvasBasedWindow
-import com.markettwits.core.DefaultWaifuPicsApp
-import com.markettwits.core.MenuNavGraph
+import com.markettwits.waifupics.root.core.DefaultWaifuPicsApp
+import com.markettwits.waifupics.root.core.MainScreen
 import com.markettwits.core_ui.di.SetContentLocal
 import org.jetbrains.skiko.wasm.onWasmReady
 
@@ -13,7 +13,7 @@ fun main() {
         CanvasBasedWindow(title = "WaifuPics") {
             DefaultWaifuPicsApp()
             SetContentLocal({}) {
-                MenuNavGraph()
+                MainScreen()
             }
         }
     }

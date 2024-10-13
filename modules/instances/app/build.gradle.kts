@@ -27,20 +27,15 @@ android {
             )
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
 }
 
 dependencies {
     implementation(libs.koin.core)
     implementation(libs.koin.android)
     implementation(libs.compose.activity)
-    implementation(libs.compose.navigation)
     implementation(libs.core.splashscreen)
-    implementation(project(path = ":modules:services:core-ui"))
-    implementation(project(path = ":modules:services:core"))
+    implementation(project(path = ":modules:features:core-ui"))
+    implementation(project(":modules:features:async"))
     implementation(project(path = ":modules:features:root"))
-    implementation(project(path = ":modules:services:cache-datasource"))
+    implementation(project(path = ":modules:features:cache-datasource"))
 }

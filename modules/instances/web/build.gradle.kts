@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
-
 plugins {
     kotlin("multiplatform")
     id("org.jetbrains.compose")
@@ -7,7 +5,7 @@ plugins {
 }
 
 kotlin {
-    @OptIn(ExperimentalWasmDsl::class)
+    @OptIn(org.jetbrains.kotlin.gradle.ExperimentalWasmDsl::class)
     wasmJs {
         moduleName = "composeApp"
         browser {
@@ -30,7 +28,7 @@ kotlin {
 
     sourceSets.commonMain.dependencies {
         implementation(project(path = ":modules:features:root"))
-        implementation(project(path = ":modules:services:core-ui"))
-        implementation(project(path = ":modules:services:core"))
+        implementation(project(path = ":modules:features:core-ui"))
+        implementation(project(path = ":modules:features:async"))
     }
 }

@@ -1,23 +1,16 @@
 plugins {
     id("kotlin-multiplatform-compose-convetion")
-    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
     namespace = "com.markettwits.navigation"
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
 }
 
 kotlin{
     sourceSets.commonMain.dependencies {
-        implementation(project(":modules:services:core-ui"))
-        implementation(project(":modules:services:core"))
-        implementation(project(":modules:services:cache-datasource"))
-        implementation(libs.kotlinx.serialization.core)
+        implementation(project(":modules:features:core-ui"))
+        implementation(project(":modules:features:async"))
+        implementation(project(":modules:features:cache-datasource"))
         implementation(compose.components.resources)
         implementation(libs.koin.core)
     }
