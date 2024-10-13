@@ -2,14 +2,20 @@ import com.android.build.gradle.BaseExtension
 
 configure<BaseExtension> {
 
-    compileSdkVersion(localLibs.findVersion("compileSdk").get().toString().toInt())
+
+    compileSdkVersion(libs.versions.compileSdk.get().toString().toInt())
 
     defaultConfig {
-        minSdk = localLibs.findVersion("minSdk").get().toString().toInt()
-        targetSdk = localLibs.findVersion("targetSdk").get().toString().toInt()
-        versionName = localLibs.findVersion("versionName").get().toString()
+        minSdk =    libs.versions.minSdk.get().toString().toInt()
+        targetSdk = libs.versions.targetSdk.get().toString().toInt()
+        versionName = libs.versions.versionName.get().toString()
         versionCode = versionCode(versionName ?: "")
         testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    compileOptions {
+        sourceCompatibility = projectJavaVersion
+        targetCompatibility = projectJavaVersion
     }
 }
 fun versionCode(versionName: String): Int {

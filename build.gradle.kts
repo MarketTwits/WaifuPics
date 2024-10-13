@@ -6,6 +6,8 @@ plugins {
     alias(libs.plugins.kotlin.kmp) apply false
     alias(libs.plugins.kotlin.parcelize) apply false
     alias(libs.plugins.org.jetbrains.kotlin.jvm) apply false
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.kotlin.android) apply false
 }
 
 

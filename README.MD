@@ -38,7 +38,7 @@ Desktop (Windows):
 `./gradlew :modules:instances:desktop:run`
 
 Web (Js):
-`./gradlew :modules:instances:web:jsRun`
+`./gradlew :modules:instances:web:jsBrowserRun`
 
 Web (WASM):
 `./gradlew :modules:instances:web:wasmJsBrowserRun`
