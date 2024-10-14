@@ -24,8 +24,7 @@ kotlin {
 
     sourceSets.jvmMain.dependencies {
         implementation(project(path = ":modules:features:root"))
-        implementation(project(path = ":modules:features:core-ui"))
-        implementation(project(path = ":modules:features:async"))
+        implementation(project(path = ":modules:core:core-ui"))
         implementation(project(":modules:features:cache-datasource"))
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.8.1")
         implementation(compose.desktop.currentOs)

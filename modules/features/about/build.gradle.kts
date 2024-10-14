@@ -12,7 +12,7 @@ android {
 }
 kotlin{
     sourceSets.commonMain.dependencies {
-        implementation(project(":modules:features:core-ui"))
+        implementation(project(":modules:core:core-ui"))
         implementation(compose.components.resources)
     }
 }

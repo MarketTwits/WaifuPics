@@ -2,7 +2,10 @@
 
 #Android SDK
 compileSdk = "34"
+filekitCore = "0.8.7"
+kotlinxIoCore = "0.5.4"
 minSdk = "24"
+multiplatformPaths = "0.2.2"
 targetSdk = "34"
 versionName = "0.1.0"
 namespace = "com.markettwits.waifupics"
@@ -42,11 +45,14 @@ coil-wasm = { module = "io.coil-kt.coil3:coil-wasm-js", version.ref = "coilCompo
 coil-mp = { module = "io.coil-kt.coil3:coil", version.ref = "coilCompose" }
 
 compose-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "compose-activity" }
+context-provider = { module = "me.sujanpoudel.multiplatform.utils:context-provider", version.ref = "multiplatformPaths" }
 core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 
 compose-navigation = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "compose-navigation" }
 compose-lifecycle-viewmodel = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "android-lifecycle-ktx" }
 
+filekit-core = { module = "io.github.vinceglb:filekit-core", version.ref = "filekitCore" }
+kotlinx-io-core = { module = "org.jetbrains.kotlinx:kotlinx-io-core", version.ref = "kotlinxIoCore" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
 ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
@@ -83,6 +89,7 @@ compose-gradle-plugin = { module = "org.jetbrains.compose:org.jetbrains.compose.
 kotlin-multiplatform-gradle-plugin = { module = "org.jetbrains.kotlin.multiplatform:org.jetbrains.kotlin.multiplatform.gradle.plugin", version.ref = "kotlin" }
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 kotlin-compose-gradle-plugin = { module = "org.jetbrains.kotlin.plugin.compose:org.jetbrains.kotlin.plugin.compose.gradle.plugin", version.ref = "kotlin" }
+multiplatform-paths = { module = "me.sujanpoudel.multiplatform.utils:multiplatform-paths", version.ref = "multiplatformPaths" }
 ruler-gradle-plugin = { module = "com.spotify.ruler:ruler-gradle-plugin", version.ref = "rulerGradlePlugin" }
 
 [plugins]

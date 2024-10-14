@@ -10,6 +10,11 @@ import WaifuPics
 
 @main
 struct iosAppApp: App {
+    
+    init() {
+        WaifuPicsApp_IosKt.doInitLaunch()
+        }
+    
     var body: some Scene {
         WindowGroup {
            ContentView()
@@ -27,6 +32,6 @@ struct ComposeView: UIViewControllerRepresentable {
 
 struct ContentView: View {
     var body: some View {
-        ComposeView().ignoresSafeArea(.all)
+        ComposeView().ignoresSafeArea()
     }
 }

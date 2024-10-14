@@ -22,8 +22,8 @@ kotlin{
 
     sourceSets.iosMain.dependencies {
         implementation(project(path = ":modules:features:root"))
-        implementation(project(path = ":modules:features:core-ui"))
-        implementation(project(path = ":modules:features:async"))
+        implementation(project(path = ":modules:core:core-ui"))
+        implementation(project(path = ":modules:core:async"))
         implementation(project(path = ":modules:features:cache-datasource"))
     }
 }

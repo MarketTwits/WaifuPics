@@ -6,10 +6,6 @@ plugins {
 android {
     namespace = "com.markettwits.cache_datasource"
 
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
 }
 kotlin {
     sourceSets {
@@ -20,8 +16,8 @@ kotlin {
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.kotlinx.serialization.core)
             implementation(libs.kotlinx.coroutines.core)
-            implementation(project(path = ":modules:features:storage"))
-            implementation(project(path = ":modules:features:cache"))
+            implementation(project(path = ":modules:core:cache"))
+            implementation(project(path = ":modules:core:paths"))
         }
     }
 }

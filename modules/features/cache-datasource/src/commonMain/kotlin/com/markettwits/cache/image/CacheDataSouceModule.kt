@@ -1,13 +1,13 @@
 package com.markettwits.cache.image
 
 import com.markettwits.waifupics.cache.kstore.listStoreOfWrapper
-import com.markettwits.waifupics.storage.PlatformStorageProvider
+import com.markettwits.waifupics.paths.cacheDirectory
 import org.koin.dsl.module
 
 val cacheDataSourceModule = module {
     val imagesCacheDataSource = ImagesCacheDataSource(
         listStoreOfWrapper(
-            path = PlatformStorageProvider.tempPath,
+            path = cacheDirectory("com.markettwits.waifupics"),
             fileName = "nekosApiImages"
         )
     )
