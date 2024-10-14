@@ -38,9 +38,9 @@ fun NavigationScreen(
     val scope = rememberCoroutineScope()
     Scaffold(
         modifier = modifier
-            .windowInsetsPadding(WindowInsets.safeDrawing)
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
+            .background(MaterialTheme.colorScheme.background)
+        ,
         topBar = {
             AnimatedVisibility(isShowTopBar) {
                 TopBarPanel(
@@ -57,6 +57,7 @@ fun NavigationScreen(
             drawerState = drawerState,
             drawerContent = {
                 NavigationBody(
+                    modifier = Modifier.padding(top = paddingValues.calculateTopPadding()),
                     isDarkTheme = isDarkTheme,
                     onClick = {
                         onClickNavigationItem(it)

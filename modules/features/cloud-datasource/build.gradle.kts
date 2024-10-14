@@ -17,7 +17,7 @@ kotlin{
             implementation(libs.ktor.client.serialization.json)
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.kotlinx.serialization.core)
-            implementation(project(":modules:features:async"))
+            implementation(project(":modules:core:async"))
         }
         jvmMain.dependencies {
             implementation(libs.ktor.client.okhttp)

@@ -8,8 +8,8 @@ android {
 
 kotlin{
     sourceSets.commonMain.dependencies {
-        implementation(project(":modules:features:core-ui"))
-        implementation(project(":modules:features:async"))
+        implementation(project(":modules:core:core-ui"))
+        implementation(project(":modules:core:async"))
         implementation(project(":modules:features:cache-datasource"))
         implementation(compose.components.resources)
         implementation(libs.koin.core)
