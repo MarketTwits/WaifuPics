@@ -23,7 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.unit.dp
-import com.markettwits.core_ui.image.DefaultImages
+import com.markettwits.core_ui.components.image.DefaultImages
 
 @Composable
 fun TopBarPanel(

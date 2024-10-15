@@ -5,11 +5,6 @@ plugins {
 
 android {
     namespace = "com.markettwits.waifupics.cache"
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
 }
 kotlin{
     sourceSets.commonMain.dependencies {

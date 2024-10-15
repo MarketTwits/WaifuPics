@@ -1,3 +1,6 @@
+
+import extension.libs
+
 plugins {
     id("kotlin")
 }

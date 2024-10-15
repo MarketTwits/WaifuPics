@@ -23,8 +23,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.markettwits.core_ui.components.HyperlinkText
-import com.markettwits.core_ui.image.DefaultImages
+import com.markettwits.core_ui.components.text.HyperlinkText
+import com.markettwits.core_ui.components.image.DefaultImages
 import com.markettwits.core_ui.theme.FontRubik
 import com.markettwits.core_ui.theme.Pink
 import org.jetbrains.compose.resources.stringResource

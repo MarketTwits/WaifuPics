@@ -8,14 +8,15 @@ import com.markettwits.async.wrappers.dispatchersList
 import com.markettwits.image_action.api.ImageIntentAction
 import com.markettwits.image_action.api.ImageLoader
 import com.markettwits.image_action.api.imageActionModule
-import com.markettwits.waifupics.gallery.cache_datasource.GalleryRepository
-import com.markettwits.waifupics.gallery.presentation.copy.SystemService
-import com.markettwits.waifupics.gallery.presentation.screens.detail.GalleryScreenViewModel
-import com.markettwits.waifupics.gallery.presentation.screens.list.GalleryViewModel
-import com.markettwits.waifupics.gallery.presentation.screens.list.communication.DetailCommunication
-import com.markettwits.waifupics.gallery.presentation.screens.list.communication.GalleryCommunication
-import com.markettwits.waifupics.gallery.presentation.screens.list.communication.SelectedImageCommunication
-import com.markettwits.waifupics.gallery.presentation.screens.list.communication.SelectedModeCommunication
+import com.markettwits.waifupics.gallery.common.FavoriteImageCacheToUiMapper
+import com.markettwits.waifupics.gallery.common.GalleryRepository
+import com.markettwits.waifupics.gallery.items.components.copy.SystemService
+import com.markettwits.waifupics.gallery.item.viewmodel.GalleryScreenViewModel
+import com.markettwits.waifupics.gallery.items.viewmodel.GalleryViewModel
+import com.markettwits.waifupics.gallery.items.components.communication.DetailCommunication
+import com.markettwits.waifupics.gallery.items.components.communication.GalleryCommunication
+import com.markettwits.waifupics.gallery.items.components.communication.SelectedImageCommunication
+import com.markettwits.waifupics.gallery.items.components.communication.SelectedModeCommunication
 import org.koin.dsl.module
 
 
@@ -24,10 +25,10 @@ val galleryModule = module {
     val communication = DetailCommunication.Base()
     val galleryCommunication = GalleryCommunication.Base()
     single<ImageLoader> { get() }
-    single<com.markettwits.waifupics.gallery.cache_datasource.GalleryRepository>{
-        com.markettwits.waifupics.gallery.cache_datasource.GalleryRepository.Base(
+    single<GalleryRepository>{
+        GalleryRepository.Base(
             dataSource = get(),
-            cacheToUiMapper = com.markettwits.waifupics.gallery.cache_datasource.FavoriteImageCacheToUiMapper.Base(),
+            cacheToUiMapper = FavoriteImageCacheToUiMapper.Base(),
             imageLoader = get()
         )
     }
