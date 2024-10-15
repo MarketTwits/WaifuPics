@@ -1,4 +1,4 @@
-package com.markettwits.waifupics.random_image.presentation.random_image.components.image.fuckup
+package com.markettwits.waifupics.random_image.image.components.image_state.fuckup
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -20,8 +20,8 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.markettwits.core_ui.theme.Shapes
 import com.markettwits.core_ui.theme.FontRubik
+import com.markettwits.core_ui.theme.Shapes
 import org.jetbrains.compose.resources.stringResource
 import waifupics.modules.features.random_image.generated.resources.Res
 import waifupics.modules.features.random_image.generated.resources.senpai

@@ -1,4 +1,4 @@
-package com.markettwits.waifupics.random_image.presentation.random_image.components.image.full_screen
+package com.markettwits.waifupics.random_image.image.components.image_state.full_screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -26,6 +26,7 @@ import com.markettwits.core_ui.components.zoomable.zoomable
 
 @Composable
 internal fun FullImageScreen(
+    modifier: Modifier = Modifier,
     imageUrl: String,
     onDismiss: () -> Unit
 ) {
@@ -35,7 +36,7 @@ internal fun FullImageScreen(
     ) {
         val zoomState = rememberZoomState(maxScale = 25f)
         Box(
-            modifier = Modifier
+            modifier = modifier
                 .background(MaterialTheme.colorScheme.background)
                 .fillMaxSize()
         ) {

@@ -1,29 +1,30 @@
 package com.markettwits.waifupics
 
+import android.graphics.Color
+import android.os.Build
 import androidx.activity.ComponentActivity
-import androidx.activity.SystemBarStyle
-import androidx.activity.enableEdgeToEdge
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsControllerCompat
 
-internal fun ComponentActivity.enableEdgeToEdgeWithSafeArea(isDarkTheme : Boolean){
+internal fun ComponentActivity.enableEdgeToEdgeWithSafeArea(isDarkTheme: Boolean) {
+
+    WindowCompat.setDecorFitsSystemWindows(window, false)
+
+    window.statusBarColor = Color.TRANSPARENT
+    window.navigationBarColor = Color.TRANSPARENT
+
+    val insetsController = WindowInsetsControllerCompat(window, window.decorView)
+
     if (isDarkTheme) {
-        enableEdgeToEdge(
-//            statusBarStyle = SystemBarStyle.dark(
-//                android.graphics.Color.BLACK
-//            ),
-//            navigationBarStyle = SystemBarStyle.dark(
-//                android.graphics.Color.BLACK
-//            ),
-        )
+        insetsController.isAppearanceLightStatusBars = false
+        insetsController.isAppearanceLightNavigationBars = false
     } else {
-        enableEdgeToEdge(
-//            statusBarStyle = SystemBarStyle.light(
-//                android.graphics.Color.WHITE,
-//                android.graphics.Color.WHITE
-//            ),
-//            navigationBarStyle = SystemBarStyle.light(
-//                android.graphics.Color.WHITE,
-//                android.graphics.Color.WHITE
-//            ),
-        )
+        insetsController.isAppearanceLightStatusBars = true
+        insetsController.isAppearanceLightNavigationBars = true
     }
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        window.isNavigationBarContrastEnforced = false
+    }
+
 }

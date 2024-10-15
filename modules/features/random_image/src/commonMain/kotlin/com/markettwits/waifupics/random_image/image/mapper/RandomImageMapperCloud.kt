@@ -3,15 +3,15 @@ package com.markettwits.waifupics.random_image.image.mapper
 import com.markettwits.cloud_datasource.data.cloud.NetworkResult
 import com.markettwits.cloud_datasource.data.network.models.RandomImageItemCloud
 import com.markettwits.cloud_datasource.data.network.models.proxyImageUrl
-import com.markettwits.cloud_datasource.presentation.random_image.model.RandomImageUiState
 import com.markettwits.waifupics.random_image.image.model.AuthorUi
 import com.markettwits.waifupics.random_image.image.model.ImageSourceUi
+import com.markettwits.waifupics.random_image.image.model.RandomImageState
 
-class RandomImageMapperCloud : NetworkResult.Mapper<RandomImageItemCloud, RandomImageUiState> {
+class RandomImageMapperCloud : NetworkResult.Mapper<RandomImageItemCloud, RandomImageState> {
 
-    override fun map(item: RandomImageItemCloud): RandomImageUiState {
+    override fun map(item: RandomImageItemCloud): RandomImageState {
         val result = if (item.artist != null)
-            RandomImageUiState.Success.WithAuthor(
+            RandomImageState.Success.WithAuthor(
                 id = item.id,
                 imageUrl = item.image_url,
                 colorPalette = item.color_palette,
@@ -24,7 +24,7 @@ class RandomImageMapperCloud : NetworkResult.Mapper<RandomImageItemCloud, Random
                 )
             )
         else {
-            RandomImageUiState.Success.EmptyAuthor(
+            RandomImageState.Success.EmptyAuthor(
                 id = item.id,
                 imageUrl = item.image_url.proxyImageUrl(),
                 colorPalette = item.color_palette,
@@ -34,6 +34,6 @@ class RandomImageMapperCloud : NetworkResult.Mapper<RandomImageItemCloud, Random
         return result
     }
 
-    override fun map(errorMessage: String, code: Int): RandomImageUiState =
-        RandomImageUiState.Error(errorMessage)
+    override fun map(errorMessage: String, code: Int): RandomImageState =
+        RandomImageState.Error(errorMessage)
 }

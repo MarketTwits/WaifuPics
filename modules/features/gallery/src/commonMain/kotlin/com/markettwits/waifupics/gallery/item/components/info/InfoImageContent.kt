@@ -19,15 +19,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.markettwits.core_ui.theme.Shapes
 import com.markettwits.core_ui.di.ApplicationViewModel
 import com.markettwits.core_ui.theme.FontRubik
 import com.markettwits.core_ui.theme.LightPink
-import com.markettwits.waifupics.gallery.item.viewmodel.GalleryScreenViewModel
-import com.markettwits.waifupics.gallery.item.components.button.EditButton
+import com.markettwits.core_ui.theme.Shapes
 import com.markettwits.waifupics.gallery.item.components.button.OpenAsButton
 import com.markettwits.waifupics.gallery.item.components.button.SaveButton
 import com.markettwits.waifupics.gallery.item.components.button.ShareButton
+import com.markettwits.waifupics.gallery.item.viewmodel.GalleryScreenViewModel
 
 
 @Composable
@@ -40,11 +39,7 @@ fun InfoImageContent(
     Box(
         modifier = modifier
             .padding(10.dp)
-//            .padding(
-//                bottom = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
-//            )
             .clip(Shapes.medium)
-//            .wrapContentSize()
             .animateContentSize(),
         contentAlignment = Alignment.CenterEnd
     ) {
@@ -56,9 +51,7 @@ fun InfoImageContent(
                 .verticalScroll(rememberScrollState())
         ) {
             MediaViewInfoActions(
-                onClickEdit = {
-                    viewModel.onClickEditImage()
-                }, onClickOpenAs = {
+                onClickOpenAs = {
                     viewModel.onClickSetImageAs()
                 }, onClickShare = {
                     viewModel.onClickShareImage()
@@ -87,20 +80,10 @@ private fun ImageInfoDate(date: String) {
     }
 }
 
-//@Composable
-//private fun ImageInfoColum(mediaInfoList: List<MediaInfo>, onLongClick: (String) -> Unit) {
-//    mediaInfoList.forEach {
-//        MediaInfoRow(label = it.label, content = it.content, icon = it.icon, onLongClick = {
-//            onLongClick(it)
-//        })
-//    }
-//}
-
 @Composable
 private fun MediaViewInfoActions(
     onClickShare: () -> Unit,
     onClickOpenAs: () -> Unit,
-    onClickEdit: () -> Unit,
     onClickSave: () -> Unit,
 ) {
     Row(
@@ -115,9 +98,6 @@ private fun MediaViewInfoActions(
         }
         OpenAsButton() {
             onClickOpenAs()
-        }
-        EditButton() {
-            onClickEdit()
         }
         SaveButton {
             onClickSave()

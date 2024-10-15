@@ -1,5 +1,6 @@
-package com.markettwits.waifupics.random_image.presentation.random_image.components.image.suceess
+package com.markettwits.waifupics.random_image.image.components.image_state.suceess
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
@@ -14,23 +15,30 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.SubcomposeAsyncImage
 import coil3.compose.SubcomposeAsyncImageContent
-import com.markettwits.cloud_datasource.presentation.random_image.components.image.ImageState
-import com.markettwits.cloud_datasource.presentation.random_image.components.image.loading.ImageLoading
-import com.markettwits.cloud_datasource.presentation.random_image.viewmodel.ImageViewModel
 import com.markettwits.core_ui.theme.Shapes
-import com.markettwits.core_ui.di.ApplicationViewModel
-import com.markettwits.waifupics.random_image.presentation.random_image.components.image.full_screen.FullImageScreen
+import com.markettwits.waifupics.random_image.image.components.image_state.ImageState
+import com.markettwits.waifupics.random_image.image.components.image_state.full_screen.FullImageScreen
+import com.markettwits.waifupics.random_image.image.components.image_state.loading.ImageLoading
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun ImageCard(imageUrl: String, id: Int) {
+fun ImageCard(
+    modifier: Modifier = Modifier,
+    imageUrl: String,
+    id: Int,
+    onChangeImageState: (ImageState) -> Unit
+) {
 
-    val viewModel: ImageViewModel = ApplicationViewModel()
     var isDialogOpen by remember { mutableStateOf(false) }
-    val modifier = Modifier
+
+
+    val innerModifier = modifier
         .sizeIn(minWidth = 200.dp, minHeight = 300.dp, maxHeight = 1080.dp, maxWidth = 1920.dp)
         .padding(20.dp)
         .clip(Shapes.medium)
-        .clickable { isDialogOpen = true }
+        .clickable {
+            isDialogOpen = true
+        }
 
     SubcomposeAsyncImage(
         model = imageUrl,
@@ -38,14 +46,22 @@ fun ImageCard(imageUrl: String, id: Int) {
         contentDescription = "",
         loading = {
             ImageLoading()
-            viewModel.obtainImageState(ImageState.Loading)
+            onChangeImageState(ImageState.Loading)
         }, success = {
-            SubcomposeAsyncImageContent(modifier = modifier)
-            viewModel.currentImage(imageUrl, id, it.result.image.width, it.result.image.height)
+            SubcomposeAsyncImageContent(modifier = innerModifier)
+            onChangeImageState(
+                ImageState.Success(
+                    id,
+                    imageUrl,
+                    it.result.image.width,
+                    it.result.image.height,
+                    false
+                )
+            )
         },
         error = {
             val message = it.result.throwable.toString()
-            viewModel.obtainImageState(ImageState.Error(message))
+            onChangeImageState(ImageState.Error(message))
         }
     )
     if (isDialogOpen) {
@@ -56,7 +72,6 @@ fun ImageCard(imageUrl: String, id: Int) {
             }
         )
     }
-
 }
 
 

@@ -1,4 +1,4 @@
-package com.markettwits.waifupics.random_image.presentation.random_image.components.image.loading.components
+package com.markettwits.waifupics.random_image.image.components.image_state.loading.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

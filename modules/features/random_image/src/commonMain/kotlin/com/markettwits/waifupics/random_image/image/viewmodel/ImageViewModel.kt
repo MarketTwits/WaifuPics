@@ -1,17 +1,17 @@
 package com.markettwits.cloud_datasource.presentation.random_image.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.markettwits.cloud_datasource.presentation.random_image.components.image.ImageState
-import com.markettwits.cloud_datasource.presentation.random_image.model.RandomImageUiState
 import com.markettwits.async.communication.StateCommunication
 import com.markettwits.async.wrappers.AsyncViewModel
 import com.markettwits.image_action.api.ImageIntentAction
 import com.markettwits.waifupics.random_image.common.RandomImageRepository
 import com.markettwits.waifupics.random_image.filter.domain.ProtectedMapper
 import com.markettwits.waifupics.random_image.filter.viewmodel.FilterCommunication
+import com.markettwits.waifupics.random_image.image.components.image_state.ImageState
+import com.markettwits.waifupics.random_image.image.model.RandomImageState
 import kotlinx.coroutines.flow.StateFlow
 
-interface ImageViewModel : StateCommunication.State<RandomImageUiState> {
+interface ImageViewModel : StateCommunication.State<RandomImageState> {
 
     fun loadedImageState(): StateFlow<ImageState>
 
@@ -30,15 +30,15 @@ interface ImageViewModel : StateCommunication.State<RandomImageUiState> {
     class Base(
         private val filterResult: FilterCommunication,
         private val protectedMapper: ProtectedMapper,
-        private val async: AsyncViewModel.Abstract<RandomImageUiState>,
+        private val async: AsyncViewModel.Abstract<RandomImageState>,
         private val randomImageCommunication: RandomImageCommunication,
         private val loadedImageCommunication: LoadedImageCommunication,
         private val repository: RandomImageRepository,
         private val shareImageAction: ImageIntentAction.ShareImage
-    ) : ViewModel(), StateCommunication.State<RandomImageUiState>, ImageViewModel {
+    ) : ViewModel(), StateCommunication.State<RandomImageState>, ImageViewModel {
 
         init {
-            randomImageCommunication.map(RandomImageUiState.Progress)
+            randomImageCommunication.map(RandomImageState.Progress)
             fetchRandomImage()
         }
 
@@ -63,12 +63,12 @@ interface ImageViewModel : StateCommunication.State<RandomImageUiState> {
         }
 
         override fun fetchRandomImage() {
-            randomImageCommunication.map(RandomImageUiState.Progress)
+            randomImageCommunication.map(RandomImageState.Progress)
             loadedImageCommunication.map(ImageState.Loading)
             async.handleAsync({
                 repository.fetchRandomImage(filterResult.state().value ?: listOf("safe"))
             }) {
-                if (it is RandomImageUiState.Error) {
+                if (it is RandomImageState.Error) {
                     loadedImageCommunication.map(ImageState.Error())
                 }
                 randomImageCommunication.map(it)
@@ -100,7 +100,7 @@ interface ImageViewModel : StateCommunication.State<RandomImageUiState> {
         override fun obtainImageState(state: ImageState) {
             loadedImageCommunication.map(state)
             if (state is ImageState.Error) randomImageCommunication.map(
-                RandomImageUiState.Error(state.message)
+                RandomImageState.Error(state.message)
             )
         }
 
@@ -108,8 +108,8 @@ interface ImageViewModel : StateCommunication.State<RandomImageUiState> {
     }
 }
 
-interface RandomImageCommunication : StateCommunication.Mutable<RandomImageUiState> {
-    class Base : StateCommunication.Abstract<RandomImageUiState>(RandomImageUiState.Initial),
+interface RandomImageCommunication : StateCommunication.Mutable<RandomImageState> {
+    class Base : StateCommunication.Abstract<RandomImageState>(RandomImageState.Initial),
         RandomImageCommunication
 }
 

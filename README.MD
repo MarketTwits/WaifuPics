@@ -43,7 +43,5 @@ Web (Js):
 Web (WASM):
 `./gradlew :modules:instances:web:wasmJsBrowserRun`
 
-`./gradlew :modules:instances:web:wasmJsBrowserDevelopmentRun --continue`
-
 ### License
 NekosApp is licensed under the MIT License. See [LICENSE] for more details.

@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.markettwits.waifupics.random_image.presentation.random_image.components.image.loading.components.LoadingBox
+import com.markettwits.waifupics.random_image.image.components.image_state.loading.components.LoadingBox
 
 @Composable
 fun ImageParametersLoading() {
