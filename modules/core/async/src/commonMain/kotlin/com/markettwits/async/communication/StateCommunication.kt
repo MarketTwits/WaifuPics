@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 interface StateCommunication {
+
     interface Update<T : Any> {
         fun map(source: T)
     }
