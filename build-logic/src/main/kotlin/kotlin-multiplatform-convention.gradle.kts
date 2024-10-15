@@ -1,6 +1,8 @@
+import extension.libs
+
 plugins {
     id("com.android.library")
-    id("base-android-convention")
+    id("kotlin-android-convention")
     id("org.jetbrains.kotlin.multiplatform")
 }
 

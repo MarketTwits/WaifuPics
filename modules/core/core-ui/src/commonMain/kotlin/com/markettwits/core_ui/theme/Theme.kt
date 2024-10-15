@@ -8,9 +8,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.graphics.Color
 import com.markettwits.core_ui.di.ApplicationViewModel
-import com.markettwits.core_ui.theme.theme.components.isDark
-import com.markettwits.core_ui.theme.theme.components.systemColorPallet
-import com.markettwits.core_ui.theme.theme.viewmodel.ThemeViewModel
+import com.markettwits.core_ui.system_theme.components.isDark
+import com.markettwits.core_ui.system_theme.components.systemColorPallet
+import com.markettwits.core_ui.system_theme.viewmodel.ThemeViewModel
 
 internal val DarkColorScheme = darkColorScheme(
     primary = Color.Black,

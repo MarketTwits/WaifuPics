@@ -9,8 +9,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.markettwits.cloud_datasource.presentation.random_image.components.RandomImageScreen
 import com.markettwits.waifupics.about.AboutScreen
-import com.markettwits.waifupics.gallery.presentation.screens.detail.ImageScreenFull
-import com.markettwits.waifupics.gallery.presentation.screens.list.GalleryScreen
+import com.markettwits.waifupics.gallery.item.components.ImageScreenFull
+import com.markettwits.waifupics.gallery.items.components.GalleryScreen
 import com.markettwits.waifupics.navigation.NavigationItem
 import com.markettwits.waifupics.navigation.NavigationScreen
 

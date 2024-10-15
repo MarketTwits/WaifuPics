@@ -12,7 +12,7 @@ kotlin{
         commonMain.dependencies {
             implementation(project(":modules:core:async"))
             implementation(project(":modules:core:core-ui"))
-            implementation(project(":modules:core:image_action:core"))
+            implementation(project(":modules:core:image-action:core"))
             implementation(project(":modules:features:cache-datasource"))
             implementation(project(":modules:features:cloud-datasource"))
             implementation(libs.koin.core)

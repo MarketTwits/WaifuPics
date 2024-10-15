@@ -2,7 +2,7 @@ package com.markettwits.core_ui.di
 
 import androidx.compose.runtime.Composable
 import coil3.compose.setSingletonImageLoaderFactory
-import com.markettwits.core_ui.image.asyncImageLoader
+import com.markettwits.core_ui.components.image.asyncImageLoader
 import com.markettwits.core_ui.theme.WaifuPicsTheme
 
 @Composable

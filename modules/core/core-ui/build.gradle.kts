@@ -22,7 +22,6 @@ kotlin {
             api(compose.ui)
             api(compose.components.uiToolingPreview)
             api(libs.compose.lifecycle.viewmodel)
-
             api(libs.ktor.core)
             api(libs.coil.compose.core)
             api(libs.coil.compose)
