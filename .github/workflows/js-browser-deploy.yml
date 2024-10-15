@@ -2,31 +2,35 @@ name: Deploy Compose Web App (JS)
 
 on:
   push:
-    branches:
-      - NK/03-migrate-kmp
+    branches: [NK/03-migrate-kmp]
+permissions:
+  contents: write
 
 jobs:
-  build:
+  test-and-build-and-deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4.2.1
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
+      - uses: actions/cache@v4
         with:
-          distribution: 'zulu'
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/buildSrc/**/*.kt') }}
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
           java-version: '17'
 
-      - name: Install dependencies
-        run: ./gradlew --no-daemon
+      - name: Build
+        run: |
+          ./gradlew wasmJsBrowserDistribution --no-configuration-cache
 
-      - name: Build distributable
-        run: ./gradlew jsBrowserDistribution
-
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4.6.8
         with:
           branch: gh-pages
           folder: modules/instances/web/build/dist/js/productionExecutable
