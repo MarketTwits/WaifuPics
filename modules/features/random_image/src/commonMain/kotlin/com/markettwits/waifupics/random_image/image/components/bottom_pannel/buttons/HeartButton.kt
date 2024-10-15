@@ -1,4 +1,4 @@
-package com.markettwits.cloud_datasource.presentation.random_image.components.bottom_pannel.buttons
+package com.markettwits.waifupics.random_image.image.components.bottom_pannel.buttons
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -6,8 +6,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import com.markettwits.cloud_datasource.presentation.random_image.viewmodel.ImageViewModel
-import com.markettwits.waifupics.random_image.presentation.random_image.components.bottom_pannel.buttons.BasePanelItem
 import org.jetbrains.compose.resources.painterResource
 import waifupics.modules.features.random_image.generated.resources.Res
 import waifupics.modules.features.random_image.generated.resources.ic_heart
@@ -17,7 +15,7 @@ import waifupics.modules.features.random_image.generated.resources.ic_heart_soli
 fun HeartButton(
     modifier: Modifier,
     enabled: Boolean,
-    viewModel: ImageViewModel,
+    onClickAddToFavorite : () -> Unit,
 ) {
     var checked by rememberSaveable{
         mutableStateOf(false)
@@ -29,6 +27,6 @@ fun HeartButton(
         enabled = enabled
     ) {
         checked = !checked
-        viewModel.onClickAddToFavorite()
+        onClickAddToFavorite()
     }
 }

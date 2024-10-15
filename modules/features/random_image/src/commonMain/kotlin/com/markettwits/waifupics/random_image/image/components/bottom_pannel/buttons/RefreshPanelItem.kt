@@ -1,4 +1,4 @@
-package com.markettwits.cloud_datasource.presentation.random_image.components.bottom_pannel.buttons
+package com.markettwits.waifupics.random_image.image.components.bottom_pannel.buttons
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -17,9 +17,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.markettwits.core_ui.theme.Shapes
-import com.markettwits.waifupics.random_image.presentation.random_image.components.image.loading.components.RotationRefreshIcon
 import com.markettwits.core_ui.theme.FontRubik
+import com.markettwits.core_ui.theme.Shapes
+import com.markettwits.waifupics.random_image.image.components.image_state.loading.components.RotationRefreshIcon
 import org.jetbrains.compose.resources.stringResource
 import waifupics.modules.features.random_image.generated.resources.Res
 import waifupics.modules.features.random_image.generated.resources.refresh

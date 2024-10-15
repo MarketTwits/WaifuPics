@@ -1,7 +1,6 @@
 package com.markettwits.waifupics.navigation.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,6 +21,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.markettwits.core_ui.extensions.noRippleClickable
 import com.markettwits.core_ui.theme.FontRubik
 import com.markettwits.core_ui.theme.LightPink
 import com.markettwits.waifupics.navigation.NavigationItem
@@ -49,13 +49,14 @@ fun NavigationBody(
                 fontFamily = FontRubik.medium()
             )
             MenuItem(
-                modifier = Modifier.clickable { onClickChangeTheme() },
+                modifier = Modifier.noRippleClickable { onClickChangeTheme() },
                 imageVector = if (isDarkTheme) Icons.Filled.DarkMode else Icons.Filled.LightMode,
                 title = "",
             )
             list.forEach {
                 MenuItem(
-                    modifier = Modifier.clickable { onClick(it) },
+                    modifier = Modifier
+                        .noRippleClickable { onClick(it) },
                     icon = it.icon(),
                     title = it.title,
                 )
@@ -75,7 +76,6 @@ private fun MenuItem(
         modifier
             .padding(10.dp)
             .padding(end = 80.dp)
-
     ) {
         if (icon != null) {
             Icon(

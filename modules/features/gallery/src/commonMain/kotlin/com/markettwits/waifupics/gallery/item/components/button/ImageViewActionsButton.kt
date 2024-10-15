@@ -4,19 +4,17 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.OpenInNew
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material.icons.outlined.DeleteOutline
-import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.Share
 import androidx.compose.runtime.Composable
 import org.jetbrains.compose.resources.stringResource
 import waifupics.modules.features.gallery.generated.resources.Res
 import waifupics.modules.features.gallery.generated.resources.delete
-import waifupics.modules.features.gallery.generated.resources.edit
 import waifupics.modules.features.gallery.generated.resources.save_to_gallery
 import waifupics.modules.features.gallery.generated.resources.share
 import waifupics.modules.features.gallery.generated.resources.use_as
 
 @Composable
-fun ShareButton(
+internal fun ShareButton(
     followTheme: Boolean = false,
     onItemClick: () -> Unit
 ) {
@@ -29,23 +27,8 @@ fun ShareButton(
     }
 }
 
-
 @Composable
- fun EditButton(
-    followTheme: Boolean = false,
-    onItemClick: () -> Unit
-) {
-    BottomBarColumn(
-        imageVector = Icons.Outlined.Edit,
-        followTheme = followTheme,
-        title = stringResource(Res.string.edit)
-    ) {
-        onItemClick()
-    }
-}
-
-@Composable
- fun OpenAsButton(
+internal fun OpenAsButton(
     followTheme: Boolean = false,
     onItemClick: () -> Unit
 ) {
@@ -57,8 +40,9 @@ fun ShareButton(
         onItemClick()
     }
 }
+
 @Composable
-fun SaveButton(
+internal fun SaveButton(
     followTheme: Boolean = false,
     onItemClick: () -> Unit
 ) {
@@ -72,7 +56,7 @@ fun SaveButton(
 }
 
 @Composable
-fun DeleteButton(
+internal fun DeleteButton(
     followTheme: Boolean = false,
     onItemClick: () -> Unit
 ) {

@@ -1,4 +1,4 @@
-package com.markettwits.cloud_datasource.presentation.random_image.components.image.loading
+package com.markettwits.waifupics.random_image.image.components.image_state.loading
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -15,10 +15,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.unit.dp
-import com.markettwits.core_ui.theme.Shapes
-import com.markettwits.core_ui.components.progress.RoundedLinearProgressIndicator
 import com.markettwits.core_ui.components.image.DefaultImages
 import com.markettwits.core_ui.theme.Pink
+import com.markettwits.core_ui.theme.Shapes
+import com.markettwits.waifupics.random_image.image.components.image_state.loading.components.RoundedLinearProgressIndicator
 
 
 @Composable

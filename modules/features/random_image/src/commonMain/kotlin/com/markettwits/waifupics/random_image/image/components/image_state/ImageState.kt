@@ -1,4 +1,4 @@
-package com.markettwits.cloud_datasource.presentation.random_image.components.image
+package com.markettwits.waifupics.random_image.image.components.image_state
 
 import androidx.compose.runtime.Stable
 

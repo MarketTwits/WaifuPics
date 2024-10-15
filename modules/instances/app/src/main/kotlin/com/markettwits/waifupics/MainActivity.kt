@@ -10,17 +10,12 @@ import com.markettwits.waifupics.root.core.MainScreen
 
 class MainActivity : ComponentActivity() {
 
-    private var isThemeReady: Boolean = false
-
     override fun onCreate(savedInstanceState: Bundle?) {
-        installSplashScreen().setKeepOnScreenCondition {
-            !isThemeReady
-        }
+        installSplashScreen()
         super.onCreate(savedInstanceState)
         setContent {
             SetContentLocal(isDarkTheme = {
                 enableEdgeToEdgeWithSafeArea(it)
-                isThemeReady = true
             }) {
                 MainScreen()
             }

@@ -1,4 +1,4 @@
-package com.markettwits.waifupics.random_image.presentation.random_image.components.bottom_pannel.buttons
+package com.markettwits.waifupics.random_image.image.components.bottom_pannel.buttons
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

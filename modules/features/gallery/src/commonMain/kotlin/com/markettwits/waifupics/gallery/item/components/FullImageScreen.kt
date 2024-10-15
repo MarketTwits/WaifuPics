@@ -16,11 +16,11 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.markettwits.core_ui.di.ApplicationViewModel
-import com.markettwits.waifupics.gallery.items.components.animations.rememberPagerFlingBehavior
 import com.markettwits.waifupics.gallery.item.components.bottomBar.BottomBarScreenImage
 import com.markettwits.waifupics.gallery.item.components.image.ZoomablePagerImage
 import com.markettwits.waifupics.gallery.item.components.topbar.TopBarScreenImage
 import com.markettwits.waifupics.gallery.item.viewmodel.GalleryScreenViewModel
+import com.markettwits.waifupics.gallery.items.components.animations.rememberPagerFlingBehavior
 
 
 @Composable
@@ -29,13 +29,25 @@ fun ImageScreenFull(
     onClickPop: () -> Unit,
 ) {
     val viewModel: GalleryScreenViewModel = ApplicationViewModel()
+
     val currentImage by viewModel.currentImage().collectAsState()
+
     val state by viewModel.state().collectAsState()
+
+    val labels by viewModel.labels.collectAsState()
+
     val pagerState = rememberPagerState(pageCount = {
         state.items.size
     }, initialPage = state.items.indexOf(currentImage))
     val showUI = rememberSaveable {
         mutableStateOf(true)
+    }
+
+    LaunchedEffect(labels) {
+        when (labels) {
+            GalleryScreenViewModel.Labels.Empty -> {}
+            GalleryScreenViewModel.Labels.GoBack -> onClickPop()
+        }
     }
 
 

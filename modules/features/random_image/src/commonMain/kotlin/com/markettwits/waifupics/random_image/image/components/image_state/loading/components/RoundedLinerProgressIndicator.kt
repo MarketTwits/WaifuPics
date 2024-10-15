@@ -1,4 +1,4 @@
-package com.markettwits.core_ui.components.progress
+package com.markettwits.waifupics.random_image.image.components.image_state.loading.components
 
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.LinearEasing
