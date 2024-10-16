@@ -14,7 +14,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
-import com.markettwits.core_ui.theme.Shapes
+import com.markettwits.theme.components.Shapes
 
 
 @OptIn(ExperimentalFoundationApi::class)

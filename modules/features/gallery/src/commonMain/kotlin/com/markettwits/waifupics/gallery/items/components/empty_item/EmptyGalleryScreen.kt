@@ -12,10 +12,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.markettwits.core_ui.theme.FontRubik
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import waifupics.modules.features.gallery.generated.resources.Res
@@ -34,7 +32,7 @@ fun EmptyGalleryItem() {
         Text(
             text = stringResource(Res.string.gallery_empty_text),
             color = MaterialTheme.colorScheme.onBackground,
-            fontFamily = FontRubik.medium(),
+            fontFamily = com.markettwits.theme.components.FontRubik.medium(),
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(16.dp)
         )

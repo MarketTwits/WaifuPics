@@ -18,7 +18,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import com.markettwits.core_ui.di.ApplicationViewModel
+import com.markettwits.core_ui.provider.ApplicationViewModel
 import com.markettwits.waifupics.navigation.components.NavigationBody
 import com.markettwits.waifupics.navigation.components.TopBarPanel
 import kotlinx.coroutines.launch
@@ -35,11 +35,11 @@ fun NavigationScreen(
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val isDarkTheme by viewModel.isDarkTheme().collectAsState()
     val scope = rememberCoroutineScope()
+
     Scaffold(
         modifier = modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-        ,
+            .background(MaterialTheme.colorScheme.background),
         topBar = {
             AnimatedVisibility(isShowTopBar) {
                 TopBarPanel(
@@ -56,6 +56,7 @@ fun NavigationScreen(
             drawerState = drawerState,
             drawerContent = {
                 NavigationBody(
+                    modifier = Modifier.padding(top = paddingValues.calculateTopPadding()),
                     isDarkTheme = isDarkTheme,
                     onClick = {
                         onClickNavigationItem(it)

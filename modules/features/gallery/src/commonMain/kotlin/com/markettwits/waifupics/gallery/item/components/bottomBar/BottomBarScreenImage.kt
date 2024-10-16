@@ -18,10 +18,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.markettwits.core_ui.theme.BlackScrim
-import com.markettwits.waifupics.gallery.items.components.animations.Animation
+import com.markettwits.theme.components.BlackScrim
 import com.markettwits.waifupics.gallery.item.components.button.DeleteButton
 import com.markettwits.waifupics.gallery.item.components.button.ShareButton
+import com.markettwits.waifupics.gallery.items.components.animations.Animation
 
 @Composable
 fun BoxScope.BottomBarScreenImage(
@@ -39,11 +39,7 @@ fun BoxScope.BottomBarScreenImage(
     ) {
         Row(
             modifier = Modifier
-                .background(
-                    Brush.verticalGradient(
-                        colors = listOf(Color.Transparent, BlackScrim)
-                    )
-                )
+                .background(Brush.verticalGradient(colors = listOf(Color.Transparent, BlackScrim)))
                 .padding(top = 24.dp,)
                 .padding(bottom = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding())
                 .fillMaxWidth()

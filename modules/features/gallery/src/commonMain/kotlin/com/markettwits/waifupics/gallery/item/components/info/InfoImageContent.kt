@@ -19,10 +19,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.markettwits.core_ui.di.ApplicationViewModel
-import com.markettwits.core_ui.theme.FontRubik
-import com.markettwits.core_ui.theme.LightPink
-import com.markettwits.core_ui.theme.Shapes
+import com.markettwits.core_ui.provider.ApplicationViewModel
+import com.markettwits.theme.components.FontRubik
+import com.markettwits.theme.components.LightPink
+import com.markettwits.theme.components.Shapes
 import com.markettwits.waifupics.gallery.item.components.button.OpenAsButton
 import com.markettwits.waifupics.gallery.item.components.button.SaveButton
 import com.markettwits.waifupics.gallery.item.components.button.ShareButton
@@ -93,10 +93,10 @@ private fun MediaViewInfoActions(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceEvenly,
     ) {
-        ShareButton() {
+        ShareButton {
             onClickShare()
         }
-        OpenAsButton() {
+        OpenAsButton {
             onClickOpenAs()
         }
         SaveButton {

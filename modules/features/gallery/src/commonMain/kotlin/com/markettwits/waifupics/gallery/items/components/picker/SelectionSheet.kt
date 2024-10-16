@@ -30,10 +30,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.unit.dp
-import com.markettwits.core_ui.theme.Shapes
-import com.markettwits.waifupics.gallery.items.model.ImageFavoriteUi
+import com.markettwits.theme.components.Shapes
 import com.markettwits.waifupics.gallery.item.components.button.DeleteButton
 import com.markettwits.waifupics.gallery.item.components.button.ShareButton
+import com.markettwits.waifupics.gallery.items.model.ImageFavoriteUi
 import org.jetbrains.compose.resources.stringResource
 import waifupics.modules.features.gallery.generated.resources.Res
 import waifupics.modules.features.gallery.generated.resources.close

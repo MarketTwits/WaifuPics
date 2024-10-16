@@ -1,7 +1,7 @@
 package com.markettwits.waifupics.gallery.item.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.markettwits.async.wrappers.AsyncViewModel
+import com.markettwits.async.AsyncViewModel
 import com.markettwits.image_action.api.ImageIntentAction
 import com.markettwits.waifupics.gallery.common.GalleryRepository
 import com.markettwits.waifupics.gallery.items.components.communication.DetailCommunication
@@ -30,16 +30,17 @@ interface GalleryScreenViewModel {
 
     fun state(): StateFlow<ImageFavoriteUiState>
 
-    val labels : StateFlow<Labels>
+    val labels: StateFlow<Labels>
 
     sealed interface Labels {
         data object GoBack : Labels
+
         data object Empty : Labels
     }
 
     class Base(
-        private val item: DetailCommunication,
-        private val list: GalleryCommunication,
+        private val itemCommunication: DetailCommunication,
+        private val listCommunication: GalleryCommunication,
         private val labelsCommunication: GalleryScreenLabelsCommunication,
         private val async: AsyncViewModel<Unit>,
         private val repository: GalleryRepository,
@@ -49,9 +50,9 @@ interface GalleryScreenViewModel {
 
         override val labels: StateFlow<Labels> = labelsCommunication.state()
 
-        override fun state() = list.state()
+        override fun state(): StateFlow<ImageFavoriteUiState> = listCommunication.state()
 
-        override fun currentImage(): StateFlow<ImageFavoriteUi> = item.state()
+        override fun currentImage(): StateFlow<ImageFavoriteUi> = itemCommunication.state()
 
         override fun onClickCopy(text: String) {
             systemService.copy(text)
@@ -59,33 +60,33 @@ interface GalleryScreenViewModel {
 
         override fun onClickDelete() {
             async.handleAsyncSingle {
-                repository.delete(item.state().value.id)
+                repository.delete(currentImage().value.id)
             }
         }
 
         override fun onClickSetImageAs() {
             async.handleAsyncSingle {
-                imageIntentAction.launchUseAs(item.state().value.imageUrl)
+                imageIntentAction.launchUseAs(currentImage().value.imageUrl)
             }
         }
 
         override fun onClickSaveToGallery() {
             async.handleAsyncSingle {
-                repository.saveToGallery(item.state().value.imageUrl)
+                repository.saveToGallery(currentImage().value.imageUrl)
             }
         }
 
         override fun onClickShareImage() {
             async.handleAsyncSingle {
-                imageIntentAction.shareImage(item.state().value.imageUrl)
+                imageIntentAction.shareImage(currentImage().value.imageUrl)
             }
         }
 
         override fun setCurrentItem(index: Int) {
-            if (index < 0 || list.state().value.items.isEmpty()) {
+            if (index < 0 || state().value.items.isEmpty()) {
                 labelsCommunication.map(Labels.GoBack)
             } else {
-                item.map(list.state().value.items[index])
+                itemCommunication.map(state().value.items[index])
             }
         }
 

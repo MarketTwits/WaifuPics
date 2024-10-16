@@ -1,5 +1,6 @@
+
 plugins {
-    id("kotlin-multiplatform-convention")
+    alias(libs.plugins.kotlin.multiplatform.convention)
 }
 
 android {

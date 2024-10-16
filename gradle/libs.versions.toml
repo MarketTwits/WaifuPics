@@ -105,10 +105,7 @@ kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref =
 org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "org-jetbrains-kotlin-jvm" }
 
 #Convention Plugins
-android-library-convention = { id = "android-library-convention", version = "unspecified" }
-android-library-compose-convention = { id = "android-library-compose-convention", version = "unspecified" }
 
-[bundles]
-ktor-common = ["ktor-core", "ktor-client-serialization-json", "ktor-client-logging", "ktor-client-content-negotiation", "ktor-client-serialization"]
-
+kotlin-multiplatform-convention = { id = "kotlin-multiplatform-convention", version = "unspecified" }
+kotlin-multiplatform-compose-convention = { id = "kotlin-multiplatform-compose-convetion", version = "unspecified" }
 

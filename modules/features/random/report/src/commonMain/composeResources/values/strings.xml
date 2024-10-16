@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="image_report_message">Do you think that this image does not correspond to this category ?</string>
+    <string name="report_title">Report</string>
+    <string name="cancel">Cancel</string>
+    <string name="allow">Allow</string>
+</resources>

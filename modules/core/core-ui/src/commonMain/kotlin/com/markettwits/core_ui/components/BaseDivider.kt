@@ -4,7 +4,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.markettwits.core_ui.theme.DirtyWhite
+import com.markettwits.theme.components.DirtyWhite
 
 @Composable
 fun BaseDivider(modifier: Modifier = Modifier) {

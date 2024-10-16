@@ -22,8 +22,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.markettwits.core_ui.extensions.noRippleClickable
-import com.markettwits.core_ui.theme.FontRubik
-import com.markettwits.core_ui.theme.LightPink
+import com.markettwits.theme.components.FontRubik
+import com.markettwits.theme.components.LightPink
 import com.markettwits.waifupics.navigation.NavigationItem
 
 @Composable

@@ -1,16 +1,12 @@
 plugins {
-    id("kotlin-multiplatform-convention")
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.kotlin.multiplatform.convention)
 }
 
 android {
-    namespace = "com.markettwits.waifupics.cache"
-
+    namespace = "com.markettwits.waifupics.paths"
 }
 kotlin {
-    sourceSets.commonMain.dependencies {
-        api(libs.kotlinx.io.core)
-    }
     sourceSets.androidMain.dependencies {
         implementation(libs.context.provider)
     }

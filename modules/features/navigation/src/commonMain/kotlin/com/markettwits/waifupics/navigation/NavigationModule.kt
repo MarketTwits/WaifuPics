@@ -1,10 +1,9 @@
 package com.markettwits.waifupics.navigation
 
-import com.markettwits.async.wrappers.AsyncViewModel
-import com.markettwits.async.wrappers.RunAsync
-import com.markettwits.async.wrappers.dispatchersList
-import com.markettwits.cache.settings.WaifuPicsAppSettings
-import com.markettwits.cache.settings.applicationSettingsModule
+import com.markettwits.async.AsyncViewModel
+import com.markettwits.async.RunAsync
+import com.markettwits.async.dispatchersList
+import com.markettwits.waifupics.settings.applicationSettingsModule
 import org.koin.dsl.module
 
 
@@ -12,7 +11,7 @@ val navigationModule = module {
     includes(applicationSettingsModule)
     single<NavigationViewModel.Base> {
         NavigationViewModel.Base(
-            settings = get<WaifuPicsAppSettings>(),
+            settings = get<com.markettwits.waifupics.settings.WaifuPicsAppSettings>(),
             themeCommunication = ApplicationThemeCommunication.Base(),
             runAsync = AsyncViewModel.Base(
                 RunAsync.Base(dispatchersList)

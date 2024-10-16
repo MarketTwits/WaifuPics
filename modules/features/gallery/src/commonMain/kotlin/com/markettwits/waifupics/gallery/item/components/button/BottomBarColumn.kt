@@ -21,7 +21,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.markettwits.core_ui.theme.Shapes
+import com.markettwits.theme.components.Shapes
 
 @Composable
 fun BottomBarColumn(

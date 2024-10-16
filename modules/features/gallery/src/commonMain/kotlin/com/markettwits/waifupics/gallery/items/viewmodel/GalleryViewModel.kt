@@ -1,16 +1,16 @@
 package com.markettwits.waifupics.gallery.items.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.markettwits.async.communication.StateCommunication
-import com.markettwits.async.wrappers.AsyncViewModel
+import com.markettwits.async.AsyncViewModel
 import com.markettwits.image_action.api.ImageIntentAction
+import com.markettwits.waifupics.communication.StateCommunication
 import com.markettwits.waifupics.gallery.common.GalleryRepository
-import com.markettwits.waifupics.gallery.items.model.ImageFavoriteUi
-import com.markettwits.waifupics.gallery.items.model.ImageFavoriteUiState
 import com.markettwits.waifupics.gallery.items.components.communication.DetailCommunication
 import com.markettwits.waifupics.gallery.items.components.communication.GalleryCommunication
 import com.markettwits.waifupics.gallery.items.components.communication.SelectedImageCommunication
 import com.markettwits.waifupics.gallery.items.components.communication.SelectedModeCommunication
+import com.markettwits.waifupics.gallery.items.model.ImageFavoriteUi
+import com.markettwits.waifupics.gallery.items.model.ImageFavoriteUiState
 import kotlinx.coroutines.flow.StateFlow
 
 interface GalleryViewModel : StateCommunication.State<ImageFavoriteUiState> {
@@ -34,10 +34,10 @@ interface GalleryViewModel : StateCommunication.State<ImageFavoriteUiState> {
     fun changeSelectedState()
 
     class Base(
-        private val gallery: GalleryCommunication,
+        private val galleryCommunication: GalleryCommunication,
         private val repository: GalleryRepository,
         private val async: AsyncViewModel.Abstract<List<ImageFavoriteUi>>,
-        private val current: DetailCommunication,
+        private val detailCommunication: DetailCommunication,
         private val selectedModeCommunication: SelectedModeCommunication,
         private val selectedImageCommunication: SelectedImageCommunication,
         private val imageIntentAction: ImageIntentAction.ShareImage
@@ -47,19 +47,18 @@ interface GalleryViewModel : StateCommunication.State<ImageFavoriteUiState> {
             favoriteImages()
         }
 
-        override fun selectedPhotoState(): List<ImageFavoriteUi> =
-            selectedImageCommunication.fetch()
+        override fun selectedPhotoState(): List<ImageFavoriteUi> = selectedImageCommunication.fetch()
 
         override fun selectedState(): StateFlow<Boolean> = selectedModeCommunication.state()
 
         override fun toDetail(state: ImageFavoriteUi) {
-            current.map(state)
+            detailCommunication.map(state)
         }
 
         override fun favoriteImages() {
             async.handleAsyncSingle {
                 repository.observe().collect {
-                    gallery.map(it)
+                    galleryCommunication.map(it)
                 }
             }
         }
@@ -75,7 +74,7 @@ interface GalleryViewModel : StateCommunication.State<ImageFavoriteUiState> {
         override fun selection(index: Int) {
             async.handleAsyncSingle {
                 val selectedPhotoState = selectedImageCommunication.fetch()
-                val item = gallery.state().value.items[index]
+                val item = galleryCommunication.state().value.items[index]
                 val selectedPhoto = selectedPhotoState.find { it.id == item.id }
                 if (selectedPhoto != null)
                     selectedImageCommunication.remove(selectedPhoto)
@@ -108,7 +107,7 @@ interface GalleryViewModel : StateCommunication.State<ImageFavoriteUiState> {
             selectedModeCommunication.map(!currentState)
         }
 
-        override fun state() = gallery.state()
+        override fun state() = galleryCommunication.state()
     }
 }
 
