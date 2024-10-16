@@ -1,9 +1,9 @@
 package com.markettwits.waifupics.gallery.di
 
 
-import com.markettwits.async.wrappers.AsyncViewModel
-import com.markettwits.async.wrappers.RunAsync
-import com.markettwits.async.wrappers.dispatchersList
+import com.markettwits.async.AsyncViewModel
+import com.markettwits.async.RunAsync
+import com.markettwits.async.dispatchersList
 import com.markettwits.cache.image.cacheDataSourceModule
 import com.markettwits.image_action.api.ImageIntentAction
 import com.markettwits.image_action.api.ImageLoader
@@ -35,10 +35,10 @@ val galleryModule = module {
     }
     single<GalleryViewModel> {
         GalleryViewModel.Base(
-            gallery = galleryCommunication,
+            galleryCommunication = galleryCommunication,
             repository = get(),
             async = AsyncViewModel.Base(RunAsync.Base(dispatchersList)),
-            current = communication,
+            detailCommunication = communication,
             selectedModeCommunication = SelectedModeCommunication.Base(),
             selectedImageCommunication = SelectedImageCommunication.Base(),
             imageIntentAction = get()
@@ -46,8 +46,8 @@ val galleryModule = module {
     }
     single<GalleryScreenViewModel> {
          GalleryScreenViewModel.Base(
-            item = communication,
-            list = galleryCommunication,
+            itemCommunication = communication,
+            listCommunication = galleryCommunication,
             async = AsyncViewModel.Base(RunAsync.Base(dispatchersList)),
             repository = get<GalleryRepository>(),
             imageIntentAction = get<ImageIntentAction.Mutable>(),

@@ -28,9 +28,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.markettwits.core_ui.extensions.noRippleClickable
-import com.markettwits.core_ui.theme.BlackScrim
-import com.markettwits.waifupics.gallery.items.components.animations.Animation
+import com.markettwits.theme.components.BlackScrim
 import com.markettwits.waifupics.gallery.item.components.info.InfoImageBottomSheet
+import com.markettwits.waifupics.gallery.items.components.animations.Animation
 
 
 @Composable
@@ -82,7 +82,7 @@ fun BoxScope.TopBarScreenImage(
                 Icon(Icons.Default.MoreVert, "", tint = Color.White)
             }
             if (infoImage) {
-                InfoImageBottomSheet() {
+                InfoImageBottomSheet {
                     infoImage = false
                 }
             }

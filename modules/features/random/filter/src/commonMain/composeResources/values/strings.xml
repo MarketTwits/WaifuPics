@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="filter">Filter</string>
+    <string name="age_rating">Age rating</string>
+    <string name="report_title">Report</string>
+    <string name="safe_for_work">Safe for work</string>
+    <string name="suggestive">Suggestive</string>
+    <string name="borderline">Borderline</string>
+    <string name="explicit_18">Explicit (18+)</string>
+</resources>

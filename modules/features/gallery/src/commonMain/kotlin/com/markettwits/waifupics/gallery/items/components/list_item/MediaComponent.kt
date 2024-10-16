@@ -8,7 +8,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import com.markettwits.core_ui.theme.Shapes
 import com.markettwits.waifupics.gallery.items.model.ImageFavoriteUi
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -22,7 +21,7 @@ fun LazyGridItemScope.MediaComponent(
 ) {
     val isSelected = remember { mutableStateOf(false) }
     Modifier
-        .clip(Shapes.extraSmall)
+        .clip(com.markettwits.theme.components.Shapes.extraSmall)
     MediaImage(
         image = media,
         selectionState = selectionState,

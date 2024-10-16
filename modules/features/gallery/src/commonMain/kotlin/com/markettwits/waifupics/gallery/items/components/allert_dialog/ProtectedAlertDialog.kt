@@ -19,9 +19,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.markettwits.core_ui.theme.Shapes
-import com.markettwits.core_ui.theme.Purple80
-import com.markettwits.core_ui.theme.PurpleGrey40
+import com.markettwits.theme.components.Purple80
+import com.markettwits.theme.components.PurpleGrey40
+import com.markettwits.theme.components.Shapes
 
 
 @OptIn(ExperimentalMaterial3Api::class)

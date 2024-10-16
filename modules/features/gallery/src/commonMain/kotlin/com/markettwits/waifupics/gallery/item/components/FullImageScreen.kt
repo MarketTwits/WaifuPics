@@ -15,7 +15,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.markettwits.core_ui.di.ApplicationViewModel
+import com.markettwits.core_ui.provider.ApplicationViewModel
 import com.markettwits.waifupics.gallery.item.components.bottomBar.BottomBarScreenImage
 import com.markettwits.waifupics.gallery.item.components.image.ZoomablePagerImage
 import com.markettwits.waifupics.gallery.item.components.topbar.TopBarScreenImage

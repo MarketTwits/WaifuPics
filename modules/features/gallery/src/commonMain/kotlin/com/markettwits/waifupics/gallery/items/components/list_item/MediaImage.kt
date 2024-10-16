@@ -23,10 +23,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import com.markettwits.core_ui.theme.Shapes
+import com.markettwits.theme.components.Shapes
 import com.markettwits.waifupics.gallery.items.components.animations.Animation
-import com.markettwits.waifupics.gallery.items.model.ImageFavoriteUi
 import com.markettwits.waifupics.gallery.items.components.picker.CheckBox
+import com.markettwits.waifupics.gallery.items.model.ImageFavoriteUi
 
 
 @Composable

@@ -15,12 +15,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.markettwits.core_ui.di.ApplicationViewModel
-import com.markettwits.waifupics.gallery.items.model.ImageFavoriteUi
-import com.markettwits.waifupics.gallery.items.model.ImageFavoriteUiState
+import com.markettwits.core_ui.provider.ApplicationViewModel
 import com.markettwits.waifupics.gallery.items.components.empty_item.EmptyGalleryItem
 import com.markettwits.waifupics.gallery.items.components.list_item.MediaComponent
 import com.markettwits.waifupics.gallery.items.components.picker.SelectionSheet
+import com.markettwits.waifupics.gallery.items.model.ImageFavoriteUi
+import com.markettwits.waifupics.gallery.items.model.ImageFavoriteUiState
 import com.markettwits.waifupics.gallery.items.viewmodel.GalleryViewModel
 
 
@@ -28,7 +28,7 @@ import com.markettwits.waifupics.gallery.items.viewmodel.GalleryViewModel
 fun GalleryScreen(onClickGoDetail : () -> Unit) {
 
     val viewModel: GalleryViewModel = ApplicationViewModel()
-    val state by viewModel.state().collectAsState()
+    val state by viewModel. state().collectAsState()
     val selected by viewModel.selectedState().collectAsState()
     val selectedMedia = viewModel.selectedPhotoState()
 

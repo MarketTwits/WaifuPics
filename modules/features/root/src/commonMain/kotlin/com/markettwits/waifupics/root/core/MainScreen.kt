@@ -7,12 +7,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.markettwits.waifupics.random_image.image.components.RandomImageScreen
 import com.markettwits.waifupics.about.AboutScreen
 import com.markettwits.waifupics.gallery.item.components.ImageScreenFull
 import com.markettwits.waifupics.gallery.items.components.GalleryScreen
 import com.markettwits.waifupics.navigation.NavigationItem
 import com.markettwits.waifupics.navigation.NavigationScreen
+import com.markettwits.waifupics.random.components.RandomImageScreen
 
 
 @Composable

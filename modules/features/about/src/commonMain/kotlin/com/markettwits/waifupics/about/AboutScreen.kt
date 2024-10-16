@@ -23,10 +23,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.markettwits.core_ui.components.text.HyperlinkText
 import com.markettwits.core_ui.components.image.DefaultImages
-import com.markettwits.core_ui.theme.FontRubik
-import com.markettwits.core_ui.theme.Pink
+import com.markettwits.core_ui.components.text.HyperlinkText
 import org.jetbrains.compose.resources.stringResource
 import waifupics.modules.features.about.generated.resources.Res
 import waifupics.modules.features.about.generated.resources.a_simple_api_for_nekos
@@ -64,7 +62,6 @@ fun AboutScreen() {
                 modifier = Modifier.size(64.dp)
             )
             Spacer(modifier = Modifier.padding(20.dp))
-            // display the title text
             Text(
                 text = "NekosApi",
                 fontSize = 32.sp,
@@ -106,9 +103,9 @@ fun AboutScreen() {
         )
         HyperlinkText(
             fontSize = 16.sp,
-            linkTextFontFamily = FontRubik.medium(),
+            linkTextFontFamily = com.markettwits.theme.components.FontRubik.medium(),
             fullTextColor = MaterialTheme.colorScheme.onPrimary,
-            linkTextColor = Pink,
+            linkTextColor = com.markettwits.theme.components.Pink,
             fullText = stringResource(Res.string.documentation_text),
             linkText = listOf(stringResource(Res.string.this_page)),
             hyperlinks = listOf(stringResource(Res.string.freecodecamp_url))
@@ -120,9 +117,9 @@ fun AboutScreen() {
         )
         HyperlinkText(
             fontSize = 16.sp,
-            linkTextFontFamily = FontRubik.medium(),
+            linkTextFontFamily = com.markettwits.theme.components.FontRubik.medium(),
             fullTextColor = MaterialTheme.colorScheme.onPrimary,
-            linkTextColor = Pink,
+            linkTextColor = com.markettwits.theme.components.Pink,
             fullText = stringResource(Res.string.source_code_link_text),
             linkText = listOf(stringResource(Res.string.github)),
             hyperlinks = listOf(stringResource(Res.string.https_github_com_nekos_api_nekos_api))

@@ -1,10 +1,10 @@
 package com.markettwits.waifupics.navigation
 
 import androidx.lifecycle.ViewModel
-import com.markettwits.cache.settings.ColorTheme
-import com.markettwits.cache.settings.WaifuPicsAppSettings
-import com.markettwits.async.communication.StateCommunication
-import com.markettwits.async.wrappers.AsyncViewModel
+import com.markettwits.async.AsyncViewModel
+import com.markettwits.waifupics.communication.StateCommunication
+import com.markettwits.waifupics.settings.WaifuPicsAppSettings
+import com.markettwits.waifupics.settings.params.ColorTheme
 import kotlinx.coroutines.flow.StateFlow
 
 interface NavigationViewModel {

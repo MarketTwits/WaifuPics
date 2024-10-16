@@ -14,9 +14,8 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.sp
 import com.markettwits.core_ui.extensions.extractSiteName
 import com.markettwits.core_ui.extensions.noRippleClickable
-import com.markettwits.core_ui.theme.FontRubik
-import com.markettwits.core_ui.theme.LightPink
-
+import com.markettwits.theme.components.FontRubik
+import com.markettwits.theme.components.LightPink
 
 
 @Composable
@@ -85,7 +84,7 @@ fun MultyLinksText(
             fontFamily = FontRubik.medium(),
             fontSize = 14.sp
         )
-        LazyRow() {
+        LazyRow {
             items(links) {
                 val text = if (it.isEmpty()) " No data source" else formatUrl(it)
                 Text(
