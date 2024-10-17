@@ -30,7 +30,7 @@ import com.markettwits.waifupics.gallery.item.viewmodel.GalleryScreenViewModel
 
 
 @Composable
-fun InfoImageContent(
+internal fun InfoImageContent(
     modifier: Modifier = Modifier,
     onDismiss: () -> Unit
 ) {

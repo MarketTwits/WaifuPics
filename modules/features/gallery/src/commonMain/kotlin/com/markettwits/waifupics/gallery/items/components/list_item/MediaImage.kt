@@ -30,7 +30,7 @@ import com.markettwits.waifupics.gallery.items.model.ImageFavoriteUi
 
 
 @Composable
-fun MediaImage(
+internal fun MediaImage(
     image: ImageFavoriteUi,
     selectionState: Boolean,
     selectedMedia: List<ImageFavoriteUi>,

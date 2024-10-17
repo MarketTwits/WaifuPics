@@ -12,7 +12,7 @@ import com.markettwits.waifupics.gallery.items.model.ImageFavoriteUi
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun LazyGridItemScope.MediaComponent(
+internal fun LazyGridItemScope.MediaComponent(
     media: ImageFavoriteUi,
     selectionState: Boolean,
     selectedMedia: List<ImageFavoriteUi>,

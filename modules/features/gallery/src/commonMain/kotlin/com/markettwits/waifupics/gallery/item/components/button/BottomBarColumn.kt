@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.markettwits.theme.components.Shapes
 
 @Composable
-fun BottomBarColumn(
+internal fun BottomBarColumn(
     imageVector: ImageVector,
     title: String,
     followTheme: Boolean = false,

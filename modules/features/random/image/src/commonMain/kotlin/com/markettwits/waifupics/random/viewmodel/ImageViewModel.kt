@@ -17,8 +17,6 @@ interface ImageViewModel : StateCommunication.State<RandomImageState> {
 
     fun onClickShareImage()
 
-    fun onClickReported()
-
     fun onClickAddToFavorite()
 
     fun fetchRandomImage()
@@ -84,15 +82,6 @@ interface ImageViewModel : StateCommunication.State<RandomImageState> {
                     success.protected
                 )
             }) {}
-        }
-
-        override fun onClickReported() {
-            val success = loadedImageCommunication.state().value as ImageState.Success
-            async.handleAsync({
-                repository.reportImage(success.id)
-            }) {
-                //TODO add request
-            }
         }
 
         override fun obtainImageState(state: ImageState) {

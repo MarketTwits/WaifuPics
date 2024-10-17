@@ -1,4 +1,4 @@
-package com.markettwits.waifupics.filter.domain
+package com.markettwits.waifupics.filter.data
 
 import com.markettwits.waifupics.filter.model.FilterItem
 import waifupics.modules.features.random.filter.generated.resources.Res

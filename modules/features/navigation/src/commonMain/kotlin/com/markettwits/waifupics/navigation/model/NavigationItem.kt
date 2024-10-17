@@ -1,4 +1,4 @@
-package com.markettwits.waifupics.navigation
+package com.markettwits.waifupics.navigation.model
 
 
 import androidx.compose.runtime.Composable

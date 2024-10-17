@@ -24,7 +24,7 @@ import com.markettwits.waifupics.gallery.item.components.button.ShareButton
 import com.markettwits.waifupics.gallery.items.components.animations.Animation
 
 @Composable
-fun BoxScope.BottomBarScreenImage(
+internal fun BoxScope.BottomBarScreenImage(
     showUI: Boolean,
     onClickShareImage: () -> Unit,
     onClickDeleteImage: () -> Unit

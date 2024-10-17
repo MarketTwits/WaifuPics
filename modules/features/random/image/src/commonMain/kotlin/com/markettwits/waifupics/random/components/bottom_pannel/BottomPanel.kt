@@ -21,6 +21,7 @@ internal fun BottomPanel(
     modifier: Modifier = Modifier,
     isEnabled : Boolean,
     isRefresh : Boolean,
+    imageId : Int,
     onClickAddToFavorite : () -> Unit,
     onClickFetchRandomImage : () -> Unit,
     onClickShareImage : () -> Unit,
@@ -55,6 +56,7 @@ internal fun BottomPanel(
         ReportedButton(
             modifier = Modifier.weight(1f),
             enabled = isEnabled,
+            imageId = imageId
         )
     }
 }

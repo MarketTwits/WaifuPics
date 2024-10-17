@@ -2,8 +2,8 @@ package com.markettwits.waifupics.filter.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.markettwits.waifupics.communication.StateCommunication
+import com.markettwits.waifupics.filter.data.FilterDataSource
 import com.markettwits.waifupics.filter.domain.FilterChecked
-import com.markettwits.waifupics.filter.domain.FilterDataSource
 import com.markettwits.waifupics.filter.model.FilterItem
 import com.markettwits.waifupics.filter.model.FilterState
 import kotlinx.coroutines.flow.StateFlow

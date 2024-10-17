@@ -4,7 +4,7 @@ import io.github.xxfast.kstore.KStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class WaifuPicsAppSettingsBase(
+internal class WaifuPicsAppSettingsBase(
     private val store: KStore<ApplicationSettings>
 ) : WaifuPicsAppSettings {
 

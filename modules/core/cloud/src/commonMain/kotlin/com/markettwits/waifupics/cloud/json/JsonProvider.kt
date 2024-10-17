@@ -1,4 +1,4 @@
-package com.markettwits.core_cloud.provider
+package com.markettwits.waifupics.cloud.json
 
 import kotlinx.serialization.json.Json
 

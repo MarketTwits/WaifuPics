@@ -9,7 +9,7 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 
 
-val cloudDataSourceModule = module{
+val nekoServiceCloudModule = module{
     singleOf(::NekoServiceBase) bind NekoService::class
     singleOf(::HttpClientProviderBase) bind HttpClientProvider::class
     single<Json>{

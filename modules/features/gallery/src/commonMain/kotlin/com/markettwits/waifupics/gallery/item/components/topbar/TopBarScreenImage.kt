@@ -34,7 +34,7 @@ import com.markettwits.waifupics.gallery.items.components.animations.Animation
 
 
 @Composable
-fun BoxScope.TopBarScreenImage(
+internal fun BoxScope.TopBarScreenImage(
     showUI: Boolean,
     createdDate : String,
     onClickGoBack : () -> Unit

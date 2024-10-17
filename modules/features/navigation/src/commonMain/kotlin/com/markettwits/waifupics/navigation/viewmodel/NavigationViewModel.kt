@@ -1,4 +1,4 @@
-package com.markettwits.waifupics.navigation
+package com.markettwits.waifupics.navigation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.markettwits.async.AsyncViewModel

@@ -21,6 +21,7 @@ class NetworkExceptionMapper {
             } else {
                 NetworkException.WrongRequest(throwable.message)
             }
+
             is ServerResponseException -> NetworkException.NoInternetException("Ooops, check your internet connection")
             else -> NetworkException.General()
         }

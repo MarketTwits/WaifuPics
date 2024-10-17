@@ -10,8 +10,8 @@ import androidx.navigation.compose.rememberNavController
 import com.markettwits.waifupics.about.AboutScreen
 import com.markettwits.waifupics.gallery.item.components.ImageScreenFull
 import com.markettwits.waifupics.gallery.items.components.GalleryScreen
-import com.markettwits.waifupics.navigation.NavigationItem
-import com.markettwits.waifupics.navigation.NavigationScreen
+import com.markettwits.waifupics.navigation.components.NavigationScreen
+import com.markettwits.waifupics.navigation.model.NavigationItem
 import com.markettwits.waifupics.random.components.RandomImageScreen
 
 

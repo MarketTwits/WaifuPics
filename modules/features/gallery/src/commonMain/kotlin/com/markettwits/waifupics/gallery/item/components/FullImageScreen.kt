@@ -90,7 +90,6 @@ fun ImageScreenFull(
             onClickDeleteImage = {
                 viewModel.onClickDelete()
             },
-
             onClickShareImage = {
                 viewModel.onClickShareImage()
             }

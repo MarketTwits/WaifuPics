@@ -1,4 +1,4 @@
-package com.markettwits.waifupics.navigation
+package com.markettwits.waifupics.navigation.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
@@ -19,8 +19,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import com.markettwits.core_ui.provider.ApplicationViewModel
-import com.markettwits.waifupics.navigation.components.NavigationBody
-import com.markettwits.waifupics.navigation.components.TopBarPanel
+import com.markettwits.waifupics.navigation.model.NavigationItem
+import com.markettwits.waifupics.navigation.viewmodel.NavigationViewModel
 import kotlinx.coroutines.launch
 
 
