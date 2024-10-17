@@ -2,7 +2,7 @@ package com.markettwits.cache.image
 
 import kotlinx.coroutines.flow.Flow
 
-interface ImageRepository {
+interface ImageCacheRepository {
 
     fun observe(): Flow<List<ImageFavoriteCache>>
 
@@ -33,7 +33,7 @@ interface ImageRepository {
     class Base(
         private val database: ImagesCacheDataSource,
         private val uiToCache: ImageUiToCacheMapper,
-    ) : ImageRepository {
+    ) : ImageCacheRepository {
 
         override suspend fun deleteList(id: List<Int>, url: List<String>) {
             database.delete(id)

@@ -1,16 +1,23 @@
 package com.markettwits.waifupics.random.model
 
+import androidx.compose.runtime.Stable
 
-interface RandomImageState {
 
+@Stable
+sealed interface RandomImageState {
+
+    @Stable
     object Initial : RandomImageState
 
+    @Stable
     object Progress : RandomImageState
 
+    @Stable
     data class Error(val message: String) : RandomImageState
 
-    interface Success : RandomImageState {
+    sealed interface Success : RandomImageState {
 
+        @Stable
         data class EmptyAuthor(
             val id: Int,
             val imageUrl: String,
@@ -18,6 +25,7 @@ interface RandomImageState {
             val imageData: ImageSourceUi,
         ) : Success
 
+        @Stable
         data class WithAuthor(
             val id: Int,
             val imageUrl: String,

@@ -5,11 +5,11 @@ import com.markettwits.async.RunAsync
 import com.markettwits.async.dispatchersList
 import com.markettwits.cache.image.cacheDataSourceModule
 import com.markettwits.image_action.api.imageActionModule
-import com.markettwits.waifupics.filter.domain.FilterDataSource
-import com.markettwits.waifupics.random.cloud.cloudDataSourceModule
+import com.markettwits.waifupics.filter.data.FilterDataSource
+import com.markettwits.waifupics.random.cloud.nekoServiceCloudModule
 import com.markettwits.waifupics.random.data.RandomImageMapperCloud
 import com.markettwits.waifupics.random.data.RandomImageRepository
-import com.markettwits.waifupics.random.report.mapper.ReportedImageMapper
+import com.markettwits.waifupics.random.report.api.reportImageModule
 import com.markettwits.waifupics.random.viewmodel.ImageViewModel
 import com.markettwits.waifupics.random.viewmodel.LoadedImageCommunication
 import com.markettwits.waifupics.random.viewmodel.RandomImageCommunication
@@ -18,7 +18,7 @@ import com.markettwits.waifupics.result.NetworkExceptionMapper
 import org.koin.dsl.module
 
 val randomImageModule = module {
-    includes(cloudDataSourceModule, cacheDataSourceModule,imageActionModule)
+    includes(nekoServiceCloudModule, cacheDataSourceModule, imageActionModule, reportImageModule)
     val filterCommunication = com.markettwits.waifupics.filter.viewmodel.FilterCommunication.Base()
     single<com.markettwits.waifupics.filter.viewmodel.AgeRatingFilterCommunication> {
         com.markettwits.waifupics.filter.viewmodel.AgeRatingFilterCommunication.Base()
@@ -33,7 +33,6 @@ val randomImageModule = module {
             repository = RandomImageRepository.Base(
                 service = get(),
                 imageMapperCloud = RandomImageMapperCloud(),
-                reportedImageMapperCloud = ReportedImageMapper(),
                 handleNetwork = HandleNetworkResult.Base(
                     NetworkExceptionMapper()
                 ),

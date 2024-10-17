@@ -23,7 +23,5 @@ interface NekoService {
      * Reports an image with the specified ID to the Nekos API.
      * @param id The ID of the image to report.
      */
-    suspend fun report(
-       id : Int
-    )
+    suspend fun report(id : Int)
 }

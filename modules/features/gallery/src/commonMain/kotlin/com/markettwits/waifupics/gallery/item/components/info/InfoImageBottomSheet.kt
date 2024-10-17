@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun InfoImageBottomSheet(modifier : Modifier = Modifier, onDismiss: () -> Unit) {
+internal fun InfoImageBottomSheet(modifier : Modifier = Modifier, onDismiss: () -> Unit) {
     val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val scope = rememberCoroutineScope()
     ModalBottomSheet(

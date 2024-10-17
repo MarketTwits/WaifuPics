@@ -21,7 +21,7 @@ import com.markettwits.waifupics.random.components.image_state.loading.ImageLoad
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-internal fun ImageCard(
+internal fun ImageCardContent(
     modifier: Modifier = Modifier,
     imageUrl: String,
     id: Int,

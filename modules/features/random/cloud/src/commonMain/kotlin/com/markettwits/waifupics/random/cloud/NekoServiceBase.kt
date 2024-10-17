@@ -32,10 +32,10 @@ internal class NekoServiceBase(
     }
 
     override suspend fun report(id: Int) {
-        val response = client.post("images/$id/report") {
+        client.post("images/report") {
+            parameter("id", id)
             contentType(ContentType.Application.Json)
         }
-        return json.decodeFromString(response.body())
     }
 
     companion object {

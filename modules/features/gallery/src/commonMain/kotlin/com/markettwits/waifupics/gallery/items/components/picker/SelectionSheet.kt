@@ -41,7 +41,7 @@ import waifupics.modules.features.gallery.generated.resources.selected_count
 
 
 @Composable
-fun SelectionSheet(
+internal fun SelectionSheet(
     modifier: Modifier = Modifier,
     selectedMedia: List<ImageFavoriteUi>,
     selectionState: Boolean,

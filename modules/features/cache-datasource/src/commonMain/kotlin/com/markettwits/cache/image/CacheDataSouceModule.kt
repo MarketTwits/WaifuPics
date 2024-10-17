@@ -11,7 +11,7 @@ val cacheDataSourceModule = module {
             fileName = "nekosApiImages"
         )
     )
-    single<ImageRepository> {
-        ImageRepository.Base(database = imagesCacheDataSource, ImageUiToCacheMapper.Base())
+    single<ImageCacheRepository> {
+        ImageCacheRepository.Base(database = imagesCacheDataSource, ImageUiToCacheMapper.Base())
     }
 }

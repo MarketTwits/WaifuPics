@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.sp
 import com.markettwits.core_ui.extensions.noRippleClickable
 import com.markettwits.theme.components.FontRubik
 import com.markettwits.theme.components.LightPink
-import com.markettwits.waifupics.navigation.NavigationItem
+import com.markettwits.waifupics.navigation.model.NavigationItem
 
 @Composable
 fun NavigationBody(

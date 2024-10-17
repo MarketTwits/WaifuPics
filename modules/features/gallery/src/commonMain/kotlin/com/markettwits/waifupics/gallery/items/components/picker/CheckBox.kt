@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 
 @Composable
-fun CheckBox(
+internal fun CheckBox(
     modifier: Modifier = Modifier,
     isChecked: Boolean,
     onCheck: (() -> Unit)? = null

@@ -10,15 +10,18 @@ android {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation(project(path = ":modules:core:async"))
-            implementation(project(path = ":modules:core:core-ui"))
-            implementation(project(path = ":modules:core:image-action:core"))
-            implementation(project(path = ":modules:core:communication"))
-            implementation(project(path = ":modules:core:result"))
-            implementation(project(path = ":modules:features:cache-datasource"))
-            implementation(project(path = ":modules:features:random:cloud"))
-            implementation(project(path = ":modules:features:random:filter"))
-            implementation(project(path = ":modules:features:random:report"))
+            implementation(projects.modules.core.result)
+            implementation(projects.modules.core.communication)
+            implementation(projects.modules.core.imageAction.core)
+            implementation(projects.modules.core.coreUi)
+            implementation(projects.modules.core.async)
+
+            implementation(projects.modules.features.cacheDatasource)
+            implementation(projects.modules.features.random.cloud)
+            implementation(projects.modules.features.random.report)
+            implementation(projects.modules.features.random.filter)
+            implementation(projects.modules.features.random.report)
+
             implementation(libs.koin.core)
             implementation(compose.components.resources)
             implementation(libs.kotlinx.serialization.json)

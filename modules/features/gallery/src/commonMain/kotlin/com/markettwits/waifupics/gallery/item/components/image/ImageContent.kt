@@ -22,7 +22,7 @@ import waifupics.modules.features.gallery.generated.resources.image
 
 
 @Composable
-fun ZoomablePagerImage(
+internal fun ZoomablePagerImage(
     modifier: Modifier = Modifier,
     imageUrl: String,
     uiEnabled: Boolean,

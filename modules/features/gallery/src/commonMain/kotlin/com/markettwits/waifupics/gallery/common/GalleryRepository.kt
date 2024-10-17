@@ -1,6 +1,6 @@
 package com.markettwits.waifupics.gallery.common
 
-import com.markettwits.cache.image.ImageRepository
+import com.markettwits.cache.image.ImageCacheRepository
 import com.markettwits.image_action.api.ImageLoader
 import com.markettwits.waifupics.gallery.items.model.ImageFavoriteUiState
 import kotlinx.coroutines.flow.Flow
@@ -17,7 +17,7 @@ interface GalleryRepository {
     suspend fun saveToGallery(url: String)
 
     class Base(
-        private val dataSource: ImageRepository,
+        private val dataSource: ImageCacheRepository,
         private val cacheToUiMapper: FavoriteImageCacheToUiMapper,
         private val imageLoader: ImageLoader,
     ) : GalleryRepository {
