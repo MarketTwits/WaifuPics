@@ -3,6 +3,7 @@ package com.markettwits.waifupics.navigation.components
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -29,7 +30,7 @@ fun NavigationScreen(
     modifier: Modifier = Modifier,
     isShowTopBar: Boolean,
     onClickNavigationItem: (NavigationItem) -> Unit,
-    content: @Composable () -> Unit
+    content: @Composable (PaddingValues) -> Unit
 ) {
     val viewModel: NavigationViewModel = ApplicationViewModel<NavigationViewModel.Base>()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -68,9 +69,15 @@ fun NavigationScreen(
                 )
             }
         ) {
-            Column(modifier = Modifier.padding(top = paddingValues.calculateTopPadding())) {
-                content()
-            }
+            content(paddingValues)
+//            Column(
+//                modifier = Modifier
+//                    .padding(
+//                top = paddingValues.calculateTopPadding())
+           // )
+//            {
+//                content(it)
+//            }
         }
     }
 }

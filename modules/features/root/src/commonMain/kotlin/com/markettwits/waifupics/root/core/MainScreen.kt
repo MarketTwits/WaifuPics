@@ -1,5 +1,6 @@
 package com.markettwits.waifupics.root.core
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -27,22 +28,23 @@ fun MainScreen(
         isShowTopBar = navBackStackEntry?.destination?.route != Screen.GalleryItem.route(),
         onClickNavigationItem = {
             navController.navigate(it.mapToScreen().route())
-        }, content = {
+        }, content = { paddingValues ->
             NavHost(
                 navController = navController,
                 startDestination = Screen.Main.route(),
                 modifier = modifier
             ) {
                 composable(Screen.Main.route()) {
-                    RandomImageScreen()
+                    RandomImageScreen(paddingValues = paddingValues)
                 }
                 composable(Screen.About.route()) {
-                    AboutScreen()
+                    AboutScreen(paddingValues = paddingValues)
                 }
                 composable(Screen.Gallery.route()) {
                     GalleryScreen(onClickGoDetail = {
                         navController.navigate(Screen.GalleryItem.route())
-                    })
+                    }, paddingValues
+                    )
                 }
                 composable(Screen.GalleryItem.route()) {
                     ImageScreenFull {

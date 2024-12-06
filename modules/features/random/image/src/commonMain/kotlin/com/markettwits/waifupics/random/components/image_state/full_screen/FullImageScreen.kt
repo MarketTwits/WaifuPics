@@ -42,7 +42,6 @@ internal fun FullImageScreen(
         ) {
             SubcomposeAsyncImage(
                 model = imageUrl,
-                filterQuality = FilterQuality.Medium,
                 contentDescription = "",
                 contentScale = ContentScale.Fit,
                 modifier = Modifier

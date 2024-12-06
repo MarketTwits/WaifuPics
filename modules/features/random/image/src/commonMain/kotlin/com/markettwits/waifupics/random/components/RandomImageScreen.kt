@@ -2,6 +2,11 @@ package com.markettwits.waifupics.random.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
@@ -21,10 +26,15 @@ import com.markettwits.waifupics.random.model.RandomImageState
 import com.markettwits.waifupics.random.viewmodel.ImageViewModel
 
 @Composable
-fun RandomImageScreen(viewModel: ImageViewModel = ApplicationViewModel()) {
+fun RandomImageScreen(
+    viewModel: ImageViewModel = ApplicationViewModel(),
+    paddingValues: PaddingValues
+) {
 
     Column(
-        modifier = Modifier.verticalScroll(rememberScrollState()),
+        modifier = Modifier
+            .padding(top = paddingValues.calculateTopPadding())
+            .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
