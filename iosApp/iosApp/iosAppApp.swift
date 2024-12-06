@@ -2,7 +2,7 @@
 //  iosAppApp.swift
 //  iosApp
 //
-//  Created by Наталья Троянова on 03.07.2024.
+//  Created by MarketTWits on 03.07.2024.
 //
 
 import SwiftUI
