@@ -13,6 +13,7 @@ import waifupics.modules.features.navigation.generated.resources.home_menu_icon
 sealed interface NavigationItem {
 
     val isSelected: Boolean
+
     val title: String
 
     fun copy(selected: Boolean): NavigationItem

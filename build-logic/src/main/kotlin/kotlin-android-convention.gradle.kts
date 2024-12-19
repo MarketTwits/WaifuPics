@@ -4,7 +4,6 @@ import extension.libs
 
 configure<BaseExtension> {
 
-
     compileSdkVersion(libs.versions.compileSdk.get().toString().toInt())
 
     defaultConfig {
@@ -12,10 +11,7 @@ configure<BaseExtension> {
         targetSdk = libs.versions.targetSdk.get().toString().toInt()
         versionName = libs.versions.versionName.get().toString()
         versionCode = extension.versionCode(versionName ?: "")
-        testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
     }
-
-
 
     compileOptions {
         sourceCompatibility = projectJavaVersion

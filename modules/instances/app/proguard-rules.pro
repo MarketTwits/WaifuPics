@@ -9,15 +9,16 @@
  -keepclasseswithmembers class kotlinx.serialization.json.** {
      kotlinx.serialization.KSerializer serializer(...);
  }
- -keep public class * extends android.app.Activity
-  -keep,allowobfuscation,allowshrinking class kotlin.coroutines.Continuation
- -dontwarn javax.annotation.**
+ #-keep public class * extends android.app.Activity
 
--keepclassmembers class androidx.compose.ui.platform.ViewLayerContainer {
-    protected void dispatchGetDisplayList(); }
+ ## -keep,allowobfuscation,allowshrinking class kotlin.coroutines.Continuation
+## -dontwarn javax.annotation.**
 
--keepclassmembers class androidx.compose.ui.platform.AndroidComposeView {
-    android.view.View findViewByAccessibilityIdTraversal(int); }
+##-keepclassmembers class androidx.compose.ui.platform.ViewLayerContainer {
+ ##   protected void dispatchGetDisplayList(); }
 
--keep,allowshrinking class * extends androidx.compose.ui.node.ModifierNodeElement
+##-keepclassmembers class androidx.compose.ui.platform.AndroidComposeView {
+ ##   android.view.View findViewByAccessibilityIdTraversal(int); }
+
+##-keep,allowshrinking class * extends androidx.compose.ui.node.ModifierNodeElement
 
