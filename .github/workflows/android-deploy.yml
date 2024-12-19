@@ -28,6 +28,10 @@ jobs:
           KEYSTORE_FILE: ${{ secrets.KEYSTORE_FILE }}
         run: echo "$KEYSTORE_FILE" | base64 -d > waifupics-key-store.key
 
+      # Add Build Tools to PATH
+      - name: Add Build Tools to PATH
+        run: echo "$ANDROID_HOME/build-tools/33.0.2" >> $GITHUB_PATH
+
       # Set up Android SDK
       - name: Set up Android SDK
         uses: android-actions/setup-android@v2
