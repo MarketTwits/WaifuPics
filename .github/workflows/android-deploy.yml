@@ -50,7 +50,7 @@ jobs:
       - name: Find APK file
         id: apk
         run: |
-          APK_PATH=$(find modules/instances/app/release/ -name "app-release.apk" | head -n 1)
+          APK_PATH=$(find modules/instances/app/build/outputs/apk/release/ -name "app-release-unsigned.apk" | head -n 1)
           if [ -z "$APK_PATH" ]; then
             echo "Error: APK not found!" && exit 1
           fi
