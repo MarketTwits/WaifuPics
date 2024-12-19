@@ -76,25 +76,23 @@ jobs:
         run: |
           zipalign -v -p 4 $APK_PATH waifupics-${{ env.VERSION_NAME }}.apk
 
-      # Upload the APK as a release artifact
       - name: Create GitHub Release
         id: create_release
         uses: actions/create-release@v1
         with:
-          tag_name: v${{ env.VERSION_NAME }}
-          release_name: "Release v${{ env.VERSION_NAME }}"
-          body: "Release of version ${{ env.VERSION_NAME }}"
-          draft: false
-          prerelease: false
+            tag_name: v${{ env.VERSION_NAME }}
+            release_name: "Release v${{ env.VERSION_NAME }}"
+            body: "Release of version ${{ env.VERSION_NAME }}"
+            draft: false
+            prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # Upload the APK to the created release
       - name: Upload APK to GitHub Release
         uses: actions/upload-release-asset@v1
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: waifupics-${{ env.VERSION_NAME }}.apk
-          asset_name: waifupics-${{ env.VERSION_NAME }}.apk
-          asset_content_type: application/vnd.android.package-archive
+            upload_url: ${{ steps.create_release.outputs.upload_url }}
+            asset_path: waifupics-${{ env.VERSION_NAME }}.apk
+            asset_name: waifupics-${{ env.VERSION_NAME }}.apk
+            asset_content_type: application/vnd.android.package-archive
 
