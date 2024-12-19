@@ -96,5 +96,5 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: waifupics-${{ env.VERSION_NAME }}.apk
           asset_name: waifupics-${{ env.VERSION_NAME }}.apk
-          content_type: application/vnd.android.package-archive
+          asset_content_type: application/vnd.android.package-archive
 
