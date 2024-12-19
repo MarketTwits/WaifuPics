@@ -39,18 +39,18 @@ jobs:
       - name: Extract version number
         id: version
         run: |
-          VERSION_NAME=$(grep "versionName" app/build.gradle | awk '{print $2}' | tr -d '"')
+          VERSION_NAME=$(grep "versionName" modules/instances/app/build.gradle | awk '{print $2}' | tr -d '"')
           echo "VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
 
       # Build the APK
       - name: Build APK
-        run: ./gradlew assembleRelease --stacktrace
+        run: ./gradlew :modules:instances:app:assembleRelease --stacktrace
 
       # Find APK file
       - name: Find APK file
         id: apk
         run: |
-          APK_PATH=$(find app/release/ -name "app-release.apk" | head -n 1)
+          APK_PATH=$(find modules/instances/app/build/outputs/ -name "app-release.apk" | head -n 1)
           if [ -z "$APK_PATH" ]; then
             echo "Error: APK not found!" && exit 1
           fi
@@ -80,3 +80,4 @@ jobs:
           asset_path: waifupics-${{ env.VERSION_NAME }}.apk
           asset_name: waifupics-${{ env.VERSION_NAME }}.apk
           content_type: application/vnd.android.package-archive
+
