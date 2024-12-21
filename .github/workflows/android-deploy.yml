@@ -46,7 +46,7 @@ jobs:
 
       # Decode keystore
       - name: Decode keystore
-        run: echo "${{ secrets.KEYSTORE_JKS_BASE64 }}" | base64 --decode > keystore.jks
+        run: echo "${{ secrets.KEYSTORE_FILE }}" | base64 --decode > keystore.jks
 
       # Extract versionName from `libs.versions.toml`
       - name: Extract version number
@@ -54,6 +54,16 @@ jobs:
         run: |
           VERSION_NAME=$(grep 'versionName =' gradle/libs.versions.toml | cut -d '"' -f 2)
           echo "VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
+
+      # Generate `keystore.properties`
+      - name: Generate keystore.properties
+        run: |
+          cat <<EOF > keystore.properties
+          storePassword=${{ secrets.KEYSTORE_PASSWORD }}
+          keyPassword=${{ secrets.KEY_PASSWORD }}
+          keyAlias=${{ secrets.KEY_ALIAS }}
+          storeFile=keystore.jks
+          EOF
 
       # Build APK
       - name: Build release APK
@@ -73,9 +83,9 @@ jobs:
           release_name: "Release ${{ env.VERSION_NAME }}"
           body: "Release of version ${{ env.VERSION_NAME }}"
           draft: false
-          prerelease: true
+          prerelease: false
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
 
       # Upload APK to GitHub Release
       - name: Upload APK to GitHub Release
