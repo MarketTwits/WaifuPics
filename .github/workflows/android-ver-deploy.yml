@@ -3,7 +3,7 @@ name: Build APK with Dynamic Versioning
 on:
   push:
     branches:
-      - main
+      - NK/03-migrate-kmp
   workflow_dispatch:
 
 jobs:
