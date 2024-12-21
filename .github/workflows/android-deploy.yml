@@ -51,9 +51,8 @@ jobs:
         id: artifacts_copy
         run: |
           mkdir -p artifacts
-          cp ${{ steps.sign_apk.outputs.signedReleaseFile }} artifacts/AppName-${{ env.VERSION_NAME }}.apk
-          cp modules/instances/app/build/outputs/mapping/release/mapping.txt artifacts/mapping-${{ env.VERSION_NAME }}.txt
-          echo "path=artifacts/" >> $GITHUB_OUTPUT
+           cp ${{ steps.sign_apk.outputs.signedReleaseFile }} artifacts/AppName-${{ env.VERSION_NAME }}.apk
+           echo "path=artifacts/" >> $GITHUB_OUTPUT
 
       # Upload artifacts
       - name: Upload Artifacts
