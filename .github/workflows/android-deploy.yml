@@ -60,7 +60,7 @@ jobs:
       - name: Find unsigned APK
         id: apk
         run: |
-          APK_PATH=$(find ./app/build/outputs/apk/release/ -name "*-unsigned.apk" | head -n 1)
+          APK_PATH=$(find ./app/build/outputs/apk/release/ -name "*app-release-unsigned.apk" | head -n 1)
           if [ -z "$APK_PATH" ]; then
             echo "Error: Unsigned APK not found!" && exit 1
           fi
