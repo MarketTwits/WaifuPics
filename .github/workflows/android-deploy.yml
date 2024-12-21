@@ -16,13 +16,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Set up JDK 11
-      - name: Set up JDK 11
+      # Set up JDK
+      - name: Set up JDK
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
-
       # Extract versionName from `libs.versions.toml`
       - name: Extract version number
         id: version
@@ -36,6 +35,7 @@ jobs:
 
       # Use r0adkll/sign-android-release to sign the APK
       - name: Sign APK
+        id: sign_apk
         uses: r0adkll/sign-android-release@v1
         with:
           releaseDirectory: modules/instances/app/build/outputs/apk/release
@@ -43,12 +43,24 @@ jobs:
           alias: ${{ secrets.KEY_ALIAS }}
           keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
+        env:
+          BUILD_TOOLS_VERSION: "34.0.0"
 
-      # Rename the signed APK
-      - name: Rename signed APK
+      # Copy artifacts (APK, mapping.txt, etc.)
+      - name: Copy artifacts
+        id: artifacts_copy
         run: |
-          mv "modules/instances/app/build/outputs/apk/release/app-release.apk" \
-          "modules/instances/app/build/outputs/apk/release/AppName-${{ env.VERSION_NAME }}.apk"
+          mkdir -p artifacts
+          cp ${{ steps.sign_apk.outputs.signedReleaseFile }} artifacts/AppName-${{ env.VERSION_NAME }}.apk
+          cp modules/instances/app/build/outputs/mapping/release/mapping.txt artifacts/mapping-${{ env.VERSION_NAME }}.txt
+          echo "path=artifacts/" >> $GITHUB_OUTPUT
+
+      # Upload artifacts
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: artifacts-${{ env.VERSION_NAME }}
+          path: ${{ steps.artifacts_copy.outputs.path }}
 
       # Create GitHub Release
       - name: Create GitHub Release
@@ -62,3 +74,12 @@ jobs:
           prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+
+      # Upload signed APK to GitHub Release
+      - name: Upload signed APK to GitHub Release
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: artifacts/AppName-${{ env.VERSION_NAME }}.apk
+          asset_name: "AppName-${{ env.VERSION_NAME }}.apk"
+          asset_content_type: application/vnd.android.package-archive
