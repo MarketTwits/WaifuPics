@@ -1,8 +1,7 @@
 name: Deploy Compose Web App (JS)
 
 on:
-  push:
-    branches: [NK/03-migrate-kmp]
+  workflow_dispatch
 permissions:
   contents: write
 
