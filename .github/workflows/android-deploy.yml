@@ -13,7 +13,8 @@ jobs:
 
     steps:
       # Checkout the repository
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       # Set up JDK 11
       - name: Set up JDK 11
@@ -22,20 +23,6 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      # Generate `keystore.properties`
-      - name: Generate keystore.properties
-        run: |
-          cat <<EOF > keystore.properties
-          storePassword:${{ secrets.KEYSTORE_STORE_PASSWORD }}
-          keyPassword:${{ secrets.KEYSTORE_KEY_PASSWORD }}
-          keyAlias:${{ secrets.KEYSTORE_KEY_ALIAS }}
-          storeFile:${{ vars.KEYSTORE_STORE_FILE_PATH }}
-          EOF
-
-      # Decode keystore
-      - name: Decode keystore
-        run: echo "${{ secrets.KEYSTORE_FILE }}" | base64 --decode > keystore.jks
-
       # Extract versionName from `libs.versions.toml`
       - name: Extract version number
         id: version
@@ -43,44 +30,25 @@ jobs:
           VERSION_NAME=$(grep 'versionName =' gradle/libs.versions.toml | cut -d '"' -f 2)
           echo "VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
 
-      # Generate `keystore.properties`
-      - name: Generate keystore.properties
-        run: |
-          cat <<EOF > keystore.properties
-          storePassword=${{ secrets.KEYSTORE_PASSWORD }}
-          keyPassword=${{ secrets.KEY_PASSWORD }}
-          keyAlias=${{ secrets.KEY_ALIAS }}
-          storeFile=keystore.jks
-          EOF
       # Build unsigned release APK
       - name: Build unsigned release APK
-        run: ./gradlew assembleRelease --stacktrace
+        run: ./gradlew :modules:instances:app:assembleRelease --stacktrace
 
-      # Find unsigned APK
-      - name: Find unsigned APK
-        id: apk
-        run: |
-          APK_PATH=$(find ./modules/instances/app/build/outputs/apk/release/ -name "app-release-unsigned.apk" | head -n 1)
-          if [ -z "$APK_PATH" ]; then
-            echo "Error: Unsigned APK not found!" && exit 1
-          fi
-          echo "APK_PATH=$APK_PATH" >> $GITHUB_ENV
-
-      # Sign the APK
+      # Use r0adkll/sign-android-release to sign the APK
       - name: Sign APK
-        run: |
-          jarsigner -verbose \
-            -sigalg SHA256withRSA -digestalg SHA-256 \
-            -keystore keystore.jks \
-            -storepass ${{ secrets.KEYSTORE_PASSWORD }} \
-            -keypass ${{ secrets.KEY_PASSWORD }} \
-            ${{ env.APK_PATH }} \
-            ${{ secrets.KEY_ALIAS }}
+        uses: r0adkll/sign-android-release@v1
+        with:
+          releaseDirectory: modules/instances/app/build/outputs/apk/release
+          signingKeyBase64: ${{ secrets.KEYSTORE_FILE }}
+          alias: ${{ secrets.KEY_ALIAS }}
+          keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
 
-      # Align the APK
-      - name: Align APK
+      # Rename the signed APK
+      - name: Rename signed APK
         run: |
-          zipalign -v -p 4 ${{ env.APK_PATH }} "./app/build/outputs/apk/release/AppName-${{ env.VERSION_NAME }}.apk"
+          mv "modules/instances/app/build/outputs/apk/release/app-release.apk" \
+          "modules/instances/app/build/outputs/apk/release/AppName-${{ env.VERSION_NAME }}.apk"
 
       # Create GitHub Release
       - name: Create GitHub Release
@@ -94,16 +62,3 @@ jobs:
           prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
-
-      # Upload signed APK to GitHub Release
-      - name: Upload signed APK to GitHub Release
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: "./app/build/outputs/apk/release/AppName-${{ env.VERSION_NAME }}.apk"
-          asset_name: "AppName-${{ env.VERSION_NAME }}.apk"
-          asset_content_type: application/vnd.android.package-archive
-
-
-
-
