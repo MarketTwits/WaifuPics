@@ -82,3 +82,5 @@ jobs:
           asset_path: artifacts/AppName-${{ env.VERSION_NAME }}.apk
           asset_name: "AppName-${{ env.VERSION_NAME }}.apk"
           asset_content_type: application/vnd.android.package-archive
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
