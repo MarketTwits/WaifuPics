@@ -22,18 +22,6 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      # Generate `apikey.properties`
-      - name: Generate apikey.properties
-        run: |
-          cat <<EOF > apikey.properties
-          DATADOG_LOGGER_NAME:"${{ vars.DATADOG_LOGGER_NAME }}"
-          DATADOG_CLIENT_TOKEN:"${{ secrets.DATADOG_CLIENT_TOKEN }}"
-          ZENDESK_URL:"${{ vars.ZENDESK_URL }}"
-          ZENDESK_APP_ID:"${{ secrets.ZENDESK_APP_ID }}"
-          ZENDESK_OAUTH_ID:"${{ secrets.ZENDESK_OAUTH_ID }}"
-          ZENDESK_CHAT_ACCOUNT_KEY:"${{ secrets.ZENDESK_CHAT_ACCOUNT_KEY }}"
-          EOF
-
       # Generate `keystore.properties`
       - name: Generate keystore.properties
         run: |
@@ -64,15 +52,35 @@ jobs:
           keyAlias=${{ secrets.KEY_ALIAS }}
           storeFile=keystore.jks
           EOF
-
-      # Build APK
-      - name: Build release APK
+      # Build unsigned release APK
+      - name: Build unsigned release APK
         run: ./gradlew assembleRelease --stacktrace
 
-      # Rename APK
-      - name: Rename APK
+      # Find unsigned APK
+      - name: Find unsigned APK
+        id: apk
         run: |
-          mv "./app/build/outputs/apk/release/app-release.apk" "./app/build/outputs/apk/release/AppName-${{ env.VERSION_NAME }}.apk"
+          APK_PATH=$(find ./app/build/outputs/apk/release/ -name "*-unsigned.apk" | head -n 1)
+          if [ -z "$APK_PATH" ]; then
+            echo "Error: Unsigned APK not found!" && exit 1
+          fi
+          echo "APK_PATH=$APK_PATH" >> $GITHUB_ENV
+
+      # Sign the APK
+      - name: Sign APK
+        run: |
+          jarsigner -verbose \
+            -sigalg SHA256withRSA -digestalg SHA-256 \
+            -keystore keystore.jks \
+            -storepass ${{ secrets.KEYSTORE_PASSWORD }} \
+            -keypass ${{ secrets.KEY_PASSWORD }} \
+            ${{ env.APK_PATH }} \
+            ${{ secrets.KEY_ALIAS }}
+
+      # Align the APK
+      - name: Align APK
+        run: |
+          zipalign -v -p 4 ${{ env.APK_PATH }} "./app/build/outputs/apk/release/AppName-${{ env.VERSION_NAME }}.apk"
 
       # Create GitHub Release
       - name: Create GitHub Release
@@ -87,12 +95,15 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
 
-      # Upload APK to GitHub Release
-      - name: Upload APK to GitHub Release
+      # Upload signed APK to GitHub Release
+      - name: Upload signed APK to GitHub Release
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: "./app/build/outputs/apk/release/AppName-${{ env.VERSION_NAME }}.apk"
           asset_name: "AppName-${{ env.VERSION_NAME }}.apk"
           asset_content_type: application/vnd.android.package-archive
+
+
+
 
