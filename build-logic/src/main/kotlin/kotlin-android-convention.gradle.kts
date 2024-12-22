@@ -1,16 +1,21 @@
 import com.android.build.gradle.BaseExtension
 import extension.projectJavaVersion
 import extension.libs
+import extension.model.ApkConfig
+import extension.model.ApkConfig.VERSION_CODE
+import extension.model.ApkConfig.VERSION_NAME
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 configure<BaseExtension> {
 
-    compileSdkVersion(libs.versions.compileSdk.get().toString().toInt())
+    compileSdkVersion(ApkConfig.COMPILE_SDK_VERSION)
 
     defaultConfig {
-        minSdk =    libs.versions.minSdk.get().toString().toInt()
-        targetSdk = libs.versions.targetSdk.get().toString().toInt()
-        versionName = libs.versions.versionName.get().toString()
-        versionCode = extension.versionCode(versionName ?: "")
+        minSdk = ApkConfig.MIN_SDK_VERSION
+        targetSdk = ApkConfig.TARGET_SDK_VERSION
+        versionName = project.VERSION_NAME
+        versionCode = project.VERSION_CODE
     }
 
     compileOptions {
@@ -21,5 +26,5 @@ configure<BaseExtension> {
     packagingOptions.resources{
         excludes += "/META-INF/{AL2.0,LGPL2.1}"
     }
-}
 
+}
