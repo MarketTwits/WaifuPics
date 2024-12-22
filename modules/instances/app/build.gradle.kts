@@ -1,18 +1,11 @@
+import extension.model.ApkConfig
+
 plugins {
     id("android-application-convention")
     id("org.jetbrains.kotlin.plugin.compose")
 }
 
-android {
-
-    namespace = libs.versions.namespace.get()
-
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
-}
+android.namespace = ApkConfig.APPLICATION_ID
 
 dependencies {
     implementation(libs.koin.core)
@@ -20,7 +13,5 @@ dependencies {
     implementation(libs.compose.activity)
     implementation(libs.core.splashscreen)
     implementation(project(path = ":modules:core:core-ui"))
-    implementation(project(path = ":modules:core:async"))
     implementation(project(path = ":modules:features:root"))
-    implementation(project(path = ":modules:features:cache-datasource"))
 }

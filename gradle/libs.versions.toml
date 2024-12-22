@@ -1,14 +1,15 @@
+
 [versions]
 
 #Android SDK
 compileSdk = "34"
 filekitCore = "0.8.7"
 kotlinxIoCore = "0.5.4"
-minSdk = "24"
+#minSdk = "24"
 multiplatformPaths = "0.2.2"
-targetSdk = "34"
+#targetSdk = "34"
 versionName = "0.1.0"
-namespace = "com.markettwits.waifupics"
+#namespace = "com.markettwits.waifupics"
 
 #plugins
 coreSplashscreen = "1.0.1"
@@ -108,4 +109,3 @@ org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "org
 
 kotlin-multiplatform-convention = { id = "kotlin-multiplatform-convention", version = "unspecified" }
 kotlin-multiplatform-compose-convention = { id = "kotlin-multiplatform-compose-convetion", version = "unspecified" }
-
