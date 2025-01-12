@@ -129,5 +129,5 @@ fun SingleLinkText(
 
 private fun formatUrl(url: String): String {
     val modified = url.extractSiteName()
-    return "🔗 ${modified.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }} "
+    return "${modified.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }} "
 }

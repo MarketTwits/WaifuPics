@@ -20,7 +20,7 @@
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.markettwits.core_ui.items.presentation.toolbar
+package com.markettwits.core_ui.components.toolbar
 
 @RequiresOptIn(
 	message = "This is an experimental API of compose-collapsing-toolbar. Any declarations with " +

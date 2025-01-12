@@ -1,6 +1,5 @@
 package com.markettwits.waifupics.random.components.image_state.suceess
 
-import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
@@ -19,7 +18,6 @@ import com.markettwits.waifupics.random.components.image_state.ImageState
 import com.markettwits.waifupics.random.components.image_state.full_screen.FullImageScreen
 import com.markettwits.waifupics.random.components.image_state.loading.ImageLoading
 
-@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 internal fun ImageCardContent(
     modifier: Modifier = Modifier,

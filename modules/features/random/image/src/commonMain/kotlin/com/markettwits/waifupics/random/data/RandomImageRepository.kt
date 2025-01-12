@@ -26,7 +26,7 @@ interface RandomImageRepository {
 
         override suspend fun fetchRandomImage(filters: List<String>): RandomImageState {
             val result = handleNetwork.tryRequest {
-                service.randomImage(filters).items.first()
+                service.randomImage(filters).first()
             }
             return result.map(imageMapperCloud)
         }

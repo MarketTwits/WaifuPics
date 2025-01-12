@@ -1,6 +1,6 @@
 package com.markettwits.waifupics.random.cloud
 
-import com.markettwits.waifupics.random.cloud.models.RandomImageCloud
+import com.markettwits.waifupics.random.cloud.models.RandomImageItemCloud
 
 
 interface NekoService {
@@ -17,7 +17,7 @@ interface NekoService {
     suspend fun randomImage(
      ageRating : List<String> = listOf("safe"),
      limit : Int = 1
-    ): RandomImageCloud
+    ): List<RandomImageItemCloud>
 
     /**
      * Reports an image with the specified ID to the Nekos API.

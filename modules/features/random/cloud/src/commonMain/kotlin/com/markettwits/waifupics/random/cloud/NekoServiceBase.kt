@@ -1,14 +1,11 @@
 package com.markettwits.waifupics.random.cloud
 
 import com.markettwits.waifupics.cloud.http.HttpClientProvider
-import com.markettwits.waifupics.random.cloud.models.RandomImageCloud
+import com.markettwits.waifupics.random.cloud.models.RandomImageItemCloud
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import io.ktor.client.request.post
-import io.ktor.client.request.url
-import io.ktor.http.ContentType
-import io.ktor.http.contentType
 
 
 internal class NekoServiceBase(
@@ -19,27 +16,24 @@ internal class NekoServiceBase(
 
     private val client = httpClient.provide(false)
 
-    override suspend fun randomImage(ageRating: List<String>, limit: Int): RandomImageCloud {
-        val response = client.get {
-            contentType(ContentType.Application.Json)
-            url("images/random")
-            ageRating.forEach { rating ->
-                parameter("rating", rating)
+    override suspend fun randomImage(ageRating: List<String>, limit: Int): List<RandomImageItemCloud> {
+        val response = client.get("?url=${API_URL}/images/random") {
+            url {
+                parameters.append("rating", ageRating.joinToString(","))
+                parameters.append("limit", limit.toString())
             }
-            parameter("limit", limit)
         }
         return json.decodeFromString(response.body())
     }
 
     override suspend fun report(id: Int) {
-        client.post("images/report") {
+        client.post("?url=${API_URL}/images/report") {
             parameter("id", id)
-            contentType(ContentType.Application.Json)
         }
     }
 
     companion object {
-        const val BASE_URL = "https://api.nekosapi.com/v3/"
+        const val API_URL = "https://api.nekosapi.com/v4"
+        const val BASE_URL = "https://corsproxy.io/"
     }
-
 }

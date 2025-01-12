@@ -19,7 +19,7 @@ kotlin {
         useEsModules()
         browser{
             commonWebpackConfig {
-                outputFileName = "web.js"
+                outputFileName = "composeApp.js"
             }
         }
         binaries.executable()
