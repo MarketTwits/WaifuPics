@@ -9,13 +9,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
@@ -24,37 +20,8 @@ import coil3.compose.AsyncImage
 import com.markettwits.core_ui.components.text.MultyLinksText
 import com.markettwits.core_ui.components.text.UnlinkMultiText
 import com.markettwits.theme.components.FontRubik
-import com.markettwits.theme.components.LightGrey
 import com.markettwits.theme.components.Shapes
 import com.markettwits.waifupics.random.model.AuthorUi
-
-@Composable
-fun ArtistEmptyInfo() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(5.dp)
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Icon(
-                Icons.Filled.Close,
-                tint = LightGrey,
-                contentDescription = null
-            )
-            Text(
-                text = "No artist",
-                color = LightGrey,
-                fontSize = 14.sp,
-                fontFamily = FontRubik.regular()
-            )
-        }
-    }
-}
 
 @Composable
 fun ArtistInfo(author : AuthorUi) {

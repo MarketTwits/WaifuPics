@@ -1,24 +1,23 @@
 package com.markettwits.waifupics.random.components
 
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.markettwits.core_ui.provider.ApplicationViewModel
 import com.markettwits.waifupics.filter.components.AgeRatingFilter
 import com.markettwits.waifupics.random.components.bottom_pannel.ConfigureBottomPanel
 import com.markettwits.waifupics.random.components.image_info.image_card_info.loading.ImageCardInfoLoading
 import com.markettwits.waifupics.random.components.image_info.image_card_info.success.ImageInfoCardEmptyAuthor
-import com.markettwits.waifupics.random.components.image_info.image_card_info.success.ImageInfoCardWitAuthor
 import com.markettwits.waifupics.random.components.image_state.fuckup.ImageFuckup
 import com.markettwits.waifupics.random.components.image_state.loading.ImageLoading
 import com.markettwits.waifupics.random.components.image_state.suceess.ImageCardContent
@@ -31,68 +30,51 @@ fun RandomImageScreen(
     paddingValues: PaddingValues
 ) {
 
-    Column(
+    Box(
         modifier = Modifier
+            .fillMaxSize()
             .padding(top = paddingValues.calculateTopPadding())
             .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        contentAlignment = Alignment.Center
     ) {
-
         val state = viewModel.state().collectAsState()
 
         val imageState = viewModel.loadedImageState().collectAsState()
 
-        when (val value = state.value) {
-            is RandomImageState.Error -> {
-                ImageFuckup(message = value.message)
-                ConfigureBottomPanel(
-                    imageState = imageState.value,
-                    imageId = 0,
-                    onClickFetchRandomImage = viewModel::fetchRandomImage,
-                    onClickShareImage = viewModel::onClickShareImage,
-                    onClickAddToFavorite = viewModel::onClickAddToFavorite
-                )
-                AgeRatingFilter()
-            }
-
-            is RandomImageState.Initial -> {}
-
-            is RandomImageState.Progress -> {
-                ImageLoading()
-                ImageCardInfoLoading()
-                ConfigureBottomPanel(
-                    imageState = imageState.value,
-                    imageId = 0,
-                    onClickFetchRandomImage = viewModel::fetchRandomImage,
-                    onClickShareImage = viewModel::onClickShareImage,
-                    onClickAddToFavorite = viewModel::onClickAddToFavorite
-                )
-                AgeRatingFilter()
-            }
-
-            is RandomImageState.Success -> {
-                if (value is RandomImageState.Success.WithAuthor) {
-                    ImageCardContent(
-                        imageUrl = value.imageUrl,
-                        id = value.id,
-                        onChangeImageState = viewModel::obtainImageState
-                    )
-                    ImageInfoCardWitAuthor(
-                        author = value.author,
-                        imageData = value.imageData,
-                        colorPalette = value.colorPalette
-                    )
+        Column(modifier = Modifier
+            .widthIn(max = 800.dp)
+            .align(Alignment.Center),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ){
+            when (val value = state.value) {
+                is RandomImageState.Error -> {
+                    ImageFuckup(message = value.message)
                     ConfigureBottomPanel(
                         imageState = imageState.value,
-                        imageId = value.id,
+                        imageId = 0,
                         onClickFetchRandomImage = viewModel::fetchRandomImage,
                         onClickShareImage = viewModel::onClickShareImage,
                         onClickAddToFavorite = viewModel::onClickAddToFavorite
                     )
                     AgeRatingFilter()
                 }
-                if (value is RandomImageState.Success.EmptyAuthor) {
+
+                is RandomImageState.Initial -> {}
+
+                is RandomImageState.Progress -> {
+                    ImageLoading()
+                    ImageCardInfoLoading()
+                    ConfigureBottomPanel(
+                        imageState = imageState.value,
+                        imageId = 0,
+                        onClickFetchRandomImage = viewModel::fetchRandomImage,
+                        onClickShareImage = viewModel::onClickShareImage,
+                        onClickAddToFavorite = viewModel::onClickAddToFavorite
+                    )
+                    AgeRatingFilter()
+                }
+
+                is RandomImageState.Success -> {
                     ImageCardContent(
                         imageUrl = value.imageUrl,
                         id = value.id,
