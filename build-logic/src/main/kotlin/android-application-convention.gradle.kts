@@ -1,6 +1,12 @@
+import extension.model.ApkConfig
+
 plugins {
     id("com.android.application")
-    id("base-android-convention")
+    id("kotlin-android-convention")
     id("kotlin-android")
-    id("base-kotlin-convention")
+}
+android{
+    defaultConfig {
+        applicationId = ApkConfig.APPLICATION_ID
+    }
 }

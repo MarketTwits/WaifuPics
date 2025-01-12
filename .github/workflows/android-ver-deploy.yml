@@ -1,0 +1,96 @@
+name: Generate release APK and publish to GitHub releases ver
+
+on:
+  push:
+    branches:
+      - NK/03-migrate-kmp
+  workflow_dispatch:
+
+jobs:
+  apk:
+    name: Generate and publish release APK
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Set up JDK
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      # Generate build number
+      - name: Generate build number
+        id: build_number
+        uses: onyxmueller/build-tag-number@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # Extract versionName from `libs.versions.toml`
+      - name: Extract version number
+        id: version
+        run: |
+          VERSION_NAME=$(grep 'versionName =' gradle/libs.versions.toml | cut -d '"' -f 2)
+          echo "VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
+          echo "FULL_VERSION_NAME=${VERSION_NAME}.${{ steps.build_number.outputs.build_number }}" >> $GITHUB_ENV
+
+      # Build unsigned release APK
+      - name: Build unsigned release APK
+        run: ./gradlew :modules:instances:app:assembleRelease --stacktrace
+
+      # Use r0adkll/sign-android-release to sign the APK
+      - name: Sign APK
+        id: sign_apk
+        uses: r0adkll/sign-android-release@v1
+        with:
+          releaseDirectory: modules/instances/app/build/outputs/apk/release
+          signingKeyBase64: ${{ secrets.KEYSTORE_FILE }}
+          alias: ${{ secrets.KEY_ALIAS }}
+          keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
+        env:
+          BUILD_TOOLS_VERSION: "34.0.0"
+
+      # Copy artifacts (APK)
+      - name: Copy artifacts
+        id: artifacts_copy
+        run: |
+          mkdir -p artifacts
+          cp ${{ steps.sign_apk.outputs.signedReleaseFile }} artifacts/AppName-${{ env.FULL_VERSION_NAME }}.apk
+          echo "path=artifacts/" >> $GITHUB_OUTPUT
+
+      # Upload artifacts
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: artifacts-${{ env.FULL_VERSION_NAME }}
+          path: ${{ steps.artifacts_copy.outputs.path }}
+
+      # Create GitHub Release
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
+        with:
+          tag_name: v${{ env.FULL_VERSION_NAME }}
+          release_name: "Waifupics App ${{ env.FULL_VERSION_NAME }}"
+          body: "Release of version ${{ env.FULL_VERSION_NAME }}"
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+
+      # Upload signed APK to GitHub Release
+      - name: Upload signed APK to GitHub Release
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: artifacts/AppName-${{ env.FULL_VERSION_NAME }}.apk
+          asset_name: "waifupics-${{ env.FULL_VERSION_NAME }}.apk"
+          asset_content_type: application/vnd.android.package-archive
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+

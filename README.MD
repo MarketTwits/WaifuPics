@@ -1,5 +1,3 @@
-
-
 # WaifuPics
 WaifuPics is a simple and fun mobile application that allows you to enjoy various content about Nekos. You can use it to view random images, facts, quotes, wallpapers, emojis, and more about Nekos. NekosApp is powered by [NekosAPI], a free and open source API that provides various endpoints for Nekos.
 
