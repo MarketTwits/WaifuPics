@@ -1,12 +1,13 @@
 plugins {
-    alias(libs.plugins.android.library.compose.convention)
+     alias(libs.plugins.kotlin.multiplatform.compose.convention)
 }
 
 android {
     namespace = "com.markettwits.about"
-
 }
-
-dependencies {
-    implementation(project(":modules:services:core-ui"))
+kotlin{
+    sourceSets.commonMain.dependencies {
+        implementation(project(path = ":modules:core:core-ui"))
+        implementation(compose.components.resources)
+    }
 }

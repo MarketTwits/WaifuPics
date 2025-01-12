@@ -1,0 +1,35 @@
+name: Deploy Compose Web App (JS)
+
+on:
+  workflow_dispatch
+permissions:
+  contents: write
+
+jobs:
+  test-and-build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.1
+
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/buildSrc/**/*.kt') }}
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Build
+        run: |
+          ./gradlew jsBrowserDistribution --no-configuration-cache
+
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4.6.8
+        with:
+          branch: gh-pages
+          folder: modules/instances/web/build/dist/js/productionExecutable

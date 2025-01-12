@@ -1,4 +1,9 @@
+
+import extension.libs
+
 plugins {
     id("kotlin")
-    id("base-kotlin-convention")
+}
+kotlin {
+    jvmToolchain(libs.versions.jvm.get().toString().toInt())
 }

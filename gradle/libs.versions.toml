@@ -1,148 +1,111 @@
+
 [versions]
-#plugins
-kotlin = "1.9.10"
-gradle = "8.1.1"
 
-#SDK
-
+#Android SDK
 compileSdk = "34"
-minSdk = "24"
-targetSdk = "34"
-namespace = "com.markettwits.waifupics"
-jvm = "8"
-jvm-dot = "1.8"
+filekitCore = "0.8.7"
+kotlinxIoCore = "0.5.4"
+#minSdk = "24"
+multiplatformPaths = "0.2.2"
+#targetSdk = "34"
+versionName = "0.1.0"
+#namespace = "com.markettwits.waifupics"
+
+#plugins
+coreSplashscreen = "1.0.1"
+kotlin = "2.0.20"
+gradle = "8.1.4"
+
+rulerGradlePlugin = "2.0.0-beta-1"
+
+jvm = "17"
 
 # Compose
-compose = "1.5.3"
-compose-ui = "1.5.1"
-compose-bom = "2023.03.00"
-compose-activity = "1.8.1"
-compose-lifecycle = "2.6.1"
-compose-material3 = "1.2.0-alpha11"
-compose-navigation = "2.7.1"
-compose-preview = "1.5.1"
-compose-coil = "2.4.0"
-accompanist = "0.27.0"
-onebone-toolbar = "2.3.5"
-realm-gradle-plugin = "10.2.0"
-zoomable = "1.5.1"
-# Android
-android-lifecycle-ktx = "2.6.1"
-exifinterface = "1.3.6"
+compose = "1.7.0-beta02"
+compose-activity = "1.9.2"
+compose-navigation = "2.8.0-alpha10"
 
-#Ui/Unit test
-junit = "4.12"
-junit-ext-ktx = "1.1.5"
-testing = "6.9.6"
-androidx-test-ext-junit = "1.1.5"
-espresso-core = "3.5.1"
-leakcanary = "2.12"
-
-#Network
-retrofit = "2.9.0"
-okkhttp = "4.11.0"
-core-ktx = "1.9.0"
-#UI
-appcompat = "1.6.1"
-material = "1.9.0"
-nabla-gallery = "1.4.5"
-
-#Database
-realm = "1.11.0"
-#Codegen
-ksp = "1.9.10-1.0.13"
-
-#Serialization
-kotlinx-serialization = "1.4.1"
-jakewharton = "0.8.0"
-
-org-jetbrains-kotlin-jvm = "1.8.0"
+android-lifecycle-ktx = "2.8.0"
+core-ktx = "1.13.1"
+appcompat = "1.7.0"
+coilCompose = "3.0.0-rc01"
+kotlinx-serialization = "1.7.3"
+kotlinx-datetime = "0.6.1"
+org-jetbrains-kotlin-jvm = "1.9.21"
+ktor = "3.0.0"
+koin = "4.0.0-RC1"
+kstore = "0.8.0"
 
 [libraries]
-compose-ui = { group = "androidx.compose", name = "ui:ui", version.ref = "compose" }
-compose-graphics = { group = "androidx.compose.ui", name = "ui-graphics", version.ref = "compose-ui" }
-compose-runtime = { group = "androidx.compose.runtime", name = "runtime", version.ref = "compose-ui" }
-compose-lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "compose-lifecycle" }
-compose-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "compose-activity" }
-compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "compose-material3" }
-compose-material3-window-size = { group = "androidx.compose.material3", name = "material3-window-size-class", version.ref = "compose-material3" }
-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
-compose-material-icons = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "compose-ui" }
-compose-accomponist = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "accompanist" }
-compose-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "compose-navigation" }
-compose-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview", version.ref = "compose-preview" }
-compose-preview = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "compose-preview" }
-compose-coil = {group = "io.coil-kt", name = "coil-compose", version.ref = "compose-coil"}
-compose-icons = {group = "androidx.compose.material", name = "material-icons-extended", version.ref = "compose-ui"}
-onebone-toolbar = {group = "me.onebone", name = "toolbar-compose", version.ref = "onebone-toolbar"}
-android-lifecycle-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "android-lifecycle-ktx" }
-realm-gradle-plugin = { module = "io.realm:realm-gradle-plugin", version.ref = "realm-gradle-plugin" }
-zoomable = { group = "net.engawapg.lib", name = "zoomable", version.ref = "zoomable" }
-#androidx-exifinterface = { group = "androidx.exifinterface", name = "exifinterface", version.ref = "exifinterface" }
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilCompose" }
+coil-network = { module = "io.coil-kt.coil3:coil-network", version.ref = "coilCompose" }
+coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version = "3.0.0-rc01" }
+coil-network-okkhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coilCompose" }
+coil-compose-core = { module = "io.coil-kt.coil3:coil-compose-core", version.ref = "coilCompose" }
+coil-wasm = { module = "io.coil-kt.coil3:coil-wasm-js", version.ref = "coilCompose" }
+coil-mp = { module = "io.coil-kt.coil3:coil", version.ref = "coilCompose" }
 
-#Test
-junit = {group = "junit", name = "junit",version.ref = "junit"}
-junit-ext-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junit-ext-ktx" }
-testing = { group = "org.testng", name = "testing", version.ref = "testing" }
-leakcanary = {group = "com.squareup.leakcanary", name = "leakcanary-android", version.ref = "leakcanary"}
+compose-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "compose-activity" }
+context-provider = { module = "me.sujanpoudel.multiplatform.utils:context-provider", version.ref = "multiplatformPaths" }
+core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
+
+compose-navigation = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "compose-navigation" }
+compose-lifecycle-viewmodel = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "android-lifecycle-ktx" }
+
+filekit-core = { module = "io.github.vinceglb:filekit-core", version.ref = "filekitCore" }
+kotlinx-io-core = { module = "org.jetbrains.kotlinx:kotlinx-io-core", version.ref = "kotlinxIoCore" }
+ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
+ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
+ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
+ktor-client-js = { module = "io.ktor:ktor-client-js", version.ref = "ktor" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
+ktor-client-serialization-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-client-serialization = { group = "io.ktor", name = "ktor-client-serialization", version.ref = "ktor" }
+ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+
+koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
+koin-compose = { group = "io.insert-koin", name = "koin-compose", version.ref = "koin" }
+koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
+
+kstore = { module = "io.github.xxfast:kstore", version.ref = "kstore" }
+kstore-file = { module = "io.github.xxfast:kstore-file", version.ref = "kstore" }
+kstore-storage = { module = "io.github.xxfast:kstore-storage", version.ref = "kstore" }
 
 #Serialization
-kotlinx-serialization-core = {group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-core", version.ref = "kotlinx-serialization"}
-kotlinx-serialization-json = {group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinx-serialization"}
-jakewharton = {group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version.ref = "jakewharton"}
+kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version = "1.8.1" }
+kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version = "1.8.1" }
+kotlinx-serialization-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-core", version.ref = "kotlinx-serialization" }
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+#Time
+kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinx-datetime" }
 
-#Data
-retrofit = {group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit"}
-retrofit-converter = {group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit"}
-okkhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okkhttp"}
-okkhttp-interceptor = {group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref ="okkhttp"}
+#Android Core
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
-realm = {group =  "io.realm.kotlin", name = "library-base", version.ref = "realm"}
-androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
-#UI
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
-nabla-gallery = {group = "run.nabla", name = "gallery-picker", version.ref = "nabla-gallery"}
 
-android-gradle = {module = "com.android.tools.build:gradle", version.ref = "gradle"}
-kotlin-gradle = {module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin"}
+#Gradle plugins
+android-gradle-plugin = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
+compose-gradle-plugin = { module = "org.jetbrains.compose:org.jetbrains.compose.gradle.plugin", version.ref = "compose" }
+kotlin-multiplatform-gradle-plugin = { module = "org.jetbrains.kotlin.multiplatform:org.jetbrains.kotlin.multiplatform.gradle.plugin", version.ref = "kotlin" }
+kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+kotlin-compose-gradle-plugin = { module = "org.jetbrains.kotlin.plugin.compose:org.jetbrains.kotlin.plugin.compose.gradle.plugin", version.ref = "kotlin" }
+multiplatform-paths = { module = "me.sujanpoudel.multiplatform.utils:multiplatform-paths", version.ref = "multiplatformPaths" }
+ruler-gradle-plugin = { module = "com.spotify.ruler:ruler-gradle-plugin", version.ref = "rulerGradlePlugin" }
 
 [plugins]
-kotlin-serialization =  {id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin"}
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+kotlin-kmp = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlin-kmp-compose = { id = "org.jetbrains.compose", version.ref = "compose" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+
 android-library = { id = "com.android.library", version.ref = "gradle" }
-android-application = {id = "com.android.application", version.ref = "gradle"}
+android-application = { id = "com.android.application", version.ref = "gradle" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize",  version.ref = "kotlin"}
-realm = {id = "io.realm.kotlin", version.ref = "realm"}
-ksp = {id = "com.google.devtools.ksp", version.ref = "ksp"}
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "org-jetbrains-kotlin-jvm" }
 
 #Convention Plugins
-android-library-convention = {id = "android-library-convention", version = "unspecified"}
-android-library-compose-convention = {id = "android-library-compose-convention", version = "unspecified"}
 
-
-[bundles]
-composeUiBundle = [
-    "compose-graphics",
-    "compose-runtime",
-    "compose-lifecycle-viewmodel",
-    "compose-activity",
-    "compose-material3",
-    "compose-material3-window-size",
-    "compose-accomponist",
-    "android-lifecycle-ktx",
-    "compose-coil",
-    "compose-icons"
-]
-composeUiTest = ["junit-ext-ktx", "testing"]
-composeUiBundleDebug = [
-    "compose-preview",
-    "compose-tooling-preview",
-]
-retrofit = ["retrofit", "retrofit-converter"]
-okkhttp = ["okkhttp", "okkhttp-interceptor"]
-network = ["retrofit", "retrofit-converter", "okkhttp", "okkhttp-interceptor","kotlinx-serialization-core",
-    "kotlinx-serialization-json", "jakewharton"]
-
+kotlin-multiplatform-convention = { id = "kotlin-multiplatform-convention", version = "unspecified" }
+kotlin-multiplatform-compose-convention = { id = "kotlin-multiplatform-compose-convetion", version = "unspecified" }
