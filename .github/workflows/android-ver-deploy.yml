@@ -3,7 +3,7 @@ name: Generate release APK and publish to GitHub releases ver
 on:
   push:
     branches:
-      - NK/03-migrate-kmp
+      - master
   workflow_dispatch:
 
 jobs:
