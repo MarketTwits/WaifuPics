@@ -13,6 +13,7 @@ interface HandleNetworkResult {
             return try {
                 NetworkResult.Success(request.invoke())
             } catch (e: Exception) {
+                println("HandleNetworkResult : ${e.message}")
                 NetworkResult.Error(handleRequestCode.handleNetworkException(e))
             }
         }

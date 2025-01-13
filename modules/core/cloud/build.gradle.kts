@@ -21,9 +21,9 @@ kotlin{
         jvmMain.dependencies {
             api(libs.ktor.client.okhttp)
         }
-        androidMain.dependencies {
-            api(libs.ktor.client.okhttp)
-        }
+//        androidMain.dependencies {
+//            api(libs.ktor.client.okhttp)
+//        }
         iosMain.dependencies {
             api(libs.ktor.client.darwin)
         }
