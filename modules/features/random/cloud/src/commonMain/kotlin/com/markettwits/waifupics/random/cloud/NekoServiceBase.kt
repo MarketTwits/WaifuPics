@@ -33,7 +33,7 @@ internal class NekoServiceBase(
     }
 
     companion object {
-        const val API_URL = "https://api.nekosapi.com/v4"
-        const val BASE_URL = "https://corsproxy.io/"
+        const val API_URL = "api.nekosapi.com/v4"
+        const val BASE_URL = "https://api.cors.lol/"
     }
 }

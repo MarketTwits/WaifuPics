@@ -7,6 +7,12 @@ import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
+import io.ktor.client.request.header
+import io.ktor.http.ContentType
+import io.ktor.http.HttpHeaders
+import io.ktor.http.URLBuilder
+import io.ktor.http.encodedPath
+import io.ktor.http.takeFrom
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
@@ -18,6 +24,7 @@ class HttpClientProviderBase(
 
     override fun provide(loggerEnabled: Boolean) = HttpClient {
         expectSuccess = true
+        followRedirects = true
         install(ContentNegotiation) {
             json(json)
         }
@@ -35,6 +42,7 @@ class HttpClientProviderBase(
             requestTimeoutMillis = 100000
         }
         defaultRequest {
+            header(HttpHeaders.ContentType, ContentType.Application.Json)
             url(baseUrl)
         }
     }
