@@ -1,4 +1,10 @@
 # WaifuPics
+[![Build](https://github.com/MarketTwits/WaifuPics/actions/workflows/js-browser-deploy.yml/badge.svg)](https://github.com/MarketTwits/WaifuPics/actions/workflows/js-browser-deploy.yml)
+![badge-android](http://img.shields.io/badge/platform-android-6EDB8D.svg?style=flat)
+![badge-ios](http://img.shields.io/badge/platform-ios-CDCDCD.svg?style=flat)
+![badge-desktop](http://img.shields.io/badge/platform-desktop-DB413D.svg?style=flat)
+![badge-js](http://img.shields.io/badge/platform-web-FDD835.svg?style=flat)
+
 WaifuPics is a simple and fun mobile application that allows you to enjoy various content about Nekos. You can use it to view random images, facts, quotes, wallpapers, emojis, and more about Nekos. NekosApp is powered by [NekosAPI], a free and open source API that provides various endpoints for Nekos.
 
 Here is a possible readme file for a mobile application that is based on https://nekosapi.com/:
