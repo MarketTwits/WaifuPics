@@ -2,38 +2,38 @@
 [versions]
 
 #Android SDK
-compileSdk = "35"
+compileSdk = "36"
 filekitCore = "0.8.8"
 kotlinxIoCore = "0.6.0"
 #minSdk = "24"
 multiplatformPaths = "0.2.2"
-#targetSdk = "35"
+#targetSdk = "36"
 versionName = "0.1.0"
 #namespace = "com.markettwits.waifupics"
 
 #plugins
 coreSplashscreen = "1.0.1"
-kotlin = "2.1.0"
-gradle = "8.7.3"
+kotlin = "2.2.21"
+gradle = "8.11.2"
 
 rulerGradlePlugin = "2.0.0"
 
 jvm = "17"
 
 # Compose
-compose = "1.7.1"
-compose-activity = "1.9.3"
-compose-navigation = "2.8.0-beta01"
+compose = "1.9.2"
+compose-activity = "1.11.0"
+compose-navigation = "2.9.0-alpha03"
 
-android-lifecycle-ktx = "2.8.7"
-core-ktx = "1.15.0"
+android-lifecycle-ktx = "2.9.0"
+core-ktx = "1.16.0"
 appcompat = "1.7.0"
-coilCompose = "3.0.3"
-kotlinx-serialization = "1.7.3"
+coilCompose = "3.0.4"
+kotlinx-serialization = "1.8.0"
 kotlinx-datetime = "0.6.1"
-org-jetbrains-kotlin-jvm = "2.1.0"
-ktor = "3.0.2"
-koin = "4.0.0"
+org-jetbrains-kotlin-jvm = "2.2.21"
+ktor = "3.3.2"
+koin = "4.1.0"
 kstore = "0.8.0"
 
 [libraries]
@@ -73,8 +73,8 @@ kstore-file = { module = "io.github.xxfast:kstore-file", version.ref = "kstore" 
 kstore-storage = { module = "io.github.xxfast:kstore-storage", version.ref = "kstore" }
 
 #Serialization
-kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version = "1.9.0" }
-kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version = "1.9.0" }
+kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version = "1.10.1" }
+kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version = "1.10.1" }
 kotlinx-serialization-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-core", version.ref = "kotlinx-serialization" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 #Time
