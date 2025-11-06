@@ -2,44 +2,44 @@
 [versions]
 
 #Android SDK
-compileSdk = "34"
-filekitCore = "0.8.7"
-kotlinxIoCore = "0.5.4"
+compileSdk = "35"
+filekitCore = "0.8.8"
+kotlinxIoCore = "0.6.0"
 #minSdk = "24"
 multiplatformPaths = "0.2.2"
-#targetSdk = "34"
+#targetSdk = "35"
 versionName = "0.1.0"
 #namespace = "com.markettwits.waifupics"
 
 #plugins
 coreSplashscreen = "1.0.1"
-kotlin = "2.0.20"
-gradle = "8.1.4"
+kotlin = "2.1.0"
+gradle = "8.7.3"
 
-rulerGradlePlugin = "2.0.0-beta-1"
+rulerGradlePlugin = "2.0.0"
 
 jvm = "17"
 
 # Compose
-compose = "1.7.0-beta02"
-compose-activity = "1.9.2"
-compose-navigation = "2.8.0-alpha10"
+compose = "1.7.1"
+compose-activity = "1.9.3"
+compose-navigation = "2.8.0-beta01"
 
-android-lifecycle-ktx = "2.8.0"
-core-ktx = "1.13.1"
+android-lifecycle-ktx = "2.8.7"
+core-ktx = "1.15.0"
 appcompat = "1.7.0"
-coilCompose = "3.0.0-rc01"
+coilCompose = "3.0.3"
 kotlinx-serialization = "1.7.3"
 kotlinx-datetime = "0.6.1"
-org-jetbrains-kotlin-jvm = "1.9.21"
-ktor = "3.0.0"
-koin = "4.0.0-RC1"
+org-jetbrains-kotlin-jvm = "2.1.0"
+ktor = "3.0.2"
+koin = "4.0.0"
 kstore = "0.8.0"
 
 [libraries]
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilCompose" }
 coil-network = { module = "io.coil-kt.coil3:coil-network", version.ref = "coilCompose" }
-coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version = "3.0.0-rc01" }
+coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coilCompose" }
 coil-network-okkhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coilCompose" }
 coil-compose-core = { module = "io.coil-kt.coil3:coil-compose-core", version.ref = "coilCompose" }
 coil-wasm = { module = "io.coil-kt.coil3:coil-wasm-js", version.ref = "coilCompose" }
@@ -73,8 +73,8 @@ kstore-file = { module = "io.github.xxfast:kstore-file", version.ref = "kstore" 
 kstore-storage = { module = "io.github.xxfast:kstore-storage", version.ref = "kstore" }
 
 #Serialization
-kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version = "1.8.1" }
-kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version = "1.8.1" }
+kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version = "1.9.0" }
+kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version = "1.9.0" }
 kotlinx-serialization-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-core", version.ref = "kotlinx-serialization" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 #Time
