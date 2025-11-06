@@ -1,5 +1,12 @@
 package com.markettwits.waifupics.random.components
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -46,54 +53,61 @@ fun RandomImageScreen(
             .align(Alignment.Center),
             horizontalAlignment = Alignment.CenterHorizontally
         ){
-            when (val value = state.value) {
-                is RandomImageState.Error -> {
-                    ImageFuckup(message = value.message)
-                    ConfigureBottomPanel(
-                        imageState = imageState.value,
-                        imageId = 0,
-                        onClickFetchRandomImage = viewModel::fetchRandomImage,
-                        onClickShareImage = viewModel::onClickShareImage,
-                        onClickAddToFavorite = viewModel::onClickAddToFavorite
+            AnimatedContent(
+                targetState = state.value,
+                transitionSpec = {
+                    // Анимация слайда справа с затуханием
+                    (slideInHorizontally(
+                        animationSpec = tween(400),
+                        initialOffsetX = { fullWidth -> fullWidth }
+                    ) + fadeIn(animationSpec = tween(400))).togetherWith(
+                        slideOutHorizontally(
+                            animationSpec = tween(400),
+                            targetOffsetX = { fullWidth -> -fullWidth }
+                        ) + fadeOut(animationSpec = tween(400))
                     )
-                    AgeRatingFilter()
                 }
+            ) { value ->
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    when (value) {
+                        is RandomImageState.Error -> {
+                            ImageFuckup(message = value.message)
+                        }
 
-                is RandomImageState.Initial -> {}
+                        is RandomImageState.Initial -> {}
 
-                is RandomImageState.Progress -> {
-                    ImageLoading()
-                    ImageCardInfoLoading()
-                    ConfigureBottomPanel(
-                        imageState = imageState.value,
-                        imageId = 0,
-                        onClickFetchRandomImage = viewModel::fetchRandomImage,
-                        onClickShareImage = viewModel::onClickShareImage,
-                        onClickAddToFavorite = viewModel::onClickAddToFavorite
-                    )
-                    AgeRatingFilter()
-                }
+                        is RandomImageState.Progress -> {
+                            ImageLoading()
+                            ImageCardInfoLoading()
+                        }
 
-                is RandomImageState.Success -> {
-                    ImageCardContent(
-                        imageUrl = value.imageUrl,
-                        id = value.id,
-                        onChangeImageState = viewModel::obtainImageState
-                    )
-                    ImageInfoCardEmptyAuthor(
-                        imageData = value.imageData,
-                        colorPalette = value.colorPalette
-                    )
-                    ConfigureBottomPanel(
-                        imageState = imageState.value,
-                        imageId = value.id,
-                        onClickFetchRandomImage = viewModel::fetchRandomImage,
-                        onClickShareImage = viewModel::onClickShareImage,
-                        onClickAddToFavorite = viewModel::onClickAddToFavorite
-                    )
-                    AgeRatingFilter()
+                        is RandomImageState.Success -> {
+                            ImageCardContent(
+                                imageUrl = value.imageUrl,
+                                id = value.id,
+                                onChangeImageState = viewModel::obtainImageState
+                            )
+                            ImageInfoCardEmptyAuthor(
+                                imageData = value.imageData,
+                                colorPalette = value.colorPalette
+                            )
+                        }
+                    }
                 }
             }
+
+            // Кнопки вне анимации, чтобы избежать мигания
+            ConfigureBottomPanel(
+                imageState = imageState.value,
+                imageId = if (state.value is RandomImageState.Success) (state.value as RandomImageState.Success).id else 0,
+                onClickFetchRandomImage = viewModel::fetchRandomImage,
+                onClickShareImage = viewModel::onClickShareImage,
+                onClickAddToFavorite = viewModel::onClickAddToFavorite
+            )
+            AgeRatingFilter()
         }
     }
 }
