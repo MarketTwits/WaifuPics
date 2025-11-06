@@ -34,18 +34,23 @@ interface RandomImageRepository {
         }
 
         override suspend fun fetchRandomImages(filters: List<String>, limit: Int): List<RandomImageState> {
-            val results = mutableListOf<RandomImageState>()
-            val cloudImages = service.randomImage(filters, limit)
+            return try {
+                // Один запрос с нужным limit вместо множества запросов
+                val cloudImages = service.randomImage(filters, limit)
 
-            cloudImages.forEach { cloudImage ->
-                val result = handleNetwork.tryRequest { cloudImage }
-                val state = result.map(imageMapperCloud)
-                if (state is RandomImageState.Success) {
-                    results.add(state)
+                // Мапим все полученные изображения
+                cloudImages.mapNotNull { cloudImage ->
+                    try {
+                        val result = handleNetwork.tryRequest { cloudImage }
+                        val state = result.map(imageMapperCloud)
+                        if (state is RandomImageState.Success) state else null
+                    } catch (e: Exception) {
+                        null // Пропускаем изображения с ошибками
+                    }
                 }
+            } catch (e: Exception) {
+                emptyList() // Возвращаем пустой список в случае ошибки сети
             }
-
-            return results
         }
 
         override suspend fun addToFavorite(
