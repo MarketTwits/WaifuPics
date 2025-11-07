@@ -2,44 +2,44 @@
 [versions]
 
 #Android SDK
-compileSdk = "34"
-filekitCore = "0.8.7"
-kotlinxIoCore = "0.5.4"
+compileSdk = "36"
+filekitCore = "0.11.0" #https://github.com/vinceglb/FileKit
+kotlinxIoCore = "0.7.0" #https://github.com/Kotlin/kotlinx-io
 #minSdk = "24"
-multiplatformPaths = "0.2.2"
-#targetSdk = "34"
+multiplatformPaths = "0.2.2" #https://github.com/psuzn/multiplatform-paths
+#targetSdk = "36"
 versionName = "0.1.0"
 #namespace = "com.markettwits.waifupics"
 
 #plugins
-coreSplashscreen = "1.0.1"
-kotlin = "2.0.20"
-gradle = "8.1.4"
+coreSplashscreen = "1.2.0" #https://developer.android.com/jetpack/androidx/releases/core
+kotlin = "2.2.20" #https://github.com/JetBrains/kotlin
+gradle = "8.13" #https://developer.android.com/build/releases/gradle-plugin
 
-rulerGradlePlugin = "2.0.0-beta-1"
+rulerGradlePlugin = "2.0.0" #https://github.com/spotify/ruler
 
 jvm = "17"
 
 # Compose
-compose = "1.7.0-beta02"
-compose-activity = "1.9.2"
-compose-navigation = "2.8.0-alpha10"
+compose = "1.9.2" #https://github.com/JetBrains/compose-multiplatform
+compose-activity = "1.11.0" #https://developer.android.com/jetpack/androidx/releases/activity
+compose-navigation = "2.9.0-alpha03" #https://developer.android.com/jetpack/androidx/releases/navigation
 
-android-lifecycle-ktx = "2.8.0"
-core-ktx = "1.13.1"
-appcompat = "1.7.0"
-coilCompose = "3.0.0-rc01"
-kotlinx-serialization = "1.7.3"
-kotlinx-datetime = "0.6.1"
-org-jetbrains-kotlin-jvm = "1.9.21"
-ktor = "3.0.0"
-koin = "4.0.0-RC1"
-kstore = "0.8.0"
+android-lifecycle-ktx = "2.9.6" #https://developer.android.com/jetpack/androidx/releases/lifecycle
+core-ktx = "1.17.0" #https://developer.android.com/jetpack/androidx/releases/core
+appcompat = "1.7.1" #https://developer.android.com/jetpack/androidx/releases/appcompat
+coilCompose = "3.3.0" #https://github.com/coil-kt/coil
+kotlinx-serialization = "1.9.0" #https://github.com/Kotlin/kotlinx.serialization
+kotlinx-datetime = "0.7.1" #https://github.com/Kotlin/kotlinx-datetime
+org-jetbrains-kotlin-jvm = "2.2.20" #https://github.com/JetBrains/kotlin
+ktor = "3.3.2" #https://github.com/ktorio/ktor
+koin = "4.1.0" #https://github.com/InsertKoinIO/koin
+kstore = "0.9.1" #https://github.com/xxfast/KStore
 
 [libraries]
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilCompose" }
 coil-network = { module = "io.coil-kt.coil3:coil-network", version.ref = "coilCompose" }
-coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version = "3.0.0-rc01" }
+coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coilCompose" }
 coil-network-okkhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coilCompose" }
 coil-compose-core = { module = "io.coil-kt.coil3:coil-compose-core", version.ref = "coilCompose" }
 coil-wasm = { module = "io.coil-kt.coil3:coil-wasm-js", version.ref = "coilCompose" }
@@ -73,8 +73,8 @@ kstore-file = { module = "io.github.xxfast:kstore-file", version.ref = "kstore" 
 kstore-storage = { module = "io.github.xxfast:kstore-storage", version.ref = "kstore" }
 
 #Serialization
-kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version = "1.8.1" }
-kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version = "1.8.1" }
+kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version = "1.10.2" } #https://github.com/Kotlin/kotlinx.coroutines
+kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version = "1.10.2" } #https://github.com/Kotlin/kotlinx.coroutines
 kotlinx-serialization-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-core", version.ref = "kotlinx-serialization" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 #Time
