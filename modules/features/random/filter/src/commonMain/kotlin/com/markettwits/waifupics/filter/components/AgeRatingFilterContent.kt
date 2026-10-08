@@ -1,6 +1,8 @@
 package com.markettwits.waifupics.filter.components
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Arrangement
+import com.markettwits.theme.components.WaifuSpacing
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
@@ -14,7 +16,7 @@ internal fun AgeRatingFilterContent(
     filterState: FilterState,
     toggleScreen: () -> Unit,
     onItemClick: (FilterItem) -> Unit
-) = Column(modifier = modifier.verticalScroll(rememberScrollState())) {
+) = Column(modifier = modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(WaifuSpacing.content)) {
     AgeRatingFilterBody(filterState = filterState) {
         onItemClick(it)
     }

@@ -3,11 +3,7 @@ package com.markettwits.waifupics.random.components.vertical_panel
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -15,18 +11,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.markettwits.waifupics.random.components.image_state.ImageState
+import com.markettwits.core_ui.components.design.WaifuOverlayButton
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import waifupics.modules.features.random.image.generated.resources.*
@@ -45,6 +39,7 @@ fun VerticalControlPanel(
     onClickShareImage: () -> Unit,
     onClickFilter: () -> Unit,
 ) {
+    val labelsVisible = showLabels && LocalDensity.current.fontScale <= 1.3f
     val loaded = imageState is ImageState.Success && actionsReady
     val heartScale = remember(imageId) { Animatable(1f) }
     var previousFavorite by remember(imageId) { mutableStateOf(isFavorite) }
@@ -71,16 +66,16 @@ fun VerticalControlPanel(
             description = if (isFavorite) "Remove from favorites" else "Add to favorites",
             icon = painterResource(if (isFavorite) Res.drawable.ic_heart_solid else Res.drawable.ic_heart),
             enabled = loaded,
-            showLabel = showLabels,
-            tint = if (isFavorite) Color(0xFFF47185) else MaterialTheme.colorScheme.onBackground,
+            showLabel = labelsVisible,
+            tint = if (isFavorite) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.primary,
             iconScale = heartScale.value,
             onClick = onClickAddToFavorite
         )
-        ActionButton("Share", "Share image", painterResource(Res.drawable.ic_share), loaded, showLabel = showLabels, onClick = onClickShareImage)
+        ActionButton("Share", "Share image", painterResource(Res.drawable.ic_share), loaded, showLabel = labelsVisible, onClick = onClickShareImage)
         ActionButton("Next", if (isLoadingNext) stringResource(Res.string.loading_more_images) else "Next image",
             painterResource(Res.drawable.ic_refresh), actionsReady && !isLoadingNext,
-            showLabel = showLabels, isLoading = isLoadingNext, onClick = onClickFetchRandomImage)
-        ActionButton("Filter", "Age rating filters", painterResource(Res.drawable.ic_filter), true, showLabel = showLabels, onClick = onClickFilter)
+            showLabel = labelsVisible, isLoading = isLoadingNext, onClick = onClickFetchRandomImage)
+        ActionButton("Filter", "Age rating filters", painterResource(Res.drawable.ic_filter), true, showLabel = labelsVisible, onClick = onClickFilter)
     }
 }
 
@@ -93,33 +88,22 @@ private fun ActionButton(
     showLabel: Boolean,
     isLoading: Boolean = false,
     iconScale: Float = 1f,
-    tint: Color = MaterialTheme.colorScheme.onBackground,
+    tint: Color = MaterialTheme.colorScheme.primary,
     onClick: () -> Unit
 ) {
     Column(
-        modifier = Modifier.fillMaxWidth().clip(androidx.compose.foundation.shape.RoundedCornerShape(12.dp))
-            .clickable(enabled = enabled, role = Role.Button, onClick = onClick)
-            .semantics(mergeDescendants = true) { contentDescription = description },
+        modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
-        Box(
-            Modifier.size(48.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            Box(
-                Modifier.size(36.dp).background(MaterialTheme.colorScheme.surface.copy(alpha = 0.94f), CircleShape)
-                    .border(1.dp, MaterialTheme.colorScheme.onBackground.copy(alpha = 0.12f), CircleShape),
-                contentAlignment = Alignment.Center
-            ) {
-                if (isLoading) CircularProgressIndicator(modifier = Modifier.size(18.dp), color = tint, strokeWidth = 2.dp)
-                else Icon(icon, contentDescription = null, modifier = Modifier.size(20.dp).graphicsLayer {
-                    scaleX = iconScale
-                    scaleY = iconScale
-                }, tint = tint.copy(alpha = if (enabled) 1f else 0.4f))
-            }
+        WaifuOverlayButton(description, onClick, enabled = enabled, tint = tint) {
+            if (isLoading) CircularProgressIndicator(Modifier.size(22.dp), strokeWidth = 2.dp)
+            else Icon(icon, null, Modifier.size(22.dp).graphicsLayer {
+                scaleX = iconScale
+                scaleY = iconScale
+            })
         }
-        if (showLabel) Text(label, color = MaterialTheme.colorScheme.onBackground.copy(alpha = if (enabled) 1f else 0.5f), fontSize = 11.sp, lineHeight = 14.sp,
-            fontFamily = com.markettwits.theme.components.FontRubik.medium(), maxLines = 1)
+        if (showLabel) Text(label, color = MaterialTheme.colorScheme.secondary.copy(alpha = if (enabled) 1f else 0.5f),
+            style = MaterialTheme.typography.labelSmall, maxLines = 1)
     }
 }

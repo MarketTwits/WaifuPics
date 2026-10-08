@@ -175,12 +175,13 @@ fun RandomImageScreen(
                             }
                         }
                     }
+                    if (fullscreen == null) {
+                        Box(Modifier.align(Alignment.BottomCenter).fillMaxWidth().height(260.dp)
+                            .background(Brush.verticalGradient(listOf(Color.Transparent,
+                                MaterialTheme.colorScheme.background.copy(alpha = 0.94f)))))
+                    }
                     Box(Modifier.fillMaxSize().padding(paddingValues)) {
                         if (fullscreen == null) {
-                            Box(
-                                Modifier.align(Alignment.BottomCenter).fillMaxWidth().height(260.dp)
-                                    .background(Brush.verticalGradient(listOf(Color.Transparent, MaterialTheme.colorScheme.background.copy(alpha = 0.94f))))
-                            )
                             activeImage?.let { image ->
                                 BottomImageInfo(
                                     modifier = Modifier.align(Alignment.BottomStart)

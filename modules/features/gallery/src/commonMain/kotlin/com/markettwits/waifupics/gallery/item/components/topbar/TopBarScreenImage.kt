@@ -16,6 +16,8 @@ import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,8 +28,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.markettwits.core_ui.extensions.noRippleClickable
 import com.markettwits.theme.components.BlackScrim
 import com.markettwits.waifupics.gallery.item.components.info.InfoImageBottomSheet
 import com.markettwits.waifupics.gallery.items.components.animations.Animation
@@ -62,24 +62,17 @@ internal fun BoxScope.TopBarScreenImage(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Icon(
-                modifier = Modifier
-                    .padding(10.dp)
-                    .noRippleClickable {
-                       onClickGoBack()
-                    },
-                imageVector = Icons.Default.ArrowBackIosNew,
-                contentDescription = "back",
-                tint = Color.White
-            )
+            IconButton(onClick = onClickGoBack) {
+                Icon(Icons.Default.ArrowBackIosNew, "Back", Modifier.size(22.dp), tint = Color.White)
+            }
             Text(
                 text = createdDate,
-                modifier = Modifier.padding(start = 30.dp),
+                modifier = Modifier.weight(1f).padding(horizontal = 12.dp),
                 color = Color.White,
-                fontSize = 16.sp
+                style = MaterialTheme.typography.titleMedium
             )
             IconButton(onClick = { infoImage = !infoImage }) {
-                Icon(Icons.Default.MoreVert, "", tint = Color.White)
+                Icon(Icons.Default.MoreVert, "Image information", Modifier.size(22.dp), tint = Color.White)
             }
             if (infoImage) {
                 InfoImageBottomSheet {

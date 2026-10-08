@@ -6,16 +6,16 @@ import androidx.activity.ComponentActivity
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 
-internal fun ComponentActivity.enableEdgeToEdgeWithSafeArea(isDarkTheme: Boolean) {
+internal fun ComponentActivity.enableEdgeToEdgeWithSafeArea(isDarkTheme: Boolean, imageViewer: Boolean = false) {
 
     WindowCompat.setDecorFitsSystemWindows(window, false)
 
     window.statusBarColor = Color.TRANSPARENT
-    window.navigationBarColor = if (isDarkTheme) Color.BLACK else Color.WHITE
+    window.navigationBarColor = Color.TRANSPARENT
 
     val insetsController = WindowInsetsControllerCompat(window, window.decorView)
 
-    if (isDarkTheme) {
+    if (isDarkTheme || imageViewer) {
         insetsController.isAppearanceLightStatusBars = false
         insetsController.isAppearanceLightNavigationBars = false
     } else {

@@ -40,7 +40,7 @@ internal fun BoxScope.BottomBarScreenImage(
         Row(
             modifier = Modifier
                 .background(Brush.verticalGradient(colors = listOf(Color.Transparent, BlackScrim)))
-                .padding(top = 24.dp,)
+                .padding(top = 16.dp, bottom = 8.dp)
                 .padding(bottom = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding())
                 .fillMaxWidth()
                 .horizontalScroll(rememberScrollState())
@@ -49,8 +49,8 @@ internal fun BoxScope.BottomBarScreenImage(
             horizontalArrangement = Arrangement.SpaceEvenly,
         )
         {
-            ShareButton(followTheme = true, onItemClick = onClickShareImage)
-            DeleteButton(followTheme = true, onItemClick = onClickDeleteImage)
+            ShareButton(overlay = true, onItemClick = onClickShareImage)
+            DeleteButton(overlay = true, onItemClick = onClickDeleteImage)
         }
     }
 }

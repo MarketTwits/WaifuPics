@@ -1,18 +1,18 @@
 package com.markettwits.theme.components
 
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Shapes
 import androidx.compose.ui.unit.dp
 
-/**
- * @param extraSmall - 2.dp
- * @param small - 5.dp
- * @param medium - 10.dp
- * @param large - 10.dp
- */
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 val Shapes = Shapes(
-    extraSmall = RoundedCornerShape(2.dp),
-    small = RoundedCornerShape(5.dp),
-    medium = RoundedCornerShape(10.dp),
-    large = RoundedCornerShape(20.dp)
+    extraSmall = RoundedCornerShape(4.dp),
+    small = RoundedCornerShape(8.dp),
+    medium = RoundedCornerShape(16.dp),
+    large = RoundedCornerShape(24.dp),
+    extraLarge = RoundedCornerShape(28.dp),
+    largeIncreased = RoundedCornerShape(28.dp),
+    extraLargeIncreased = RoundedCornerShape(32.dp),
+    extraExtraLarge = RoundedCornerShape(48.dp)
 )

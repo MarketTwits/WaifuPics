@@ -3,6 +3,7 @@ package com.markettwits.waifupics
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
@@ -17,10 +18,16 @@ class MainActivity : ComponentActivity() {
         installSplashScreen()
         super.onCreate(savedInstanceState)
         setContent {
-            SetContentLocal(isDarkTheme = {
-                enableEdgeToEdgeWithSafeArea(it)
-            }) {
-                MainScreen(modifier = Modifier.semantics { testTagsAsResourceId = true })
+            var darkTheme by remember { mutableStateOf(false) }
+            var imageViewer by remember { mutableStateOf(false) }
+            LaunchedEffect(darkTheme, imageViewer) {
+                enableEdgeToEdgeWithSafeArea(darkTheme, imageViewer)
+            }
+            SetContentLocal(isDarkTheme = { darkTheme = it }) {
+                MainScreen(
+                    modifier = Modifier.semantics { testTagsAsResourceId = true },
+                    onImageViewerChanged = { imageViewer = it }
+                )
             }
         }
     }

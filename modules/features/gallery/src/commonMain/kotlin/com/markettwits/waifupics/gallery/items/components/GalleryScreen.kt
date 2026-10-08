@@ -1,14 +1,14 @@
 package com.markettwits.waifupics.gallery.items.components
 
+import androidx.compose.foundation.layout.Arrangement
+import com.markettwits.theme.components.WaifuSpacing
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBars
-import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -41,13 +41,15 @@ fun GalleryScreen(
         Box(
             modifier = Modifier
                 .padding(top = paddingValues.calculateTopPadding())
-                .windowInsetsPadding(WindowInsets.navigationBars)
                 .fillMaxSize()
-                .padding(10.dp)
         ) {
             if (state is ImageFavoriteUiState.Base) {
                 LazyVerticalGrid(
                     columns = GridCells.Adaptive(130.dp),
+                    modifier = Modifier.fillMaxSize().padding(horizontal = WaifuSpacing.content),
+                    horizontalArrangement = Arrangement.spacedBy(WaifuSpacing.small),
+                    verticalArrangement = Arrangement.spacedBy(WaifuSpacing.small),
+                    contentPadding = PaddingValues(top = WaifuSpacing.small, bottom = (if (selected) 180.dp else WaifuSpacing.content) + WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()),
                 ) {
                     items(state.items, key = { it.id }) { image ->
                         if (image is ImageFavoriteUi.Base) {
@@ -78,7 +80,6 @@ fun GalleryScreen(
 
             SelectionSheet(
                 modifier = Modifier
-                    .windowInsetsPadding(WindowInsets.navigationBars)
                     .align(Alignment.BottomEnd),
                 selectedMedia = selectedMedia,
                 selectionState = selected,

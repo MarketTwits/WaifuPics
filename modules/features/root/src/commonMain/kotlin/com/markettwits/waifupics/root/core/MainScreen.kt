@@ -1,7 +1,7 @@
 package com.markettwits.waifupics.root.core
 
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
@@ -19,12 +19,21 @@ import com.markettwits.waifupics.random.components.RandomImageScreen
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
+    onImageViewerChanged: (Boolean) -> Unit = {},
 ) {
 
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
 
+    val imageViewer = navBackStackEntry?.destination?.route == Screen.GalleryItem.route()
+    LaunchedEffect(imageViewer) { onImageViewerChanged(imageViewer) }
+
     NavigationScreen(
+        selectedTitle = when (navBackStackEntry?.destination?.route) {
+            Screen.About.route() -> "About"
+            Screen.Gallery.route(), Screen.GalleryItem.route() -> "Favorites"
+            else -> "Home"
+        },
         isShowTopBar = navBackStackEntry?.destination?.route != Screen.GalleryItem.route(),
         overlayTopBar = navBackStackEntry?.destination?.route.let { it == null || it == Screen.Main.route() },
         onClickNavigationItem = {

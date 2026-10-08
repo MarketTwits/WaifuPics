@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="close">Close</string>
-    <string name="selected_count">Selected count %1$s</string>
+    <string name="selected_count">%1$s selected</string>
     <string name="edit">Edit</string>
     <string name="use_as">Use as</string>
     <string name="save_to_gallery">Save to gallery</string>
@@ -10,4 +10,8 @@
     <string name="image">image</string>
     <string name="text_copied_to_clipboard">Text copied to clipboard</string>
     <string name="gallery_empty_text">Gallery is empty now.\n Click on the heart button to add an image.</string>
+    <string name="image_information">Image information</string>
+    <string name="saved_on">Saved on</string>
+    <string name="image_size">Dimensions</string>
+    <string name="image_actions">Actions</string>
 </resources>

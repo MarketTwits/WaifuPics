@@ -47,7 +47,7 @@ fun BottomImageInfo(
         Text(
             title,
             modifier = Modifier.clickable(enabled = hasSource) { uriHandler.openUri(source) },
-            color = MaterialTheme.colorScheme.onBackground,
+            color = MaterialTheme.colorScheme.secondary,
             fontSize = 16.sp,
             lineHeight = 20.sp,
             fontFamily = com.markettwits.theme.components.FontRubik.medium(),
@@ -55,19 +55,19 @@ fun BottomImageInfo(
             overflow = TextOverflow.Ellipsis
         )
         if (!compact) imageData.artistName?.let { artist ->
-            Text(artist, color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.85f),
+            Text(artist, color = MaterialTheme.colorScheme.secondary.copy(alpha = 0.85f),
                 fontSize = 13.sp, lineHeight = 18.sp,
                 fontFamily = com.markettwits.theme.components.FontRubik.regular(),
                 maxLines = 1, overflow = TextOverflow.Ellipsis)
         }
         FlowRow(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             Text(imageRatingLabel(imageData.ageRating),
-                color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.8f),
+                color = MaterialTheme.colorScheme.secondary.copy(alpha = 0.8f),
                 fontSize = 13.sp, lineHeight = 18.sp,
                 fontFamily = com.markettwits.theme.components.FontRubik.regular())
             loadedImage?.let { image ->
                 Text("${image.width} × ${image.height}",
-                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.8f),
+                    color = MaterialTheme.colorScheme.secondary.copy(alpha = 0.8f),
                     fontSize = 12.sp, lineHeight = 18.sp,
                     fontFamily = com.markettwits.theme.components.FontRubik.regular())
             }
@@ -87,9 +87,9 @@ fun BottomImageInfo(
                 enabled = infoEnabled,
                 modifier = Modifier.heightIn(min = 48.dp).semantics { contentDescription = infoDescription },
                 contentPadding = PaddingValues(horizontal = 8.dp),
-                colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.inversePrimary)
+                colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onSurface)
             ) {
-                Icon(Icons.Outlined.Info, contentDescription = null, modifier = Modifier.size(18.dp))
+                Icon(Icons.Outlined.Info, contentDescription = null, modifier = Modifier.size(22.dp))
                 Spacer(Modifier.width(6.dp))
                 Text(stringResource(Res.string.image_info), fontSize = 12.sp)
             }

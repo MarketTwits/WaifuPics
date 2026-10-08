@@ -10,12 +10,11 @@ import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ZoomOutMap
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import com.markettwits.core_ui.components.design.WaifuOverlayButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -154,26 +153,19 @@ internal fun FullImageScreen(
             horizontalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             if (isZoomed) FullImageButton(
+                description = stringResource(Res.string.reset_image_zoom),
                 onClick = { scope.launch { zoomState.changeScale(1f, Offset.Zero, tween(180)) } }
             ) {
-                Icon(Icons.Default.ZoomOutMap, stringResource(Res.string.reset_image_zoom), Modifier.size(20.dp))
+                Icon(Icons.Default.ZoomOutMap, null, Modifier.size(22.dp))
             }
-            FullImageButton(onClick = onDismiss) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(Res.string.close_full_image), Modifier.size(20.dp))
+            FullImageButton(description = stringResource(Res.string.close_full_image), onClick = onDismiss) {
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, null, Modifier.size(22.dp))
             }
         }
     }
 }
 
 @Composable
-private fun FullImageButton(onClick: () -> Unit, content: @Composable () -> Unit) {
-    IconButton(onClick = onClick, modifier = Modifier.size(48.dp)) {
-        Box(Modifier.size(36.dp).background(MaterialTheme.colorScheme.surface.copy(alpha = 0.94f), CircleShape),
-            contentAlignment = Alignment.Center) {
-            androidx.compose.runtime.CompositionLocalProvider(
-                androidx.compose.material3.LocalContentColor provides MaterialTheme.colorScheme.inversePrimary,
-                content = content
-            )
-        }
-    }
+private fun FullImageButton(description: String, onClick: () -> Unit, content: @Composable () -> Unit) {
+    WaifuOverlayButton(description, onClick, tint = MaterialTheme.colorScheme.onSurface, content = content)
 }

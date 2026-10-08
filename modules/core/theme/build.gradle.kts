@@ -16,7 +16,7 @@ kotlin {
             api(libs.koin.compose)
             api(compose.runtime)
             api(compose.foundation)
-            api(compose.material3)
+            api(libs.compose.material3)
             api(compose.materialIconsExtended)
             api(compose.ui)
             api(compose.components.uiToolingPreview)
@@ -30,6 +30,9 @@ kotlin {
             implementation(compose.components.resources)
             implementation(project(path = ":modules:core:async"))
             implementation(project(path = ":modules:features:settings"))
+        }
+        commonTest.dependencies {
+            implementation(kotlin("test"))
         }
         jvmMain.dependencies {
             api(libs.ktor.client.okhttp)

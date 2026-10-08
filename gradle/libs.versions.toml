@@ -24,6 +24,8 @@ jvm = "17"
 
 # Compose
 compose = "1.9.3"
+# Expressive APIs are available in this release for the current Compose runtime.
+material3 = { strictly = "1.9.0-alpha04" }
 compose-activity = "1.12.1"
 compose-navigation = "2.9.1"
 
@@ -39,6 +41,7 @@ koin = "4.1.1"
 kstore = "1.0.0"
 
 [libraries]
+compose-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "material3" }
 compose-ui-backhandler = { module = "org.jetbrains.compose.ui:ui-backhandler", version.ref = "compose" }
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilCompose" }
 coil-network = { module = "io.coil-kt.coil3:coil-network", version.ref = "coilCompose" }

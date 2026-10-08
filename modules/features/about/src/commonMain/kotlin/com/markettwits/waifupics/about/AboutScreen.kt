@@ -6,13 +6,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.navigationBarsPadding
+import com.markettwits.theme.components.WaifuSpacing
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -24,7 +23,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.markettwits.core_ui.components.image.DefaultImages
@@ -51,9 +49,10 @@ fun AboutScreen(paddingValues: PaddingValues) {
         modifier = Modifier
             .padding(top = paddingValues.calculateTopPadding())
             .fillMaxSize()
-            .padding(16.dp)
+            .navigationBarsPadding()
+            .padding(WaifuSpacing.screen)
             .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(WaifuSpacing.section)
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -66,26 +65,23 @@ fun AboutScreen(paddingValues: PaddingValues) {
                 contentDescription = stringResource(Res.string.nekosapi_logo),
                 modifier = Modifier.size(64.dp)
             )
-            Spacer(modifier = Modifier.padding(20.dp))
+            Spacer(modifier = Modifier.width(WaifuSpacing.content))
             Text(
                 text = "NekosApi",
-                fontSize = 32.sp,
-                fontWeight = FontWeight.Bold
+                style = MaterialTheme.typography.headlineLarge
             )
         }
         Text(
             text = stringResource(Res.string.a_simple_api_for_nekos),
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Medium
+            style = MaterialTheme.typography.headlineSmall
         )
         Text(
             text = stringResource(Res.string.description_text),
-            fontSize = 16.sp
+            style = MaterialTheme.typography.bodyLarge
         )
         Text(
             text = "Features",
-            fontSize = 20.sp,
-            fontWeight = FontWeight.SemiBold
+            style = MaterialTheme.typography.titleMedium
         )
         BulletList(
             items = listOf(
@@ -99,32 +95,30 @@ fun AboutScreen(paddingValues: PaddingValues) {
         )
         Text(
             text = "Usage",
-            fontSize = 20.sp,
-            fontWeight = FontWeight.SemiBold
+            style = MaterialTheme.typography.titleMedium
         )
         Text(
             text = stringResource(Res.string.usage_text),
-            fontSize = 16.sp
+            style = MaterialTheme.typography.bodyLarge
         )
         HyperlinkText(
             fontSize = 16.sp,
             linkTextFontFamily = com.markettwits.theme.components.FontRubik.medium(),
-            fullTextColor = MaterialTheme.colorScheme.onPrimary,
-            linkTextColor = com.markettwits.theme.components.Pink,
+            fullTextColor = MaterialTheme.colorScheme.onSurface,
+            linkTextColor = MaterialTheme.colorScheme.secondary,
             fullText = stringResource(Res.string.documentation_text),
             linkText = listOf(stringResource(Res.string.this_page)),
             hyperlinks = listOf(stringResource(Res.string.freecodecamp_url))
         )
         Text(
             text = stringResource(Res.string.source_code),
-            fontSize = 20.sp,
-            fontWeight = FontWeight.SemiBold
+            style = MaterialTheme.typography.titleMedium
         )
         HyperlinkText(
             fontSize = 16.sp,
             linkTextFontFamily = com.markettwits.theme.components.FontRubik.medium(),
-            fullTextColor = MaterialTheme.colorScheme.onPrimary,
-            linkTextColor = com.markettwits.theme.components.Pink,
+            fullTextColor = MaterialTheme.colorScheme.onSurface,
+            linkTextColor = MaterialTheme.colorScheme.secondary,
             fullText = stringResource(Res.string.source_code_link_text),
             linkText = listOf(stringResource(Res.string.github)),
             hyperlinks = listOf(stringResource(Res.string.https_github_com_nekos_api_nekos_api))
@@ -143,12 +137,12 @@ private fun BulletList(items: List<String>) {
                 imageVector = Icons.Default.Brightness1,
                 contentDescription = null,
                 modifier = Modifier.size(8.dp),
-                tint = MaterialTheme.colorScheme.primaryContainer
+                tint = MaterialTheme.colorScheme.primary
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text(
                 text = item,
-                fontSize = 16.sp
+                style = MaterialTheme.typography.bodyLarge
             )
         }
     }

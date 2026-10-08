@@ -1,16 +1,13 @@
 package com.markettwits.waifupics.random.components.bottom_info
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.outlined.ContentCopy
 import androidx.compose.material.icons.outlined.OpenInNew
 import androidx.compose.material3.*
@@ -31,8 +28,8 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.markettwits.theme.components.FontRubik
+import com.markettwits.core_ui.components.design.*
+import com.markettwits.theme.components.WaifuSpacing
 import com.markettwits.waifupics.random.components.image_state.ImageState
 import com.markettwits.waifupics.random.model.RandomImageState
 import kotlinx.coroutines.CancellationException
@@ -58,7 +55,7 @@ internal fun ImageInformationSheet(
     var copying by remember(image.id) { mutableStateOf(false) }
     var copiedValue by remember(image.id) { mutableStateOf<String?>(null) }
     var copyVersion by remember(image.id) { mutableIntStateOf(0) }
-    val foreground = MaterialTheme.colorScheme.inversePrimary
+    val foreground = MaterialTheme.colorScheme.onSurface
     val source = image.imageData.sourceUrl.trim()
     val host = source.substringAfter("://", "").substringBefore('/').substringBefore('?').substringBefore('#')
     val hasSource = (source.startsWith("https://", true) || source.startsWith("http://", true)) &&
@@ -99,114 +96,90 @@ internal fun ImageInformationSheet(
         }
     }
 
-    ModalBottomSheet(
+    WaifuSheet(
+        title = stringResource(Res.string.image_information),
         onDismissRequest = onDismiss,
-        sheetState = sheetState,
-        containerColor = MaterialTheme.colorScheme.background,
-        contentColor = foreground,
-        dragHandle = { BottomSheetDefaults.DragHandle(color = foreground.copy(alpha = 0.25f)) }
+        sheetState = sheetState
     ) {
         Column(Modifier.fillMaxWidth()) {
-            Row(Modifier.fillMaxWidth().padding(horizontal = 20.dp), verticalAlignment = Alignment.CenterVertically) {
-                Text(stringResource(Res.string.image_information), Modifier.weight(1f),
-                    fontFamily = FontRubik.medium(), fontSize = 20.sp, lineHeight = 26.sp)
-                IconButton(onClick = onDismiss, modifier = Modifier.size(48.dp)) {
-                    Icon(Icons.Default.Close, stringResource(Res.string.close_image_information), Modifier.size(20.dp))
-                }
-            }
             if (copyError) Text(stringResource(Res.string.image_copy_failed),
-                modifier = Modifier.padding(horizontal = 20.dp).padding(top = 8.dp)
+                modifier = Modifier.padding(horizontal = WaifuSpacing.screen).padding(top = 8.dp)
                     .semantics { liveRegion = LiveRegionMode.Polite },
-                fontFamily = FontRubik.regular(), fontSize = 13.sp, lineHeight = 18.sp)
+                style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error)
             Column(
                 Modifier.fillMaxWidth().weight(1f, fill = false).verticalScroll(rememberScrollState())
                     .padding(top = 16.dp, bottom = 24.dp),
-                verticalArrangement = Arrangement.spacedBy(24.dp)
+                verticalArrangement = Arrangement.spacedBy(WaifuSpacing.section)
             ) {
-                Column(Modifier.padding(horizontal = 20.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                    InformationField(stringResource(Res.string.image_author),
+                Column(Modifier.padding(horizontal = WaifuSpacing.screen), verticalArrangement = Arrangement.spacedBy(WaifuSpacing.content)) {
+                    WaifuInfoField(stringResource(Res.string.image_author),
                         image.imageData.artistName?.takeIf { it.isNotBlank() }
                             ?: stringResource(Res.string.image_not_provided))
                     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(20.dp)) {
-                        InformationField(stringResource(Res.string.image_size),
+                        WaifuInfoField(stringResource(Res.string.image_size),
                             loadedImage?.let { "${it.width} × ${it.height}" }
                                 ?: stringResource(Res.string.image_size_pending), Modifier.weight(1f))
-                        InformationField(stringResource(Res.string.age_rating),
+                        WaifuInfoField(stringResource(Res.string.age_rating),
                             imageRatingLabel(image.imageData.ageRating), Modifier.weight(1f))
                     }
                 }
-                HorizontalDivider(Modifier.padding(horizontal = 20.dp), color = foreground.copy(alpha = 0.1f))
-                Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                    FieldLabel(stringResource(Res.string.image_palette_title), Modifier.padding(horizontal = 20.dp))
-                    if (palette.isEmpty()) Box(Modifier.padding(horizontal = 20.dp)) {
+                HorizontalDivider(Modifier.padding(horizontal = WaifuSpacing.screen), color = MaterialTheme.colorScheme.outlineVariant)
+                Column(verticalArrangement = Arrangement.spacedBy(WaifuSpacing.item)) {
+                    WaifuSectionLabel(stringResource(Res.string.image_palette_title), Modifier.padding(horizontal = WaifuSpacing.screen))
+                    if (palette.isEmpty()) Box(Modifier.padding(horizontal = WaifuSpacing.screen)) {
                         InformationText(stringResource(Res.string.image_not_provided))
                     }
                     else {
                         Text(stringResource(Res.string.image_palette_copy_hint),
-                            modifier = Modifier.padding(horizontal = 20.dp),
-                            color = foreground.copy(alpha = 0.65f), fontFamily = FontRubik.regular(),
-                            fontSize = 12.sp, lineHeight = 18.sp)
-                        Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(horizontal = 20.dp),
-                            horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                            modifier = Modifier.padding(horizontal = WaifuSpacing.screen),
+                            color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodySmall)
+                        Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(horizontal = WaifuSpacing.screen),
+                            horizontalArrangement = Arrangement.spacedBy(WaifuSpacing.item)) {
                             palette.forEach { swatch ->
                                 PaletteTile(swatch, copiedValue == swatch.hex, !copying) { copyText(swatch.hex) }
                             }
                         }
                     }
                 }
-                Column(Modifier.padding(horizontal = 20.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                    FieldLabel(stringResource(Res.string.image_source))
+                Column(Modifier.padding(horizontal = WaifuSpacing.screen), verticalArrangement = Arrangement.spacedBy(WaifuSpacing.item)) {
+                    WaifuSectionLabel(stringResource(Res.string.image_source))
                     if (hasSource) {
-                        Text(host.removePrefix("www."), fontSize = 16.sp, lineHeight = 22.sp,
-                            fontFamily = FontRubik.medium())
+                        Text(host.removePrefix("www."), style = MaterialTheme.typography.titleMedium)
                         SelectionContainer {
-                            Text(source, fontSize = 13.sp, lineHeight = 19.sp,
-                                fontFamily = FontRubik.regular(), color = foreground.copy(alpha = 0.7f),
+                            Text(source, style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 maxLines = 2, overflow = TextOverflow.Ellipsis)
                         }
-                        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                            FilledTonalButton(
+                        FlowRow(Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(WaifuSpacing.item),
+                            verticalArrangement = Arrangement.spacedBy(WaifuSpacing.small),
+                            maxItemsInEachRow = if (LocalDensity.current.fontScale > 1.3f) 1 else 2) {
+                            WaifuActionButton(
+                                label = stringResource(Res.string.open_image_source),
                                 onClick = { linkError = runCatching { uriHandler.openUri(source) }.isFailure },
-                                modifier = Modifier.weight(1f).heightIn(min = 48.dp),
-                                contentPadding = PaddingValues(horizontal = 12.dp, vertical = 10.dp),
-                                colors = ButtonDefaults.filledTonalButtonColors(
-                                    containerColor = foreground.copy(alpha = 0.07f), contentColor = foreground)
-                            ) {
-                                Icon(Icons.Outlined.OpenInNew, null, Modifier.size(18.dp))
-                                Spacer(Modifier.width(6.dp))
-                                Text(stringResource(Res.string.open_image_source), fontFamily = FontRubik.medium(),
-                                    fontSize = 13.sp, lineHeight = 18.sp)
-                            }
-                            OutlinedButton(
+                                modifier = Modifier.weight(1f),
+                                icon = Icons.Outlined.OpenInNew
+                            )
+                            WaifuActionButton(
+                                label = stringResource(if (copiedValue == source) Res.string.image_copied else Res.string.copy_image_source),
                                 onClick = { copyText(source) }, enabled = !copying,
-                                modifier = Modifier.weight(1f).heightIn(min = 48.dp),
-                                contentPadding = PaddingValues(horizontal = 12.dp, vertical = 10.dp),
-                                border = BorderStroke(1.dp, foreground.copy(alpha = 0.2f)),
-                                colors = ButtonDefaults.outlinedButtonColors(contentColor = foreground)
-                            ) {
-                                Icon(if (copiedValue == source) Icons.Default.Check else Icons.Outlined.ContentCopy,
-                                    null, Modifier.size(18.dp))
-                                Spacer(Modifier.width(6.dp))
-                                Text(stringResource(if (copiedValue == source) Res.string.image_copied else Res.string.copy_image_source),
-                                    fontFamily = FontRubik.medium(), fontSize = 13.sp, lineHeight = 18.sp)
-                            }
+                                modifier = Modifier.weight(1f),
+                                icon = if (copiedValue == source) Icons.Default.Check else Icons.Outlined.ContentCopy,
+                                style = WaifuActionStyle.Outlined
+                            )
                         }
                         if (linkError) Text(stringResource(Res.string.image_source_open_failed),
                             modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
-                            fontFamily = FontRubik.regular(), fontSize = 13.sp)
+                            style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error)
                     } else InformationText(stringResource(Res.string.image_not_provided))
                 }
-                Column(Modifier.padding(horizontal = 20.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                    FieldLabel(stringResource(Res.string.image_tags))
+                Column(Modifier.padding(horizontal = WaifuSpacing.screen), verticalArrangement = Arrangement.spacedBy(WaifuSpacing.item)) {
+                    WaifuSectionLabel(stringResource(Res.string.image_tags))
                     if (tags.isEmpty()) InformationText(stringResource(Res.string.image_not_provided))
                     else SelectionContainer {
                         FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                             tags.forEach { tag ->
-                                Surface(shape = RoundedCornerShape(8.dp),
-                                    color = foreground.copy(alpha = 0.06f), contentColor = foreground) {
-                                    Text(tag, Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
-                                        fontFamily = FontRubik.regular(), fontSize = 13.sp, lineHeight = 18.sp)
-                                }
+                                WaifuTag(tag)
                             }
                         }
                     }
@@ -220,7 +193,7 @@ private data class PaletteSwatch(val color: Color, val hex: String)
 
 @Composable
 private fun PaletteTile(swatch: PaletteSwatch, copied: Boolean, enabled: Boolean, onCopy: () -> Unit) {
-    val foreground = MaterialTheme.colorScheme.inversePrimary
+    val foreground = MaterialTheme.colorScheme.onSurface
     val description = stringResource(Res.string.copy_palette_color, swatch.hex)
     val state = if (copied) stringResource(Res.string.image_copied) else ""
     Surface(
@@ -228,37 +201,23 @@ private fun PaletteTile(swatch: PaletteSwatch, copied: Boolean, enabled: Boolean
         modifier = Modifier.width(64.dp * maxOf(1f, LocalDensity.current.fontScale))
             .heightIn(min = 56.dp)
             .semantics { contentDescription = description; stateDescription = state },
-        shape = RoundedCornerShape(6.dp),
+        shape = MaterialTheme.shapes.small,
         color = Color.Transparent, contentColor = foreground
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(6.dp)) {
-            Box(Modifier.fillMaxWidth().height(32.dp).clip(RoundedCornerShape(6.dp)).background(swatch.color),
+            Box(Modifier.fillMaxWidth().height(32.dp).clip(MaterialTheme.shapes.small).background(swatch.color),
                 contentAlignment = Alignment.Center) {
                 if (copied) Icon(Icons.Default.Check, null, Modifier.size(18.dp),
                     tint = if (swatch.color.luminance() > 0.179f) Color.Black else Color.White)
             }
-            Text(swatch.hex, fontFamily = FontRubik.medium(), fontSize = 11.sp, lineHeight = 16.sp, maxLines = 1)
+            Text(swatch.hex, style = MaterialTheme.typography.labelSmall, maxLines = 1)
         }
     }
 }
 
 @Composable
-private fun InformationField(label: String, value: String, modifier: Modifier = Modifier) {
-    Column(modifier, verticalArrangement = Arrangement.spacedBy(6.dp)) {
-        FieldLabel(label)
-        InformationText(value)
-    }
-}
-
-@Composable
-private fun FieldLabel(label: String, modifier: Modifier = Modifier) {
-    Text(label, modifier, fontSize = 12.sp, lineHeight = 16.sp, fontFamily = FontRubik.medium(),
-        color = MaterialTheme.colorScheme.inversePrimary.copy(alpha = 0.65f))
-}
-
-@Composable
 private fun InformationText(value: String) {
     SelectionContainer {
-        Text(value, fontSize = 15.sp, lineHeight = 21.sp, fontFamily = FontRubik.regular())
+        Text(value, style = MaterialTheme.typography.bodyMedium)
     }
 }

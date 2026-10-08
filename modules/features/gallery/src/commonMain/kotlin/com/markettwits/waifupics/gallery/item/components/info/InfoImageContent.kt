@@ -1,106 +1,51 @@
 package com.markettwits.waifupics.gallery.item.components.info
 
-import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.OpenInNew
+import androidx.compose.material.icons.filled.Save
+import androidx.compose.material.icons.outlined.Share
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.platform.LocalDensity
+import com.markettwits.core_ui.components.design.*
 import com.markettwits.core_ui.provider.ApplicationViewModel
-import com.markettwits.theme.components.FontRubik
-import com.markettwits.theme.components.LightPink
-import com.markettwits.theme.components.Shapes
-import com.markettwits.waifupics.gallery.item.components.button.OpenAsButton
-import com.markettwits.waifupics.gallery.item.components.button.SaveButton
-import com.markettwits.waifupics.gallery.item.components.button.ShareButton
+import com.markettwits.theme.components.WaifuSpacing
 import com.markettwits.waifupics.gallery.item.viewmodel.GalleryScreenViewModel
+import org.jetbrains.compose.resources.stringResource
+import waifupics.modules.features.gallery.generated.resources.*
 
-
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
-internal fun InfoImageContent(
-    modifier: Modifier = Modifier,
-    onDismiss: () -> Unit
-) {
+internal fun InfoImageContent(modifier: Modifier = Modifier, onDismiss: () -> Unit) {
     val viewModel: GalleryScreenViewModel = ApplicationViewModel()
     val image by viewModel.currentImage().collectAsState()
-    Box(
-        modifier = modifier
-            .padding(10.dp)
-            .clip(Shapes.medium)
-            .animateContentSize(),
-        contentAlignment = Alignment.CenterEnd
-    ) {
-        Column(
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .fillMaxWidth()
-                .verticalScroll(rememberScrollState())
-        ) {
-            MediaViewInfoActions(
-                onClickOpenAs = {
-                    viewModel.onClickSetImageAs()
-                }, onClickShare = {
-                    viewModel.onClickShareImage()
-                },
-                onClickSave = {
-                    viewModel.onClickSaveToGallery()
-                    onDismiss()
-                }
-            )
-            ImageInfoDate(image.created)
+    val actionsPerRow = if (LocalDensity.current.fontScale > 1.3f) 1 else 2
+    Column(modifier.fillMaxWidth().verticalScroll(rememberScrollState())
+        .padding(WaifuSpacing.screen), verticalArrangement = Arrangement.spacedBy(WaifuSpacing.section)) {
+        WaifuInfoField(stringResource(Res.string.saved_on), image.created)
+        if (image.width > 0 && image.height > 0) {
+            WaifuInfoField(stringResource(Res.string.image_size), "${image.width} × ${image.height}")
         }
-    }
-}
-
-@Composable
-private fun ImageInfoDate(date: String) {
-    Box(
-        modifier = Modifier.clip(Shapes.medium)
-    ) {
-        Text(
-            text = date,
-            color = LightPink,
-            fontFamily = FontRubik.medium(),
-            fontSize = 14.sp
-        )
-    }
-}
-
-@Composable
-private fun MediaViewInfoActions(
-    onClickShare: () -> Unit,
-    onClickOpenAs: () -> Unit,
-    onClickSave: () -> Unit,
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .horizontalScroll(rememberScrollState()),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceEvenly,
-    ) {
-        ShareButton {
-            onClickShare()
-        }
-        OpenAsButton {
-            onClickOpenAs()
-        }
-        SaveButton {
-            onClickSave()
+        Column(Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(WaifuSpacing.item)) {
+            WaifuSectionLabel(stringResource(Res.string.image_actions))
+            FlowRow(Modifier.fillMaxWidth(),
+                maxItemsInEachRow = actionsPerRow,
+                horizontalArrangement = Arrangement.spacedBy(WaifuSpacing.item),
+                verticalArrangement = Arrangement.spacedBy(WaifuSpacing.small)) {
+                WaifuActionButton(stringResource(Res.string.share), viewModel::onClickShareImage,
+                    modifier = Modifier.weight(1f), icon = Icons.Outlined.Share)
+                WaifuActionButton(stringResource(Res.string.use_as), viewModel::onClickSetImageAs,
+                    modifier = Modifier.weight(1f), icon = Icons.AutoMirrored.Filled.OpenInNew)
+            }
+            WaifuActionButton(stringResource(Res.string.save_to_gallery), {
+                viewModel.onClickSaveToGallery()
+                onDismiss()
+            }, modifier = Modifier.fillMaxWidth(), icon = Icons.Default.Save,
+                style = WaifuActionStyle.Outlined)
         }
     }
 }
