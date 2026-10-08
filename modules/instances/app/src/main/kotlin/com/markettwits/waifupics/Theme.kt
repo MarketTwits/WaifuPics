@@ -11,7 +11,7 @@ internal fun ComponentActivity.enableEdgeToEdgeWithSafeArea(isDarkTheme: Boolean
     WindowCompat.setDecorFitsSystemWindows(window, false)
 
     window.statusBarColor = Color.TRANSPARENT
-    window.navigationBarColor = Color.TRANSPARENT
+    window.navigationBarColor = if (isDarkTheme) Color.BLACK else Color.WHITE
 
     val insetsController = WindowInsetsControllerCompat(window, window.decorView)
 

@@ -26,6 +26,7 @@ fun MainScreen(
 
     NavigationScreen(
         isShowTopBar = navBackStackEntry?.destination?.route != Screen.GalleryItem.route(),
+        overlayTopBar = navBackStackEntry?.destination?.route.let { it == null || it == Screen.Main.route() },
         onClickNavigationItem = {
             navController.navigate(it.mapToScreen().route())
         }, content = { paddingValues ->
@@ -41,9 +42,10 @@ fun MainScreen(
                     AboutScreen(paddingValues = paddingValues)
                 }
                 composable(Screen.Gallery.route()) {
-                    GalleryScreen(onClickGoDetail = {
-                        navController.navigate(Screen.GalleryItem.route())
-                    }, paddingValues
+                    GalleryScreen(
+                        onClickGoDetail = {
+                            navController.navigate(Screen.GalleryItem.route())
+                        }, paddingValues
                     )
                 }
                 composable(Screen.GalleryItem.route()) {
@@ -61,6 +63,3 @@ private fun NavigationItem.mapToScreen(): Screen =
         is NavigationItem.Favorite -> Screen.Gallery
         is NavigationItem.Home -> Screen.Main
     }
-
-
-

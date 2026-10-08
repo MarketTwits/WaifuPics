@@ -9,7 +9,9 @@ interface RandomImageRepository {
 
     suspend fun fetchRandomImage(filters: List<String>): RandomImageState
 
-    suspend fun addToFavorite(
+    suspend fun fetchRandomImages(filters: List<String>, limit: Int): List<RandomImageState.Success>
+
+    suspend fun toggleFavorite(
         id: Int,
         width: Int,
         height: Int,
@@ -31,7 +33,10 @@ interface RandomImageRepository {
             return result.map(imageMapperCloud)
         }
 
-        override suspend fun addToFavorite(
+        override suspend fun fetchRandomImages(filters: List<String>, limit: Int): List<RandomImageState.Success> =
+            service.randomImage(filters, limit).map(imageMapperCloud::map)
+
+        override suspend fun toggleFavorite(
             id: Int,
             width: Int,
             height: Int,

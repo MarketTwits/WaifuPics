@@ -13,6 +13,7 @@ kotlin{
         implementation(project(path = ":modules:core:communication"))
         implementation(project(path = ":modules:features:settings"))
         implementation(compose.components.resources)
+        implementation(libs.compose.ui.backhandler)
         implementation(libs.koin.core)
     }
 }

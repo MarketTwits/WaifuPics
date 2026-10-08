@@ -2,44 +2,47 @@
 [versions]
 
 #Android SDK
-compileSdk = "34"
-filekitCore = "0.8.7"
-kotlinxIoCore = "0.5.4"
+compileSdk = "36"
+filekitCore = "0.12.0"
+kotlinxIoCore = "0.8.2"
 #minSdk = "24"
 multiplatformPaths = "0.2.2"
-#targetSdk = "34"
+#targetSdk = "36"
 versionName = "0.1.0"
 #namespace = "com.markettwits.waifupics"
 
 #plugins
-coreSplashscreen = "1.0.1"
-kotlin = "2.0.20"
-gradle = "8.1.4"
+coreSplashscreen = "1.2.0"
+kotlin = "2.2.21"
+agp = "8.11.2"
+gradle = "8.14.3"
+kotlinx-browser = "0.3.1"
 
-rulerGradlePlugin = "2.0.0-beta-1"
+rulerGradlePlugin = "2.0.0"
 
 jvm = "17"
 
 # Compose
-compose = "1.7.0-beta02"
-compose-activity = "1.9.2"
-compose-navigation = "2.8.0-alpha10"
+compose = "1.9.3"
+compose-activity = "1.12.1"
+compose-navigation = "2.9.1"
 
-android-lifecycle-ktx = "2.8.0"
-core-ktx = "1.13.1"
-appcompat = "1.7.0"
-coilCompose = "3.0.0-rc01"
-kotlinx-serialization = "1.7.3"
-kotlinx-datetime = "0.6.1"
-org-jetbrains-kotlin-jvm = "1.9.21"
-ktor = "3.0.0"
-koin = "4.0.0-RC1"
-kstore = "0.8.0"
+android-lifecycle-ktx = "2.9.6"
+core-ktx = "1.17.0"
+appcompat = "1.7.1"
+coilCompose = "3.3.0"
+kotlinx-serialization = "1.9.0"
+kotlinx-datetime = "0.7.1"
+org-jetbrains-kotlin-jvm = "2.2.21"
+ktor = "3.3.3"
+koin = "4.1.1"
+kstore = "1.0.0"
 
 [libraries]
+compose-ui-backhandler = { module = "org.jetbrains.compose.ui:ui-backhandler", version.ref = "compose" }
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilCompose" }
 coil-network = { module = "io.coil-kt.coil3:coil-network", version.ref = "coilCompose" }
-coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version = "3.0.0-rc01" }
+coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coilCompose" }
 coil-network-okkhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coilCompose" }
 coil-compose-core = { module = "io.coil-kt.coil3:coil-compose-core", version.ref = "coilCompose" }
 coil-wasm = { module = "io.coil-kt.coil3:coil-wasm-js", version.ref = "coilCompose" }
@@ -54,6 +57,7 @@ compose-lifecycle-viewmodel = { module = "org.jetbrains.androidx.lifecycle:lifec
 
 filekit-core = { module = "io.github.vinceglb:filekit-core", version.ref = "filekitCore" }
 kotlinx-io-core = { module = "org.jetbrains.kotlinx:kotlinx-io-core", version.ref = "kotlinxIoCore" }
+kotlinx-browser = { module = "org.jetbrains.kotlinx:kotlinx-browser", version.ref = "kotlinx-browser" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
 ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
@@ -73,8 +77,8 @@ kstore-file = { module = "io.github.xxfast:kstore-file", version.ref = "kstore" 
 kstore-storage = { module = "io.github.xxfast:kstore-storage", version.ref = "kstore" }
 
 #Serialization
-kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version = "1.8.1" }
-kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version = "1.8.1" }
+kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version = "1.10.1" }
+kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version = "1.10.1" }
 kotlinx-serialization-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-core", version.ref = "kotlinx-serialization" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 #Time
@@ -85,7 +89,7 @@ core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 
 #Gradle plugins
-android-gradle-plugin = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
+android-gradle-plugin = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 compose-gradle-plugin = { module = "org.jetbrains.compose:org.jetbrains.compose.gradle.plugin", version.ref = "compose" }
 kotlin-multiplatform-gradle-plugin = { module = "org.jetbrains.kotlin.multiplatform:org.jetbrains.kotlin.multiplatform.gradle.plugin", version.ref = "kotlin" }
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
@@ -99,11 +103,11 @@ kotlin-kmp = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin"
 kotlin-kmp-compose = { id = "org.jetbrains.compose", version.ref = "compose" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 
-android-library = { id = "com.android.library", version.ref = "gradle" }
-android-application = { id = "com.android.application", version.ref = "gradle" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
-org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "org-jetbrains-kotlin-jvm" }
+org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 
 #Convention Plugins
 

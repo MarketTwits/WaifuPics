@@ -1,77 +1,113 @@
 package com.markettwits.waifupics.random.components.image_state.suceess
 
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.key
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.unit.dp
 import coil3.compose.SubcomposeAsyncImage
 import coil3.compose.SubcomposeAsyncImageContent
 import com.markettwits.waifupics.random.components.image_state.ImageState
-import com.markettwits.waifupics.random.components.image_state.full_screen.FullImageScreen
+import com.markettwits.waifupics.random.components.image_state.fuckup.ImageFuckup
 import com.markettwits.waifupics.random.components.image_state.loading.ImageLoading
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-internal fun ImageCardContent(
+internal fun SharedTransitionScope.ImageCardContent(
     modifier: Modifier = Modifier,
     imageUrl: String,
     id: Int,
-    onChangeImageState: (ImageState) -> Unit
+    colorPalette: List<List<Int>>,
+    animateBackground: Boolean,
+    sharedKey: String,
+    animatedVisibilityScope: AnimatedVisibilityScope,
+    onChangeImageState: (ImageState) -> Unit,
+    onOpenFullScreen: () -> Unit
 ) {
 
-    var isDialogOpen by remember { mutableStateOf(false) }
+    val boundsState = rememberSharedContentState(key = "${sharedKey}_bounds")
+    val elementState = rememberSharedContentState(key = sharedKey)
+    var retryAttempt by remember(id, imageUrl) { mutableIntStateOf(0) }
 
-
-    val innerModifier = modifier
-        .sizeIn(minWidth = 200.dp, minHeight = 300.dp, maxHeight = 1080.dp, maxWidth = 1920.dp)
-        .padding(20.dp)
-        .clip(com.markettwits.theme.components.Shapes.medium)
-        .clickable {
-            isDialogOpen = true
-        }
-
-    SubcomposeAsyncImage(
-        model = imageUrl,
-        contentScale = ContentScale.Fit,
-        contentDescription = "",
-        loading = {
-            ImageLoading()
-            onChangeImageState(ImageState.Loading)
-        }, success = {
-            SubcomposeAsyncImageContent(modifier = innerModifier)
-            onChangeImageState(
-                ImageState.Success(
-                    id,
-                    imageUrl,
-                    it.result.image.width,
-                    it.result.image.height,
-                    false
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .sharedBounds(
+                sharedContentState = boundsState,
+                animatedVisibilityScope = animatedVisibilityScope,
+                boundsTransform = { _, _ -> spring(dampingRatio = 0.75f, stiffness = 400f) }
+            ),
+        contentAlignment = Alignment.Center
+    ) {
+        key(retryAttempt) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                SubcomposeAsyncImage(
+                    modifier = modifier
+                        .fillMaxSize()
+                        .testTag("feed-image-$id")
+                        .clickable {
+                            onOpenFullScreen()
+                        }
+                        .sharedElement(
+                            sharedContentState = elementState,
+                            animatedVisibilityScope = animatedVisibilityScope,
+                            boundsTransform = { _, _ -> spring(dampingRatio = 0.75f, stiffness = 400f) }
+                        ),
+                    model = imageUrl,
+                    contentScale = ContentScale.Fit,
+                    alignment = Alignment.Center,
+                    contentDescription = "View image",
+                    loading = {
+                        ImageLoading()
+                        LaunchedEffect(id, imageUrl) { onChangeImageState(ImageState.Loading) }
+                    }, success = {
+                        val imageScope = this
+                        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                            AnimatedImageBackground(it.painter, colorPalette, animateBackground)
+                            imageScope.SubcomposeAsyncImageContent(
+                                modifier = Modifier.fillMaxSize().softFitEdges(it.painter.intrinsicSize),
+                                contentScale = ContentScale.Fit,
+                                alignment = Alignment.Center
+                            )
+                        }
+                        LaunchedEffect(id, imageUrl, it.result) {
+                            onChangeImageState(
+                                ImageState.Success(
+                                    id,
+                                    imageUrl,
+                                    it.result.image.width,
+                                    it.result.image.height,
+                                    false
+                                )
+                            )
+                        }
+                    },
+                    error = {
+                        val message = it.result.throwable.message ?: "Не удалось загрузить изображение"
+                        ImageFuckup(onRetry = { retryAttempt++ })
+                        LaunchedEffect(id, imageUrl, it.result) {
+                            onChangeImageState(ImageState.Error(message))
+                        }
+                    }
                 )
-            )
-        },
-        error = {
-            val message = it.result.throwable.toString()
-            onChangeImageState(ImageState.Error(message))
-        }
-    )
-    if (isDialogOpen) {
-        FullImageScreen(
-            imageUrl = imageUrl,
-            onDismiss = {
-                isDialogOpen = false
             }
-        )
+        }
     }
 }
-
-
-
-
-

@@ -1,7 +1,7 @@
 package com.markettwits.cache.image
 
+import kotlin.time.ExperimentalTime
 
-import kotlinx.datetime.Clock
 
 interface ImageUiToCacheMapper {
 
@@ -15,6 +15,7 @@ interface ImageUiToCacheMapper {
 
     class Base : ImageUiToCacheMapper {
 
+        @OptIn(ExperimentalTime::class)
         override fun map(
             id: Int,
             width: Int,
@@ -27,7 +28,7 @@ interface ImageUiToCacheMapper {
                 width = width,
                 height = height,
                 netUrl = url,
-                created = Clock.System.now().toEpochMilliseconds(),
+                created = kotlin.time.Clock.System.now().toEpochMilliseconds(),
                 protected = isProtected
             )
     }

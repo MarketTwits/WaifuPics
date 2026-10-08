@@ -10,6 +10,7 @@ kotlin{
     sourceSets.commonMain.dependencies {
         implementation(libs.koin.core)
         implementation(libs.kstore)
+        implementation(libs.kotlinx.io.core)
         implementation(libs.kotlinx.serialization.json)
     }
     sourceSets.androidMain.dependencies {

@@ -24,8 +24,13 @@ kotlin {
 
             implementation(libs.koin.core)
             implementation(compose.components.resources)
+            implementation(libs.compose.ui.backhandler)
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.kotlinx.serialization.core)
+        }
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.1")
         }
     }
 }

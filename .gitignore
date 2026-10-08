@@ -17,3 +17,6 @@
 .externalNativeBuild
 .cxx
 .kotlin
+
+# Local documentation and audit materials
+/docs/

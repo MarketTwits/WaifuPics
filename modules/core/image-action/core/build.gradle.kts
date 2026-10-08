@@ -20,4 +20,7 @@ kotlin{
         implementation("com.sun.jna:jna:3.0.9")
         implementation("net.java.dev.jna:jna-platform:4.0.0")
     }
+    sourceSets.wasmJsMain.dependencies {
+        implementation(libs.kotlinx.browser)
+    }
 }

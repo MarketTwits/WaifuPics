@@ -2,15 +2,14 @@ package com.markettwits.waifupics.filter.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.markettwits.theme.components.FontRubik
-import com.markettwits.theme.components.LightPink
 import com.markettwits.waifupics.filter.model.FilterItem
 import com.markettwits.waifupics.filter.model.FilterState
 import org.jetbrains.compose.resources.stringResource
@@ -29,13 +28,12 @@ internal fun AgeRatingFilterBody(
     Text(
         modifier = Modifier.Companion.padding(10.dp),
         text = stringResource(Res.string.age_rating),
-        color = LightPink,
+        color = MaterialTheme.colorScheme.inversePrimary,
         fontFamily = FontRubik.medium(),
-        fontSize = 12.sp
+        fontSize = 16.sp,
+        lineHeight = 22.sp
     )
-    Column(
-        modifier = Modifier.Companion.height(250.dp),
-    ) {
+    Column {
         filterState.filter.forEach {
             AgeRatingFilterPosition(
                 canBeChecked = filterState.couldBeChecked(it),

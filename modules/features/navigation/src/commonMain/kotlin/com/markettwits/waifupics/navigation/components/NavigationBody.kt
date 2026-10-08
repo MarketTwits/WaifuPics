@@ -3,6 +3,7 @@ package com.markettwits.waifupics.navigation.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -29,6 +30,7 @@ import com.markettwits.waifupics.navigation.model.NavigationItem
 @Composable
 fun NavigationBody(
     modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(0.dp),
     isDarkTheme: Boolean,
     onClick: (NavigationItem) -> Unit,
     onClickChangeTheme : () -> Unit
@@ -38,9 +40,9 @@ fun NavigationBody(
             .background(MaterialTheme.colorScheme.background)
             .wrapContentWidth()
             .fillMaxHeight()
-            .padding(10.dp)
+            .padding(start = 10.dp, end = 10.dp, bottom = 10.dp)
     ) {
-        Column {
+        Column(modifier = Modifier.padding(contentPadding)) {
             Text(
                 modifier = Modifier.padding(10.dp),
                 text = "Menu",
@@ -106,4 +108,3 @@ private val list = listOf(
     NavigationItem.Favorite(),
     NavigationItem.About()
 )
-

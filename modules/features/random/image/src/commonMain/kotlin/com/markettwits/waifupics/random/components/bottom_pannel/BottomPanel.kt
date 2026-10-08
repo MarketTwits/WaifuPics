@@ -6,13 +6,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.markettwits.waifupics.random.components.bottom_pannel.buttons.BasePanelItem
 import com.markettwits.waifupics.random.components.bottom_pannel.buttons.HeartButton
 import com.markettwits.waifupics.random.components.bottom_pannel.buttons.RefreshPanelItem
 import com.markettwits.waifupics.random.components.bottom_pannel.buttons.ReportedButton
 import org.jetbrains.compose.resources.painterResource
 import waifupics.modules.features.random.image.generated.resources.Res
-import waifupics.modules.features.random.image.generated.resources.ic_bookmark
+import waifupics.modules.features.random.image.generated.resources.ic_filter
 import waifupics.modules.features.random.image.generated.resources.ic_share
 
 
@@ -24,23 +25,26 @@ internal fun BottomPanel(
     imageId : Int,
     onClickAddToFavorite : () -> Unit,
     onClickFetchRandomImage : () -> Unit,
+    onClickFilter : () -> Unit,
     onClickShareImage : () -> Unit,
+    isFavorite: Boolean,
 ) {
     Row(
-        modifier = modifier
-            .fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center
+        horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterHorizontally)
     ) {
-        BasePanelItem(
-            modifier = Modifier.weight(1f),
-            image = painterResource(Res.drawable.ic_bookmark),
-            enabled = isEnabled
-        ) {}
         HeartButton(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier.weight(0.9f),
             enabled = isEnabled,
+            checked = isFavorite,
             onClickAddToFavorite = onClickAddToFavorite,
+        )
+        BasePanelItem(
+            modifier = Modifier.weight(0.9f),
+            image = painterResource(Res.drawable.ic_filter),
+            onClick = onClickFilter,
+            enabled = isEnabled
         )
         RefreshPanelItem(
             modifier = Modifier.weight(2.5f),
@@ -48,13 +52,13 @@ internal fun BottomPanel(
             onClick = onClickFetchRandomImage
         )
         BasePanelItem(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier.weight(0.9f),
             image = painterResource(Res.drawable.ic_share),
             enabled = isEnabled,
             onClick = onClickShareImage
         )
         ReportedButton(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier.weight(0.9f),
             enabled = isEnabled,
             imageId = imageId
         )

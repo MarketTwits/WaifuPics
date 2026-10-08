@@ -1,11 +1,8 @@
 import com.android.build.gradle.BaseExtension
 import extension.projectJavaVersion
-import extension.libs
 import extension.model.ApkConfig
 import extension.model.ApkConfig.VERSION_CODE
 import extension.model.ApkConfig.VERSION_NAME
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 configure<BaseExtension> {
 
