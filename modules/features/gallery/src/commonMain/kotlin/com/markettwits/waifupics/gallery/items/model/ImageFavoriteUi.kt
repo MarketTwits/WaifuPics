@@ -10,6 +10,7 @@ sealed class ImageFavoriteUi(
     open val height: Int,
     open val created: String,
     open val protected: Boolean,
+    open val savedAt: Long? = null,
 ) {
     data class Base(
         override val id: Int,
@@ -17,8 +18,9 @@ sealed class ImageFavoriteUi(
         override val width: Int,
         override val height: Int,
         override val created: String,
-        override val protected: Boolean
-    ) : ImageFavoriteUi(id, imageUrl, width, height, created, protected)
+        override val protected: Boolean,
+        override val savedAt: Long? = null
+    ) : ImageFavoriteUi(id, imageUrl, width, height, created, protected, savedAt)
 
     data class Protected(
         override val id: Int,
@@ -26,8 +28,9 @@ sealed class ImageFavoriteUi(
         override val width: Int,
         override val height: Int,
         override val created: String,
-        override val protected: Boolean
-    ) : ImageFavoriteUi(id, imageUrl, width, height, created, protected)
+        override val protected: Boolean,
+        override val savedAt: Long? = null
+    ) : ImageFavoriteUi(id, imageUrl, width, height, created, protected, savedAt)
 
     data object Initial : ImageFavoriteUi(0, "", 0, 0, "", false)
 }

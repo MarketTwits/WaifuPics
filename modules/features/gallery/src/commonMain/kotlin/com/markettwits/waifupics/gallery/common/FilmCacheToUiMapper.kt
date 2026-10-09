@@ -26,7 +26,8 @@ interface FavoriteImageCacheToUiMapper {
                     height = item.height,
                     width = item.width,
                     protected = item.protected,
-                    created = mapTime(item.created)
+                    created = mapTime(item.created),
+                    savedAt = item.created
                 )
             } else {
                 ImageFavoriteUi.Base(
@@ -35,7 +36,8 @@ interface FavoriteImageCacheToUiMapper {
                     height = item.height,
                     width = item.width,
                     protected = item.protected,
-                    created = mapTime(item.created)
+                    created = mapTime(item.created),
+                    savedAt = item.created
                 )
             }
         }

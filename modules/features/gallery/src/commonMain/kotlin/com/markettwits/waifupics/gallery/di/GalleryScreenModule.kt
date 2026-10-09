@@ -41,7 +41,8 @@ val galleryModule = module {
             detailCommunication = communication,
             selectedModeCommunication = SelectedModeCommunication.Base(),
             selectedImageCommunication = SelectedImageCommunication.Base(),
-            imageIntentAction = get()
+            imageIntentAction = get(),
+            settings = get()
         )
     }
     single<GalleryScreenViewModel> {

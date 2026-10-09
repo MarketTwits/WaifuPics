@@ -6,12 +6,15 @@ import androidx.compose.foundation.lazy.grid.LazyGridItemScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.semantics.onLongClick
+import androidx.compose.ui.semantics.semantics
 import com.markettwits.waifupics.gallery.items.model.ImageFavoriteUi
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun LazyGridItemScope.MediaComponent(
     media: ImageFavoriteUi,
+    modifier: Modifier = Modifier,
     selectionState: Boolean,
     selectedMedia: List<ImageFavoriteUi>,
     onItemClick: (ImageFavoriteUi) -> Unit,
@@ -21,15 +24,14 @@ internal fun LazyGridItemScope.MediaComponent(
         image = media,
         selectionState = selectionState,
         selectedMedia = selectedMedia,
-        modifier = Modifier.animateItem(fadeInSpec = null, fadeOutSpec = null)
+        modifier = modifier.animateItem(fadeInSpec = null, fadeOutSpec = null)
             .clip(androidx.compose.material3.MaterialTheme.shapes.medium)
+            .semantics { onLongClick { onItemLongClick(media); true } }
             .combinedClickable(
                 onClick = {
                     onItemClick(media)
                 },
-                onLongClick = {
-                    onItemLongClick(media)
-                },
+                onLongClick = null,
             )
     )
 }
