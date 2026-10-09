@@ -27,6 +27,10 @@
         <item>Sep</item><item>Oct</item><item>Nov</item><item>Dec</item>
     </string-array>
     <string name="gallery_layout">Gallery layout</string>
+    <string name="gallery_viewer_position">%1$s of %2$s</string>
+    <string name="gallery_viewer_photo">Photo %1$s of %2$s</string>
+    <string name="gallery_image_load_failed">Could not load image</string>
+    <string name="gallery_retry">Try again</string>
     <string name="gallery_layout_day">Day</string>
     <string name="gallery_layout_month">Month</string>
     <string name="gallery_layout_auto">Automatic</string>

@@ -46,21 +46,26 @@ internal fun Modifier.gallerySelectionGesture(
     selectedIds: Set<Int>,
     selectionMode: Boolean,
     onSelection: (Set<Int>) -> Unit,
-    onFinish: () -> Unit
+    onFinish: () -> Unit,
+    viewportTranslationY: () -> Float = { 0f }
 ): Modifier {
     val currentIds by rememberUpdatedState(ids)
     val currentSelection by rememberUpdatedState(selectedIds)
     val currentMode by rememberUpdatedState(selectionMode)
     val changeSelection by rememberUpdatedState(onSelection)
     val finishSelection by rememberUpdatedState(onFinish)
+    val translationY by rememberUpdatedState(viewportTranslationY)
     val haptic = LocalHapticFeedback.current
     return pointerInput(state, ids) {
         val horizontalInset = WaifuSpacing.content.toPx()
         coroutineScope {
             val gestureScope = this
+            fun photoAt(point: Offset, clampToContent: Boolean = false): Int? =
+                state.photoAt(point - Offset(0f, translationY()), horizontalInset, clampToContent)
             awaitEachGesture {
                 val down = awaitFirstDown(requireUnconsumed = false, pass = PointerEventPass.Initial)
-                val anchor = state.photoAt(down.position, horizontalInset) ?: return@awaitEachGesture
+                if (down.isConsumed) return@awaitEachGesture
+                val anchor = photoAt(down.position) ?: return@awaitEachGesture
                 val startedInSelectionMode = currentMode
                 val baseline = currentSelection.toSet()
                 var position = down.position
@@ -96,7 +101,7 @@ internal fun Modifier.gallerySelectionGesture(
                 update(anchor)
                 haptic.performHapticFeedback(if (startedInSelectionMode) HapticFeedbackType.TextHandleMove
                     else HapticFeedbackType.LongPress)
-                update(state.photoAt(position, horizontalInset))
+                update(photoAt(position))
                 val autoScroll = gestureScope.launch {
                     var previousFrame = 0L
                     while (isActive) {
@@ -113,7 +118,7 @@ internal fun Modifier.gallerySelectionGesture(
                         }
                         if (speed != 0f) {
                             state.scrollBy(speed * 800 * density * seconds)
-                            update(state.photoAt(position, horizontalInset, clampToContent = true))
+                            update(photoAt(position, clampToContent = true))
                         }
                     }
                 }
@@ -123,7 +128,7 @@ internal fun Modifier.gallerySelectionGesture(
                         if (event.changes.count { it.pressed } > 1) break
                         val change = event.changes.firstOrNull { it.id == down.id } ?: break
                         position = change.position
-                        update(state.photoAt(position, horizontalInset, clampToContent = true))
+                        update(photoAt(position, clampToContent = true))
                         change.consume()
                         if (!change.pressed) break
                     }

@@ -60,6 +60,7 @@ fun NavigationScreen(
         Box(Modifier.fillMaxSize()) {
             ModalNavigationDrawer(
                 drawerState = drawerState,
+                gesturesEnabled = isShowTopBar,
                 drawerContent = {
                     NavigationBody(
                         contentPadding = PaddingValues(

@@ -12,6 +12,7 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.contentDescription
@@ -20,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.markettwits.core_ui.provider.ApplicationViewModel
 import com.markettwits.theme.components.WaifuSpacing
 import com.markettwits.waifupics.gallery.items.components.empty_item.EmptyGalleryItem
+import com.markettwits.waifupics.gallery.items.components.animations.GalleryImageTransition
 import com.markettwits.waifupics.gallery.items.components.list_item.MediaComponent
 import com.markettwits.waifupics.gallery.items.components.picker.SelectionSheet
 import com.markettwits.waifupics.gallery.items.model.*
@@ -31,7 +33,8 @@ import kotlin.math.ceil
 import kotlin.math.roundToInt
 
 @Composable
-fun GalleryScreen(onClickGoDetail: () -> Unit, paddingValues: PaddingValues) {
+fun GalleryScreen(onClickGoDetail: () -> Unit, paddingValues: PaddingValues,
+    imageTransition: GalleryImageTransition? = null, returnToImageId: Int? = null) {
     val viewModel: GalleryViewModel = ApplicationViewModel()
     val state by viewModel.state().collectAsState()
     val selected by viewModel.selectedState().collectAsState()
@@ -42,6 +45,7 @@ fun GalleryScreen(onClickGoDetail: () -> Unit, paddingValues: PaddingValues) {
     val selectedIds = selectedMedia.map { it.id }.toSet()
     val haptic = LocalHapticFeedback.current
     val gridState = rememberLazyGridState()
+    val overscroll = rememberGalleryOverscrollEffect()
     val gridDragged by gridState.interactionSource.collectIsDraggedAsState()
     val today = rememberGalleryToday()
     val zone = TimeZone.currentSystemDefault()
@@ -60,10 +64,19 @@ fun GalleryScreen(onClickGoDetail: () -> Unit, paddingValues: PaddingValues) {
         pendingAnchor?.let { photoIndexes[it]?.let(gridState::requestScrollToItem) }
         pendingAnchor = null
     }
+    val returnOffset = with(LocalDensity.current) { (GalleryDateHeaderHeight + WaifuSpacing.small).roundToPx() }
+    LaunchedEffect(imageTransition?.visible, returnToImageId, photoIndexes) {
+        if (imageTransition?.visible != false && returnToImageId != null) {
+            val index = photoIndexes[returnToImageId]
+            if (index != null && gridState.layoutInfo.visibleItemsInfo.none { it.key == "photo-$returnToImageId" }) {
+                gridState.requestScrollToItem(index, -returnOffset)
+            }
+        }
+    }
     val navigationInset = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
     val bottomPadding = (if (selected) 180.dp else WaifuSpacing.content) + navigationInset
 
-    BoxWithConstraints(Modifier.padding(top = paddingValues.calculateTopPadding()).fillMaxSize()) {
+    BoxWithConstraints(Modifier.padding(top = paddingValues.calculateTopPadding()).fillMaxSize().clipToBounds()) {
         val density = LocalDensity.current
         val contentWidth = with(density) { maxWidth.roundToPx() - 2 * WaifuSpacing.content.roundToPx() }
             .coerceAtLeast(1)
@@ -96,11 +109,12 @@ fun GalleryScreen(onClickGoDetail: () -> Unit, paddingValues: PaddingValues) {
         if (sections.isEmpty()) {
             EmptyGalleryItem()
         } else {
-            LazyVerticalGrid(columns = GridCells.Fixed(columns), state = gridState,
+            LazyVerticalGrid(columns = GridCells.Fixed(columns), state = gridState, overscrollEffect = overscroll,
                 modifier = Modifier.fillMaxSize()
                     .gallerySelectionGesture(gridState, ids, selectedIds, selected,
                         onSelection = { viewModel.replaceSelection(it, keepMode = true) },
-                        onFinish = viewModel::finishSelectionGesture),
+                        onFinish = viewModel::finishSelectionGesture,
+                        viewportTranslationY = { overscroll.displacement }),
                 horizontalArrangement = Arrangement.spacedBy(WaifuSpacing.small),
                 verticalArrangement = Arrangement.spacedBy(WaifuSpacing.small),
                 contentPadding = PaddingValues(start = WaifuSpacing.content, end = WaifuSpacing.content,
@@ -120,6 +134,7 @@ fun GalleryScreen(onClickGoDetail: () -> Unit, paddingValues: PaddingValues) {
                         val description = stringResource(Res.string.gallery_saved_image,
                             image.created)
                         MediaComponent(media = image, selectionState = selected,
+                            imageTransition = imageTransition,
                             selectedMedia = selectedMedia,
                             modifier = Modifier.testTag("gallery-image-${image.id}")
                                 .semantics { contentDescription = description },
@@ -128,7 +143,7 @@ fun GalleryScreen(onClickGoDetail: () -> Unit, paddingValues: PaddingValues) {
                                 haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                             }, onItemClick = {
                                 if (selected) viewModel.selection(it.id)
-                                else {
+                                else if (imageTransition?.running != true && imageTransition?.visible != false) {
                                     viewModel.toDetail(it)
                                     onClickGoDetail()
                                 }
@@ -137,7 +152,7 @@ fun GalleryScreen(onClickGoDetail: () -> Unit, paddingValues: PaddingValues) {
                 }
             }
             GalleryFastScroller(gridState, geometry, Modifier.fillMaxHeight()
-                .padding(top = WaifuSpacing.small, bottom = bottomPadding))
+                .padding(top = WaifuSpacing.small, bottom = bottomPadding), overscroll = overscroll)
         }
         if (showLayout) GalleryLayoutSheet(layout, onApply = { choice ->
             if (choice != layout) {

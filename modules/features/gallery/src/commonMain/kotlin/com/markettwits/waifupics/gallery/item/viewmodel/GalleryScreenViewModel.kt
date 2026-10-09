@@ -59,35 +59,37 @@ interface GalleryScreenViewModel {
         }
 
         override fun onClickDelete() {
+            val image = currentImage().value
             async.handleAsyncSingle {
-                repository.delete(currentImage().value.id)
+                repository.delete(image.id)
             }
         }
 
         override fun onClickSetImageAs() {
+            val image = currentImage().value
             async.handleAsyncSingle {
-                imageIntentAction.launchUseAs(currentImage().value.imageUrl)
+                imageIntentAction.launchUseAs(image.imageUrl)
             }
         }
 
         override fun onClickSaveToGallery() {
+            val image = currentImage().value
             async.handleAsyncSingle {
-                repository.saveToGallery(currentImage().value.imageUrl)
+                repository.saveToGallery(image.imageUrl)
             }
         }
 
         override fun onClickShareImage() {
+            val image = currentImage().value
             async.handleAsyncSingle {
-                imageIntentAction.shareImage(currentImage().value.imageUrl)
+                imageIntentAction.shareImage(image.imageUrl)
             }
         }
 
         override fun setCurrentItem(index: Int) {
-            if (index < 0 || state().value.items.isEmpty()) {
-                labelsCommunication.map(Labels.GoBack)
-            } else {
-                itemCommunication.map(state().value.items[index])
-            }
+            val image = state().value.items.filterIsInstance<ImageFavoriteUi.Base>().getOrNull(index) ?: return
+            labelsCommunication.map(Labels.Empty)
+            itemCommunication.map(image)
         }
 
     }

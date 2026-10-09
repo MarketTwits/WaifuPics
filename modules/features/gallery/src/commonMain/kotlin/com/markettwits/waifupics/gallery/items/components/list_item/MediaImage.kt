@@ -16,20 +16,24 @@ import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import com.markettwits.waifupics.gallery.common.rememberGalleryImageRequest
 import com.markettwits.waifupics.gallery.items.components.picker.CheckBox
 import com.markettwits.waifupics.gallery.items.model.ImageFavoriteUi
+import com.markettwits.waifupics.gallery.items.components.animations.GalleryImageTransition
 
 @Composable
 internal fun MediaImage(image: ImageFavoriteUi, selectionState: Boolean,
-    selectedMedia: List<ImageFavoriteUi>, modifier: Modifier = Modifier) {
+    selectedMedia: List<ImageFavoriteUi>, modifier: Modifier = Modifier,
+    imageTransition: GalleryImageTransition? = null) {
     val selected = selectionState && selectedMedia.any { it.id == image.id }
     val inset by animateDpAsState(if (selected) 8.dp else 0.dp, label = "Selection inset")
     val borderColor by animateColorAsState(if (selected) MaterialTheme.colorScheme.primary else Color.Transparent,
         label = "Selection border")
     Box(modifier.aspectRatio(0.8f).semantics { this.selected = selected }) {
+        val imageModifier = Modifier.fillMaxSize().padding(inset)
         AsyncImage(
-            model = image.imageUrl, contentDescription = null,
-            modifier = Modifier.fillMaxSize().padding(inset).clip(MaterialTheme.shapes.medium)
+            model = rememberGalleryImageRequest(image), contentDescription = null,
+            modifier = (imageTransition?.image(imageModifier, image.id) ?: imageModifier).clip(MaterialTheme.shapes.medium)
                 .border(if (selected) 2.dp else 0.dp, borderColor, MaterialTheme.shapes.medium),
             contentScale = ContentScale.Crop
         )
