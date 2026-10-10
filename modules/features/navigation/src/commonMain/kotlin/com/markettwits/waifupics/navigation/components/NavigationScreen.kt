@@ -17,6 +17,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.backhandler.BackHandler
 import androidx.compose.ui.unit.dp
 import com.markettwits.theme.components.LocalWaifuDarkTheme
+import com.markettwits.theme.components.LocalThemeReveal
 import com.markettwits.core_ui.provider.ApplicationViewModel
 import com.markettwits.waifupics.navigation.model.NavigationItem
 import com.markettwits.waifupics.navigation.viewmodel.NavigationViewModel
@@ -36,6 +37,7 @@ fun NavigationScreen(
     val viewModel: NavigationViewModel = ApplicationViewModel<NavigationViewModel.Base>()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val isDarkTheme = LocalWaifuDarkTheme.current
+    val themeReveal = LocalThemeReveal.current
     val scope = rememberCoroutineScope()
     BackHandler(enabled = drawerState.isOpen) {
         scope.launch { drawerState.close() }
@@ -72,8 +74,10 @@ fun NavigationScreen(
                             onClickNavigationItem(it)
                             scope.launch { drawerState.close() }
                         },
-                        onClickChangeTheme = {
-                            viewModel.onClickChangeTheme(isDarkTheme)
+                        themeSwitchEnabled = themeReveal?.isAnimating != true,
+                        onClickChangeTheme = { center ->
+                            val change = { viewModel.onClickChangeTheme(isDarkTheme) }
+                            if (themeReveal != null) themeReveal.changeTheme(center, change) else change()
                         }
                     )
                 }

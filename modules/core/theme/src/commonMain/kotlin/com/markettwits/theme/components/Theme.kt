@@ -9,6 +9,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.SideEffect
 import com.markettwits.theme.viewmodel.ThemeViewModel
 
 val LocalWaifuDarkTheme = staticCompositionLocalOf { false }
@@ -22,14 +23,19 @@ fun WaifuPicsTheme(
 ) {
     val theme = viewModel.theme().collectAsState()
     val dark = isDark(theme = theme.value)
-    LaunchedEffect(dark) { isDarkTheme(dark) }
-    CompositionLocalProvider(LocalWaifuDarkTheme provides dark) {
+    val reveal = rememberThemeRevealState()
+    SideEffect { reveal.observeTheme(dark) }
+    LaunchedEffect(dark, reveal.isAnimating) {
+        if (!reveal.isAnimating) isDarkTheme(dark)
+    }
+    CompositionLocalProvider(LocalWaifuDarkTheme provides dark, LocalThemeReveal provides reveal) {
         MaterialExpressiveTheme(
-            colorScheme = systemColorPallet(theme = theme.value, systemIsDark = isSystemInDarkTheme()),
+            colorScheme = systemColorPallet(theme = theme.value, systemIsDark = isSystemInDarkTheme(),
+                animateColors = !reveal.isAnimating),
             motionScheme = MotionScheme.expressive(),
             shapes = Shapes,
             typography = waifuTypography(),
-            content = content
+            content = { ThemeRevealHost(reveal, content) }
         )
     }
 }

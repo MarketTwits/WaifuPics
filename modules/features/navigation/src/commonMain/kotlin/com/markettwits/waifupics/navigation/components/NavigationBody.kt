@@ -8,7 +8,14 @@ import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.layout.boundsInWindow
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.dp
 import com.markettwits.theme.components.WaifuSpacing
 import com.markettwits.theme.components.WaifuSize
@@ -17,7 +24,8 @@ import com.markettwits.waifupics.navigation.model.NavigationItem
 @Composable
 fun NavigationBody(modifier: Modifier = Modifier, contentPadding: PaddingValues = PaddingValues(0.dp),
     isDarkTheme: Boolean, selectedTitle: String = "Home", onClick: (NavigationItem) -> Unit,
-    onClickChangeTheme: () -> Unit) {
+    themeSwitchEnabled: Boolean = true, onClickChangeTheme: (Offset?) -> Unit) {
+    var themeButtonCenter by remember { mutableStateOf<Offset?>(null) }
     ModalDrawerSheet(modifier = modifier.width(264.dp),
         drawerContainerColor = MaterialTheme.colorScheme.surface,
         drawerContentColor = MaterialTheme.colorScheme.onSurface,
@@ -27,7 +35,9 @@ fun NavigationBody(modifier: Modifier = Modifier, contentPadding: PaddingValues 
             verticalArrangement = Arrangement.spacedBy(WaifuSpacing.small)) {
             Text("Menu", Modifier.padding(horizontal = WaifuSpacing.small),
                 style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.secondary)
-            IconButton(onClick = onClickChangeTheme) {
+            IconButton(onClick = { onClickChangeTheme(themeButtonCenter) },
+                enabled = themeSwitchEnabled,
+                modifier = Modifier.onGloballyPositioned { themeButtonCenter = it.boundsInWindow().center }) {
                 Icon(if (isDarkTheme) Icons.Default.DarkMode else Icons.Default.LightMode,
                     contentDescription = if (isDarkTheme) "Switch to light theme" else "Switch to dark theme",
                     modifier = Modifier.size(WaifuSize.overlayIcon), tint = MaterialTheme.colorScheme.primary)

@@ -9,13 +9,14 @@ import com.markettwits.waifupics.settings.params.ColorTheme
 fun systemColorPallet(
     systemIsDark: Boolean = isSystemInDarkTheme(),
     theme: ColorTheme,
+    animateColors: Boolean = true,
 ): ColorScheme {
     return when (theme) {
         ColorTheme.DarkTheme -> DarkColorScheme
         ColorTheme.LightTheme -> LightColorScheme
         ColorTheme.System -> if (systemIsDark) DarkColorScheme else LightColorScheme
         ColorTheme.Empty -> if (systemIsDark) DarkColorScheme else LightColorScheme
-    }.toAnimatePallet()
+    }.let { if (animateColors) it.toAnimatePallet() else it }
 }
 
 @Composable
