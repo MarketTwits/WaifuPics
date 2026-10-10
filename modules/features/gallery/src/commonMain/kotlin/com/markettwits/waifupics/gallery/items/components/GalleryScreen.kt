@@ -19,6 +19,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.Dp
 import com.markettwits.core_ui.provider.ApplicationViewModel
 import com.markettwits.theme.components.WaifuSpacing
 import com.markettwits.waifupics.gallery.items.components.empty_item.EmptyGalleryItem
@@ -35,7 +36,8 @@ import kotlin.math.roundToInt
 
 @Composable
 fun GalleryScreen(onClickGoDetail: () -> Unit, paddingValues: PaddingValues,
-    imageTransition: GalleryImageTransition? = null, returnToImageId: Int? = null) {
+    imageTransition: GalleryImageTransition? = null, returnToImageId: Int? = null,
+    onBottomOverlayHeightChanged: (Dp) -> Unit = {}) {
     val viewModel: GalleryViewModel = ApplicationViewModel()
     val state by viewModel.state().collectAsState()
     val selected by viewModel.selectedState().collectAsState()
@@ -169,7 +171,8 @@ fun GalleryScreen(onClickGoDetail: () -> Unit, paddingValues: PaddingValues,
         }, onDismiss = { showLayout = false })
         SelectionSheet(modifier = Modifier.align(Alignment.BottomCenter), selectedMedia = selectedMedia,
             selectionState = selected, clearSelection = viewModel::changeSelectedState,
-            shareImages = viewModel::shareImages, deleteImages = viewModel::delete)
+            shareImages = viewModel::shareImages, deleteImages = viewModel::delete,
+            onHeightChanged = onBottomOverlayHeightChanged)
     }
 }
 

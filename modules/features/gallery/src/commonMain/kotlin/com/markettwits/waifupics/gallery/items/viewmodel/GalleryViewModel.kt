@@ -12,6 +12,7 @@ import com.markettwits.async.AsyncViewModel
 import com.markettwits.image_action.api.ImageIntentAction
 import com.markettwits.waifupics.communication.StateCommunication
 import com.markettwits.waifupics.gallery.common.GalleryRepository
+import com.markettwits.waifupics.gallery.common.GalleryDeletion
 import com.markettwits.waifupics.gallery.items.components.communication.DetailCommunication
 import com.markettwits.waifupics.gallery.items.components.communication.GalleryCommunication
 import com.markettwits.waifupics.gallery.items.components.communication.SelectedImageCommunication
@@ -58,7 +59,8 @@ interface GalleryViewModel : StateCommunication.State<ImageFavoriteUiState> {
         private val selectedModeCommunication: SelectedModeCommunication,
         private val selectedImageCommunication: SelectedImageCommunication,
         private val imageIntentAction: ImageIntentAction.ShareImage,
-        private val settings: WaifuPicsAppSettings
+        private val settings: WaifuPicsAppSettings,
+        private val deletion: GalleryDeletion
     ) : ViewModel(), StateCommunication.State<ImageFavoriteUiState>, GalleryViewModel {
 
         private val layoutState = MutableStateFlow(GalleryLayout())
@@ -100,11 +102,7 @@ interface GalleryViewModel : StateCommunication.State<ImageFavoriteUiState> {
         }
 
         override fun deleteImage(item: String, id: Int) {
-            async.handleAsync({
-                repository.delete(id)
-            }) {
-                favoriteImages()
-            }
+            async.handleAsyncSingle { deletion.delete(setOf(id)) }
         }
 
         override fun selection(id: Int) {
@@ -141,13 +139,10 @@ interface GalleryViewModel : StateCommunication.State<ImageFavoriteUiState> {
         }
 
         override fun delete() {
-            val selectedPhotoState = selectedImageCommunication.fetch()
-            val id = selectedPhotoState.map { it.id }
-            val url = selectedPhotoState.map { it.imageUrl }
-            async.handleAsyncSingle {
-                repository.delete(id, url)
+            val ids = selectedImageCommunication.fetch().map { it.id }.toSet()
+            async.handleAsync({ deletion.delete(ids) }) { success ->
+                if (success) replaceSelection(emptySet())
             }
-            changeSelectedState()
         }
 
         override fun changeSelectedState() {
@@ -159,5 +154,4 @@ interface GalleryViewModel : StateCommunication.State<ImageFavoriteUiState> {
         override fun state() = galleryCommunication.state()
     }
 }
-
 

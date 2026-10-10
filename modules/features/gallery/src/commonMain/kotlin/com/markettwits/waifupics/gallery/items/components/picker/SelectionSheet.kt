@@ -12,6 +12,10 @@ import androidx.compose.material.icons.outlined.DeleteOutline
 import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.markettwits.core_ui.components.design.WaifuActionTile
@@ -24,9 +28,14 @@ import waifupics.modules.features.gallery.generated.resources.*
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 internal fun SelectionSheet(modifier: Modifier = Modifier, selectedMedia: List<ImageFavoriteUi>,
-    selectionState: Boolean, clearSelection: () -> Unit, shareImages: () -> Unit, deleteImages: () -> Unit) {
+    selectionState: Boolean, clearSelection: () -> Unit, shareImages: () -> Unit, deleteImages: () -> Unit,
+    onHeightChanged: (Dp) -> Unit = {}) {
+    val density = LocalDensity.current
+    LaunchedEffect(selectionState) { if (!selectionState) onHeightChanged(0.dp) }
     val motion = MaterialTheme.motionScheme
-    AnimatedVisibility(modifier = modifier, visible = selectionState,
+    AnimatedVisibility(modifier = modifier.onSizeChanged {
+        onHeightChanged(if (selectionState) with(density) { it.height.toDp() } else 0.dp)
+    }, visible = selectionState,
         enter = slideInVertically(animationSpec = motion.defaultSpatialSpec()) { it },
         exit = slideOutVertically(animationSpec = motion.fastSpatialSpec()) { it }) {
         Surface(shape = MaterialTheme.shapes.extraLarge.copy(bottomStart = CornerSize(0.dp), bottomEnd = CornerSize(0.dp)),

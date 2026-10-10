@@ -17,11 +17,14 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import coil3.compose.AsyncImage
 import androidx.compose.ui.layout.ContentScale
 import com.markettwits.core_ui.provider.ApplicationViewModel
 import com.markettwits.waifupics.gallery.common.rememberGalleryImageRequest
+import com.markettwits.waifupics.gallery.common.GalleryDeletion
+import org.koin.compose.koinInject
 import com.markettwits.core_ui.components.zoomable.rememberZoomState
 import com.markettwits.core_ui.components.zoomable.ZoomState
 import androidx.compose.ui.geometry.Offset
@@ -41,8 +44,10 @@ import kotlin.math.roundToInt
 @Composable
 fun ImageScreenFull(modifier: Modifier = Modifier,
     imageTransition: GalleryImageTransition? = null,
+    onBottomOverlayHeightChanged: (Dp) -> Unit = {},
     onCurrentImageChanged: (Int) -> Unit = {}, onClickPop: () -> Unit) {
     val viewModel: GalleryScreenViewModel = ApplicationViewModel()
+    val deletion = koinInject<GalleryDeletion>()
     val currentImage by viewModel.currentImage().collectAsState()
     val state by viewModel.state().collectAsState()
     val images = remember(state.items) { state.items.filterIsInstance<ImageFavoriteUi.Base>() }
@@ -51,6 +56,7 @@ fun ImageScreenFull(modifier: Modifier = Modifier,
         images.size
     }
     var visibleId by rememberSaveable { mutableIntStateOf(currentImage.id) }
+    var restoredFocus by remember { mutableStateOf<Int?>(null) }
     var showUI by rememberSaveable { mutableStateOf(true) }
     var previewIndex by remember { mutableStateOf<Int?>(null) }
     var previewCommitted by remember { mutableStateOf(false) }
@@ -89,14 +95,22 @@ fun ImageScreenFull(modifier: Modifier = Modifier,
             }
         }
     }
-    LaunchedEffect(ids) {
+    LaunchedEffect(deletion) { deletion.restoredFocus.collect {
+        if (!navigatingBack && imageTransition?.visible != false) restoredFocus = it
+    } }
+    LaunchedEffect(ids, restoredFocus) {
         if (images.isEmpty()) {
             close()
             return@LaunchedEffect
         }
-        val index = images.indexOfFirst { it.id == visibleId }.takeIf { it >= 0 }
+        val restoredIndex = images.indexOfFirst { it.id == restoredFocus }.takeIf { it >= 0 }
+        if (restoredIndex != null) {
+            visibleId = images[restoredIndex].id
+        }
+        val index = restoredIndex ?: images.indexOfFirst { it.id == visibleId }.takeIf { it >= 0 }
             ?: pagerState.currentPage.coerceIn(images.indices)
         pagerState.scrollToPage(index)
+        if (restoredIndex != null) restoredFocus = null
         snapshotFlow { pagerState.currentPage }.collect { page ->
             images.getOrNull(page)?.let {
                 visibleId = it.id
@@ -212,6 +226,7 @@ fun ImageScreenFull(modifier: Modifier = Modifier,
                     }
                 }
             }, actionsEnabled = previewIndex == null && !pagerState.isScrollInProgress && currentImage.id == displayed.id,
-            onClickDeleteImage = viewModel::onClickDelete, onClickShareImage = viewModel::onClickShareImage)
+            onClickDeleteImage = viewModel::onClickDelete, onClickShareImage = viewModel::onClickShareImage,
+            onHeightChanged = onBottomOverlayHeightChanged)
     }
 }

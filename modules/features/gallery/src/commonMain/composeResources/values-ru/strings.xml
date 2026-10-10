@@ -1,4 +1,9 @@
 <resources>
+    <string name="gallery_deleted">Удалено</string>
+    <string name="gallery_deleted_count">Удалено: %1$s</string>
+    <string name="gallery_undo">Отменить</string>
+    <string name="gallery_delete_failed">Не удалось удалить изображения</string>
+    <string name="gallery_restore_failed">Не удалось восстановить изображения. Попробуйте ещё раз.</string>
     <string name="gallery_today">Сегодня</string>
     <string name="gallery_yesterday">Вчера</string>
     <string name="gallery_undated">Дата неизвестна</string>

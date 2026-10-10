@@ -12,6 +12,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.DeleteOutline
 import androidx.compose.material.icons.outlined.Share
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -28,8 +32,11 @@ import waifupics.modules.features.gallery.generated.resources.*
 @Composable
 internal fun BoxScope.BottomBarScreenImage(showUI: Boolean, images: List<ImageFavoriteUi>, selectedIndex: Int,
     onPreview: (Int?) -> Unit, onSelect: (Int, Boolean) -> Unit, actionsEnabled: Boolean,
-    onClickShareImage: () -> Unit, onClickDeleteImage: () -> Unit) {
-    AnimatedVisibility(visible = showUI, modifier = Modifier.fillMaxWidth().align(Alignment.BottomCenter),
+    onClickShareImage: () -> Unit, onClickDeleteImage: () -> Unit, onHeightChanged: (Dp) -> Unit = {}) {
+    val density = LocalDensity.current
+    LaunchedEffect(showUI) { if (!showUI) onHeightChanged(0.dp) }
+    AnimatedVisibility(visible = showUI, modifier = Modifier.fillMaxWidth().align(Alignment.BottomCenter)
+        .onSizeChanged { onHeightChanged(if (showUI) with(density) { it.height.toDp() } else 0.dp) },
         enter = fadeIn(tween(220)) + slideInVertically(tween(220)) { it / 3 },
         exit = fadeOut(tween(140)) + slideOutVertically(tween(140)) { it / 3 }) {
         Column(Modifier.fillMaxWidth()

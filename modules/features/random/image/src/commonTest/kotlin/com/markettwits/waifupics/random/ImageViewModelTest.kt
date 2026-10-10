@@ -328,6 +328,8 @@ class ImageViewModelTest {
 }
 
 internal class FakeCache : ImageCacheRepository {
+    override suspend fun removeForUndo(ids: Set<Int>) = com.markettwits.cache.image.FavoriteImageRemoval(emptyList(), emptyList())
+    override suspend fun restoreRemoved(removals: List<com.markettwits.cache.image.FavoriteImageRemoval>) = Unit
     override fun observe() = flowOf(emptyList<ImageFavoriteCache>())
     override suspend fun fetch() = emptyList<ImageFavoriteCache>()
     override suspend fun addToFavorite(id: Int, width: Int, height: Int, url: String, isProtected: Boolean) = Unit

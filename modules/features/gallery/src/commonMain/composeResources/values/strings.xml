@@ -6,6 +6,11 @@
     <string name="use_as">Use as</string>
     <string name="save_to_gallery">Save to gallery</string>
     <string name="delete">Delete</string>
+    <string name="gallery_deleted">Deleted</string>
+    <string name="gallery_deleted_count">Deleted: %1$s</string>
+    <string name="gallery_undo">Undo</string>
+    <string name="gallery_delete_failed">Could not delete images</string>
+    <string name="gallery_restore_failed">Could not restore images. Try again.</string>
     <string name="share">Share</string>
     <string name="image">image</string>
     <string name="text_copied_to_clipboard">Text copied to clipboard</string>

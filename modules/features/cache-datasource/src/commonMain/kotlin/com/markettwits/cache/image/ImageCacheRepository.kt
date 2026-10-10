@@ -30,10 +30,18 @@ interface ImageCacheRepository {
 
     suspend fun delete(imageUrl: String)
 
+    suspend fun removeForUndo(ids: Set<Int>): FavoriteImageRemoval
+
+    suspend fun restoreRemoved(removals: List<FavoriteImageRemoval>)
+
     class Base(
         private val database: ImagesCacheDataSource,
         private val uiToCache: ImageUiToCacheMapper,
     ) : ImageCacheRepository {
+
+        override suspend fun removeForUndo(ids: Set<Int>) = database.removeForUndo(ids)
+
+        override suspend fun restoreRemoved(removals: List<FavoriteImageRemoval>) = database.restoreRemoved(removals)
 
         override suspend fun deleteList(id: List<Int>, url: List<String>) {
             database.delete(id)

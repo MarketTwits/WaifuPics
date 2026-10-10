@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.markettwits.async.AsyncViewModel
 import com.markettwits.image_action.api.ImageIntentAction
 import com.markettwits.waifupics.gallery.common.GalleryRepository
+import com.markettwits.waifupics.gallery.common.GalleryDeletion
 import com.markettwits.waifupics.gallery.items.components.communication.DetailCommunication
 import com.markettwits.waifupics.gallery.items.components.communication.GalleryCommunication
 import com.markettwits.waifupics.gallery.items.components.communication.GalleryScreenLabelsCommunication
@@ -44,6 +45,7 @@ interface GalleryScreenViewModel {
         private val labelsCommunication: GalleryScreenLabelsCommunication,
         private val async: AsyncViewModel<Unit>,
         private val repository: GalleryRepository,
+        private val deletion: GalleryDeletion,
         private val imageIntentAction: ImageIntentAction.Mutable,
         private val systemService: SystemService,
     ) : ViewModel(), GalleryScreenViewModel {
@@ -61,7 +63,7 @@ interface GalleryScreenViewModel {
         override fun onClickDelete() {
             val image = currentImage().value
             async.handleAsyncSingle {
-                repository.delete(image.id)
+                deletion.delete(setOf(image.id), viewerFocus = image.id)
             }
         }
 
