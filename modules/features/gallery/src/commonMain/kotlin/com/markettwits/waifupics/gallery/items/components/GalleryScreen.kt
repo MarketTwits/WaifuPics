@@ -2,6 +2,7 @@ package com.markettwits.waifupics.gallery.items.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -45,7 +46,7 @@ fun GalleryScreen(onClickGoDetail: () -> Unit, paddingValues: PaddingValues,
     val selectedIds = selectedMedia.map { it.id }.toSet()
     val haptic = LocalHapticFeedback.current
     val gridState = rememberLazyGridState()
-    val overscroll = rememberGalleryOverscrollEffect()
+    val overscroll = rememberGalleryOverscrollEffect(gridState)
     val gridDragged by gridState.interactionSource.collectIsDraggedAsState()
     val today = rememberGalleryToday()
     val zone = TimeZone.currentSystemDefault()
@@ -93,18 +94,21 @@ fun GalleryScreen(onClickGoDetail: () -> Unit, paddingValues: PaddingValues,
             GalleryScrollGeometry(sections, columns, headerHeight, (cellWidth / 0.8f).roundToInt(),
                 spacing, spacing, footerHeight, viewport)
         }
-        val activeSectionKey by remember(gridState, geometry) {
-            derivedStateOf { geometry.sectionOfItem(gridState.firstVisibleItemIndex)?.key }
+        val pinnedSection by remember(gridState, geometry) {
+            derivedStateOf { geometry.pinnedSection(gridState.firstVisibleItemIndex, gridState.firstVisibleItemScrollOffset) }
         }
         LaunchedEffect(gridState, geometry) {
             var previous: String? = null
-            snapshotFlow { gridState.firstVisibleItemIndex to gridDragged }.collect { (index, dragged) ->
-                val current = geometry.sectionOfItem(index)?.key
-                if (dragged && previous != null && current != previous) {
+            snapshotFlow { pinnedSection?.key to gridDragged }.collect { (current, dragged) ->
+                if (dragged && previous != null && current != null && current != previous) {
                     haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
                 }
                 previous = current
             }
+        }
+        val selectSection: (GallerySection) -> Unit = { section ->
+            viewModel.selectGroup(section.images.map { it.id }.toSet())
+            haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
         }
         if (sections.isEmpty()) {
             EmptyGalleryItem()
@@ -114,21 +118,20 @@ fun GalleryScreen(onClickGoDetail: () -> Unit, paddingValues: PaddingValues,
                     .gallerySelectionGesture(gridState, ids, selectedIds, selected,
                         onSelection = { viewModel.replaceSelection(it, keepMode = true) },
                         onFinish = viewModel::finishSelectionGesture,
-                        viewportTranslationY = { overscroll.displacement }),
+                        viewportTranslationY = { overscroll.displacement },
+                        obscuredTop = { if (pinnedSection != null) headerHeight.toFloat() else 0f }),
                 horizontalArrangement = Arrangement.spacedBy(WaifuSpacing.small),
                 verticalArrangement = Arrangement.spacedBy(WaifuSpacing.small),
                 contentPadding = PaddingValues(start = WaifuSpacing.content, end = WaifuSpacing.content,
                     top = WaifuSpacing.small, bottom = bottomPadding)) {
                 sections.forEach { section ->
-                    stickyHeader(key = "date-${section.key}", contentType = "date") {
+                    item(key = "date-${section.key}", contentType = "date", span = { GridItemSpan(maxLineSpan) }) {
                         GalleryDateHeader(
                             label = if (layout.byMonth) galleryMonthLabel(section.date, today) else galleryDateLabel(section.date, today),
                             count = section.images.size,
                             selectedCount = section.images.count { it.id in selectedIds },
-                            onSelectGroup = {
-                                viewModel.selectGroup(section.images.map { it.id }.toSet())
-                                haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
-                            }, onLayout = if (section.key == activeSectionKey) ({ showLayout = true }) else null)
+                            onSelectGroup = { selectSection(section) },
+                            onLayout = if (section === sections.first() && pinnedSection == null) ({ showLayout = true }) else null)
                     }
                     items(section.images, key = { "photo-${it.id}" }, contentType = { "image" }) { image ->
                         val description = stringResource(Res.string.gallery_saved_image,
@@ -151,8 +154,14 @@ fun GalleryScreen(onClickGoDetail: () -> Unit, paddingValues: PaddingValues,
                     }
                 }
             }
+            // Like Ente, the current date is a stationary overlay, not a header pushed by the next one.
+            pinnedSection?.let { section ->
+                GalleryPinnedDateHeader(section, layout.byMonth, today, selectedIds,
+                    onSelectGroup = { selectSection(section) }, onLayout = { showLayout = true })
+            }
             GalleryFastScroller(gridState, geometry, Modifier.fillMaxHeight()
-                .padding(top = WaifuSpacing.small, bottom = bottomPadding), overscroll = overscroll)
+                .padding(top = WaifuSpacing.small, bottom = bottomPadding), overscroll = overscroll,
+                pinnedHeaderHeight = if (pinnedSection != null) GalleryDateHeaderHeight - WaifuSpacing.small else 0.dp)
         }
         if (showLayout) GalleryLayoutSheet(layout, onApply = { choice ->
             if (choice != layout) {

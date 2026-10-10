@@ -6,7 +6,10 @@ android {
     namespace = "com.markettwits.gallery"
 }
 kotlin{
-    sourceSets.commonTest.dependencies { implementation(kotlin("test")) }
+    sourceSets.commonTest.dependencies {
+        implementation(kotlin("test"))
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.1")
+    }
     sourceSets.commonMain.dependencies {
         implementation(project(path = ":modules:features:cache-datasource"))
         implementation(project(path = ":modules:features:settings"))

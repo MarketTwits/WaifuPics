@@ -21,6 +21,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.semantics.*
 import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.markettwits.theme.components.WaifuSpacing
 import com.markettwits.theme.components.WaifuSize
@@ -36,7 +37,7 @@ private class ScrollbarRequest(val geometry: GalleryScrollGeometry, val progress
 /** Paint and pointer input use one fixed rail; moving dates never move the thumb. */
 @Composable
 internal fun GalleryFastScroller(state: LazyGridState, geometry: GalleryScrollGeometry,
-    modifier: Modifier = Modifier, overscroll: GalleryOverscrollEffect? = null) {
+    modifier: Modifier = Modifier, overscroll: GalleryOverscrollEffect? = null, pinnedHeaderHeight: Dp = 0.dp) {
     if (geometry.maxOffset <= 0) return
     val actualProgress by remember(state, geometry) {
         derivedStateOf {
@@ -106,7 +107,9 @@ internal fun GalleryFastScroller(state: LazyGridState, geometry: GalleryScrollGe
         val hitTop = (thumb.center - hitHeight / 2f).coerceIn(0f, trackHeight - hitHeight)
         val touchInset = with(density) { WaifuSpacing.content.toPx() }
         val dateSlop = with(density) { 4.dp.toPx() }
-        val headers = info.visibleItemsInfo.filter { it.key.toString().startsWith("date-") }.map {
+        val pinnedHeight = with(density) { pinnedHeaderHeight.toPx() }
+        val headers = (if (pinnedHeight > 0f) listOf(-dateSlop..(pinnedHeight + dateSlop)) else emptyList()) +
+            info.visibleItemsInfo.filter { it.key.toString().startsWith("date-") }.map {
             val top = it.offset.y - info.viewportStartOffset - info.beforeContentPadding + displacement
             (top - dateSlop)..(top + it.size.height + dateSlop)
         }

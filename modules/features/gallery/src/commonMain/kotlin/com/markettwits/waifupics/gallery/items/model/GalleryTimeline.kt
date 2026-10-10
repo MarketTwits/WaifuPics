@@ -35,7 +35,7 @@ internal class GalleryScrollGeometry(
     headerHeight: Int,
     photoHeight: Int,
     spacing: Int,
-    topPadding: Int,
+    private val topPadding: Int,
     bottomPadding: Int,
     viewportHeight: Int
 ) {
@@ -71,6 +71,12 @@ internal class GalleryScrollGeometry(
     fun offsetOf(item: Int, itemOffset: Int): Int =
         if (rows.isEmpty()) 0 else (rows[itemToRow[item.coerceIn(itemToRow.indices)]].offset + itemOffset)
             .coerceIn(0, maxOffset)
+
+    /** An overlay switches dates only when the next section's real header reaches the top. */
+    fun pinnedSection(item: Int, itemOffset: Int): GallerySection? {
+        val offset = offsetOf(item, itemOffset) - topPadding
+        return if (rows.isEmpty() || offset < 0) null else rowAt(offset).section
+    }
 
     fun target(fraction: Float): GalleryScrollTarget {
         if (rows.isEmpty()) return GalleryScrollTarget(0, 0)

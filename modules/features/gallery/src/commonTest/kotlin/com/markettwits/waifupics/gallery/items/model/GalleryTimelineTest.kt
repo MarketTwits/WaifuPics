@@ -69,4 +69,23 @@ class GalleryTimelineTest {
         assertEquals(GalleryScrollTarget(0, 0), empty.target(1f))
         assertNull(empty.sectionAt(0.5f))
     }
+
+    @Test fun pinnedDateChangesOnlyWhenTheNextHeaderReachesTheTop() {
+        val layout = geometry()
+        assertNull(layout.pinnedSection(0, 0))
+        assertNull(layout.pinnedSection(0, 7))
+        assertEquals(LocalDate(2026, 10, 9), layout.pinnedSection(0, 8)?.date)
+        // Use a smaller viewport so the second header can actually reach the top.
+        val scrollable = geometry(viewport = 100)
+        assertEquals(LocalDate(2026, 10, 9), scrollable.pinnedSection(4, 7)?.date)
+        assertEquals(LocalDate(2026, 10, 8), scrollable.pinnedSection(4, 8)?.date)
+        assertEquals(LocalDate(2026, 10, 9), scrollable.pinnedSection(4, 7)?.date)
+    }
+
+    @Test fun pinnedDateDoesNotDependOnWhichColumnIsReportedFirst() {
+        val layout = geometry()
+        assertEquals(layout.pinnedSection(1, 20), layout.pinnedSection(2, 20))
+        val empty = GalleryScrollGeometry(emptyList(), 2, 48, 100, 8, 8, 16, 200)
+        assertNull(empty.pinnedSection(0, 10))
+    }
 }

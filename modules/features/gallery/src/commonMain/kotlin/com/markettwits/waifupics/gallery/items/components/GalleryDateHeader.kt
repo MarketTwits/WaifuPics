@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import com.markettwits.theme.components.WaifuSpacing
 import com.markettwits.theme.components.WaifuSize
 import kotlinx.coroutines.delay
+import com.markettwits.waifupics.gallery.items.model.GallerySection
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
@@ -107,6 +108,20 @@ internal fun GalleryDateHeader(label: String, count: Int, selectedCount: Int,
                 modifier = Modifier.width(WaifuSize.touchTarget).height(GalleryDateHeaderHeight)) {
                 Icon(Icons.Outlined.MoreVert, stringResource(Res.string.gallery_layout), Modifier.size(20.dp))
             }
+        }
+    }
+}
+
+/** One fixed slot owns the date and its actions throughout scrolling. */
+@Composable
+internal fun GalleryPinnedDateHeader(section: GallerySection, byMonth: Boolean, today: LocalDate,
+    selectedIds: Set<Int>, onSelectGroup: () -> Unit, onLayout: () -> Unit) {
+    Surface(Modifier.fillMaxWidth(), color = MaterialTheme.colorScheme.background, shadowElevation = 1.dp) {
+        Box(Modifier.padding(horizontal = WaifuSpacing.content)) {
+            GalleryDateHeader(
+                label = if (byMonth) galleryMonthLabel(section.date, today) else galleryDateLabel(section.date, today),
+                count = section.images.size, selectedCount = section.images.count { it.id in selectedIds },
+                onSelectGroup = onSelectGroup, onLayout = onLayout)
         }
     }
 }

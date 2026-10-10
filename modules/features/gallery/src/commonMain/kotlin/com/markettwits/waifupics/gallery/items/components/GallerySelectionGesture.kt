@@ -19,12 +19,12 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 
-private fun LazyGridState.photoAt(point: Offset, horizontalInset: Float, clampToContent: Boolean = false): Int? {
+private fun LazyGridState.photoAt(point: Offset, horizontalInset: Float, clampToContent: Boolean = false, obscuredTop: Float = 0f): Int? {
     val info = layoutInfo
     val bottom = (info.viewportSize.height - info.afterContentPadding - 1).coerceAtLeast(1).toFloat()
     val headerBottom = info.visibleItemsInfo.filter { it.key.toString().startsWith("date-") && it.offset.y <= 0 }
         .maxOfOrNull { it.offset.y + it.size.height - info.viewportStartOffset } ?: 0
-    val top = (headerBottom + info.mainAxisItemSpacing + 1).toFloat().coerceIn(1f, bottom)
+    val top = maxOf((headerBottom + info.mainAxisItemSpacing + 1).toFloat(), obscuredTop + 1f).coerceIn(1f, bottom)
     val y = if (clampToContent) point.y.coerceIn(top, bottom) else point.y
     // Item offsets exclude content padding; pointer coordinates include the full grid viewport.
     val position = Offset(point.x - horizontalInset, y + info.viewportStartOffset)
@@ -47,7 +47,8 @@ internal fun Modifier.gallerySelectionGesture(
     selectionMode: Boolean,
     onSelection: (Set<Int>) -> Unit,
     onFinish: () -> Unit,
-    viewportTranslationY: () -> Float = { 0f }
+    viewportTranslationY: () -> Float = { 0f },
+    obscuredTop: () -> Float = { 0f }
 ): Modifier {
     val currentIds by rememberUpdatedState(ids)
     val currentSelection by rememberUpdatedState(selectedIds)
@@ -55,13 +56,18 @@ internal fun Modifier.gallerySelectionGesture(
     val changeSelection by rememberUpdatedState(onSelection)
     val finishSelection by rememberUpdatedState(onFinish)
     val translationY by rememberUpdatedState(viewportTranslationY)
+    val currentObscuredTop by rememberUpdatedState(obscuredTop)
     val haptic = LocalHapticFeedback.current
     return pointerInput(state, ids) {
         val horizontalInset = WaifuSpacing.content.toPx()
         coroutineScope {
             val gestureScope = this
-            fun photoAt(point: Offset, clampToContent: Boolean = false): Int? =
-                state.photoAt(point - Offset(0f, translationY()), horizontalInset, clampToContent)
+            fun photoAt(point: Offset, clampToContent: Boolean = false): Int? {
+                if (!clampToContent && point.y < currentObscuredTop()) return null
+                val shift = translationY()
+                return state.photoAt(point - Offset(0f, shift), horizontalInset, clampToContent,
+                    obscuredTop = (currentObscuredTop() - shift).coerceAtLeast(0f))
+            }
             awaitEachGesture {
                 val down = awaitFirstDown(requireUnconsumed = false, pass = PointerEventPass.Initial)
                 if (down.isConsumed) return@awaitEachGesture
@@ -111,8 +117,9 @@ internal fun Modifier.gallerySelectionGesture(
                         val info = state.layoutInfo
                         val edge = 56 * density
                         val bottom = (info.viewportSize.height - info.afterContentPadding).coerceAtLeast(1).toFloat()
+                        val top = currentObscuredTop()
                         val speed = when {
-                            position.y < edge -> -((edge - position.y) / edge).coerceIn(0f, 1f)
+                            position.y < top + edge -> -((top + edge - position.y) / edge).coerceIn(0f, 1f)
                             position.y > bottom - edge -> ((position.y - (bottom - edge)) / edge).coerceIn(0f, 1f)
                             else -> 0f
                         }
