@@ -36,4 +36,5 @@
     <string name="gallery_this_month">Этот месяц</string>
     <string name="gallery_select_group">Выбрать все за %1$s</string>
     <string name="gallery_deselect_group">Снять выбор за %1$s</string>
+    <string name="gallery_metadata_not_saved">Для этого изображения дополнительные сведения не сохранены.</string>
 </resources>

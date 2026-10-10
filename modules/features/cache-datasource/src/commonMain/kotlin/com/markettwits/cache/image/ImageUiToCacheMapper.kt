@@ -10,7 +10,8 @@ interface ImageUiToCacheMapper {
         width: Int,
         height: Int,
         url: String,
-        isProtected: Boolean
+        isProtected: Boolean,
+        metadata: FavoriteImageMetadata? = null
     ): ImageFavoriteCache
 
     class Base : ImageUiToCacheMapper {
@@ -21,7 +22,8 @@ interface ImageUiToCacheMapper {
             width: Int,
             height: Int,
             url: String,
-            isProtected: Boolean
+            isProtected: Boolean,
+            metadata: FavoriteImageMetadata?
         ): ImageFavoriteCache =
             ImageFavoriteCache(
                 id = id,
@@ -29,7 +31,8 @@ interface ImageUiToCacheMapper {
                 height = height,
                 netUrl = url,
                 created = kotlin.time.Clock.System.now().toEpochMilliseconds(),
-                protected = isProtected
+                protected = isProtected,
+                metadata = metadata?.normalized()
             )
     }
 }

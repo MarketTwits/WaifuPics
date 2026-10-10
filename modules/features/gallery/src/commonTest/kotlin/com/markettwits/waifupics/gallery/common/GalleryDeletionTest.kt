@@ -132,8 +132,8 @@ class GalleryDeletionTest {
         }
         override fun observe() = flowOf(images)
         override suspend fun fetch() = images
-        override suspend fun addToFavorite(id: Int, width: Int, height: Int, url: String, isProtected: Boolean) = Unit
-        override suspend fun addOrDelete(id: Int, width: Int, height: Int, url: String, isProtected: Boolean) = Unit
+        override suspend fun addToFavorite(id: Int, width: Int, height: Int, url: String, isProtected: Boolean, metadata: com.markettwits.cache.image.FavoriteImageMetadata?) = Unit
+        override suspend fun addOrDelete(id: Int, width: Int, height: Int, url: String, isProtected: Boolean, metadata: com.markettwits.cache.image.FavoriteImageMetadata?) = Unit
         override suspend fun deleteList(id: List<Int>, url: List<String>) = Unit
         override suspend fun delete(id: Int) = Unit
         override suspend fun delete(imageUrl: String) = Unit

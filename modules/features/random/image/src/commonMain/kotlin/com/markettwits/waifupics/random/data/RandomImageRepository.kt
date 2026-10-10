@@ -1,6 +1,7 @@
 package com.markettwits.waifupics.random.data
 
 import com.markettwits.cache.image.ImageCacheRepository
+import com.markettwits.cache.image.FavoriteImageMetadata
 import com.markettwits.waifupics.random.cloud.NekoService
 import com.markettwits.waifupics.random.model.RandomImageState
 import com.markettwits.waifupics.result.HandleNetworkResult
@@ -16,7 +17,8 @@ interface RandomImageRepository {
         width: Int,
         height: Int,
         url: String,
-        isProtected: Boolean
+        isProtected: Boolean,
+        metadata: FavoriteImageMetadata? = null
     )
 
     class Base(
@@ -41,9 +43,10 @@ interface RandomImageRepository {
             width: Int,
             height: Int,
             url: String,
-            isProtected: Boolean
+            isProtected: Boolean,
+            metadata: FavoriteImageMetadata?
         ) {
-            cache.addOrDelete(id, width, height, url, isProtected)
+            cache.addOrDelete(id, width, height, url, isProtected, metadata)
         }
     }
 }

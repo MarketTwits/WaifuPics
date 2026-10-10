@@ -106,6 +106,24 @@ class ImageViewModelTest {
     }
 
     @Test
+    fun savingFavoriteCapturesMetadataForClickedImageBeforePageChanges() = runTest {
+        repository.fetch = { listOf(
+            image(1).copy(colorPalette = listOf(listOf(1, 2, 3)),
+                imageData = ImageSourceUi("https://example.com/art/1", "safe", "Artist 1", listOf("tag-1"))),
+            image(2).copy(colorPalette = listOf(listOf(4, 5, 6)),
+                imageData = ImageSourceUi("https://example.com/art/2", "suggestive", "Artist 2", listOf("tag-2")))
+        ) }
+        settle()
+        model.obtainImageState(1, image(1).imageUrl, loaded(1))
+        model.obtainImageState(2, image(2).imageUrl, loaded(2))
+        model.onClickAddToFavorite()
+        model.onPageChanged(1)
+        settle()
+        assertEquals(com.markettwits.cache.image.FavoriteImageMetadata("Artist 1", "safe", "https://example.com/art/1",
+            listOf("tag-1"), listOf(listOf(1, 2, 3))), repository.favoriteMetadata.single())
+    }
+
+    @Test
     fun filterChangeRejectsLateResponseAndClearsLoadedState() = runTest {
         val oldResponse = CompletableDeferred<List<RandomImageState.Success>>()
         repository.fetch = { selected ->
@@ -311,13 +329,15 @@ class ImageViewModelTest {
         var fetch: suspend (List<String>) -> List<RandomImageState.Success> = { (1..5).map { image(it) } }
         val requests = mutableListOf<List<String>>()
         val favorites = mutableListOf<Pair<Int, Boolean>>()
+        val favoriteMetadata = mutableListOf<com.markettwits.cache.image.FavoriteImageMetadata?>()
         override suspend fun fetchRandomImages(filters: List<String>, limit: Int): List<RandomImageState.Success> {
             requests.add(filters)
             return fetch(filters)
         }
         override suspend fun fetchRandomImage(filters: List<String>): RandomImageState = fetch(filters).first()
-        override suspend fun toggleFavorite(id: Int, width: Int, height: Int, url: String, isProtected: Boolean) {
+        override suspend fun toggleFavorite(id: Int, width: Int, height: Int, url: String, isProtected: Boolean, metadata: com.markettwits.cache.image.FavoriteImageMetadata?) {
             favorites.add(id to isProtected)
+            favoriteMetadata.add(metadata)
         }
     }
     private class FakeShare : ImageIntentAction.ShareImage {
@@ -332,8 +352,8 @@ internal class FakeCache : ImageCacheRepository {
     override suspend fun restoreRemoved(removals: List<com.markettwits.cache.image.FavoriteImageRemoval>) = Unit
     override fun observe() = flowOf(emptyList<ImageFavoriteCache>())
     override suspend fun fetch() = emptyList<ImageFavoriteCache>()
-    override suspend fun addToFavorite(id: Int, width: Int, height: Int, url: String, isProtected: Boolean) = Unit
-    override suspend fun addOrDelete(id: Int, width: Int, height: Int, url: String, isProtected: Boolean) = Unit
+    override suspend fun addToFavorite(id: Int, width: Int, height: Int, url: String, isProtected: Boolean, metadata: com.markettwits.cache.image.FavoriteImageMetadata?) = Unit
+    override suspend fun addOrDelete(id: Int, width: Int, height: Int, url: String, isProtected: Boolean, metadata: com.markettwits.cache.image.FavoriteImageMetadata?) = Unit
     override suspend fun deleteList(id: List<Int>, url: List<String>) = Unit
     override suspend fun delete(id: Int) = Unit
     override suspend fun delete(imageUrl: String) = Unit

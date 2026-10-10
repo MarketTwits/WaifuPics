@@ -51,4 +51,5 @@
     <string name="gallery_this_month">This month</string>
     <string name="gallery_select_group">Select all for %1$s</string>
     <string name="gallery_deselect_group">Unselect all for %1$s</string>
+    <string name="gallery_metadata_not_saved">Additional information was not saved for this image.</string>
 </resources>

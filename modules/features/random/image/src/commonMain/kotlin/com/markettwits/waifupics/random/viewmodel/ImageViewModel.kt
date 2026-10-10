@@ -3,6 +3,7 @@ package com.markettwits.waifupics.random.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.markettwits.cache.image.ImageCacheRepository
+import com.markettwits.cache.image.FavoriteImageMetadata
 import com.markettwits.image_action.api.ImageIntentAction
 import com.markettwits.waifupics.communication.StateCommunication
 import com.markettwits.waifupics.filter.viewmodel.FilterCommunication
@@ -128,10 +129,13 @@ interface ImageViewModel : StateCommunication.State<RandomImageState> {
 
         override fun onClickAddToFavorite() {
             val image = currentLoadedImage() ?: return
+            val info = currentImage()?.takeIf { it.id == image.id && it.imageUrl == image.networkUrl } ?: return
+            val metadata = FavoriteImageMetadata(info.imageData.artistName, info.imageData.ageRating,
+                info.imageData.sourceUrl, info.imageData.tags, info.colorPalette)
             viewModelScope.launch {
                 try {
                     repository.toggleFavorite(
-                        image.id, image.width, image.height, image.networkUrl, image.protected
+                        image.id, image.width, image.height, image.networkUrl, image.protected, metadata
                     )
                 } catch (e: CancellationException) {
                     throw e

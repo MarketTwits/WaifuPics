@@ -1,0 +1,20 @@
+<resources>
+    <string name="close">Закрыть</string>
+    <string name="image_author">Автор</string>
+    <string name="age_rating">Возрастной рейтинг</string>
+    <string name="image_not_provided">Не указан</string>
+    <string name="image_palette_title">Палитра цветов</string>
+    <string name="image_palette_copy_hint">Нажмите на цвет, чтобы скопировать HEX</string>
+    <string name="copy_palette_color">Скопировать цвет %1$s</string>
+    <string name="image_source">Источник</string>
+    <string name="open_image_source">Открыть источник</string>
+    <string name="copy_image_source">Копировать ссылку</string>
+    <string name="image_copied">Скопировано</string>
+    <string name="image_copy_failed">Не удалось скопировать</string>
+    <string name="image_source_open_failed">Не удалось открыть источник</string>
+    <string name="image_tags">Теги</string>
+    <string name="safe_for_work">Безопасно</string>
+    <string name="suggestive">Откровенное</string>
+    <string name="borderline">На грани</string>
+    <string name="explicit_18">Для взрослых (18+)</string>
+</resources>

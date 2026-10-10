@@ -13,7 +13,8 @@ interface ImageCacheRepository {
         width: Int,
         height: Int,
         url: String,
-        isProtected: Boolean
+        isProtected: Boolean,
+        metadata: FavoriteImageMetadata? = null
     )
 
     suspend fun addOrDelete(
@@ -21,7 +22,8 @@ interface ImageCacheRepository {
         width: Int,
         height: Int,
         url: String,
-        isProtected: Boolean
+        isProtected: Boolean,
+        metadata: FavoriteImageMetadata? = null
     )
 
     suspend fun deleteList(id: List<Int>, url: List<String>)
@@ -56,9 +58,10 @@ interface ImageCacheRepository {
             width: Int,
             height: Int,
             url: String,
-            isProtected: Boolean
+            isProtected: Boolean,
+            metadata: FavoriteImageMetadata?
         ) {
-            database.write(uiToCache.map(id, width, height, url, isProtected))
+            database.write(uiToCache.map(id, width, height, url, isProtected, metadata))
         }
 
         override suspend fun addOrDelete(
@@ -66,12 +69,13 @@ interface ImageCacheRepository {
             width: Int,
             height: Int,
             url: String,
-            isProtected: Boolean
+            isProtected: Boolean,
+            metadata: FavoriteImageMetadata?
         ) {
             if (database.hasImageWithUrl(url)) {
                 delete(url)
             } else {
-                addToFavorite(id, width, height, url, isProtected)
+                addToFavorite(id, width, height, url, isProtected, metadata)
             }
         }
 
