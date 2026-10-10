@@ -25,7 +25,8 @@ private fun ImageFavoriteUi.savedDate(zone: TimeZone): LocalDate? {
     return runCatching { LocalDate(parts[2].toInt(), parts[1].toInt(), parts[0].toInt()) }.getOrNull()
 }
 
-internal data class GalleryScrollRow(val firstItem: Int, val offset: Int, val section: GallerySection)
+internal data class GalleryScrollRow(val firstItem: Int, val offset: Int, val section: GallerySection,
+    val height: Int, val photoIds: List<Int> = emptyList(), val justified: GalleryJustifiedRow? = null)
 internal data class GalleryScrollTarget(val item: Int, val offset: Int)
 
 /** Uses the same header, cell and spacing geometry as the grid, including incomplete day rows. */
@@ -37,10 +38,12 @@ internal class GalleryScrollGeometry(
     spacing: Int,
     private val topPadding: Int,
     bottomPadding: Int,
-    viewportHeight: Int
+    viewportHeight: Int,
+    justifiedRows: Map<String, List<GalleryJustifiedRow>>? = null
 ) {
     val rows: List<GalleryScrollRow>
     private val itemToRow: IntArray
+    private val photoItems = mutableMapOf<Int, Int>()
     val maxOffset: Int
     init {
         require(columns > 0 && headerHeight > 0 && photoHeight > 0)
@@ -49,14 +52,27 @@ internal class GalleryScrollGeometry(
         var offset = 0
         var item = 0
         sections.forEach { section ->
-            list.add(GalleryScrollRow(item++, offset, section))
+            list.add(GalleryScrollRow(item++, offset, section, headerHeight))
             mapping.add(list.lastIndex)
             offset += headerHeight + spacing
-            section.images.chunked(columns).forEach { row ->
-                list.add(GalleryScrollRow(item, offset, section))
-                repeat(row.size) { mapping.add(list.lastIndex) }
-                item += row.size
-                offset += photoHeight + spacing
+            if (justifiedRows != null) {
+                justifiedRows.getValue(section.key).forEach { row ->
+                    list.add(GalleryScrollRow(item, offset, section, row.height, row.cells.map { it.image.id }, row))
+                    mapping.add(list.lastIndex)
+                    row.cells.forEach { photoItems[it.image.id] = item }
+                    item++
+                    offset += row.height + spacing
+                }
+            } else {
+                section.images.chunked(columns).forEach { row ->
+                    list.add(GalleryScrollRow(item, offset, section, photoHeight, row.map { it.id }))
+                    repeat(row.size) { index ->
+                        mapping.add(list.lastIndex)
+                        photoItems[row[index].id] = item + index
+                    }
+                    item += row.size
+                    offset += photoHeight + spacing
+                }
             }
         }
         rows = list
@@ -64,6 +80,15 @@ internal class GalleryScrollGeometry(
         maxOffset = (topPadding + offset - (if (list.isEmpty()) 0 else spacing) + bottomPadding - viewportHeight)
             .coerceAtLeast(0)
     }
+
+    fun itemForPhoto(id: Int): Int? = photoItems[id]
+
+    fun firstPhotoInItem(item: Int): Int? = rowForItem(item)?.photoIds?.firstOrNull()
+
+    fun photoAt(item: Int, x: Float, y: Float): Int? = rowForItem(item)?.justified?.photoAt(x, y)
+
+    private fun rowForItem(item: Int): GalleryScrollRow? =
+        if (rows.isEmpty()) null else rows[itemToRow[item.coerceIn(itemToRow.indices)]]
 
     fun sectionOfItem(item: Int): GallerySection? =
         if (rows.isEmpty()) null else rows[itemToRow[item.coerceIn(itemToRow.indices)]].section

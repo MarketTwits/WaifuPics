@@ -67,7 +67,8 @@ interface GalleryViewModel : StateCommunication.State<ImageFavoriteUiState> {
             favoriteImages()
             viewModelScope.launch {
                 settings.observeSettings().collect {
-                    layoutState.value = GalleryLayout(it.galleryColumns.coerceIn(0, 6), it.galleryGroupByMonth)
+                    layoutState.value = GalleryLayout(it.galleryColumns.coerceIn(0, 6), it.galleryGroupByMonth,
+                        it.galleryKeepAspectRatio)
                 }
             }
         }
@@ -78,7 +79,7 @@ interface GalleryViewModel : StateCommunication.State<ImageFavoriteUiState> {
             viewModelScope.launch {
                 val current = settings.settings()
                 settings.updateSettings(current.copy(galleryColumns = layout.columns.coerceIn(0, 6),
-                    galleryGroupByMonth = layout.byMonth))
+                    galleryGroupByMonth = layout.byMonth, galleryKeepAspectRatio = layout.keepAspectRatio))
             }
         }
 
@@ -158,6 +159,5 @@ interface GalleryViewModel : StateCommunication.State<ImageFavoriteUiState> {
         override fun state() = galleryCommunication.state()
     }
 }
-
 
 

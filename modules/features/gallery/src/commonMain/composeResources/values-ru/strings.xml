@@ -20,6 +20,11 @@
     <string name="gallery_layout_month">По месяцам</string>
     <string name="gallery_layout_auto">Автоматически</string>
     <string name="gallery_layout_custom">Настроить</string>
+    <string name="gallery_layout_proportions">Пропорции</string>
+    <string name="gallery_layout_proportions_description">Картинки целиком в ровных рядах</string>
+    <string name="gallery_layout_grid">Сетка</string>
+    <string name="gallery_image_layout">Вид изображений</string>
+    <string name="gallery_density">Плотность: %1$s</string>
     <string name="gallery_columns">Колонки: %1$s</string>
     <string name="gallery_grouping">Группировка</string>
     <string name="gallery_apply">Применить</string>

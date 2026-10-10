@@ -19,7 +19,8 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 
-private fun LazyGridState.photoAt(point: Offset, horizontalInset: Float, clampToContent: Boolean = false, obscuredTop: Float = 0f): Int? {
+private fun LazyGridState.photoAt(point: Offset, horizontalInset: Float, clampToContent: Boolean = false, obscuredTop: Float = 0f,
+    rowPhotoAt: ((Int, Float, Float) -> Int?)? = null): Int? {
     val info = layoutInfo
     val bottom = (info.viewportSize.height - info.afterContentPadding - 1).coerceAtLeast(1).toFloat()
     val headerBottom = info.visibleItemsInfo.filter { it.key.toString().startsWith("date-") && it.offset.y <= 0 }
@@ -32,9 +33,12 @@ private fun LazyGridState.photoAt(point: Offset, horizontalInset: Float, clampTo
         position.x >= offset.x && position.x < offset.x + size.width &&
             position.y >= offset.y && position.y < offset.y + size.height
     if (info.visibleItemsInfo.any { it.key.toString().startsWith("date-") && contains(it.offset, it.size) }) return null
-    return info.visibleItemsInfo.firstOrNull {
-        it.key.toString().startsWith("photo-") && contains(it.offset, it.size)
-    }?.key?.toString()?.removePrefix("photo-")?.toIntOrNull()
+    val item = info.visibleItemsInfo.firstOrNull {
+        (it.key.toString().startsWith("photo-") || it.key.toString().startsWith("row-")) && contains(it.offset, it.size)
+    } ?: return null
+    return if (item.key.toString().startsWith("row-"))
+        rowPhotoAt?.invoke(item.index, position.x - item.offset.x, position.y - item.offset.y)
+    else item.key.toString().removePrefix("photo-").toIntOrNull()
 }
 
 /** In selection mode a swipe changes a range; otherwise a long press starts the same gesture. */
@@ -48,7 +52,8 @@ internal fun Modifier.gallerySelectionGesture(
     onSelection: (Set<Int>) -> Unit,
     onFinish: () -> Unit,
     viewportTranslationY: () -> Float = { 0f },
-    obscuredTop: () -> Float = { 0f }
+    obscuredTop: () -> Float = { 0f },
+    rowPhotoAt: ((Int, Float, Float) -> Int?)? = null
 ): Modifier {
     val currentIds by rememberUpdatedState(ids)
     val currentSelection by rememberUpdatedState(selectedIds)
@@ -57,6 +62,7 @@ internal fun Modifier.gallerySelectionGesture(
     val finishSelection by rememberUpdatedState(onFinish)
     val translationY by rememberUpdatedState(viewportTranslationY)
     val currentObscuredTop by rememberUpdatedState(obscuredTop)
+    val currentRowPhotoAt by rememberUpdatedState(rowPhotoAt)
     val haptic = LocalHapticFeedback.current
     return pointerInput(state, ids) {
         val horizontalInset = WaifuSpacing.content.toPx()
@@ -66,7 +72,7 @@ internal fun Modifier.gallerySelectionGesture(
                 if (!clampToContent && point.y < currentObscuredTop()) return null
                 val shift = translationY()
                 return state.photoAt(point - Offset(0f, shift), horizontalInset, clampToContent,
-                    obscuredTop = (currentObscuredTop() - shift).coerceAtLeast(0f))
+                    obscuredTop = (currentObscuredTop() - shift).coerceAtLeast(0f), rowPhotoAt = currentRowPhotoAt)
             }
             awaitEachGesture {
                 val down = awaitFirstDown(requireUnconsumed = false, pass = PointerEventPass.Initial)

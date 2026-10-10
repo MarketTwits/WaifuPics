@@ -8,7 +8,8 @@ import kotlinx.serialization.Serializable
 data class ApplicationSettings(
     val theme: ColorTheme,
     val galleryColumns: Int = 0,
-    val galleryGroupByMonth: Boolean = false
+    val galleryGroupByMonth: Boolean = false,
+    val galleryKeepAspectRatio: Boolean = false
 ) {
 
     companion object{

@@ -52,28 +52,6 @@ fun GalleryScreen(onClickGoDetail: () -> Unit, paddingValues: PaddingValues,
     val zone = TimeZone.currentSystemDefault()
     val sections = remember(state.items, zone, layout.byMonth) { gallerySections(state.items, zone, layout.byMonth) }
     val ids = remember(sections) { sections.flatMap { it.images }.map { it.id } }
-    val photoIndexes = remember(sections) {
-        buildMap<Int, Int> {
-            var index = 0
-            sections.forEach { section ->
-                index++
-                section.images.forEach { put(it.id, index++) }
-            }
-        }
-    }
-    LaunchedEffect(layout) {
-        pendingAnchor?.let { photoIndexes[it]?.let(gridState::requestScrollToItem) }
-        pendingAnchor = null
-    }
-    val returnOffset = with(LocalDensity.current) { (GalleryDateHeaderHeight + WaifuSpacing.small).roundToPx() }
-    LaunchedEffect(imageTransition?.visible, returnToImageId, photoIndexes) {
-        if (imageTransition?.visible != false && returnToImageId != null) {
-            val index = photoIndexes[returnToImageId]
-            if (index != null && gridState.layoutInfo.visibleItemsInfo.none { it.key == "photo-$returnToImageId" }) {
-                gridState.requestScrollToItem(index, -returnOffset)
-            }
-        }
-    }
     val navigationInset = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
     val bottomPadding = (if (selected) 180.dp else WaifuSpacing.content) + navigationInset
 
@@ -90,9 +68,29 @@ fun GalleryScreen(onClickGoDetail: () -> Unit, paddingValues: PaddingValues,
         val headerHeight = with(density) { GalleryDateHeaderHeight.roundToPx() }
         val footerHeight = with(density) { bottomPadding.roundToPx() }
         val viewport = with(density) { maxHeight.roundToPx() }
-        val geometry = remember(sections, columns, cellWidth, spacing, headerHeight, footerHeight, viewport) {
+        val justifiedRows = remember(sections, layout.keepAspectRatio, contentWidth, columns, spacing, density) {
+            if (layout.keepAspectRatio) sections.associate { section ->
+                section.key to galleryJustifiedRows(section.images, contentWidth,
+                    minOf((cellWidth / 0.8f).roundToInt(), with(density) { 280.dp.roundToPx() }),
+                    spacing, with(density) { 48.dp.roundToPx() })
+            } else null
+        }
+        val geometry = remember(sections, columns, cellWidth, spacing, headerHeight, footerHeight, viewport, justifiedRows) {
             GalleryScrollGeometry(sections, columns, headerHeight, (cellWidth / 0.8f).roundToInt(),
-                spacing, spacing, footerHeight, viewport)
+                spacing, spacing, footerHeight, viewport, justifiedRows)
+        }
+        LaunchedEffect(layout, geometry) {
+            pendingAnchor?.let { id -> geometry.itemForPhoto(id)?.let { gridState.requestScrollToItem(it) } }
+            pendingAnchor = null
+        }
+        val returnOffset = headerHeight + spacing
+        LaunchedEffect(imageTransition?.visible, returnToImageId, geometry) {
+            if (imageTransition?.visible != false && returnToImageId != null) {
+                val index = geometry.itemForPhoto(returnToImageId)
+                if (index != null && gridState.layoutInfo.visibleItemsInfo.none { it.index == index }) {
+                    gridState.requestScrollToItem(index, -returnOffset)
+                }
+            }
         }
         val pinnedSection by remember(gridState, geometry) {
             derivedStateOf { geometry.pinnedSection(gridState.firstVisibleItemIndex, gridState.firstVisibleItemScrollOffset) }
@@ -113,13 +111,14 @@ fun GalleryScreen(onClickGoDetail: () -> Unit, paddingValues: PaddingValues,
         if (sections.isEmpty()) {
             EmptyGalleryItem()
         } else {
-            LazyVerticalGrid(columns = GridCells.Fixed(columns), state = gridState, overscrollEffect = overscroll,
+            LazyVerticalGrid(columns = GridCells.Fixed(if (layout.keepAspectRatio) 1 else columns), state = gridState, overscrollEffect = overscroll,
                 modifier = Modifier.fillMaxSize()
                     .gallerySelectionGesture(gridState, ids, selectedIds, selected,
                         onSelection = { viewModel.replaceSelection(it, keepMode = true) },
                         onFinish = viewModel::finishSelectionGesture,
                         viewportTranslationY = { overscroll.displacement },
-                        obscuredTop = { if (pinnedSection != null) headerHeight.toFloat() else 0f }),
+                        obscuredTop = { if (pinnedSection != null) headerHeight.toFloat() else 0f },
+                        rowPhotoAt = if (layout.keepAspectRatio) geometry::photoAt else null),
                 horizontalArrangement = Arrangement.spacedBy(WaifuSpacing.small),
                 verticalArrangement = Arrangement.spacedBy(WaifuSpacing.small),
                 contentPadding = PaddingValues(start = WaifuSpacing.content, end = WaifuSpacing.content,
@@ -133,24 +132,18 @@ fun GalleryScreen(onClickGoDetail: () -> Unit, paddingValues: PaddingValues,
                             onSelectGroup = { selectSection(section) },
                             onLayout = if (section === sections.first() && pinnedSection == null) ({ showLayout = true }) else null)
                     }
-                    items(section.images, key = { "photo-${it.id}" }, contentType = { "image" }) { image ->
-                        val description = stringResource(Res.string.gallery_saved_image,
-                            image.created)
-                        MediaComponent(media = image, selectionState = selected,
-                            imageTransition = imageTransition,
-                            selectedMedia = selectedMedia,
-                            modifier = Modifier.testTag("gallery-image-${image.id}")
-                                .semantics { contentDescription = description },
-                            onItemLongClick = {
-                                viewModel.replaceSelection(selectedIds + it.id, keepMode = true)
-                                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                            }, onItemClick = {
-                                if (selected) viewModel.selection(it.id)
-                                else if (imageTransition?.running != true && imageTransition?.visible != false) {
-                                    viewModel.toDetail(it)
-                                    onClickGoDetail()
-                                }
-                            })
+                    if (justifiedRows != null) {
+                        items(justifiedRows.getValue(section.key), key = { it.key }, contentType = { "proportional-row" }) { row ->
+                            GalleryJustifiedRowContent(row) { image, frame ->
+                                GalleryPhoto(viewModel, image, selected, selectedIds, selectedMedia,
+                                    imageTransition, onClickGoDetail, frame, preserveAspectRatio = true)
+                            }
+                        }
+                    } else {
+                        items(section.images, key = { "photo-${it.id}" }, contentType = { "image" }) { image ->
+                            GalleryPhoto(viewModel, image, selected, selectedIds, selectedMedia, imageTransition,
+                                onClickGoDetail, Modifier.animateItem(fadeInSpec = null, fadeOutSpec = null))
+                        }
                     }
                 }
             }
@@ -165,8 +158,11 @@ fun GalleryScreen(onClickGoDetail: () -> Unit, paddingValues: PaddingValues,
         }
         if (showLayout) GalleryLayoutSheet(layout, onApply = { choice ->
             if (choice != layout) {
-                pendingAnchor = gridState.layoutInfo.visibleItemsInfo.firstOrNull { it.key.toString().startsWith("photo-") }
-                    ?.key?.toString()?.removePrefix("photo-")?.toIntOrNull()
+                pendingAnchor = gridState.layoutInfo.visibleItemsInfo.firstOrNull {
+                    it.key.toString().startsWith("photo-") || it.key.toString().startsWith("row-")
+                }?.let { info -> info.key.toString().removePrefix("photo-").toIntOrNull()
+                    ?: geometry.firstPhotoInItem(info.index) }
+                overscroll.reset()
                 viewModel.setLayout(choice)
                 haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
             }
@@ -175,4 +171,25 @@ fun GalleryScreen(onClickGoDetail: () -> Unit, paddingValues: PaddingValues,
             selectionState = selected, clearSelection = viewModel::changeSelectedState,
             shareImages = viewModel::shareImages, deleteImages = viewModel::delete)
     }
+}
+
+@Composable
+private fun GalleryPhoto(viewModel: GalleryViewModel, image: ImageFavoriteUi.Base, selected: Boolean,
+    selectedIds: Set<Int>, selectedMedia: List<ImageFavoriteUi>, transition: GalleryImageTransition?,
+    onClickGoDetail: () -> Unit, modifier: Modifier, preserveAspectRatio: Boolean = false) {
+    val haptic = LocalHapticFeedback.current
+    val description = stringResource(Res.string.gallery_saved_image, image.created)
+    MediaComponent(media = image, selectionState = selected, selectedMedia = selectedMedia,
+        imageTransition = transition, preserveAspectRatio = preserveAspectRatio,
+        modifier = modifier.testTag("gallery-image-${image.id}").semantics { contentDescription = description },
+        onItemLongClick = {
+            viewModel.replaceSelection(selectedIds + it.id, keepMode = true)
+            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+        }, onItemClick = {
+            if (selected) viewModel.selection(it.id)
+            else if (transition?.running != true && transition?.visible != false) {
+                viewModel.toDetail(it)
+                onClickGoDetail()
+            }
+        })
 }

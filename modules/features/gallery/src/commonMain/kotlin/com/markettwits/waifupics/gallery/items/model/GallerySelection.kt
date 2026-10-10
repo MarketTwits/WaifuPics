@@ -1,6 +1,6 @@
 package com.markettwits.waifupics.gallery.items.model
 
-data class GalleryLayout(val columns: Int = 0, val byMonth: Boolean = false)
+data class GalleryLayout(val columns: Int = 0, val byMonth: Boolean = false, val keepAspectRatio: Boolean = false)
 
 /** Every update starts from the original selection; reversing restores items outside the range. */
 internal class GallerySelectionRange(

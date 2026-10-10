@@ -35,6 +35,11 @@
     <string name="gallery_layout_month">Month</string>
     <string name="gallery_layout_auto">Automatic</string>
     <string name="gallery_layout_custom">Custom</string>
+    <string name="gallery_layout_proportions">Proportions</string>
+    <string name="gallery_layout_proportions_description">Full images in aligned rows</string>
+    <string name="gallery_layout_grid">Grid</string>
+    <string name="gallery_image_layout">Image layout</string>
+    <string name="gallery_density">Density: %1$s</string>
     <string name="gallery_columns">%1$s columns</string>
     <string name="gallery_grouping">Group images</string>
     <string name="gallery_apply">Apply</string>

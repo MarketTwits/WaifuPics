@@ -11,6 +11,7 @@ import androidx.compose.material.icons.outlined.ChevronRight
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.outlined.GridOn
 import androidx.compose.material.icons.outlined.GridView
+import androidx.compose.material.icons.outlined.ViewQuilt
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -33,6 +34,7 @@ internal fun GalleryLayoutSheet(current: GalleryLayout, onApply: (GalleryLayout)
     var custom by rememberSaveable { mutableStateOf(false) }
     var columns by rememberSaveable { mutableIntStateOf(current.columns.takeIf { it in 2..6 } ?: 3) }
     var byMonth by rememberSaveable { mutableStateOf(current.byMonth) }
+    var keepAspectRatio by rememberSaveable { mutableStateOf(current.keepAspectRatio) }
     val day = current == GalleryLayout(3, false)
     val month = current == GalleryLayout(5, true)
 
@@ -55,7 +57,11 @@ internal fun GalleryLayoutSheet(current: GalleryLayout, onApply: (GalleryLayout)
                         LayoutChoice(stringResource(Res.string.gallery_layout_month), month, Icons.Outlined.GridOn) {
                             apply(GalleryLayout(5, true))
                         }
-                        LayoutChoice(stringResource(Res.string.gallery_layout_custom), !day && !month,
+                        LayoutChoice(stringResource(Res.string.gallery_layout_proportions), current.keepAspectRatio,
+                            Icons.Outlined.ViewQuilt, subtitle = stringResource(Res.string.gallery_layout_proportions_description)) {
+                            apply(current.copy(keepAspectRatio = true))
+                        }
+                        LayoutChoice(stringResource(Res.string.gallery_layout_custom), !day && !month && !current.keepAspectRatio,
                             opensSettings = true) { custom = true }
                     }
                 }
@@ -65,7 +71,14 @@ internal fun GalleryLayoutSheet(current: GalleryLayout, onApply: (GalleryLayout)
                     Spacer(Modifier.width(WaifuSpacing.small))
                     Text(stringResource(Res.string.gallery_layout))
                 }
-                WaifuSectionLabel(stringResource(Res.string.gallery_columns, columns))
+                WaifuSectionLabel(stringResource(Res.string.gallery_image_layout))
+                FlowRow(horizontalArrangement = Arrangement.spacedBy(WaifuSpacing.small)) {
+                    FilterChip(!keepAspectRatio, { keepAspectRatio = false },
+                        label = { Text(stringResource(Res.string.gallery_layout_grid)) }, modifier = Modifier.heightIn(min = 48.dp))
+                    FilterChip(keepAspectRatio, { keepAspectRatio = true },
+                        label = { Text(stringResource(Res.string.gallery_layout_proportions)) }, modifier = Modifier.heightIn(min = 48.dp))
+                }
+                WaifuSectionLabel(stringResource(if (keepAspectRatio) Res.string.gallery_density else Res.string.gallery_columns, columns))
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(WaifuSpacing.small)) {
                     (2..6).forEach { number ->
                         FilterChip(selected = number == columns, onClick = { columns = number },
@@ -79,7 +92,7 @@ internal fun GalleryLayoutSheet(current: GalleryLayout, onApply: (GalleryLayout)
                     FilterChip(byMonth, { byMonth = true }, label = { Text(stringResource(Res.string.gallery_layout_month)) },
                         modifier = Modifier.heightIn(min = 48.dp))
                 }
-                WaifuActionButton(stringResource(Res.string.gallery_apply), { apply(GalleryLayout(columns, byMonth)) },
+                WaifuActionButton(stringResource(Res.string.gallery_apply), { apply(GalleryLayout(columns, byMonth, keepAspectRatio)) },
                     modifier = Modifier.fillMaxWidth())
                 TextButton(onClick = { apply(GalleryLayout()) }, modifier = Modifier.fillMaxWidth()) {
                     Text(stringResource(Res.string.gallery_layout_auto))
@@ -91,14 +104,18 @@ internal fun GalleryLayoutSheet(current: GalleryLayout, onApply: (GalleryLayout)
 
 @Composable
 private fun LayoutChoice(title: String, selected: Boolean, icon: ImageVector? = null,
-    opensSettings: Boolean = false, onClick: () -> Unit) {
+    opensSettings: Boolean = false, subtitle: String? = null, onClick: () -> Unit) {
     val interaction = if (opensSettings) Modifier.clickable(onClick = onClick, role = Role.Button)
         else Modifier.selectable(selected, onClick = onClick, role = Role.RadioButton)
     Row(Modifier.fillMaxWidth().then(interaction).heightIn(min = 56.dp)
         .padding(horizontal = WaifuSpacing.content, vertical = WaifuSpacing.small),
         horizontalArrangement = Arrangement.spacedBy(WaifuSpacing.content), verticalAlignment = Alignment.CenterVertically) {
         if (icon != null) Icon(icon, null, Modifier.size(20.dp), tint = MaterialTheme.colorScheme.onSurfaceVariant)
-        Text(title, Modifier.weight(1f), style = MaterialTheme.typography.bodyLarge)
+        Column(Modifier.weight(1f)) {
+            Text(title, style = MaterialTheme.typography.bodyLarge)
+            if (subtitle != null) Text(subtitle, style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
         if (selected) Icon(Icons.Default.Check, null, Modifier.size(20.dp), tint = MaterialTheme.colorScheme.primary)
         if (opensSettings) Icon(Icons.Outlined.ChevronRight, null, Modifier.size(20.dp),
             tint = MaterialTheme.colorScheme.onSurfaceVariant)

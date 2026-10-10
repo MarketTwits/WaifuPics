@@ -24,18 +24,18 @@ import com.markettwits.waifupics.gallery.items.components.animations.GalleryImag
 @Composable
 internal fun MediaImage(image: ImageFavoriteUi, selectionState: Boolean,
     selectedMedia: List<ImageFavoriteUi>, modifier: Modifier = Modifier,
-    imageTransition: GalleryImageTransition? = null) {
+    imageTransition: GalleryImageTransition? = null, preserveAspectRatio: Boolean = false) {
     val selected = selectionState && selectedMedia.any { it.id == image.id }
     val inset by animateDpAsState(if (selected) 8.dp else 0.dp, label = "Selection inset")
     val borderColor by animateColorAsState(if (selected) MaterialTheme.colorScheme.primary else Color.Transparent,
         label = "Selection border")
-    Box(modifier.aspectRatio(0.8f).semantics { this.selected = selected }) {
+    Box((if (preserveAspectRatio) modifier else modifier.aspectRatio(0.8f)).semantics { this.selected = selected }) {
         val imageModifier = Modifier.fillMaxSize().padding(inset)
         AsyncImage(
             model = rememberGalleryImageRequest(image), contentDescription = null,
             modifier = (imageTransition?.image(imageModifier, image.id) ?: imageModifier).clip(MaterialTheme.shapes.medium)
                 .border(if (selected) 2.dp else 0.dp, borderColor, MaterialTheme.shapes.medium),
-            contentScale = ContentScale.Crop
+            contentScale = if (preserveAspectRatio) ContentScale.Fit else ContentScale.Crop
         )
         AnimatedVisibility(visible = selectionState) {
             Box(Modifier.padding(8.dp)) { CheckBox(isChecked = selected) }
