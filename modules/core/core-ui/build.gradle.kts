@@ -9,6 +9,10 @@ android {
 
 kotlin {
     sourceSets {
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.1")
+        }
         androidMain.dependencies {
             api(libs.ktor.client.okhttp)
         }

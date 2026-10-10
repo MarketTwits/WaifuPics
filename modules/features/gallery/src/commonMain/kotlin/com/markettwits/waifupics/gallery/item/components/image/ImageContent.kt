@@ -29,7 +29,7 @@ internal fun ZoomablePagerImage(image: ImageFavoriteUi, zoomState: ZoomState,
     var contentSize by remember(image.id) { mutableStateOf(Size(image.width.toFloat(), image.height.toFloat())) }
     val painter = rememberAsyncImagePainter(model = rememberGalleryImageRequest(image), contentScale = ContentScale.Fit,
         onSuccess = {
-            val size = it.painter.intrinsicSize
+            val size = Size(it.result.image.width.toFloat(), it.result.image.height.toFloat())
             if (size.width > 0 && size.height > 0) {
                 contentSize = size
                 zoomState.setContentSize(size)
@@ -48,7 +48,9 @@ internal fun ZoomablePagerImage(image: ImageFavoriteUi, zoomState: ZoomState,
         // Change layout bounds, so shared return starts at the actual dragged image size.
         val width = minOf(maxWidth, maxHeight * ratio) * frameScale
         val height = minOf(maxHeight, maxWidth / ratio) * frameScale
-        Box(Modifier.fillMaxSize().zoomable(zoomState = zoomState, onTap = { onItemClick() }),
+        Box(Modifier.fillMaxSize().zoomable(zoomState = zoomState,
+            zoomEnabled = active && loadState is AsyncImagePainter.State.Success && imageTransition?.running != true && frameScale == 1f,
+            onTap = { onItemClick() }),
             contentAlignment = Alignment.Center) {
             val frame = Modifier.size(width, height)
             Image(painter, stringResource(Res.string.image),

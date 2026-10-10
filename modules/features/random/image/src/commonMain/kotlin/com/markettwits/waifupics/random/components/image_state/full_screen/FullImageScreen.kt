@@ -25,6 +25,7 @@ import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.key.*
@@ -36,6 +37,8 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.SubcomposeAsyncImage
 import coil3.compose.SubcomposeAsyncImageContent
 import coil3.compose.rememberAsyncImagePainter
+import coil3.compose.LocalPlatformContext
+import coil3.request.ImageRequest
 import com.markettwits.core_ui.components.zoomable.ScrollGesturePropagation
 import com.markettwits.core_ui.components.zoomable.rememberZoomState
 import com.markettwits.core_ui.components.zoomable.zoomable
@@ -56,6 +59,11 @@ internal fun FullImageScreen(
     onDismiss: () -> Unit
 ) {
     val zoomState = rememberZoomState(maxScale = 25f)
+    val context = LocalPlatformContext.current
+    val imageRequest = remember(context, imageUrl) {
+        // The original-size zoom stage needs the full image, not a viewport-sized decode.
+        ImageRequest.Builder(context).data(imageUrl).size(coil3.size.Size.ORIGINAL).build()
+    }
     val scope = rememberCoroutineScope()
     val focusRequester = remember { FocusRequester() }
     var dragOffset by remember { mutableFloatStateOf(0f) }
@@ -68,6 +76,8 @@ internal fun FullImageScreen(
     val flingMinimumDistance = with(density) { 32.dp.toPx() }
     val dismissVelocity = with(density) { 1200.dp.toPx() }
     val zoomDescription = stringResource(if (isZoomed) Res.string.zoomed_image else Res.string.original_image_size)
+
+    LaunchedEffect(imageUrl) { zoomState.reset() }
 
     LaunchedEffect(isVisible) {
         if (isVisible) focusRequester.requestFocus()
@@ -97,7 +107,7 @@ internal fun FullImageScreen(
             modifier = Modifier.fillMaxSize().alpha(0.3f * (1f - dragProgress)).blur(32.dp))
         key(retryAttempt) {
             SubcomposeAsyncImage(
-                model = imageUrl,
+                model = imageRequest,
                 contentDescription = stringResource(Res.string.full_image),
                 contentScale = ContentScale.Fit,
                 modifier = Modifier.fillMaxSize()
@@ -142,7 +152,7 @@ internal fun FullImageScreen(
                 success = {
                     SubcomposeAsyncImageContent(contentScale = ContentScale.Fit)
                     LaunchedEffect(it.painter) {
-                        zoomState.setContentSize(it.painter.intrinsicSize)
+                        zoomState.setContentSize(Size(it.result.image.width.toFloat(), it.result.image.height.toFloat()))
                         imageReady = true
                     }
                 }
