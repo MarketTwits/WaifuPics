@@ -1,7 +1,8 @@
 package com.markettwits.waifupics.random.components
 
 import androidx.compose.animation.*
-import androidx.compose.animation.core.MutableTransitionState
+import androidx.compose.animation.core.updateTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.pager.VerticalPager
@@ -14,7 +15,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.ui.backhandler.BackHandler
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -27,6 +28,8 @@ import com.markettwits.waifupics.random.components.image_state.ImageState
 import com.markettwits.waifupics.random.components.image_state.fuckup.ImageFuckup
 import com.markettwits.waifupics.random.components.image_state.loading.ImageLoading
 import com.markettwits.waifupics.random.components.image_state.suceess.ImageCardContent
+import com.markettwits.waifupics.random.components.image_state.full_screen.FullImageScreen
+import com.markettwits.waifupics.random.components.image_state.full_screen.HomeImageTransition
 import com.markettwits.waifupics.random.components.vertical_panel.VerticalControlPanel
 import com.markettwits.waifupics.random.model.RandomImageState
 import com.markettwits.waifupics.random.viewmodel.ImageViewModel
@@ -46,6 +49,7 @@ fun RandomImageScreen(
     randomImageViewModel: ImageViewModel = ApplicationViewModel(),
     filterViewModel: AgeRatingFilterViewModel = ApplicationViewModel(),
     paddingValues: PaddingValues,
+    onViewerVisibilityChanged: (Boolean) -> Unit = {},
 ) {
     val state by randomImageViewModel.state().collectAsState()
     val images by randomImageViewModel.images().collectAsState()
@@ -57,27 +61,15 @@ fun RandomImageScreen(
     val favorites by randomImageViewModel.favorites().collectAsState()
     var fullscreen by remember { mutableStateOf<FullscreenData?>(null) }
     var information by remember { mutableStateOf<ImageDetails?>(null) }
-    val fullscreenTransition = remember { MutableTransitionState(false) }
+    val fullscreenTransition = updateTransition(fullscreen?.isVisible == true, label = "Home image viewer")
     val snackbar = remember { SnackbarHostState() }
     val pagerState = rememberPagerState(initialPage = currentIndex, pageCount = { max(images.size, 1) })
     val hasImages = images.isNotEmpty()
     val retryLabel = stringResource(Res.string.retry_loading)
     val feedErrorLabel = stringResource(Res.string.feed_load_failed)
-
-    BackHandler(enabled = fullscreen?.isVisible == true) {
-        fullscreen = fullscreen?.copy(isVisible = false)
-    }
-    LaunchedEffect(fullscreen?.isVisible) {
-        fullscreenTransition.targetState = fullscreen?.isVisible == true
-    }
-    LaunchedEffect(fullscreenTransition) {
-        snapshotFlow {
-            fullscreenTransition.isIdle && !fullscreenTransition.currentState &&
-                !fullscreenTransition.targetState
-        }.collect { closed ->
-            if (closed && fullscreen?.isVisible == false) fullscreen = null
-        }
-    }
+    val reportViewer by rememberUpdatedState(onViewerVisibilityChanged)
+    LaunchedEffect(fullscreen != null) { reportViewer(fullscreen != null) }
+    DisposableEffect(Unit) { onDispose { reportViewer(false) } }
 
     // Only explicit navigation commands drive the pager; swiping never feeds an animation back.
     LaunchedEffect(requestedPage, hasImages) {
@@ -121,6 +113,14 @@ fun RandomImageScreen(
     val actionsReady = !pagerState.isScrollInProgress && requestedPage == null
 
     SharedTransitionLayout {
+        LaunchedEffect(fullscreenTransition) {
+            snapshotFlow {
+                !isTransitionActive && !fullscreenTransition.isRunning &&
+                    !fullscreenTransition.currentState && !fullscreenTransition.targetState
+            }.collect { closed ->
+                if (closed && fullscreen?.isVisible == false) fullscreen = null
+            }
+        }
         Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
             Box(
                 Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background),
@@ -147,76 +147,78 @@ fun RandomImageScreen(
                         ) { page ->
                             val image = images.getOrNull(page) as? RandomImageState.Success
                             if (image != null) {
-                                AnimatedVisibility(
-                                    visible = fullscreen?.isVisible != true || fullscreen?.key != "image_${image.id}",
-                                    modifier = Modifier.fillMaxSize(),
-                                    enter = EnterTransition.None,
-                                    exit = ExitTransition.None
-                                ) {
-                                    with(this@SharedTransitionLayout) {
-                                        ImageCardContent(
-                                            imageUrl = image.imageUrl,
-                                            id = image.id,
-                                            colorPalette = image.colorPalette,
-                                            animateBackground = page == pagerState.currentPage &&
-                                                !pagerState.isScrollInProgress && fullscreen == null && information == null,
-                                            sharedKey = "image_${image.id}",
-                                            animatedVisibilityScope = this@AnimatedVisibility,
-                                            onChangeImageState = {
-                                                randomImageViewModel.obtainImageState(image.id, image.imageUrl, it)
-                                            },
-                                            onDoubleTapFavorite = {
-                                                actionsReady && page == pagerState.settledPage &&
-                                                    randomImageViewModel.onDoubleTapFavorite(image.id)
-                                            },
-                                            onOpenFullScreen = {
-                                                if (actionsReady && page == pagerState.settledPage)
-                                                    fullscreen = FullscreenData(image.imageUrl, "image_${image.id}", true)
-                                            }
-                                        )
-                                    }
+                                with(this@SharedTransitionLayout) {
+                                    ImageCardContent(
+                                        imageUrl = image.imageUrl,
+                                        id = image.id,
+                                        colorPalette = image.colorPalette,
+                                        animateBackground = page == pagerState.currentPage &&
+                                            !pagerState.isScrollInProgress && fullscreen == null && information == null,
+                                        sharedKey = "image_${image.id}",
+                                        fullscreenTransition = fullscreenTransition,
+                                        isFullscreenImage = fullscreen?.key == "image_${image.id}",
+                                        onChangeImageState = {
+                                            randomImageViewModel.obtainImageState(image.id, image.imageUrl, it)
+                                        },
+                                        onDoubleTapFavorite = {
+                                            fullscreen == null && actionsReady && page == pagerState.settledPage &&
+                                                randomImageViewModel.onDoubleTapFavorite(image.id)
+                                        },
+                                        onOpenFullScreen = { painter ->
+                                            if (fullscreen == null && actionsReady && page == pagerState.settledPage)
+                                                fullscreen = FullscreenData(image, painter, true)
+                                        }
+                                    )
                                 }
                             }
                         }
                     }
-                    if (fullscreen == null) {
+                    fullscreenTransition.AnimatedVisibility(
+                        visible = { !it }, modifier = Modifier.align(Alignment.BottomCenter),
+                        enter = fadeIn(tween(200)), exit = fadeOut(tween(140))
+                    ) {
                         Box(Modifier.align(Alignment.BottomCenter).fillMaxWidth().height(260.dp)
                             .background(Brush.verticalGradient(listOf(Color.Transparent,
                                 MaterialTheme.colorScheme.background.copy(alpha = 0.94f)))))
                     }
                     Box(Modifier.fillMaxSize().padding(paddingValues)) {
-                        if (fullscreen == null) {
-                            activeImage?.let { image ->
-                                BottomImageInfo(
-                                    modifier = Modifier.align(Alignment.BottomStart)
-                                        .fillMaxWidth().padding(start = 20.dp, end = 88.dp, bottom = 20.dp),
-                                    imageData = image.imageData,
-                                    colorPalette = image.colorPalette,
-                                    loadedImage = (imageState as? ImageState.Success)?.takeIf {
-                                        it.id == image.id && it.networkUrl == image.imageUrl
-                                    },
-                                    compact = compactControls,
-                                    infoEnabled = actionsReady,
-                                    onInfo = {
-                                        information = ImageDetails(image, (imageState as? ImageState.Success)?.takeIf {
+                        fullscreenTransition.AnimatedVisibility(
+                            visible = { !it }, modifier = Modifier.fillMaxSize(),
+                            enter = fadeIn(tween(200)), exit = fadeOut(tween(140))
+                        ) {
+                            Box(Modifier.fillMaxSize()) {
+                                activeImage?.let { image ->
+                                    BottomImageInfo(
+                                        modifier = Modifier.align(Alignment.BottomStart)
+                                            .fillMaxWidth().padding(start = 20.dp, end = 88.dp, bottom = 20.dp),
+                                        imageData = image.imageData,
+                                        colorPalette = image.colorPalette,
+                                        loadedImage = (imageState as? ImageState.Success)?.takeIf {
                                             it.id == image.id && it.networkUrl == image.imageUrl
-                                        })
-                                    }
+                                        },
+                                        compact = compactControls,
+                                        infoEnabled = actionsReady && fullscreen == null,
+                                        onInfo = {
+                                            information = ImageDetails(image, (imageState as? ImageState.Success)?.takeIf {
+                                                it.id == image.id && it.networkUrl == image.imageUrl
+                                            })
+                                        }
+                                    )
+                                }
+                                VerticalControlPanel(
+                                    modifier = Modifier.align(Alignment.BottomEnd).padding(end = 12.dp, bottom = 16.dp),
+                                    imageState = imageState,
+                                    actionsReady = actionsReady && fullscreen == null,
+                                    showLabels = !compactControls,
+                                    isLoadingNext = isFetching && (images.isEmpty() || currentIndex == images.lastIndex),
+                                    isFavorite = activeImage?.id in favorites,
+                                    imageId = activeImage?.id,
+                                    onClickAddToFavorite = randomImageViewModel::onClickAddToFavorite,
+                                    onClickFetchRandomImage = randomImageViewModel::fetchRandomImage,
+                                    onClickShareImage = randomImageViewModel::onClickShareImage,
+                                    onClickFilter = filterViewModel::toggle
                                 )
                             }
-                            VerticalControlPanel(
-                                modifier = Modifier.align(Alignment.BottomEnd).padding(end = 12.dp, bottom = 16.dp),
-                                imageState = imageState,
-                                actionsReady = actionsReady,
-                                showLabels = !compactControls,
-                                isLoadingNext = isFetching && (images.isEmpty() || currentIndex == images.lastIndex),
-                                isFavorite = activeImage?.id in favorites,
-                                imageId = activeImage?.id,
-                                onClickAddToFavorite = randomImageViewModel::onClickAddToFavorite,
-                                onClickFetchRandomImage = randomImageViewModel::fetchRandomImage,
-                                onClickShareImage = randomImageViewModel::onClickShareImage,
-                                onClickFilter = filterViewModel::toggle
-                            )
                         }
                         SnackbarHost(snackbar, Modifier.align(Alignment.TopCenter).padding(top = 68.dp))
                         AgeRatingFilter(viewModel = filterViewModel)
@@ -228,30 +230,28 @@ fun RandomImageScreen(
                     }
                 }
             }
-            AnimatedVisibility(
-                visibleState = fullscreenTransition,
+            fullscreenTransition.AnimatedVisibility(
+                visible = { it },
                 modifier = Modifier.fillMaxSize(),
-                enter = fadeIn(), exit = fadeOut()
+                enter = fadeIn(tween(280)), exit = fadeOut(tween(240))
             ) {
                 val data = fullscreen ?: return@AnimatedVisibility
-                Box(
-                    Modifier.fillMaxSize().sharedBounds(
-                        rememberSharedContentState("${data.key}_bounds"), this
-                    ).sharedElement(rememberSharedContentState(data.key), this),
-                    contentAlignment = Alignment.Center
-                ) {
-                    com.markettwits.waifupics.random.components.image_state.full_screen.FullImageScreen(
-                        modifier = Modifier.fillMaxSize(),
-                        imageUrl = data.url,
-                        isVisible = data.isVisible,
-                        transformOrigin = androidx.compose.ui.graphics.TransformOrigin.Center,
-                        onDismiss = { fullscreen = data.copy(isVisible = false) }
-                    )
-                }
+                FullImageScreen(
+                    modifier = Modifier.fillMaxSize(),
+                    imageUrl = data.image.imageUrl,
+                    preview = data.painter,
+                    colorPalette = data.image.colorPalette,
+                    imageTransition = HomeImageTransition(this@SharedTransitionLayout, this, data.key),
+                    transitionRunning = isTransitionActive || fullscreenTransition.isRunning,
+                    isVisible = data.isVisible,
+                    onDismiss = { fullscreen = data.copy(isVisible = false) }
+                )
             }
         }
     }
 }
 
-private data class FullscreenData(val url: String, val key: String, val isVisible: Boolean)
+private data class FullscreenData(val image: RandomImageState.Success, val painter: Painter, val isVisible: Boolean) {
+    val key: String get() = "image_${image.id}"
+}
 private data class ImageDetails(val image: RandomImageState.Success, val loadedImage: ImageState.Success?)

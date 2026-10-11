@@ -1,6 +1,9 @@
 package com.markettwits.waifupics.navigation.components
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -86,10 +89,13 @@ fun NavigationScreen(
             ) {
                 content(paddingValues)
             }
-            if (isShowTopBar && overlayTopBar) {
+            AnimatedVisibility(isShowTopBar && overlayTopBar,
+                enter = fadeIn(tween(200)), exit = fadeOut(tween(140))) {
                 TopBarPanel(isOpened = drawerState.isOpen, overlay = true) {
-                    scope.launch {
-                        if (drawerState.isOpen) drawerState.close() else drawerState.open()
+                    if (isShowTopBar) {
+                        scope.launch {
+                            if (drawerState.isOpen) drawerState.close() else drawerState.open()
+                        }
                     }
                 }
             }

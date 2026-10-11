@@ -48,6 +48,10 @@ fun MainScreen(
     var galleryReturnId by rememberSaveable { mutableStateOf<Int?>(null) }
     var galleryOverlayHeight by remember { mutableStateOf(0.dp) }
     var viewerOverlayHeight by remember { mutableStateOf(0.dp) }
+    var homeViewerActive by remember { mutableStateOf(false) }
+    val homeViewerShown = homeViewerActive && navBackStackEntry?.destination?.route.let {
+        it == null || it == Screen.Main.route()
+    }
 
     val imageViewer = navBackStackEntry?.destination?.route == Screen.GalleryItem.route()
     LaunchedEffect(imageViewer) { onImageViewerChanged(imageViewer) }
@@ -58,7 +62,7 @@ fun MainScreen(
             Screen.Gallery.route(), Screen.GalleryItem.route() -> "Favorites"
             else -> "Home"
         },
-        isShowTopBar = navBackStackEntry?.destination?.route != Screen.GalleryItem.route(),
+        isShowTopBar = navBackStackEntry?.destination?.route != Screen.GalleryItem.route() && !homeViewerShown,
         overlayTopBar = navBackStackEntry?.destination?.route.let { it == null || it == Screen.Main.route() },
         onClickNavigationItem = {
             galleryReturnId = null
@@ -85,7 +89,8 @@ fun MainScreen(
                         composable(Screen.Main.route(), exitTransition = {
                             if (targetState.destination.route == Screen.Gallery.route()) ExitTransition.None else null
                         }) {
-                            RandomImageScreen(paddingValues = paddingValues)
+                            RandomImageScreen(paddingValues = paddingValues,
+                                onViewerVisibilityChanged = { homeViewerActive = it })
                         }
                         composable(Screen.About.route(), exitTransition = {
                             if (targetState.destination.route == Screen.Gallery.route()) ExitTransition.None else null

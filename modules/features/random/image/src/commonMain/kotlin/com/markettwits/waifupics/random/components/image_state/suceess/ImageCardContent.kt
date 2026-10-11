@@ -1,9 +1,12 @@
 package com.markettwits.waifupics.random.components.image_state.suceess
 
-import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
-import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.Transition
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,12 +23,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.semantics.onClick
 import androidx.compose.ui.semantics.semantics
 import coil3.compose.SubcomposeAsyncImage
-import coil3.compose.SubcomposeAsyncImageContent
+import com.markettwits.waifupics.random.components.image_state.full_screen.HomeImageTransition
+import com.markettwits.waifupics.random.components.image_state.full_screen.HomeSharedImage
 import com.markettwits.waifupics.random.components.image_state.ImageState
 import com.markettwits.waifupics.random.components.image_state.fuckup.ImageFuckup
 import com.markettwits.waifupics.random.components.image_state.loading.ImageLoading
@@ -39,14 +44,13 @@ internal fun SharedTransitionScope.ImageCardContent(
     colorPalette: List<List<Int>>,
     animateBackground: Boolean,
     sharedKey: String,
-    animatedVisibilityScope: AnimatedVisibilityScope,
+    fullscreenTransition: Transition<Boolean>,
+    isFullscreenImage: Boolean,
     onChangeImageState: (ImageState) -> Unit,
     onDoubleTapFavorite: () -> Boolean,
-    onOpenFullScreen: () -> Unit
+    onOpenFullScreen: (Painter) -> Unit
 ) {
 
-    val boundsState = rememberSharedContentState(key = "${sharedKey}_bounds")
-    val elementState = rememberSharedContentState(key = sharedKey)
     var retryAttempt by remember(id, imageUrl) { mutableIntStateOf(0) }
     val hearts = remember(id, imageUrl) { mutableStateListOf<FavoriteHeart>() }
     var heartSequence by remember(id, imageUrl) { mutableIntStateOf(0) }
@@ -54,13 +58,7 @@ internal fun SharedTransitionScope.ImageCardContent(
     val favorite by rememberUpdatedState(onDoubleTapFavorite)
 
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .sharedBounds(
-                sharedContentState = boundsState,
-                animatedVisibilityScope = animatedVisibilityScope,
-                boundsTransform = { _, _ -> spring(dampingRatio = 0.75f, stiffness = 400f) }
-            ),
+        modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         key(retryAttempt) {
@@ -72,12 +70,7 @@ internal fun SharedTransitionScope.ImageCardContent(
                 SubcomposeAsyncImage(
                     modifier = modifier
                         .fillMaxSize()
-                        .testTag("feed-image-$id")
-                        .sharedElement(
-                            sharedContentState = elementState,
-                            animatedVisibilityScope = animatedVisibilityScope,
-                            boundsTransform = { _, _ -> spring(dampingRatio = 0.75f, stiffness = 400f) }
-                        ),
+                        .testTag("feed-image-$id"),
                     model = imageUrl,
                     contentScale = ContentScale.Fit,
                     alignment = Alignment.Center,
@@ -86,12 +79,12 @@ internal fun SharedTransitionScope.ImageCardContent(
                         ImageLoading()
                         LaunchedEffect(id, imageUrl) { onChangeImageState(ImageState.Loading) }
                     }, success = {
-                        val imageScope = this
+                        val loadedPainter = it.painter
                         Box(Modifier.fillMaxSize()
-                            .semantics { onClick { openFullScreen(); true } }
+                            .semantics { onClick { openFullScreen(loadedPainter); true } }
                             .pointerInput(id, imageUrl) {
                                 detectTapGestures(
-                                    onTap = { openFullScreen() },
+                                    onTap = { openFullScreen(loadedPainter) },
                                     onDoubleTap = { position ->
                                         if (favorite()) {
                                             if (hearts.size >= 5) hearts.removeAt(0)
@@ -101,11 +94,15 @@ internal fun SharedTransitionScope.ImageCardContent(
                                 )
                             }, contentAlignment = Alignment.Center) {
                             AnimatedImageBackground(it.painter, colorPalette, animateBackground)
-                            imageScope.SubcomposeAsyncImageContent(
-                                modifier = Modifier.fillMaxSize().softFitEdges(it.painter.intrinsicSize),
-                                contentScale = ContentScale.Fit,
-                                alignment = Alignment.Center
-                            )
+                            fullscreenTransition.AnimatedVisibility(
+                                visible = { expanded -> !expanded || !isFullscreenImage },
+                                modifier = Modifier.fillMaxSize(),
+                                enter = fadeIn(tween(180)), exit = fadeOut(tween(180))
+                            ) {
+                                HomeSharedImage(loadedPainter, null,
+                                    HomeImageTransition(this@ImageCardContent, this, sharedKey),
+                                    Modifier.softFitEdges(loadedPainter.intrinsicSize))
+                            }
                             FavoriteHeartOverlay(hearts, onFinished = { hearts.remove(it) })
                         }
                         LaunchedEffect(id, imageUrl, it.result) {
