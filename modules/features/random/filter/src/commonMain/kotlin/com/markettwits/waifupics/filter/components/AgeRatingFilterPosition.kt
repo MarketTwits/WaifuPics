@@ -14,6 +14,7 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun AgeRatingFilterPosition(canBeChecked: Boolean, item: FilterItem, onClick: (FilterItem) -> Unit) {
+    val colors = MaterialTheme.colorScheme
     Surface(shape = MaterialTheme.shapes.medium,
         color = if (item.checked) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.surfaceContainer) {
         Row(Modifier.fillMaxWidth().heightIn(min = WaifuSize.touchTarget)
@@ -22,7 +23,15 @@ internal fun AgeRatingFilterPosition(canBeChecked: Boolean, item: FilterItem, on
             .padding(horizontal = WaifuSpacing.content, vertical = WaifuSpacing.small),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(WaifuSpacing.item)) {
-            Checkbox(checked = item.checked, onCheckedChange = null, enabled = !canBeChecked)
+            Checkbox(checked = item.checked, onCheckedChange = null, enabled = !canBeChecked,
+                colors = CheckboxDefaults.colors(
+                    checkedColor = colors.primaryContainer,
+                    uncheckedColor = colors.secondary.copy(alpha = 0.75f),
+                    checkmarkColor = colors.secondary,
+                    disabledCheckedColor = colors.primaryContainer.copy(alpha = 0.6f),
+                    disabledUncheckedColor = colors.secondary.copy(alpha = 0.38f),
+                    disabledIndeterminateColor = colors.primaryContainer.copy(alpha = 0.6f)
+                ))
             Text(stringResource(item.title), style = MaterialTheme.typography.bodyLarge)
         }
     }
