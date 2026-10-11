@@ -1,7 +1,10 @@
 package com.markettwits.waifupics.gallery.items.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.indication
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.selection.triStateToggleable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.material3.*
@@ -14,6 +17,7 @@ import androidx.compose.ui.state.ToggleableState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.heading
@@ -81,6 +85,7 @@ internal fun GalleryDateHeader(label: String, count: Int, selectedCount: Int,
         else -> ToggleableState.Indeterminate
     }
     val selectionInteraction = remember { MutableInteractionSource() }
+    val layoutInteraction = remember { MutableInteractionSource() }
     Row(Modifier.fillMaxWidth().height(GalleryDateHeaderHeight).background(MaterialTheme.colorScheme.background),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(WaifuSpacing.small)) {
@@ -89,14 +94,15 @@ internal fun GalleryDateHeader(label: String, count: Int, selectedCount: Int,
             maxLines = 1, overflow = TextOverflow.Ellipsis)
         if (selectedCount > 0) Text("$selectedCount/$count",
             style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-        // Move the complete controls, keeping the glyph, ripple and touch bounds concentric.
-        Row(Modifier.offset(x = (WaifuSize.touchTarget - 20.dp) / 2),
-            horizontalArrangement = Arrangement.spacedBy(WaifuSpacing.small), verticalAlignment = Alignment.CenterVertically) {
-            Box(Modifier.width(WaifuSize.touchTarget).height(GalleryDateHeaderHeight)
-                .triStateToggleable(selection, interactionSource = selectionInteraction,
-                    indication = ripple(bounded = false, radius = 20.dp), role = Role.Checkbox, onClick = onSelectGroup)
-                .semantics { contentDescription = if (selection == ToggleableState.On) deselectDescription else selectDescription },
-                contentAlignment = Alignment.Center) {
+        // Layout bounds end at the same inset as the date starts. Never shift hit areas
+        // into the scrollbar rail to align the smaller glyph with the screen edge.
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(0.dp),
+            verticalAlignment = Alignment.CenterVertically) {
+            GalleryHeaderControl(selectionInteraction,
+                Modifier.triStateToggleable(selection, interactionSource = selectionInteraction,
+                    indication = null, role = Role.Checkbox, onClick = onSelectGroup)
+                    .semantics { contentDescription = if (selection == ToggleableState.On) deselectDescription else selectDescription }) {
                 Icon(when (selection) {
                     ToggleableState.On -> Icons.Outlined.CheckCircle
                     ToggleableState.Indeterminate -> Icons.Outlined.RemoveCircleOutline
@@ -104,10 +110,29 @@ internal fun GalleryDateHeader(label: String, count: Int, selectedCount: Int,
                 }, null, Modifier.size(20.dp),
                     tint = if (selection == ToggleableState.Off) MaterialTheme.colorScheme.outline else MaterialTheme.colorScheme.primary)
             }
-            if (onLayout != null) IconButton(onClick = onLayout,
-                modifier = Modifier.width(WaifuSize.touchTarget).height(GalleryDateHeaderHeight)) {
-                Icon(Icons.Outlined.MoreVert, stringResource(Res.string.gallery_layout), Modifier.size(20.dp))
+            if (onLayout != null) {
+                val description = stringResource(Res.string.gallery_layout)
+                GalleryHeaderControl(layoutInteraction,
+                    Modifier.clickable(interactionSource = layoutInteraction, indication = null,
+                        role = Role.Button, onClick = onLayout).semantics { contentDescription = description }) {
+                    Icon(Icons.Outlined.MoreVert, null, Modifier.size(20.dp),
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
             }
+        }
+    }
+}
+
+/** A wide hit slot with a square visual surface keeps both actions and ripples concentric. */
+@Composable
+private fun GalleryHeaderControl(interaction: MutableInteractionSource, modifier: Modifier,
+    content: @Composable () -> Unit) {
+    Box(Modifier.width(WaifuSize.touchTarget).height(GalleryDateHeaderHeight).then(modifier),
+        contentAlignment = Alignment.Center) {
+        Box(Modifier.size(WaifuSize.overlayControl).clip(CircleShape)
+            .indication(interaction, ripple(bounded = false, radius = WaifuSize.overlayControl / 2)),
+            contentAlignment = Alignment.Center) {
+            content()
         }
     }
 }
