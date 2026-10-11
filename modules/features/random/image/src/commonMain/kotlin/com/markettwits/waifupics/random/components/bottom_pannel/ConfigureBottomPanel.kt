@@ -9,8 +9,10 @@ internal fun ConfigureBottomPanel(
     modifier: Modifier = Modifier,
     imageState: ImageState,
     imageId : Int,
+    isFavorite: Boolean,
     onClickAddToFavorite: () -> Unit,
     onClickFetchRandomImage: () -> Unit,
+    onClickFilter : () -> Unit,
     onClickShareImage: () -> Unit,
 ) {
 
@@ -22,7 +24,9 @@ internal fun ConfigureBottomPanel(
         isEnabled = enabled,
         isRefresh = refresh,
         imageId = imageId,
+        isFavorite = isFavorite,
         onClickAddToFavorite = onClickAddToFavorite,
+        onClickFilter = onClickFilter,
         onClickShareImage = onClickShareImage,
         onClickFetchRandomImage = onClickFetchRandomImage
     )

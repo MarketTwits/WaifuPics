@@ -1,36 +1,63 @@
-name: Deploy Compose Web App (JS)
+name: Build and deploy Compose Web Apps (JS and Wasm)
 
 on:
   push:
     branches:
       - master
+  pull_request:
+    branches:
+      - master
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
-  test-and-build-and-deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.2.1
+        uses: actions/checkout@v7
 
-      - uses: actions/cache@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v6
         with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/buildSrc/**/*.kt') }}
-
-      - uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
+          distribution: temurin
           java-version: '17'
 
-      - name: Build
-        run: |
-          ./gradlew jsBrowserDistribution --no-configuration-cache
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v6
+        with:
+          cache-provider: basic
 
-      - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@v4.6.8
+      - name: Build production JS distribution
+        run: >-
+          ./gradlew :modules:instances:web:jsBrowserDistribution
+          :modules:instances:web:wasmJsBrowserDistribution
+          --no-configuration-cache
+          --max-workers=2
+          -Dorg.gradle.jvmargs='-Xmx5g -Dfile.encoding=UTF-8'
+
+      - name: Assemble JS and Wasm web distributions
+        run: |
+          mkdir -p website/wasm
+          cp -R modules/instances/web/build/dist/js/productionExecutable/. website/
+          cp -R modules/instances/web/build/dist/wasmJs/productionExecutable/. website/wasm/
+
+      - name: Verify deploy directory
+        run: |
+          test -f website/index.html
+          test -f website/composeApp.js
+          test -f website/favicon.ico
+          test -f website/wasm/index.html
+          test -f website/wasm/composeApp.js
+          test -f website/wasm/favicon.ico
+
+      - name: Deploy to GitHub Pages
+        if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/master')
+        uses: JamesIves/github-pages-deploy-action@v4.8.0
         with:
           branch: gh-pages
-          folder: modules/instances/web/build/dist/js/productionExecutable
+          folder: website

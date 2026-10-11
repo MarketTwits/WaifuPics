@@ -10,6 +10,7 @@ import com.markettwits.image_action.api.ImageLoader
 import com.markettwits.image_action.api.imageActionModule
 import com.markettwits.waifupics.gallery.common.FavoriteImageCacheToUiMapper
 import com.markettwits.waifupics.gallery.common.GalleryRepository
+import com.markettwits.waifupics.gallery.common.GalleryDeletion
 import com.markettwits.waifupics.gallery.item.viewmodel.GalleryScreenViewModel
 import com.markettwits.waifupics.gallery.items.components.communication.DetailCommunication
 import com.markettwits.waifupics.gallery.items.components.communication.GalleryCommunication
@@ -26,6 +27,7 @@ val galleryModule = module {
     val communication = DetailCommunication.Base()
     val galleryCommunication = GalleryCommunication.Base()
     single<ImageLoader> { get() }
+    single { GalleryDeletion(get()) }
     single<GalleryRepository>{
         GalleryRepository.Base(
             dataSource = get(),
@@ -41,7 +43,9 @@ val galleryModule = module {
             detailCommunication = communication,
             selectedModeCommunication = SelectedModeCommunication.Base(),
             selectedImageCommunication = SelectedImageCommunication.Base(),
-            imageIntentAction = get()
+            imageIntentAction = get(),
+            settings = get(),
+            deletion = get()
         )
     }
     single<GalleryScreenViewModel> {
@@ -50,6 +54,7 @@ val galleryModule = module {
             listCommunication = galleryCommunication,
             async = AsyncViewModel.Base(RunAsync.Base(dispatchersList)),
             repository = get<GalleryRepository>(),
+            deletion = get(),
             imageIntentAction = get<ImageIntentAction.Mutable>(),
              labelsCommunication = GalleryScreenLabelsCommunication.Base(),
             systemService = object : SystemService {

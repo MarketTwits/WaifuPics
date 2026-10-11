@@ -7,7 +7,7 @@ plugins {
 kotlin {
     @OptIn(org.jetbrains.kotlin.gradle.ExperimentalWasmDsl::class)
     wasmJs {
-        moduleName = "composeApp"
+        outputModuleName.set("composeApp")
         browser {
             commonWebpackConfig {
                 outputFileName = "composeApp.js"
@@ -15,7 +15,7 @@ kotlin {
         }
         binaries.executable()
     }
-    js(IR) {
+    js {
         useEsModules()
         browser{
             commonWebpackConfig {

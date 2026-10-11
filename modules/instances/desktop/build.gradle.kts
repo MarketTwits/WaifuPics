@@ -1,4 +1,6 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     kotlin("multiplatform")
@@ -14,10 +16,10 @@ tasks.withType<Jar> {
 kotlin {
 
     jvm {
-        compilations.all {
-            kotlinOptions.jvmTarget = "17"
+        @OptIn(ExperimentalKotlinGradlePluginApi::class)
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
         }
-        withJava()
     }
 
     jvmToolchain(17)
@@ -26,9 +28,9 @@ kotlin {
         implementation(project(path = ":modules:features:root"))
         implementation(project(path = ":modules:core:core-ui"))
         implementation(project(":modules:features:cache-datasource"))
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.8.1")
+        implementation(libs.kotlinx.coroutines.swing)
         implementation(compose.desktop.currentOs)
-        implementation(compose.desktop.common)
+        implementation(libs.compose.desktop.common)
     }
 }
 
@@ -37,17 +39,29 @@ compose.desktop {
         mainClass = "com.markettwits.waifupics.app.MainKt"
         nativeDistributions {
             packageName = "WaifuPics"
-            description = "Sportsauce Desktop Application"
-            copyright = "© 2024 My Name. All rights reserved."
+            packageVersion = libs.versions.versionName.get()
+            description = "WaifuPics desktop application"
+            copyright = "© 2026 MarketTwits"
             vendor = "MarketTwits"
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             appResourcesRootDir.set(project.layout.projectDirectory.dir("resources"))
+            macOS {
+                bundleID = "com.markettwits.waifupics"
+                iconFile.set(project.file("resources/macos/WaifuPics.icns"))
+            }
+            windows {
+                iconFile.set(project.file("resources/windows/WaifuPics.ico"))
+            }
+            linux {
+                iconFile.set(project.file("resources/linux/WaifuPics.png"))
+            }
         }
         buildTypes.release.proguard {
+            isEnabled.set(true)
             configurationFiles.from("compose-desktop.pro")
-            obfuscate.set(false)
-            optimize.set(false)
-            version.set("7.5.0")
+            version.set("7.8.0")
+            obfuscate.set(true)
+            optimize.set(true)
         }
     }
 }

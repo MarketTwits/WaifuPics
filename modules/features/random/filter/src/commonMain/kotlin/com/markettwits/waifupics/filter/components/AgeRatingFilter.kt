@@ -1,66 +1,27 @@
 package com.markettwits.waifupics.filter.components
 
-import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.rememberModalBottomSheetState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.unit.dp
-import com.markettwits.core_ui.provider.ApplicationViewModel
+import com.markettwits.core_ui.components.design.WaifuSheet
+import com.markettwits.theme.components.WaifuSpacing
 import com.markettwits.waifupics.filter.viewmodel.AgeRatingFilterViewModel
+import org.jetbrains.compose.resources.stringResource
+import waifupics.modules.features.random.filter.generated.resources.Res
+import waifupics.modules.features.random.filter.generated.resources.age_rating
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AgeRatingFilter(
-    modifier: Modifier = Modifier
-) {
-    val viewModel: AgeRatingFilterViewModel = ApplicationViewModel()
-
-    val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
-
+fun AgeRatingFilter(modifier: Modifier = Modifier, viewModel: AgeRatingFilterViewModel) {
     val filterState by viewModel.state().collectAsState()
-    Box(
-        modifier = modifier
-            .padding(
-                bottom = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
+    if (filterState.isOpened) {
+        WaifuSheet(title = stringResource(Res.string.age_rating), modifier = modifier,
+            onDismissRequest = viewModel::toggle) { dismissSheet ->
+            AgeRatingFilterContent(
+                modifier = Modifier.padding(horizontal = WaifuSpacing.screen, vertical = WaifuSpacing.content),
+                filterState = filterState, toggleScreen = dismissSheet, onItemClick = viewModel::checked
             )
-            .padding(5.dp)
-            .clip(com.markettwits.theme.components.Shapes.medium)
-            .background(MaterialTheme.colorScheme.secondary)
-            .fillMaxWidth()
-            .animateContentSize(),
-        contentAlignment = Alignment.CenterEnd
-    ) {
-        AgeRationFilterHeader(
-            onClick = { viewModel.toggle() },
-            isOpened = filterState.isOpened
-        )
-        if (filterState.isOpened) {
-            ModalBottomSheet(
-                onDismissRequest = { viewModel.toggle() },
-                sheetState = bottomSheetState,
-                containerColor = MaterialTheme.colorScheme.background
-            ) {
-                AgeRatingFilterContent(
-                    filterState = filterState,
-                    toggleScreen = { viewModel.toggle() },
-                ) {
-                    viewModel.checked(it)
-                }
-            }
         }
     }
 }

@@ -3,13 +3,15 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
 }
 
-android {
-    namespace = "com.markettwits.waifupics.cache"
-}
 kotlin{
+    android {
+        namespace = "com.markettwits.waifupics.cache"
+    }
+
     sourceSets.commonMain.dependencies {
         implementation(libs.koin.core)
         implementation(libs.kstore)
+        implementation(libs.kotlinx.io.core)
         implementation(libs.kotlinx.serialization.json)
     }
     sourceSets.androidMain.dependencies {

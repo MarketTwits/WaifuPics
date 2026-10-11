@@ -1,13 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="close">Close</string>
-    <string name="selected_count">Selected count %1$s</string>
+    <string name="selected_count">%1$s selected</string>
     <string name="edit">Edit</string>
     <string name="use_as">Use as</string>
     <string name="save_to_gallery">Save to gallery</string>
     <string name="delete">Delete</string>
+    <string name="gallery_deleted">Deleted</string>
+    <string name="gallery_deleted_count">Deleted: %1$s</string>
+    <string name="gallery_undo">Undo</string>
+    <string name="gallery_delete_failed">Could not delete images</string>
+    <string name="gallery_restore_failed">Could not restore images. Try again.</string>
     <string name="share">Share</string>
     <string name="image">image</string>
     <string name="text_copied_to_clipboard">Text copied to clipboard</string>
     <string name="gallery_empty_text">Gallery is empty now.\n Click on the heart button to add an image.</string>
+    <string name="gallery_load_failed">Could not load gallery</string>
+    <string name="image_information">Image information</string>
+    <string name="saved_on">Saved on</string>
+    <string name="image_size">Dimensions</string>
+    <string name="image_actions">Actions</string>
+    <string name="gallery_today">Today</string>
+    <string name="gallery_yesterday">Yesterday</string>
+    <string name="gallery_undated">Date unavailable</string>
+    <string name="gallery_date">%1$s %2$s %3$s</string>
+    <string name="gallery_period">%1$s %2$s</string>
+    <string name="gallery_fast_scroll">Scroll gallery by date</string>
+    <string name="gallery_saved_image">Image saved on %1$s</string>
+    <string-array name="gallery_months">
+        <item>Jan</item><item>Feb</item><item>Mar</item><item>Apr</item>
+        <item>May</item><item>Jun</item><item>Jul</item><item>Aug</item>
+        <item>Sep</item><item>Oct</item><item>Nov</item><item>Dec</item>
+    </string-array>
+    <string name="gallery_layout">Gallery layout</string>
+    <string name="gallery_viewer_position">%1$s of %2$s</string>
+    <string name="gallery_viewer_photo">Photo %1$s of %2$s</string>
+    <string name="gallery_image_load_failed">Could not load image</string>
+    <string name="gallery_retry">Try again</string>
+    <string name="gallery_layout_day">Day</string>
+    <string name="gallery_layout_month">Month</string>
+    <string name="gallery_layout_auto">Automatic</string>
+    <string name="gallery_layout_custom">Custom</string>
+    <string name="gallery_layout_proportions">Proportions</string>
+    <string name="gallery_layout_proportions_description">Full images in aligned rows</string>
+    <string name="gallery_layout_grid">Grid</string>
+    <string name="gallery_image_layout">Image layout</string>
+    <string name="gallery_density">Density: %1$s</string>
+    <string name="gallery_columns">%1$s columns</string>
+    <string name="gallery_grouping">Group images</string>
+    <string name="gallery_apply">Apply</string>
+    <string name="gallery_this_month">This month</string>
+    <string name="gallery_select_group">Select all for %1$s</string>
+    <string name="gallery_deselect_group">Unselect all for %1$s</string>
+    <string name="gallery_metadata_not_saved">Additional information was not saved for this image.</string>
 </resources>

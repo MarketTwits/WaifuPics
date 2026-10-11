@@ -1,74 +1,73 @@
 package com.markettwits.waifupics.gallery.item.components.image
 
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.tween
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.blur
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.rememberAsyncImagePainter
-import com.markettwits.core_ui.components.zoomable.rememberZoomState
+import coil3.compose.AsyncImagePainter
+import com.markettwits.waifupics.gallery.common.rememberGalleryImageRequest
+import com.markettwits.theme.components.WaifuSpacing
+import kotlinx.coroutines.delay
+import com.markettwits.core_ui.components.zoomable.ZoomState
 import com.markettwits.core_ui.components.zoomable.zoomable
-import com.markettwits.waifupics.gallery.items.components.animations.Animation.DEFAULT_TOP_BAR_ANIMATION_DURATION
+import com.markettwits.waifupics.gallery.items.components.animations.GalleryImageTransition
+import com.markettwits.waifupics.gallery.items.model.ImageFavoriteUi
 import org.jetbrains.compose.resources.stringResource
-import waifupics.modules.features.gallery.generated.resources.Res
-import waifupics.modules.features.gallery.generated.resources.image
-
+import waifupics.modules.features.gallery.generated.resources.*
 
 @Composable
-internal fun ZoomablePagerImage(
-    modifier: Modifier = Modifier,
-    imageUrl: String,
-    uiEnabled: Boolean,
-    maxScale: Float = 25f,
-    onItemClick: () -> Unit,
-    setCurrentItem: () -> Unit
-) {
-    val zoomState = rememberZoomState(
-        maxScale = maxScale
-    )
-    val painter = rememberAsyncImagePainter(
-        model = imageUrl,
-        contentScale = ContentScale.Fit,
+internal fun ZoomablePagerImage(image: ImageFavoriteUi, zoomState: ZoomState,
+    uiEnabled: Boolean, active: Boolean, resetZoom: Boolean, frameScale: Float,
+    imageTransition: GalleryImageTransition?, onItemClick: () -> Unit) {
+    var contentSize by remember(image.id) { mutableStateOf(Size(image.width.toFloat(), image.height.toFloat())) }
+    val painter = rememberAsyncImagePainter(model = rememberGalleryImageRequest(image), contentScale = ContentScale.Fit,
         onSuccess = {
-            zoomState.setContentSize(it.painter.intrinsicSize)
-        }
-    )
-
-    Box(modifier = Modifier.fillMaxSize()) {
-        val blurAlpha by animateFloatAsState(
-            animationSpec = tween(DEFAULT_TOP_BAR_ANIMATION_DURATION),
-            targetValue = if (uiEnabled) 0.7f else 0f,
-            label = "blurAlpha"
-        )
-        Image(
-            modifier = Modifier
-                .fillMaxSize()
-                .alpha(blurAlpha)
-                .blur(100.dp),
-            painter = painter,
-            contentDescription = null,
-            contentScale = ContentScale.Crop
-        )
-        Image(
-            modifier = modifier
-                .fillMaxSize()
-                .zoomable(
-                    onTap = {
-                        onItemClick()
-                    },
-                    zoomState = zoomState,
-                ),
-            painter = painter,
-            contentScale = ContentScale.Fit,
-            contentDescription = stringResource(Res.string.image)
-        )
+            val size = Size(it.result.image.width.toFloat(), it.result.image.height.toFloat())
+            if (size.width > 0 && size.height > 0) {
+                contentSize = size
+                zoomState.setContentSize(size)
+            }
+        })
+    val loadState by painter.state.collectAsState()
+    var loading by remember(image.id) { mutableStateOf(false) }
+    LaunchedEffect(loadState) {
+        loading = false
+        if (loadState is AsyncImagePainter.State.Loading) { delay(350); loading = true }
     }
-    setCurrentItem()
+    LaunchedEffect(resetZoom) { if (resetZoom) zoomState.reset() }
+    BoxWithConstraints(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        GalleryImageBackdrop(image, uiEnabled, fallback = painter)
+        val ratio = if (contentSize.width > 0 && contentSize.height > 0) contentSize.width / contentSize.height else 1f
+        // Change layout bounds, so shared return starts at the actual dragged image size.
+        val width = minOf(maxWidth, maxHeight * ratio) * frameScale
+        val height = minOf(maxHeight, maxWidth / ratio) * frameScale
+        Box(Modifier.fillMaxSize().zoomable(zoomState = zoomState,
+            zoomEnabled = active && loadState is AsyncImagePainter.State.Success && imageTransition?.running != true && frameScale == 1f,
+            onTap = { onItemClick() }),
+            contentAlignment = Alignment.Center) {
+            val frame = Modifier.size(width, height)
+            Image(painter, stringResource(Res.string.image),
+                modifier = if (active) imageTransition?.image(frame, image.id) ?: frame else frame,
+                contentScale = ContentScale.Fit)
+        }
+        if (active && imageTransition?.running != true) {
+            AnimatedVisibility(loading) { CircularProgressIndicator(Modifier.size(32.dp), strokeWidth = 2.dp) }
+            if (loadState is AsyncImagePainter.State.Error) {
+                Surface(shape = MaterialTheme.shapes.large, color = MaterialTheme.colorScheme.surfaceContainerHigh) {
+                    Column(Modifier.padding(WaifuSpacing.screen), horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(WaifuSpacing.small)) {
+                        Text(stringResource(Res.string.gallery_image_load_failed), style = MaterialTheme.typography.bodyMedium)
+                        TextButton(onClick = painter::restart) { Text(stringResource(Res.string.gallery_retry)) }
+                    }
+                }
+            }
+        }
+    }
 }

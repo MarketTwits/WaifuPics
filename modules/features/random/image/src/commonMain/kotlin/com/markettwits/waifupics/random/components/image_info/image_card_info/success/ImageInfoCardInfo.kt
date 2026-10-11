@@ -25,7 +25,7 @@ fun ImageInfoCardEmptyAuthor(
         modifier = modifier
             .padding(10.dp)
             .clip(Shapes.medium)
-            .background(MaterialTheme.colorScheme.secondary)
+            .background(MaterialTheme.colorScheme.surfaceContainer)
     ) {
         HorizontalDivider(thickness = 0.1.dp, color = DirtyWhite)
         SourceAndResource(imageData)

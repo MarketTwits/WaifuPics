@@ -3,24 +3,28 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
 }
 
-android {
-    namespace = "com.markettwits.waifupics.core_ui"
-}
-
 kotlin {
+    android {
+        namespace = "com.markettwits.waifupics.core_ui"
+    }
+
     sourceSets {
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+            implementation(libs.kotlinx.coroutines.test)
+        }
         androidMain.dependencies {
             api(libs.ktor.client.okhttp)
         }
         commonMain.dependencies {
-            implementation(compose.components.resources)
+            implementation(libs.compose.resources)
             api(libs.koin.compose)
-            api(compose.runtime)
-            api(compose.foundation)
-            api(compose.material3)
-            api(compose.materialIconsExtended)
-            api(compose.ui)
-            api(compose.components.uiToolingPreview)
+            api(libs.compose.runtime)
+            api(libs.compose.foundation)
+            api(libs.compose.material3)
+            api(libs.compose.material.icons.extended)
+            api(libs.compose.ui)
+            api(libs.compose.ui.tooling.preview)
             api(libs.compose.lifecycle.viewmodel)
             api(libs.ktor.core)
             api(libs.coil.compose.core)

@@ -1,6 +1,7 @@
 package extension.model
 
 
+import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.api.Project
 
 object ApkConfig {
@@ -8,16 +9,15 @@ object ApkConfig {
 
     const val MIN_SDK_VERSION = 24
 
-    const val TARGET_SDK_VERSION = 35
-    const val COMPILE_SDK_VERSION = 35
-
-    private const val DEBUG_VERSION = "DEBUG_VERSION"
+    const val TARGET_SDK_VERSION = 36
+    const val COMPILE_SDK_VERSION = 37
 
     val Project.VERSION_CODE
-        get() = prop("version_code", Integer.MAX_VALUE).toInt()
+        get() = propOrNull("version_code")?.toInt() ?: catalogVersion("versionCode").toInt()
 
     val Project.VERSION_NAME
-        get() = prop("version_name", DEBUG_VERSION)
+        get() = propOrNull("version_name")
+            ?: catalogVersion("versionName")
 
     val Project.CURRENT_FLAVOR_TYPE: FlavorType
         get() {
@@ -35,6 +35,9 @@ internal fun Project.propOrNull(key: String): String? {
     return providers.gradleProperty(key).orNull
 }
 
-internal fun Project.prop(key: String, default: Any): String {
-    return providers.gradleProperty(key).getOrElse(default.toString())
-}
+private fun Project.catalogVersion(name: String): String =
+    extensions.getByType(VersionCatalogsExtension::class.java)
+        .named("libs")
+        .findVersion(name)
+        .orElseThrow { IllegalStateException("$name is missing from the libs version catalog") }
+        .requiredVersion

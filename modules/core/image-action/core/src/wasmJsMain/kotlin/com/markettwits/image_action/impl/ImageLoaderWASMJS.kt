@@ -9,6 +9,7 @@ import org.w3c.fetch.Response
 import org.w3c.files.Blob
 
 
+@OptIn(kotlin.js.ExperimentalWasmJsInterop::class)
 class ImageLoaderWASMJS :
     com.markettwits.image_action.api.ImageLoader {
 

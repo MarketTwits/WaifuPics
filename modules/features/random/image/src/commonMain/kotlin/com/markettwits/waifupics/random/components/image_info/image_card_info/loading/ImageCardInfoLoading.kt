@@ -21,7 +21,7 @@ fun ImageCardInfoLoading(){
         modifier = Modifier
             .padding(20.dp)
             .clip(Shapes.medium)
-            .background(MaterialTheme.colorScheme.secondary)
+            .background(MaterialTheme.colorScheme.surfaceContainer)
     ) {
         ArtistInfoLoading()
         HorizontalDivider(thickness = 0.1.dp, color = DirtyWhite)

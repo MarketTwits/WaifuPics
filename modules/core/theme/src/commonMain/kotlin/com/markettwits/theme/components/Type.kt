@@ -1,34 +1,31 @@
 package com.markettwits.theme.components
 
 import androidx.compose.material3.Typography
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.sp
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 
-// Set of Material typography styles to start with
-val Typography = Typography(
-    bodyLarge = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
-        lineHeight = 24.sp,
-        letterSpacing = 0.5.sp
-    )
-    /* Other default text styles to override
-    titleLarge = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 22.sp,
-        lineHeight = 28.sp,
-        letterSpacing = 0.sp
-    ),
-    labelSmall = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Medium,
-        fontSize = 11.sp,
-        lineHeight = 16.sp,
-        letterSpacing = 0.5.sp
-    )
-    */
-)
+/** Rubik is shared by library components and app content. */
+@Composable
+fun waifuTypography(): Typography {
+    val family = FontRubik.family()
+    return remember(family) {
+        val base = Typography()
+        base.copy(
+            displayLarge = base.displayLarge.copy(fontFamily = family),
+            displayMedium = base.displayMedium.copy(fontFamily = family),
+            displaySmall = base.displaySmall.copy(fontFamily = family),
+            headlineLarge = base.headlineLarge.copy(fontFamily = family),
+            headlineMedium = base.headlineMedium.copy(fontFamily = family),
+            headlineSmall = base.headlineSmall.copy(fontFamily = family),
+            titleLarge = base.titleLarge.copy(fontFamily = family),
+            titleMedium = base.titleMedium.copy(fontFamily = family),
+            titleSmall = base.titleSmall.copy(fontFamily = family),
+            bodyLarge = base.bodyLarge.copy(fontFamily = family),
+            bodyMedium = base.bodyMedium.copy(fontFamily = family),
+            bodySmall = base.bodySmall.copy(fontFamily = family),
+            labelLarge = base.labelLarge.copy(fontFamily = family),
+            labelMedium = base.labelMedium.copy(fontFamily = family),
+            labelSmall = base.labelSmall.copy(fontFamily = family),
+        )
+    }
+}

@@ -30,15 +30,15 @@ internal fun EmptyGalleryItem() {
     ) {
         Text(
             text = stringResource(Res.string.gallery_empty_text),
-            color = MaterialTheme.colorScheme.onBackground,
-            fontFamily = com.markettwits.theme.components.FontRubik.medium(),
+            color = MaterialTheme.colorScheme.onSurface,
+            style = MaterialTheme.typography.bodyLarge,
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(16.dp)
         )
         Icon(
             painter = painterResource(Res.drawable.ic_heart),
-            tint = MaterialTheme.colorScheme.onBackground,
-            contentDescription = "Heart Icon",
+            tint = MaterialTheme.colorScheme.primary,
+            contentDescription = null,
             modifier = Modifier.size(48.dp)
         )
     }

@@ -3,9 +3,9 @@ package com.markettwits.waifupics.cache.kstore
 import io.github.xxfast.kstore.KStore
 import io.github.xxfast.kstore.file.extensions.listStoreOf
 import io.github.xxfast.kstore.file.storeOf
+import kotlinx.io.files.Path
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
-import okio.Path.Companion.toPath
 
 actual inline fun <reified T : @Serializable Any> storeOfWrapper(
     path: String,
@@ -14,7 +14,7 @@ actual inline fun <reified T : @Serializable Any> storeOfWrapper(
     enableCache: Boolean,
     json: Json
 ): KStore<T> {
-    val fullPath = "$path/$fileName".toPath()
+    val fullPath = Path("$path/$fileName")
     return storeOf(fullPath, default, enableCache, json)
 }
 
@@ -25,6 +25,6 @@ actual inline fun <reified T : @Serializable Any> listStoreOfWrapper(
     enableCache: Boolean,
     json: Json
 ): KStore<List<T>> {
-    val fullPath = "$path/$fileName".toPath()
+    val fullPath = Path("$path/$fileName")
     return listStoreOf(fullPath, default, enableCache, json)
 }

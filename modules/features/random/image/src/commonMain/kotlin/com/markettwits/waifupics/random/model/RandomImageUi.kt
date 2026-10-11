@@ -13,5 +13,7 @@ data class AuthorUi(
 @Stable
 data class ImageSourceUi(
     val sourceUrl : String,
-    val ageRating : String
+    val ageRating : String,
+    val artistName: String? = null,
+    val tags: List<String> = emptyList()
 )

@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -18,7 +19,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.markettwits.core_ui.extensions.rgbToComposeColor
 import com.markettwits.theme.components.FontRubik
-import com.markettwits.theme.components.LightPink
 import com.markettwits.theme.components.Shapes
 import org.jetbrains.compose.resources.stringResource
 import waifupics.modules.features.random.image.generated.resources.Res
@@ -38,7 +38,7 @@ fun ColorPalette(hex : List<List<Int>>) {
             Text(
                 text = stringResource(Res.string.color_palette),
                 fontFamily = FontRubik.medium(),
-                color = LightPink,
+                color = MaterialTheme.colorScheme.secondary,
                 fontSize = 14.sp
             )
             Row(

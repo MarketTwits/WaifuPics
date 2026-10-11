@@ -15,7 +15,10 @@ val nekoServiceCloudModule = module{
     single<Json>{
         JsonProviderBase().provide()
     }
-    single<String>{
-        NekoServiceBase.BASE_URL
+    single<HttpClientProvider>{
+        HttpClientProviderBase(
+            get(),
+            NekoServiceBase.API_URL
+        )
     }
 }

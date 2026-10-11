@@ -17,6 +17,7 @@
 package com.markettwits.core_ui.components.zoomable
 
 import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.animation.core.DecayAnimationSpec
 import androidx.compose.animation.core.exponentialDecay
@@ -30,6 +31,8 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.input.pointer.util.VelocityTracker
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -78,6 +81,25 @@ class ZoomState(
         get() = _offsetY.value
 
     private var layoutSize = Size.Zero
+    private var doubleTapStage = ImageZoomStage.Fit
+    private var motion: Job? = null
+
+    private fun stopMotion() {
+        motion?.cancel()
+        motion = null
+    }
+
+    // Coordinate all axes as one cancellable operation, including any running inertia.
+    private suspend fun animateMotion(block: suspend CoroutineScope.() -> Unit) = coroutineScope {
+        stopMotion()
+        val animation = launch(block = block)
+        motion = animation
+        try {
+            animation.join()
+        } finally {
+            if (motion === animation) motion = null
+        }
+    }
 
     /**
      * Set composable layout size.
@@ -87,7 +109,10 @@ class ZoomState(
      * @param size The size of composable layout size.
      */
     fun setLayoutSize(size: Size) {
+        if (layoutSize == size) return
         layoutSize = size
+        doubleTapStage = if (abs(scale - 1f) < 0.001f) ImageZoomStage.Fit else ImageZoomStage.Gesture
+        stopMotion()
         updateFitContentSize()
     }
 
@@ -97,18 +122,21 @@ class ZoomState(
      * @param size The content size, for example an image size in pixel.
      */
     fun setContentSize(size: Size) {
+        if (!size.validPixels() || contentSize == size) return
         contentSize = size
+        doubleTapStage = if (abs(scale - 1f) < 0.001f) ImageZoomStage.Fit else ImageZoomStage.Gesture
+        stopMotion()
         updateFitContentSize()
     }
 
     private var fitContentSize = Size.Zero
     private fun updateFitContentSize() {
-        if (layoutSize == Size.Zero) {
+        if (!layoutSize.validPixels()) {
             fitContentSize = Size.Zero
             return
         }
 
-        if (contentSize == Size.Zero) {
+        if (!contentSize.validPixels()) {
             fitContentSize = layoutSize
             return
         }
@@ -125,6 +153,8 @@ class ZoomState(
 
     /** Reset the scale and the offsets. */
     suspend fun reset() = coroutineScope {
+        stopMotion()
+        doubleTapStage = ImageZoomStage.Fit
         launch { _scale.snapTo(1f) }
         _offsetX.updateBounds(0f, 0f)
         launch { _offsetX.snapTo(0f) }
@@ -135,6 +165,7 @@ class ZoomState(
     private val velocityTracker = VelocityTracker()
 
     internal fun startGesture() {
+        stopMotion()
         velocityTracker.resetTracking()
     }
 
@@ -169,7 +200,9 @@ class ZoomState(
         position: Offset,
         timeMillis: Long
     ) = coroutineScope {
+        stopMotion()
         val newScale = (scale * zoom).coerceIn(0.9f, maxScale)
+        doubleTapStage = if (abs(newScale - 1f) < 0.001f) ImageZoomStage.Fit else ImageZoomStage.Gesture
         val newOffset = calculateNewOffset(newScale, position, pan)
         val newBounds = calculateNewBounds(newScale)
 
@@ -207,7 +240,21 @@ class ZoomState(
         targetScale: Float,
         position: Offset,
         animationSpec: AnimationSpec<Float> = spring(),
-    ) = coroutineScope {
+    ) {
+        doubleTapStage = if (abs(targetScale - 1f) < 0.001f) ImageZoomStage.Fit else ImageZoomStage.Gesture
+        animateScale(targetScale, position, animationSpec)
+    }
+
+    /** Geometry-aware zoom. Matching stages are skipped; a manual transform returns to fit. */
+    suspend fun zoomOnDoubleTap(position: Offset) {
+        val geometry = ImageZoomGeometry.calculate(layoutSize, contentSize, maxScale) ?: return
+        val next = geometry.nextStage(doubleTapStage, scale) ?: return
+        doubleTapStage = next
+        animateScale(geometry.scale(next), position, tween(250, easing = CubicBezierEasing(0.215f, 0.61f, 0.355f, 1f)))
+    }
+
+    private suspend fun animateScale(targetScale: Float, position: Offset,
+        animationSpec: AnimationSpec<Float>) = animateMotion {
         val newScale = targetScale.coerceIn(1f, maxScale)
         val newOffset = calculateNewOffset(newScale, position, Offset.Zero)
         val newBounds = calculateNewBounds(newScale)
@@ -236,22 +283,7 @@ class ZoomState(
         position: Offset,
         pan: Offset,
     ): Offset {
-        val size = fitContentSize * scale
-        val newSize = fitContentSize * newScale
-        val deltaWidth = newSize.width - size.width
-        val deltaHeight = newSize.height - size.height
-
-        // Position with the origin at the left top corner of the content.
-        val xInContent = position.x - offsetX + (size.width - layoutSize.width) * 0.5f
-        val yInContent = position.y - offsetY + (size.height - layoutSize.height) * 0.5f
-        // Amount of offset change required to zoom around the position.
-        val deltaX = (deltaWidth * 0.5f) - (deltaWidth * xInContent / size.width)
-        val deltaY = (deltaHeight * 0.5f) - (deltaHeight * yInContent / size.height)
-
-        val x = offsetX + pan.x + deltaX
-        val y = offsetY + pan.y + deltaY
-
-        return Offset(x, y)
+        return imageZoomOffset(layoutSize, Offset(offsetX, offsetY), scale, newScale, position, pan)
     }
 
     private fun calculateNewBounds(
@@ -263,16 +295,15 @@ class ZoomState(
         return Rect(-boundX, -boundY, boundX, boundY)
     }
 
-    internal suspend fun startFling() = coroutineScope {
+    internal suspend fun startFling() {
         val velocity = velocityTracker.calculateVelocity()
-        if (velocity.x != 0f) {
-            launch {
-                _offsetX.animateDecay(velocity.x, velocityDecay)
+        if (velocity.x == 0f && velocity.y == 0f) return
+        animateMotion {
+            if (velocity.x != 0f) {
+                launch { _offsetX.animateDecay(velocity.x, velocityDecay) }
             }
-        }
-        if (velocity.y != 0f) {
-            launch {
-                _offsetY.animateDecay(velocity.y, velocityDecay)
+            if (velocity.y != 0f) {
+                launch { _offsetY.animateDecay(velocity.y, velocityDecay) }
             }
         }
     }
