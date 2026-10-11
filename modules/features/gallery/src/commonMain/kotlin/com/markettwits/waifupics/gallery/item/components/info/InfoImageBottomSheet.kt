@@ -1,30 +1,18 @@
 package com.markettwits.waifupics.gallery.item.components.info
 
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import kotlinx.coroutines.launch
+import com.markettwits.core_ui.components.design.WaifuSheet
+import org.jetbrains.compose.resources.stringResource
+import waifupics.modules.features.gallery.generated.resources.Res
+import waifupics.modules.features.gallery.generated.resources.image_information
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun InfoImageBottomSheet(modifier : Modifier = Modifier, onDismiss: () -> Unit) {
-    val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
-    val scope = rememberCoroutineScope()
-    ModalBottomSheet(
-        modifier = modifier,
-        containerColor = MaterialTheme.colorScheme.background,
-        onDismissRequest = { onDismiss() },
-        sheetState = bottomSheetState,
-    ) {
-        InfoImageContent(onDismiss = {
-            scope.launch {
-                bottomSheetState.hide()
-                onDismiss()
-            }
-        })
+internal fun InfoImageBottomSheet(modifier: Modifier = Modifier, onDismiss: () -> Unit) {
+    WaifuSheet(title = stringResource(Res.string.image_information), modifier = modifier,
+        onDismissRequest = onDismiss) { dismissSheet ->
+        InfoImageContent(onDismiss = dismissSheet)
     }
 }

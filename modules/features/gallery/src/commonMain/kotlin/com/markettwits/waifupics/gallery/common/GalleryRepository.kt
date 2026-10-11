@@ -27,7 +27,7 @@ interface GalleryRepository {
             if (items.isEmpty())
                 ImageFavoriteUiState.Empty
             else
-                ImageFavoriteUiState.Base(items.reversed())
+                ImageFavoriteUiState.Base(items.reversed().sortedByDescending { it.savedAt })
         }
 
         override suspend fun delete(id: Int) {

@@ -292,8 +292,7 @@ enum class ScrollGesturePropagation {
  * @param onTap will be called when single tap is detected on the element.
  * @param onDoubleTap will be called when double tap is detected on the
  *     element. This is a suspend function and called in a coroutine scope.
- *     The default is to toggle the scale between 1.0f and 2.5f with
- *     animation.
+ *     The default cycles through fit, covering the viewport and original pixel size.
  */
 fun Modifier.zoomable(
     zoomState: ZoomState,
@@ -302,10 +301,7 @@ fun Modifier.zoomable(
     scrollGesturePropagation: ScrollGesturePropagation = ScrollGesturePropagation.ContentEdge,
     onTap: (position: Offset) -> Unit = {},
     onDoubleTap: suspend (position: Offset) -> Unit = { position ->
-        if (zoomEnabled) zoomState.toggleScale(
-            2.5f,
-            position
-        )
+        if (zoomEnabled) zoomState.zoomOnDoubleTap(position)
     },
 ): Modifier = this then ZoomableElement(
     zoomState = zoomState,

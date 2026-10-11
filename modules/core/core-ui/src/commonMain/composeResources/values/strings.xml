@@ -1,0 +1,20 @@
+<resources>
+    <string name="close">Close</string>
+    <string name="image_author">Artist</string>
+    <string name="age_rating">Age rating</string>
+    <string name="image_not_provided">Not provided</string>
+    <string name="image_palette_title">Color palette</string>
+    <string name="image_palette_copy_hint">Tap a color to copy HEX</string>
+    <string name="copy_palette_color">Copy color %1$s</string>
+    <string name="image_source">Source</string>
+    <string name="open_image_source">Open source</string>
+    <string name="copy_image_source">Copy link</string>
+    <string name="image_copied">Copied</string>
+    <string name="image_copy_failed">Couldn’t copy to clipboard</string>
+    <string name="image_source_open_failed">Couldn’t open source</string>
+    <string name="image_tags">Tags</string>
+    <string name="safe_for_work">Safe for work</string>
+    <string name="suggestive">Suggestive</string>
+    <string name="borderline">Borderline</string>
+    <string name="explicit_18">Explicit (18+)</string>
+</resources>

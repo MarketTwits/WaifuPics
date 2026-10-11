@@ -1,8 +1,5 @@
 package com.markettwits.waifupics.random.di
 
-import com.markettwits.async.AsyncViewModel
-import com.markettwits.async.RunAsync
-import com.markettwits.async.dispatchersList
 import com.markettwits.cache.image.cacheDataSourceModule
 import com.markettwits.image_action.api.imageActionModule
 import com.markettwits.waifupics.filter.data.FilterDataSource
@@ -26,8 +23,6 @@ val randomImageModule = module {
     single<ImageViewModel> {
         ImageViewModel.Base(
             filterResult = filterCommunication,
-            protectedMapper = com.markettwits.waifupics.filter.domain.ProtectedMapper.Base(),
-            async = AsyncViewModel.Base(RunAsync.Base(dispatchersList)),
             randomImageCommunication = RandomImageCommunication.Base(),
             loadedImageCommunication = LoadedImageCommunication.Base(),
             repository = RandomImageRepository.Base(
@@ -38,7 +33,8 @@ val randomImageModule = module {
                 ),
                 cache = get(),
             ),
-            shareImageAction = get()
+            shareImageAction = get(),
+            cache = get()
         )
     }
     single<com.markettwits.waifupics.filter.viewmodel.AgeRatingFilterViewModel> {

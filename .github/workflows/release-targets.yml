@@ -1,0 +1,78 @@
+name: Verify release builds for all targets
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+permissions:
+  contents: read
+
+jobs:
+  desktop:
+    name: Desktop release (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-26
+          - macos-26-intel
+          - windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v6
+        with:
+          cache-provider: basic
+
+      - name: Install Linux packaging tools
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install --yes fakeroot
+
+      - name: Build release package for current OS
+        shell: bash
+        run: >-
+          ./gradlew :modules:instances:desktop:packageReleaseDistributionForCurrentOS
+          --no-configuration-cache
+          --max-workers=2
+          -Dorg.gradle.jvmargs='-Xmx5g -Dfile.encoding=UTF-8'
+
+  ios:
+    name: iOS release frameworks
+    runs-on: macos-26-intel
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v6
+        with:
+          cache-provider: basic
+
+      - name: Build release frameworks
+        run: >-
+          ./gradlew
+          :modules:instances:ios:linkReleaseFrameworkIosArm64
+          :modules:instances:ios:linkReleaseFrameworkIosSimulatorArm64
+          --no-configuration-cache
+          --max-workers=2
+          -Dorg.gradle.jvmargs='-Xmx8g -Dfile.encoding=UTF-8'

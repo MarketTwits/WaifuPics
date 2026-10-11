@@ -11,4 +11,10 @@ sealed class ImageFavoriteUiState(val items: List<ImageFavoriteUi>) {
 
     @Stable
     data object Empty : ImageFavoriteUiState(emptyList())
+
+    @Stable
+    data object Loading : ImageFavoriteUiState(emptyList())
+
+    @Stable
+    data class Error(val cachedItems: List<ImageFavoriteUi> = emptyList()) : ImageFavoriteUiState(cachedItems)
 }

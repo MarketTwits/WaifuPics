@@ -11,11 +11,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
-import androidx.compose.ui.unit.sp
 import com.markettwits.core_ui.extensions.extractSiteName
 import com.markettwits.core_ui.extensions.noRippleClickable
-import com.markettwits.theme.components.FontRubik
-import com.markettwits.theme.components.LightPink
 
 
 @Composable
@@ -31,15 +28,13 @@ fun ImageParametersText(
         Row {
             Text(
                 text = "$title : ",
-                color = LightPink,
-                fontFamily = FontRubik.medium(),
-                fontSize = 14.sp,
+                color = MaterialTheme.colorScheme.secondary,
+                style = MaterialTheme.typography.bodyMedium,
             )
             Text(
                 text = content,
-                color = MaterialTheme.colorScheme.onPrimary,
-                fontFamily = FontRubik.medium(),
-                fontSize = 14.sp,
+                color = MaterialTheme.colorScheme.onSurface,
+                style = MaterialTheme.typography.bodyMedium,
             )
         }
     }
@@ -54,17 +49,15 @@ fun UnlinkMultiText(
     Row {
         Text(
             text = title,
-            color = LightPink,
-            fontFamily = FontRubik.medium(),
-            fontSize = 14.sp
+            color = MaterialTheme.colorScheme.secondary,
+            style = MaterialTheme.typography.bodyMedium
         )
         FlowRow {
             text.forEach {
                 Text(
                     text = it,
-                    color = MaterialTheme.colorScheme.onPrimary,
-                    fontFamily = FontRubik.medium(),
-                    fontSize = 14.sp,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    style = MaterialTheme.typography.bodyMedium,
                 )
             }
         }
@@ -80,9 +73,8 @@ fun MultyLinksText(
     Row {
         Text(
             text = title,
-            color = LightPink,
-            fontFamily = FontRubik.medium(),
-            fontSize = 14.sp
+            color = MaterialTheme.colorScheme.secondary,
+            style = MaterialTheme.typography.bodyMedium
         )
         LazyRow {
             items(links) {
@@ -92,9 +84,8 @@ fun MultyLinksText(
                         uriHandler.openUri(it)
                     }),
                     text = text,
-                    color = MaterialTheme.colorScheme.onPrimary,
-                    fontFamily = FontRubik.medium(),
-                    fontSize = 14.sp,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    style = MaterialTheme.typography.bodyMedium,
                 )
             }
         }
@@ -109,9 +100,8 @@ fun SingleLinkText(
     Row {
         Text(
             text = title,
-            color = LightPink,
-            fontFamily = FontRubik.medium(),
-            fontSize = 14.sp
+            color = MaterialTheme.colorScheme.secondary,
+            style = MaterialTheme.typography.bodyMedium
         )
         val text = if (link.isEmpty()) "No data source" else formatUrl(link)
         val uriHandler = LocalUriHandler.current
@@ -120,9 +110,8 @@ fun SingleLinkText(
                 uriHandler.openUri(link)
             }),
             text = text,
-            color = MaterialTheme.colorScheme.onPrimary,
-            fontFamily = FontRubik.medium(),
-            fontSize = 14.sp,
+            color = MaterialTheme.colorScheme.onSurface,
+            style = MaterialTheme.typography.bodyMedium,
         )
     }
 }

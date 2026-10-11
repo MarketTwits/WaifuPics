@@ -3,10 +3,11 @@ plugins {
     alias(libs.plugins.kotlin.multiplatform.compose.convention)
 }
 
-android {
-    namespace = "com.markettwits.root"
-}
 kotlin {
+    android {
+        namespace = "com.markettwits.root"
+    }
+
     sourceSets.commonMain.dependencies {
         implementation(libs.koin.core)
         implementation(libs.koin.compose)

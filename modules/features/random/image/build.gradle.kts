@@ -3,11 +3,11 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
 }
 
-android {
-    namespace = "com.markettwits.random.image"
-}
-
 kotlin {
+    android {
+        namespace = "com.markettwits.random.image"
+    }
+
     sourceSets {
         commonMain.dependencies {
             implementation(projects.modules.core.result)
@@ -23,9 +23,14 @@ kotlin {
             implementation(projects.modules.features.random.report)
 
             implementation(libs.koin.core)
-            implementation(compose.components.resources)
+            implementation(libs.compose.resources)
+            implementation(libs.compose.ui.backhandler)
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.kotlinx.serialization.core)
+        }
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+            implementation(libs.kotlinx.coroutines.test)
         }
     }
 }

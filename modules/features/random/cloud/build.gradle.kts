@@ -3,11 +3,11 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
 }
 
-android {
-    namespace = "com.markettwits.random.cloud"
-}
-
 kotlin {
+    android {
+        namespace = "com.markettwits.random.cloud"
+    }
+
     sourceSets {
         commonMain.dependencies {
             implementation(project(path = ":modules:core:cloud"))

@@ -1,6 +1,11 @@
 package com.markettwits.waifupics.gallery.items.components.picker
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.ui.unit.dp
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.outlined.Circle
@@ -17,7 +22,7 @@ internal fun CheckBox(
     onCheck: (() -> Unit)? = null
 ) {
     val image = if (isChecked) Icons.Filled.CheckCircle else Icons.Outlined.Circle
-    val color = if (isChecked) MaterialTheme.colorScheme.surfaceTint
+    val color = if (isChecked) MaterialTheme.colorScheme.primary
     else MaterialTheme.colorScheme.onSurface
     if (onCheck != null) {
         IconButton(
@@ -27,6 +32,7 @@ internal fun CheckBox(
             Image(
                 imageVector = image,
                 colorFilter = ColorFilter.tint(color),
+                modifier = Modifier.size(22.dp),
                 contentDescription = null
             )
         }
@@ -34,7 +40,7 @@ internal fun CheckBox(
         Image(
             imageVector = image,
             colorFilter = ColorFilter.tint(color),
-            modifier = modifier,
+            modifier = modifier.size(26.dp).background(MaterialTheme.colorScheme.surface, CircleShape).padding(2.dp),
             contentDescription = null
         )
     }

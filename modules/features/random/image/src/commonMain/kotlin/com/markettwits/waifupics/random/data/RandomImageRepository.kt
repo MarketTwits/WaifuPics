@@ -1,6 +1,7 @@
 package com.markettwits.waifupics.random.data
 
 import com.markettwits.cache.image.ImageCacheRepository
+import com.markettwits.cache.image.FavoriteImageMetadata
 import com.markettwits.waifupics.random.cloud.NekoService
 import com.markettwits.waifupics.random.model.RandomImageState
 import com.markettwits.waifupics.result.HandleNetworkResult
@@ -9,12 +10,15 @@ interface RandomImageRepository {
 
     suspend fun fetchRandomImage(filters: List<String>): RandomImageState
 
-    suspend fun addToFavorite(
+    suspend fun fetchRandomImages(filters: List<String>, limit: Int): List<RandomImageState.Success>
+
+    suspend fun toggleFavorite(
         id: Int,
         width: Int,
         height: Int,
         url: String,
-        isProtected: Boolean
+        isProtected: Boolean,
+        metadata: FavoriteImageMetadata? = null
     )
 
     class Base(
@@ -31,14 +35,18 @@ interface RandomImageRepository {
             return result.map(imageMapperCloud)
         }
 
-        override suspend fun addToFavorite(
+        override suspend fun fetchRandomImages(filters: List<String>, limit: Int): List<RandomImageState.Success> =
+            service.randomImage(filters, limit).map(imageMapperCloud::map)
+
+        override suspend fun toggleFavorite(
             id: Int,
             width: Int,
             height: Int,
             url: String,
-            isProtected: Boolean
+            isProtected: Boolean,
+            metadata: FavoriteImageMetadata?
         ) {
-            cache.addOrDelete(id, width, height, url, isProtected)
+            cache.addOrDelete(id, width, height, url, isProtected, metadata)
         }
     }
 }

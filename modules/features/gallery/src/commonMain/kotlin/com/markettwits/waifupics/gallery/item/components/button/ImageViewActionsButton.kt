@@ -15,12 +15,12 @@ import waifupics.modules.features.gallery.generated.resources.use_as
 
 @Composable
 internal fun ShareButton(
-    followTheme: Boolean = false,
+    overlay: Boolean = false,
     onItemClick: () -> Unit
 ) {
     BottomBarColumn(
         imageVector = Icons.Outlined.Share,
-        followTheme = followTheme,
+        overlay = overlay,
         title = stringResource(Res.string.share)
     ) {
         onItemClick()
@@ -29,12 +29,12 @@ internal fun ShareButton(
 
 @Composable
 internal fun OpenAsButton(
-    followTheme: Boolean = false,
+    overlay: Boolean = false,
     onItemClick: () -> Unit
 ) {
     BottomBarColumn(
         imageVector = Icons.AutoMirrored.Filled.OpenInNew,
-        followTheme = followTheme,
+        overlay = overlay,
         title = stringResource(Res.string.use_as)
     ) {
         onItemClick()
@@ -43,12 +43,12 @@ internal fun OpenAsButton(
 
 @Composable
 internal fun SaveButton(
-    followTheme: Boolean = false,
+    overlay: Boolean = false,
     onItemClick: () -> Unit
 ) {
     BottomBarColumn(
         imageVector = Icons.Default.Save,
-        followTheme = followTheme,
+        overlay = overlay,
         title = stringResource(Res.string.save_to_gallery)
     ) {
         onItemClick()
@@ -57,12 +57,12 @@ internal fun SaveButton(
 
 @Composable
 internal fun DeleteButton(
-    followTheme: Boolean = false,
+    overlay: Boolean = false,
     onItemClick: () -> Unit
 ) {
     BottomBarColumn(
         imageVector = Icons.Outlined.DeleteOutline,
-        followTheme = followTheme,
+        overlay = overlay,
         title = stringResource(Res.string.delete)
     ) {
         onItemClick()

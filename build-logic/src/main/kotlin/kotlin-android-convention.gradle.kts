@@ -1,15 +1,12 @@
-import com.android.build.gradle.BaseExtension
+import com.android.build.api.dsl.ApplicationExtension
 import extension.projectJavaVersion
-import extension.libs
 import extension.model.ApkConfig
 import extension.model.ApkConfig.VERSION_CODE
 import extension.model.ApkConfig.VERSION_NAME
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-configure<BaseExtension> {
+configure<ApplicationExtension> {
 
-    compileSdkVersion(ApkConfig.COMPILE_SDK_VERSION)
+    compileSdk = ApkConfig.COMPILE_SDK_VERSION
 
     defaultConfig {
         minSdk = ApkConfig.MIN_SDK_VERSION
@@ -23,8 +20,10 @@ configure<BaseExtension> {
         targetCompatibility = projectJavaVersion
     }
 
-    packagingOptions.resources{
-        excludes += "/META-INF/{AL2.0,LGPL2.1}"
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
     }
 
 }

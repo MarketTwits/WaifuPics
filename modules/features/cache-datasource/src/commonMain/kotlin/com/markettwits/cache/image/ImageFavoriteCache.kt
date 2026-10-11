@@ -9,5 +9,6 @@ data class ImageFavoriteCache(
     val width : Int,
     val height : Int,
     val created : Long,
-    val protected: Boolean
+    val protected: Boolean,
+    val metadata: FavoriteImageMetadata? = null
 )

@@ -1,109 +1,58 @@
 package com.markettwits.waifupics.navigation.components
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.LightMode
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.layout.boundsInWindow
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.markettwits.core_ui.extensions.noRippleClickable
-import com.markettwits.theme.components.FontRubik
-import com.markettwits.theme.components.LightPink
+import com.markettwits.theme.components.WaifuSpacing
+import com.markettwits.theme.components.WaifuSize
 import com.markettwits.waifupics.navigation.model.NavigationItem
 
 @Composable
-fun NavigationBody(
-    modifier: Modifier = Modifier,
-    isDarkTheme: Boolean,
-    onClick: (NavigationItem) -> Unit,
-    onClickChangeTheme : () -> Unit
-) {
-    Box(
-        modifier = modifier
-            .background(MaterialTheme.colorScheme.background)
-            .wrapContentWidth()
-            .fillMaxHeight()
-            .padding(10.dp)
-    ) {
-        Column {
-            Text(
-                modifier = Modifier.padding(10.dp),
-                text = "Menu",
-                color = LightPink,
-                fontSize = 14.sp,
-                fontFamily = FontRubik.medium()
-            )
-            MenuItem(
-                modifier = Modifier.noRippleClickable { onClickChangeTheme() },
-                imageVector = if (isDarkTheme) Icons.Filled.DarkMode else Icons.Filled.LightMode,
-                title = "",
-            )
-            list.forEach {
-                MenuItem(
-                    modifier = Modifier
-                        .noRippleClickable { onClick(it) },
-                    icon = it.icon(),
-                    title = it.title,
+fun NavigationBody(modifier: Modifier = Modifier, contentPadding: PaddingValues = PaddingValues(0.dp),
+    isDarkTheme: Boolean, selectedTitle: String = "Home", onClick: (NavigationItem) -> Unit,
+    themeSwitchEnabled: Boolean = true, onClickChangeTheme: (Offset?) -> Unit) {
+    var themeButtonCenter by remember { mutableStateOf<Offset?>(null) }
+    ModalDrawerSheet(modifier = modifier.width(264.dp),
+        drawerContainerColor = MaterialTheme.colorScheme.surface,
+        drawerContentColor = MaterialTheme.colorScheme.onSurface,
+        windowInsets = WindowInsets(0, 0, 0, 0)) {
+        Column(Modifier.padding(contentPadding).verticalScroll(rememberScrollState())
+            .padding(horizontal = WaifuSpacing.item, vertical = WaifuSpacing.small),
+            verticalArrangement = Arrangement.spacedBy(WaifuSpacing.small)) {
+            Text("Menu", Modifier.padding(horizontal = WaifuSpacing.small),
+                style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.secondary)
+            IconButton(onClick = { onClickChangeTheme(themeButtonCenter) },
+                enabled = themeSwitchEnabled,
+                modifier = Modifier.onGloballyPositioned { themeButtonCenter = it.boundsInWindow().center }) {
+                Icon(if (isDarkTheme) Icons.Default.DarkMode else Icons.Default.LightMode,
+                    contentDescription = if (isDarkTheme) "Switch to light theme" else "Switch to dark theme",
+                    modifier = Modifier.size(WaifuSize.overlayIcon), tint = MaterialTheme.colorScheme.primary)
+            }
+            items.forEach { item ->
+                NavigationDrawerItem(
+                    label = { Text(item.title, style = MaterialTheme.typography.titleMedium) },
+                    selected = selectedTitle == item.title,
+                    onClick = { onClick(item) },
+                    shape = MaterialTheme.shapes.medium,
+                    icon = { Icon(item.icon(), null, Modifier.size(WaifuSize.overlayIcon)) }
                 )
             }
         }
     }
 }
 
-@Composable
-private fun MenuItem(
-    modifier: Modifier = Modifier,
-    icon: Painter? = null,
-    imageVector: ImageVector? = null,
-    title: String,
-) {
-    Row(
-        modifier
-            .padding(10.dp)
-            .padding(end = 80.dp)
-    ) {
-        if (icon != null) {
-            Icon(
-                painter = icon,
-                contentDescription = title,
-                tint = MaterialTheme.colorScheme.onBackground
-            )
-        }
-        if (imageVector != null) {
-            Icon(
-                imageVector = imageVector,
-                contentDescription = title,
-                tint = MaterialTheme.colorScheme.onBackground
-            )
-        }
-        Spacer(modifier = modifier.width(10.dp))
-        Text(
-            text = title,
-            color = MaterialTheme.colorScheme.onBackground,
-            fontSize = 18.sp,
-            fontFamily = FontRubik.medium()
-        )
-    }
-}
-
-private val list = listOf(
-    NavigationItem.Home(),
-    NavigationItem.Favorite(),
-    NavigationItem.About()
-)
-
+private val items = listOf(NavigationItem.Home(), NavigationItem.Favorite(), NavigationItem.About())

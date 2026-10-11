@@ -1,10 +1,18 @@
 package com.markettwits.waifupics.gallery.items.viewmodel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.compose.runtime.snapshots.Snapshot
+import com.markettwits.waifupics.settings.WaifuPicsAppSettings
+import com.markettwits.waifupics.gallery.items.model.GalleryLayout
+import com.markettwits.waifupics.gallery.items.model.toggleGalleryGroup
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 import com.markettwits.async.AsyncViewModel
 import com.markettwits.image_action.api.ImageIntentAction
 import com.markettwits.waifupics.communication.StateCommunication
 import com.markettwits.waifupics.gallery.common.GalleryRepository
+import com.markettwits.waifupics.gallery.common.GalleryDeletion
 import com.markettwits.waifupics.gallery.items.components.communication.DetailCommunication
 import com.markettwits.waifupics.gallery.items.components.communication.GalleryCommunication
 import com.markettwits.waifupics.gallery.items.components.communication.SelectedImageCommunication
@@ -12,6 +20,7 @@ import com.markettwits.waifupics.gallery.items.components.communication.Selected
 import com.markettwits.waifupics.gallery.items.model.ImageFavoriteUi
 import com.markettwits.waifupics.gallery.items.model.ImageFavoriteUiState
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.CancellationException
 
 interface GalleryViewModel : StateCommunication.State<ImageFavoriteUiState> {
 
@@ -25,7 +34,17 @@ interface GalleryViewModel : StateCommunication.State<ImageFavoriteUiState> {
 
     fun selectedState(): StateFlow<Boolean>
 
-    fun selection(index: Int)
+    fun selection(id: Int)
+
+    fun selectGroup(ids: Set<Int>)
+
+    fun replaceSelection(ids: Set<Int>, keepMode: Boolean = false)
+
+    fun finishSelectionGesture()
+
+    fun layout(): StateFlow<GalleryLayout>
+
+    fun setLayout(layout: GalleryLayout)
 
     fun shareImages()
 
@@ -40,11 +59,31 @@ interface GalleryViewModel : StateCommunication.State<ImageFavoriteUiState> {
         private val detailCommunication: DetailCommunication,
         private val selectedModeCommunication: SelectedModeCommunication,
         private val selectedImageCommunication: SelectedImageCommunication,
-        private val imageIntentAction: ImageIntentAction.ShareImage
+        private val imageIntentAction: ImageIntentAction.ShareImage,
+        private val settings: WaifuPicsAppSettings,
+        private val deletion: GalleryDeletion
     ) : ViewModel(), StateCommunication.State<ImageFavoriteUiState>, GalleryViewModel {
+
+        private val layoutState = MutableStateFlow(GalleryLayout())
 
         init {
             favoriteImages()
+            viewModelScope.launch {
+                settings.observeSettings().collect {
+                    layoutState.value = GalleryLayout(it.galleryColumns.coerceIn(0, 6), it.galleryGroupByMonth,
+                        it.galleryKeepAspectRatio)
+                }
+            }
+        }
+
+        override fun layout(): StateFlow<GalleryLayout> = layoutState
+
+        override fun setLayout(layout: GalleryLayout) {
+            viewModelScope.launch {
+                val current = settings.settings()
+                settings.updateSettings(current.copy(galleryColumns = layout.columns.coerceIn(0, 6),
+                    galleryGroupByMonth = layout.byMonth, galleryKeepAspectRatio = layout.keepAspectRatio))
+            }
         }
 
         override fun selectedPhotoState(): List<ImageFavoriteUi> = selectedImageCommunication.fetch()
@@ -57,31 +96,38 @@ interface GalleryViewModel : StateCommunication.State<ImageFavoriteUiState> {
 
         override fun favoriteImages() {
             async.handleAsyncSingle {
-                repository.observe().collect {
-                    galleryCommunication.map(it)
-                }
+                observeGalleryImages(repository, galleryCommunication)
             }
         }
 
         override fun deleteImage(item: String, id: Int) {
-            async.handleAsync({
-                repository.delete(id)
-            }) {
-                favoriteImages()
-            }
+            async.handleAsyncSingle { deletion.delete(setOf(id)) }
         }
 
-        override fun selection(index: Int) {
-            async.handleAsyncSingle {
-                val selectedPhotoState = selectedImageCommunication.fetch()
-                val item = galleryCommunication.state().value.items[index]
-                val selectedPhoto = selectedPhotoState.find { it.id == item.id }
-                if (selectedPhoto != null)
-                    selectedImageCommunication.remove(selectedPhoto)
-                else
-                    selectedImageCommunication.add(item)
-                if (selectedPhotoState.isEmpty()) changeSelectedState()
+        override fun selection(id: Int) {
+            val original = selectedImageCommunication.fetch().map { it.id }.toSet()
+            replaceSelection(if (id in original) original - id else original + id)
+        }
+
+        override fun selectGroup(ids: Set<Int>) {
+            replaceSelection(toggleGalleryGroup(selectedImageCommunication.fetch().map { it.id }.toSet(), ids))
+        }
+
+        override fun replaceSelection(ids: Set<Int>, keepMode: Boolean) {
+            val available = galleryCommunication.state().value.items.filterIsInstance<ImageFavoriteUi.Base>()
+                .associateBy { it.id }
+            val validIds = ids.intersect(available.keys)
+            Snapshot.withMutableSnapshot {
+                selectedImageCommunication.fetch().toList().filter { it.id !in validIds }
+                    .forEach { selectedImageCommunication.remove(it) }
+                val current = selectedImageCommunication.fetch().map { it.id }.toSet()
+                (validIds - current).forEach { selectedImageCommunication.add(available.getValue(it)) }
             }
+            selectedModeCommunication.map(keepMode || validIds.isNotEmpty())
+        }
+
+        override fun finishSelectionGesture() {
+            selectedModeCommunication.map(selectedImageCommunication.fetch().isNotEmpty())
         }
 
         override fun shareImages() {
@@ -92,13 +138,10 @@ interface GalleryViewModel : StateCommunication.State<ImageFavoriteUiState> {
         }
 
         override fun delete() {
-            val selectedPhotoState = selectedImageCommunication.fetch()
-            val id = selectedPhotoState.map { it.id }
-            val url = selectedPhotoState.map { it.imageUrl }
-            async.handleAsyncSingle {
-                repository.delete(id, url)
+            val ids = selectedImageCommunication.fetch().map { it.id }.toSet()
+            async.handleAsync({ deletion.delete(ids) }) { success ->
+                if (success) replaceSelection(emptySet())
             }
-            changeSelectedState()
         }
 
         override fun changeSelectedState() {
@@ -111,5 +154,17 @@ interface GalleryViewModel : StateCommunication.State<ImageFavoriteUiState> {
     }
 }
 
-
+/** Loading is distinct from an empty snapshot; read failures never masquerade as empty. */
+internal suspend fun observeGalleryImages(repository: GalleryRepository, communication: GalleryCommunication) {
+    if (communication.state().value is ImageFavoriteUiState.Error && communication.state().value.items.isEmpty()) {
+        communication.map(ImageFavoriteUiState.Loading)
+    }
+    try {
+        repository.observe().collect { communication.map(it) }
+    } catch (cancelled: CancellationException) {
+        throw cancelled
+    } catch (_: Exception) {
+        communication.map(ImageFavoriteUiState.Error(communication.state().value.items))
+    }
+}
 
