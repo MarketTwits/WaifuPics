@@ -20,6 +20,7 @@ import com.markettwits.waifupics.gallery.items.components.communication.Selected
 import com.markettwits.waifupics.gallery.items.model.ImageFavoriteUi
 import com.markettwits.waifupics.gallery.items.model.ImageFavoriteUiState
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.CancellationException
 
 interface GalleryViewModel : StateCommunication.State<ImageFavoriteUiState> {
 
@@ -95,9 +96,7 @@ interface GalleryViewModel : StateCommunication.State<ImageFavoriteUiState> {
 
         override fun favoriteImages() {
             async.handleAsyncSingle {
-                repository.observe().collect {
-                    galleryCommunication.map(it)
-                }
+                observeGalleryImages(repository, galleryCommunication)
             }
         }
 
@@ -152,6 +151,20 @@ interface GalleryViewModel : StateCommunication.State<ImageFavoriteUiState> {
         }
 
         override fun state() = galleryCommunication.state()
+    }
+}
+
+/** Loading is distinct from an empty snapshot; read failures never masquerade as empty. */
+internal suspend fun observeGalleryImages(repository: GalleryRepository, communication: GalleryCommunication) {
+    if (communication.state().value is ImageFavoriteUiState.Error && communication.state().value.items.isEmpty()) {
+        communication.map(ImageFavoriteUiState.Loading)
+    }
+    try {
+        repository.observe().collect { communication.map(it) }
+    } catch (cancelled: CancellationException) {
+        throw cancelled
+    } catch (_: Exception) {
+        communication.map(ImageFavoriteUiState.Error(communication.state().value.items))
     }
 }
 

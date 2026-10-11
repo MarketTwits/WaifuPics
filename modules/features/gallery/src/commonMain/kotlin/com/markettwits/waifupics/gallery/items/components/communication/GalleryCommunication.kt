@@ -8,7 +8,7 @@ import com.markettwits.waifupics.gallery.items.model.ImageFavoriteUi
 import com.markettwits.waifupics.gallery.items.model.ImageFavoriteUiState
 
 interface GalleryCommunication : StateCommunication.Mutable<ImageFavoriteUiState> {
-    class Base : StateCommunication.Abstract<ImageFavoriteUiState>(ImageFavoriteUiState.Empty),
+    class Base : StateCommunication.Abstract<ImageFavoriteUiState>(ImageFavoriteUiState.Loading),
         GalleryCommunication
 }
 

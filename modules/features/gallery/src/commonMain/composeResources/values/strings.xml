@@ -15,6 +15,7 @@
     <string name="image">image</string>
     <string name="text_copied_to_clipboard">Text copied to clipboard</string>
     <string name="gallery_empty_text">Gallery is empty now.\n Click on the heart button to add an image.</string>
+    <string name="gallery_load_failed">Could not load gallery</string>
     <string name="image_information">Image information</string>
     <string name="saved_on">Saved on</string>
     <string name="image_size">Dimensions</string>

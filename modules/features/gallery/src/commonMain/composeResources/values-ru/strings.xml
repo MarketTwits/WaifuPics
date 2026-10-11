@@ -1,4 +1,5 @@
 <resources>
+    <string name="gallery_load_failed">Не удалось загрузить галерею</string>
     <string name="gallery_deleted">Удалено</string>
     <string name="gallery_deleted_count">Удалено: %1$s</string>
     <string name="gallery_undo">Отменить</string>

@@ -71,8 +71,10 @@ fun NavigationScreen(
                         isDarkTheme = isDarkTheme,
                         selectedTitle = selectedTitle,
                         onClick = {
-                            onClickNavigationItem(it)
-                            scope.launch { drawerState.close() }
+                            scope.launch {
+                                drawerState.close()
+                                onClickNavigationItem(it)
+                            }
                         },
                         themeSwitchEnabled = themeReveal?.isAnimating != true,
                         onClickChangeTheme = { center ->

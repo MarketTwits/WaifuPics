@@ -41,7 +41,7 @@ private fun LazyGridState.photoAt(point: Offset, horizontalInset: Float, clampTo
     else item.key.toString().removePrefix("photo-").toIntOrNull()
 }
 
-/** In selection mode a swipe changes a range; otherwise a long press starts the same gesture. */
+/** Each range gesture requires a long press; ordinary swipes scroll even in selection mode. */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun Modifier.gallerySelectionGesture(
@@ -80,26 +80,14 @@ internal fun Modifier.gallerySelectionGesture(
                 val anchor = photoAt(down.position) ?: return@awaitEachGesture
                 val startedInSelectionMode = currentMode
                 val baseline = currentSelection.toSet()
-                var position = down.position
-                if (startedInSelectionMode) {
-                    var activated = false
-                    while (!activated) {
-                        val event = awaitPointerEvent(PointerEventPass.Initial)
-                        if (event.changes.count { it.pressed } > 1) return@awaitEachGesture
-                        val change = event.changes.firstOrNull { it.id == down.id } ?: return@awaitEachGesture
-                        if (!change.pressed) return@awaitEachGesture
-                        position = change.position
-                        activated = (position - down.position).getDistance() >= viewConfiguration.touchSlop
-                        if (activated) change.consume()
-                    }
-                } else {
-                    // Finish the down event before waiting on Main: the image consumes its
-                    // down there, which would otherwise cancel long press immediately.
-                    awaitPointerEvent(PointerEventPass.Final)
-                    val press = awaitLongPressOrCancellation(down.id) ?: return@awaitEachGesture
-                    position = press.position
-                    press.consume()
-                }
+                // Finish the down event before waiting on Main: the image consumes its
+                // down there, which would otherwise cancel long press immediately.
+                // Before long press succeeds, leave movement to LazyVerticalGrid. Its
+                // consumed scroll cancels this wait without changing the selection.
+                awaitPointerEvent(PointerEventPass.Final)
+                val press = awaitLongPressOrCancellation(down.id) ?: return@awaitEachGesture
+                var position = press.position
+                press.consume()
                 val range = GallerySelectionRange(currentIds.toList(), baseline, anchor,
                     selecting = !startedInSelectionMode || anchor !in baseline)
                 var lastId: Int? = null
@@ -111,8 +99,7 @@ internal fun Modifier.gallerySelectionGesture(
                     }
                 }
                 update(anchor)
-                haptic.performHapticFeedback(if (startedInSelectionMode) HapticFeedbackType.TextHandleMove
-                    else HapticFeedbackType.LongPress)
+                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                 update(photoAt(position))
                 val autoScroll = gestureScope.launch {
                     var previousFrame = 0L

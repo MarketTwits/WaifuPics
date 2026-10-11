@@ -1,12 +1,18 @@
 package com.markettwits.waifupics.gallery.items.components
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.background
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.foundation.interaction.collectIsDraggedAsState
 import androidx.compose.ui.platform.LocalHapticFeedback
@@ -14,6 +20,7 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.contentDescription
@@ -21,6 +28,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.Dp
 import com.markettwits.core_ui.provider.ApplicationViewModel
+import com.markettwits.core_ui.components.design.WaifuLoadingIndicator
 import com.markettwits.theme.components.WaifuSpacing
 import com.markettwits.waifupics.gallery.items.components.empty_item.EmptyGalleryItem
 import com.markettwits.waifupics.gallery.items.components.animations.GalleryImageTransition
@@ -33,6 +41,7 @@ import org.jetbrains.compose.resources.stringResource
 import waifupics.modules.features.gallery.generated.resources.*
 import kotlin.math.ceil
 import kotlin.math.roundToInt
+import kotlinx.coroutines.delay
 
 @Composable
 fun GalleryScreen(onClickGoDetail: () -> Unit, paddingValues: PaddingValues,
@@ -40,6 +49,19 @@ fun GalleryScreen(onClickGoDetail: () -> Unit, paddingValues: PaddingValues,
     onBottomOverlayHeightChanged: (Dp) -> Unit = {}) {
     val viewModel: GalleryViewModel = ApplicationViewModel()
     val state by viewModel.state().collectAsState()
+    val loading = state is ImageFavoriteUiState.Loading
+    val contentAlpha = remember { Animatable(if (returnToImageId != null) 1f else 0f) }
+    var showLoading by remember { mutableStateOf(false) }
+    LaunchedEffect(loading) {
+        if (loading) {
+            showLoading = false
+            delay(180)
+            showLoading = true
+        } else {
+            showLoading = false
+            contentAlpha.animateTo(1f, tween(180))
+        }
+    }
     val selected by viewModel.selectedState().collectAsState()
     val selectedMedia = viewModel.selectedPhotoState()
     val layout by viewModel.layout().collectAsState()
@@ -57,7 +79,9 @@ fun GalleryScreen(onClickGoDetail: () -> Unit, paddingValues: PaddingValues,
     val navigationInset = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
     val bottomPadding = (if (selected) 180.dp else WaifuSpacing.content) + navigationInset
 
-    BoxWithConstraints(Modifier.padding(top = paddingValues.calculateTopPadding()).fillMaxSize().clipToBounds()) {
+    BoxWithConstraints(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)
+        .padding(top = paddingValues.calculateTopPadding()).clipToBounds()
+        .graphicsLayer { alpha = if (loading) 1f else contentAlpha.value }) {
         val density = LocalDensity.current
         val contentWidth = with(density) { maxWidth.roundToPx() - 2 * WaifuSpacing.content.roundToPx() }
             .coerceAtLeast(1)
@@ -110,7 +134,17 @@ fun GalleryScreen(onClickGoDetail: () -> Unit, paddingValues: PaddingValues,
             viewModel.selectGroup(section.images.map { it.id }.toSet())
             haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
         }
-        if (sections.isEmpty()) {
+        if (loading) {
+            if (showLoading) WaifuLoadingIndicator(Modifier.align(Alignment.Center))
+        } else if (sections.isEmpty() && state is ImageFavoriteUiState.Error) {
+            Column(Modifier.align(Alignment.Center).padding(WaifuSpacing.content),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(WaifuSpacing.small)) {
+                Text(stringResource(Res.string.gallery_load_failed),
+                    style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                TextButton(onClick = viewModel::favoriteImages) { Text(stringResource(Res.string.gallery_retry)) }
+            }
+        } else if (sections.isEmpty()) {
             EmptyGalleryItem()
         } else {
             LazyVerticalGrid(columns = GridCells.Fixed(if (layout.keepAspectRatio) 1 else columns), state = gridState, overscrollEffect = overscroll,

@@ -82,15 +82,22 @@ fun MainScreen(
                         startDestination = Screen.Main.route(),
                         modifier = modifier
                     ) {
-                        composable(Screen.Main.route()) {
+                        composable(Screen.Main.route(), exitTransition = {
+                            if (targetState.destination.route == Screen.Gallery.route()) ExitTransition.None else null
+                        }) {
                             RandomImageScreen(paddingValues = paddingValues)
                         }
-                        composable(Screen.About.route()) {
+                        composable(Screen.About.route(), exitTransition = {
+                            if (targetState.destination.route == Screen.Gallery.route()) ExitTransition.None else null
+                        }) {
                             AboutScreen(paddingValues = paddingValues)
                         }
                         composable(Screen.Gallery.route(),
-                            enterTransition = { fadeIn(tween(220)) }, exitTransition = { fadeOut(tween(220)) },
-                            popEnterTransition = { fadeIn(tween(220)) }) {
+                            enterTransition = { EnterTransition.None }, exitTransition = { fadeOut(tween(220)) },
+                            popEnterTransition = {
+                                if (initialState.destination.route == Screen.GalleryItem.route()) fadeIn(tween(220))
+                                else EnterTransition.None
+                            }) {
                             GalleryScreen(
                                 onClickGoDetail = {
                                     galleryReturnId = null
