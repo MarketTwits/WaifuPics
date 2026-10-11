@@ -3,15 +3,15 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
 }
 
-android {
-    namespace = "com.markettwits.cache_datasource"
-
-}
 kotlin {
+    android {
+        namespace = "com.markettwits.cache_datasource"
+    }
+
     sourceSets {
         commonTest.dependencies {
             implementation(kotlin("test"))
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.1")
+            implementation(libs.kotlinx.coroutines.test)
         }
         commonMain.dependencies {
             implementation(libs.koin.core)

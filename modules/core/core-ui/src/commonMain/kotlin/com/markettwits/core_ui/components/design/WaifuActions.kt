@@ -8,6 +8,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,7 +24,6 @@ import com.markettwits.theme.components.WaifuSize
 
 enum class WaifuActionStyle { Primary, Tonal, Outlined }
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun WaifuActionButton(
     label: String,
@@ -42,17 +42,16 @@ fun WaifuActionButton(
     }
     val size = modifier.heightIn(min = WaifuSize.touchTarget)
     when (style) {
-        WaifuActionStyle.Primary -> Button(onClick, shapes = ButtonDefaults.shapes(shape = MaterialTheme.shapes.medium, pressedShape = MaterialTheme.shapes.small), modifier = size,
+        WaifuActionStyle.Primary -> Button(onClick, shape = MaterialTheme.shapes.medium, modifier = size,
             enabled = enabled, content = content)
-        WaifuActionStyle.Tonal -> FilledTonalButton(onClick, shapes = ButtonDefaults.shapes(shape = MaterialTheme.shapes.medium, pressedShape = MaterialTheme.shapes.small), modifier = size,
+        WaifuActionStyle.Tonal -> FilledTonalButton(onClick, shape = MaterialTheme.shapes.medium, modifier = size,
             enabled = enabled, content = content)
-        WaifuActionStyle.Outlined -> OutlinedButton(onClick, shapes = ButtonDefaults.shapes(shape = MaterialTheme.shapes.medium, pressedShape = MaterialTheme.shapes.small), modifier = size,
+        WaifuActionStyle.Outlined -> OutlinedButton(onClick, shape = MaterialTheme.shapes.medium, modifier = size,
             colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.secondary),
             enabled = enabled, content = content)
     }
 }
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun WaifuOverlayButton(
     description: String,
@@ -66,7 +65,7 @@ fun WaifuOverlayButton(
     val pressed by interaction.collectIsPressedAsState()
     val corner by animateDpAsState(
         if (pressed) WaifuSpacing.small else WaifuSize.overlayControl / 2,
-        animationSpec = MaterialTheme.motionScheme.fastSpatialSpec(), label = "Overlay button shape")
+        animationSpec = spring(), label = "Overlay button shape")
     Surface(
         onClick = onClick, enabled = enabled, interactionSource = interaction,
         modifier = modifier.size(WaifuSize.touchTarget).semantics { contentDescription = description; role = Role.Button },

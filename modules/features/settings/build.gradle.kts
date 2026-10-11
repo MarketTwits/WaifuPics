@@ -3,11 +3,11 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
 }
 
-android {
-    namespace = "com.markettwits.settings"
-}
-
 kotlin {
+    android {
+        namespace = "com.markettwits.settings"
+    }
+
     sourceSets {
         commonMain.dependencies {
             implementation(libs.koin.core)

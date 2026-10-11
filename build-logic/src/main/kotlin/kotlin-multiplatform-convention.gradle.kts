@@ -4,15 +4,18 @@ import extension.libs
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 
 plugins {
-    id("com.android.library")
-    id("kotlin-android-convention")
+    id("com.android.kotlin.multiplatform.library")
     id("org.jetbrains.kotlin.multiplatform")
 }
 
 kotlin {
     jvm()
-    jvmToolchain(libs.versions.jvm.get().toString().toInt())
-    androidTarget()
+    jvmToolchain(libs.versions.jvm.get().toInt())
+    android {
+        compileSdk = extension.model.ApkConfig.COMPILE_SDK_VERSION
+        minSdk = extension.model.ApkConfig.MIN_SDK_VERSION
+        withHostTest {}
+    }
 
     wasmJs() {
         browser()
@@ -26,7 +29,6 @@ kotlin {
     }
 
     listOf(
-        iosX64(),
         iosArm64(),
         iosSimulatorArm64()
     ).forEach {
@@ -36,9 +38,4 @@ kotlin {
         }
     }
 
-    sourceSets {
-        all {
-            languageSettings.optIn("kotlinx.cinterop.ExperimentalForeignApi")
-        }
-    }
 }

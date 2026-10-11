@@ -3,6 +3,7 @@
 /local.properties
 /.idea/**
 /.fleet/**
+**/xcuserdata/
 
 *.apk
 
@@ -13,10 +14,14 @@
 
 .DS_Store
 /build
+**/build/
 /captures
 .externalNativeBuild
 .cxx
 .kotlin
+*.jks
+*.keystore
+/modules/instances/app/release/
 
 # Local documentation and audit materials
 /docs/

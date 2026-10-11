@@ -15,7 +15,7 @@ kotlin {
         }
         binaries.executable()
     }
-    js(IR) {
+    js {
         useEsModules()
         browser{
             commonWebpackConfig {

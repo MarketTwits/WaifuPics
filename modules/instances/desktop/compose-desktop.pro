@@ -1,4 +1,4 @@
--keepclasseswithmembers public class com.markettwits.sportsouce.app.MainKt {
+-keepclasseswithmembers public class com.markettwits.waifupics.app.MainKt {
     public static void main(java.lang.String[]);
 }
 
@@ -29,7 +29,7 @@
  -keepclassmembernames class kotlinx.** {
      volatile <fields>;
  }
- -keep class io.koil.io.** {*;}
+ -keep class coil3.** {*;}
  -keep class java.time.** {*;}
 
 -assumenosideeffects public class androidx.compose.runtime.ComposerKt {

@@ -3,11 +3,11 @@ plugins {
     alias(libs.plugins.kotlin.multiplatform.convention)
 }
 
-android {
-    namespace = "com.markettwits.waifupics.cloud"
-}
-
 kotlin{
+    android {
+        namespace = "com.markettwits.waifupics.cloud"
+    }
+
     sourceSets{
         commonMain.dependencies {
             api(libs.koin.core)

@@ -2,11 +2,23 @@ plugins {
     id("kotlin-multiplatform-convention")
 }
 
-android {
-    namespace = "com.markettwits.image_action_core"
-}
-
 kotlin{
+    android {
+        namespace = "com.markettwits.image_action_core"
+    }
+
+    sourceSets {
+        iosMain {
+            languageSettings.optIn("kotlinx.cinterop.ExperimentalForeignApi")
+        }
+        iosArm64Main {
+            languageSettings.optIn("kotlinx.cinterop.ExperimentalForeignApi")
+        }
+        iosSimulatorArm64Main {
+            languageSettings.optIn("kotlinx.cinterop.ExperimentalForeignApi")
+        }
+    }
+
     sourceSets.commonMain.dependencies {
         implementation(libs.koin.core)
         implementation(libs.filekit.core)
@@ -17,8 +29,8 @@ kotlin{
         implementation(libs.appcompat)
     }
     sourceSets.jvmMain.dependencies {
-        implementation("com.sun.jna:jna:3.0.9")
-        implementation("net.java.dev.jna:jna-platform:4.0.0")
+        implementation(libs.jna)
+        implementation(libs.jna.platform)
     }
     sourceSets.wasmJsMain.dependencies {
         implementation(libs.kotlinx.browser)

@@ -3,10 +3,11 @@ plugins {
     alias(libs.plugins.kotlin.multiplatform.convention)
 }
 
-android {
-    namespace = "com.markettwits.waifupics.paths"
-}
 kotlin {
+    android {
+        namespace = "com.markettwits.waifupics.paths"
+    }
+
     sourceSets.androidMain.dependencies {
         implementation(libs.context.provider)
     }

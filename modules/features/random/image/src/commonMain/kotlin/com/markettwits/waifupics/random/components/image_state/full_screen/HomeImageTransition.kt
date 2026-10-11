@@ -31,8 +31,7 @@ internal class HomeImageTransition(
         modifier.sharedBounds(
             rememberSharedContentState(key), visibilityScope,
             boundsTransform = { _, _ -> tween(380, easing = FastOutSlowInEasing) },
-            enter = fadeIn(tween(160)), exit = fadeOut(tween(160)),
-            resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(ContentScale.Fit)
+            enter = fadeIn(tween(160)), exit = fadeOut(tween(160))
         )
     }
 }

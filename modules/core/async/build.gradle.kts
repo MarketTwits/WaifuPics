@@ -3,11 +3,11 @@ plugins {
     alias(libs.plugins.kotlin.multiplatform.convention)
 }
 
-android {
-    namespace = "com.markettwits.async"
-}
-
 kotlin{
+    android {
+        namespace = "com.markettwits.async"
+    }
+
     sourceSets.commonMain.dependencies {
         api(libs.kotlinx.coroutines.core)
     }

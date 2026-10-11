@@ -29,8 +29,7 @@ fun WaifuDialog(title: String, message: String, confirmLabel: String, dismissLab
     )
 }
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun WaifuLoadingIndicator(modifier: Modifier = Modifier) {
-    LoadingIndicator(modifier = modifier.size(40.dp), color = MaterialTheme.colorScheme.primary)
+    CircularProgressIndicator(modifier = modifier.size(40.dp), color = MaterialTheme.colorScheme.primary)
 }

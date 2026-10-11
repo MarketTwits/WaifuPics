@@ -3,6 +3,7 @@ package com.markettwits.waifupics.gallery.items.components.picker
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.ui.unit.dp
@@ -25,19 +26,17 @@ import com.markettwits.waifupics.gallery.items.model.ImageFavoriteUi
 import org.jetbrains.compose.resources.stringResource
 import waifupics.modules.features.gallery.generated.resources.*
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 internal fun SelectionSheet(modifier: Modifier = Modifier, selectedMedia: List<ImageFavoriteUi>,
     selectionState: Boolean, clearSelection: () -> Unit, shareImages: () -> Unit, deleteImages: () -> Unit,
     onHeightChanged: (Dp) -> Unit = {}) {
     val density = LocalDensity.current
     LaunchedEffect(selectionState) { if (!selectionState) onHeightChanged(0.dp) }
-    val motion = MaterialTheme.motionScheme
     AnimatedVisibility(modifier = modifier.onSizeChanged {
         onHeightChanged(if (selectionState) with(density) { it.height.toDp() } else 0.dp)
     }, visible = selectionState,
-        enter = slideInVertically(animationSpec = motion.defaultSpatialSpec()) { it },
-        exit = slideOutVertically(animationSpec = motion.fastSpatialSpec()) { it }) {
+        enter = slideInVertically(animationSpec = spring()) { it },
+        exit = slideOutVertically(animationSpec = spring()) { it }) {
         Surface(shape = MaterialTheme.shapes.extraLarge.copy(bottomStart = CornerSize(0.dp), bottomEnd = CornerSize(0.dp)),
             color = MaterialTheme.colorScheme.surfaceContainerLow,
             contentColor = MaterialTheme.colorScheme.onSurface, shadowElevation = WaifuSpacing.small) {
