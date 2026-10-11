@@ -6,33 +6,33 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 /**
- * Менеджер для управления кешем изображений.
- * Хранит очередь предзагруженных изображений и управляет их загрузкой.
+ * Manages the image cache.
+ * Keeps a queue of prefetched images and controls when to load more.
  */
 interface ImageCacheManager {
 
     /**
-     * Количество оставшихся изображений в кеше
+     * Number of images remaining in the cache.
      */
     fun remainingImagesCount(): StateFlow<Int>
 
     /**
-     * Получить следующее изображение из кеша
+     * Get the next cached image.
      */
     fun getNextImage(): RandomImageState?
 
     /**
-     * Добавить изображения в кеш
+     * Add images to the cache.
      */
     fun addImages(images: List<RandomImageState>)
 
     /**
-     * Очистить кеш
+     * Clear the cache.
      */
     fun clear()
 
     /**
-     * Проверить, нужна ли подгрузка новых изображений
+     * Check whether more images should be loaded.
      */
     fun shouldLoadMore(): Boolean
 

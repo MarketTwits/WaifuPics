@@ -118,7 +118,7 @@ internal fun SharedTransitionScope.ImageCardContent(
                         }
                     },
                     error = {
-                        val message = it.result.throwable.message ?: "Не удалось загрузить изображение"
+                        val message = it.result.throwable.message ?: "Could not load image"
                         ImageFuckup(onRetry = { retryAttempt++ })
                         LaunchedEffect(id, imageUrl, it.result) {
                             onChangeImageState(ImageState.Error(message))

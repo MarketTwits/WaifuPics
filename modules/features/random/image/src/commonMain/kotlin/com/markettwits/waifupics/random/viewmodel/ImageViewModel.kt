@@ -197,7 +197,7 @@ interface ImageViewModel : StateCommunication.State<RandomImageState> {
                     val additions = batch.distinctBy { it.id }.filter { it.id !in existingIds }
                     if (additions.isEmpty()) {
                         if (images.value.isEmpty()) requestedPage.value = null
-                        val message = "Нет новых изображений. Попробуйте ещё раз."
+                        val message = "No new images. Try again."
                         loadingError.value = message
                         randomImageCommunication.map(RandomImageState.Error(message))
                         return@launch
@@ -217,7 +217,7 @@ interface ImageViewModel : StateCommunication.State<RandomImageState> {
                 } catch (e: Exception) {
                     if (requestGeneration == generation) {
                         if (images.value.isEmpty()) requestedPage.value = null
-                        loadingError.value = e.message ?: "Не удалось выполнить действие"
+                        loadingError.value = e.message ?: "Could not complete the action"
                         showError(e)
                     }
                 } finally {
@@ -253,7 +253,7 @@ interface ImageViewModel : StateCommunication.State<RandomImageState> {
         }
 
         private fun showError(error: Exception) {
-            randomImageCommunication.map(RandomImageState.Error(error.message ?: "Не удалось выполнить действие"))
+            randomImageCommunication.map(RandomImageState.Error(error.message ?: "Could not complete the action"))
         }
     }
 }
