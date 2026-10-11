@@ -1,7 +1,7 @@
 [versions]
 # Application release
-versionName = "1.2.0"
-versionCode = "5"
+versionName = "1.2.1"
+versionCode = "6"
 
 # Build toolchain
 agp = "9.3.1"

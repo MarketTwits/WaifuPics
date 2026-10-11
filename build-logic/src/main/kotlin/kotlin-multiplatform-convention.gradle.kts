@@ -14,6 +14,7 @@ kotlin {
     android {
         compileSdk = extension.model.ApkConfig.COMPILE_SDK_VERSION
         minSdk = extension.model.ApkConfig.MIN_SDK_VERSION
+        androidResources.enable = true
         withHostTest {}
     }
 
