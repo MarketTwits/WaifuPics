@@ -15,7 +15,7 @@ import com.markettwits.waifupics.random.viewmodel.RandomImageCommunication
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.NonCancellable
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -39,6 +39,7 @@ class ImageViewModelTest {
     private lateinit var filters: FilterCommunication
     private lateinit var repository: FakeRepository
     private lateinit var share: FakeShare
+    private lateinit var cache: FakeCache
     private lateinit var model: ImageViewModel.Base
 
     @BeforeTest
@@ -47,9 +48,10 @@ class ImageViewModelTest {
         filters = FilterCommunication.Base()
         repository = FakeRepository()
         share = FakeShare()
+        cache = FakeCache()
         model = ImageViewModel.Base(
             filters, RandomImageCommunication.Base(), LoadedImageCommunication.Base(),
-            repository, share, FakeCache()
+            repository, share, cache
         )
         store.put("feed", model)
     }
@@ -58,6 +60,72 @@ class ImageViewModelTest {
     fun tearDown() {
         store.clear()
         Dispatchers.resetMain()
+    }
+
+    @Test
+    fun doubleTapAddsOnceAndNeverTogglesAnExistingFavorite() = runTest {
+        settle()
+        model.obtainImageState(1, image(1).imageUrl, loaded(1))
+        repeat(4) { assertTrue(model.onDoubleTapFavorite(1)) }
+        settle()
+        assertEquals(listOf(1), cache.additions.map { it.id })
+        assertTrue(1 in model.favorites().value)
+        assertTrue(model.onDoubleTapFavorite(1))
+        settle()
+        assertEquals(1, cache.additions.size)
+        assertTrue(repository.favorites.isEmpty())
+    }
+
+    @Test
+    fun doubleTapRejectsUnloadedNeighborsAndPendingPagerNavigation() = runTest {
+        settle()
+        model.obtainImageState(2, image(2).imageUrl, loaded(2))
+        assertFalse(model.onDoubleTapFavorite(1))
+        assertFalse(model.onDoubleTapFavorite(2))
+        model.obtainImageState(1, image(1).imageUrl, loaded(1))
+        model.fetchRandomImage()
+        assertFalse(model.onDoubleTapFavorite(1))
+        settle()
+        assertTrue(cache.additions.isEmpty())
+    }
+
+    @Test
+    fun doubleTapCapturesMetadataAndRatingEvenWhenUserImmediatelySwipes() = runTest {
+        val metadata = com.markettwits.cache.image.FavoriteImageMetadata("Artist", "explicit",
+            "https://example.com/art/1", listOf("art"), listOf(listOf(1, 2, 3)))
+        repository.fetch = { listOf(image(1, "explicit").copy(
+            imageData = ImageSourceUi(requireNotNull(metadata.sourceUrl), requireNotNull(metadata.ageRating), metadata.artistName, metadata.tags),
+            colorPalette = metadata.colorPalette), image(2)) }
+        settle()
+        model.obtainImageState(1, image(1).imageUrl, loaded(1))
+        assertTrue(model.onDoubleTapFavorite(1))
+        model.onPageChanged(1)
+        settle()
+        val saved = cache.additions.single()
+        assertEquals(1, saved.id)
+        assertEquals(metadata, saved.metadata)
+        assertTrue(saved.protected)
+    }
+
+    @Test
+    fun pendingDoubleTapCannotBeUndoneBySaveButtonAndFailureAllowsRetry() = runTest {
+        settle()
+        model.obtainImageState(1, image(1).imageUrl, loaded(1))
+        val completion = CompletableDeferred<Unit>()
+        cache.beforeAdd = { completion.await() }
+        assertTrue(model.onDoubleTapFavorite(1))
+        runCurrent()
+        model.onClickAddToFavorite()
+        assertTrue(model.onDoubleTapFavorite(1))
+        completion.completeExceptionally(IllegalStateException("storage failed"))
+        settle()
+        assertTrue(repository.favorites.isEmpty())
+        assertTrue(cache.additions.isEmpty())
+        assertEquals("storage failed", assertIs<RandomImageState.Error>(model.state().value).message)
+        cache.beforeAdd = { }
+        assertTrue(model.onDoubleTapFavorite(1))
+        settle()
+        assertEquals(listOf(1), cache.additions.map { it.id })
     }
 
     @Test
@@ -348,11 +416,19 @@ class ImageViewModelTest {
 }
 
 internal class FakeCache : ImageCacheRepository {
+    private val images = MutableStateFlow(emptyList<ImageFavoriteCache>())
+    val additions = mutableListOf<ImageFavoriteCache>()
+    var beforeAdd: suspend () -> Unit = { }
     override suspend fun removeForUndo(ids: Set<Int>) = com.markettwits.cache.image.FavoriteImageRemoval(emptyList(), emptyList())
     override suspend fun restoreRemoved(removals: List<com.markettwits.cache.image.FavoriteImageRemoval>) = Unit
-    override fun observe() = flowOf(emptyList<ImageFavoriteCache>())
-    override suspend fun fetch() = emptyList<ImageFavoriteCache>()
-    override suspend fun addToFavorite(id: Int, width: Int, height: Int, url: String, isProtected: Boolean, metadata: com.markettwits.cache.image.FavoriteImageMetadata?) = Unit
+    override fun observe() = images
+    override suspend fun fetch() = images.value
+    override suspend fun addToFavorite(id: Int, width: Int, height: Int, url: String, isProtected: Boolean, metadata: com.markettwits.cache.image.FavoriteImageMetadata?) {
+        beforeAdd()
+        val saved = ImageFavoriteCache(id, url, width, height, 0L, isProtected, metadata)
+        additions.add(saved)
+        images.value += saved
+    }
     override suspend fun addOrDelete(id: Int, width: Int, height: Int, url: String, isProtected: Boolean, metadata: com.markettwits.cache.image.FavoriteImageMetadata?) = Unit
     override suspend fun deleteList(id: List<Int>, url: List<String>) = Unit
     override suspend fun delete(id: Int) = Unit

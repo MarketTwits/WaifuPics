@@ -165,6 +165,10 @@ fun RandomImageScreen(
                                             onChangeImageState = {
                                                 randomImageViewModel.obtainImageState(image.id, image.imageUrl, it)
                                             },
+                                            onDoubleTapFavorite = {
+                                                actionsReady && page == pagerState.settledPage &&
+                                                    randomImageViewModel.onDoubleTapFavorite(image.id)
+                                            },
                                             onOpenFullScreen = {
                                                 if (actionsReady && page == pagerState.settledPage)
                                                     fullscreen = FullscreenData(image.imageUrl, "image_${image.id}", true)

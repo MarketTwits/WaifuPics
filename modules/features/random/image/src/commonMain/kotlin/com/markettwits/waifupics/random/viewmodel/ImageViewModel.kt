@@ -30,6 +30,7 @@ interface ImageViewModel : StateCommunication.State<RandomImageState> {
     fun onPageChanged(index: Int)
     fun onClickShareImage()
     fun onClickAddToFavorite()
+    fun onDoubleTapFavorite(imageId: Int): Boolean
     fun fetchRandomImage()
     fun obtainImageState(id: Int, imageUrl: String, state: ImageState)
 
@@ -52,6 +53,7 @@ interface ImageViewModel : StateCommunication.State<RandomImageState> {
         private var batchJob: Job? = null
         private var generation = 0
         private var filters: List<String> = emptyList()
+        private val pendingFavorites = mutableSetOf<Int>()
 
         init {
             viewModelScope.launch {
@@ -129,20 +131,43 @@ interface ImageViewModel : StateCommunication.State<RandomImageState> {
 
         override fun onClickAddToFavorite() {
             val image = currentLoadedImage() ?: return
-            val info = currentImage()?.takeIf { it.id == image.id && it.imageUrl == image.networkUrl } ?: return
+            saveFavorite(image, addOnly = false)
+        }
+
+        override fun onDoubleTapFavorite(imageId: Int): Boolean {
+            val image = currentLoadedImage()?.takeIf { it.id == imageId } ?: return false
+            return saveFavorite(image, addOnly = true)
+        }
+
+        private fun saveFavorite(image: ImageState.Success, addOnly: Boolean): Boolean {
+            val info = currentImage()?.takeIf { it.id == image.id && it.imageUrl == image.networkUrl }
+                ?: return false
+            // Repeated double taps may replay the heart, but must never toggle or duplicate a save.
+            if (image.id in pendingFavorites) return addOnly
+            if (addOnly && image.id in favorites.value) return true
+            pendingFavorites.add(image.id)
             val metadata = FavoriteImageMetadata(info.imageData.artistName, info.imageData.ageRating,
                 info.imageData.sourceUrl, info.imageData.tags, info.colorPalette)
             viewModelScope.launch {
                 try {
-                    repository.toggleFavorite(
-                        image.id, image.width, image.height, image.networkUrl, image.protected, metadata
-                    )
+                    if (addOnly) {
+                        cache.addToFavorite(
+                            image.id, image.width, image.height, image.networkUrl, image.protected, metadata
+                        )
+                    } else {
+                        repository.toggleFavorite(
+                            image.id, image.width, image.height, image.networkUrl, image.protected, metadata
+                        )
+                    }
                 } catch (e: CancellationException) {
                     throw e
                 } catch (e: Exception) {
                     showError(e)
+                } finally {
+                    pendingFavorites.remove(image.id)
                 }
             }
+            return true
         }
 
         override fun fetchRandomImage() {

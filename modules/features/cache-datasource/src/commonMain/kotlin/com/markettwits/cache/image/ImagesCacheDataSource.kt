@@ -10,7 +10,10 @@ class ImagesCacheDataSource(
 
     suspend fun write(data: ImageFavoriteCache) {
         cache.update {
-            it.orEmpty().plus(data)
+            val images = it.orEmpty()
+            // Keep the original save date and position when the same image is liked again.
+            if (images.any { image -> image.id == data.id || image.netUrl == data.netUrl }) images
+            else images.plus(data)
         }
     }
 

@@ -2,6 +2,8 @@ package com.markettwits.cache.image
 
 import com.markettwits.waifupics.cache.kstore.listStoreOfWrapper
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import java.io.File
 import java.nio.file.Files
 import kotlin.test.*
@@ -43,6 +45,21 @@ class FavoritesUpgradeTest {
             assertEquals(before + added, reopened)
             assertEquals(metadata, reopened.last().metadata)
             assertFalse(File(file.path + ".temp").exists())
+        }
+    }
+
+    @Test fun concurrentRepeatedLikesKeepOneRecordAndItsOriginalDateAndPosition() = runTest {
+        withOldFile { file, data ->
+            data.write(added)
+            val before = data.getAll()
+            coroutineScope {
+                repeat(8) { index ->
+                    launch { data.write(added.copy(created = added.created + index + 1)) }
+                }
+            }
+            data.write(added.copy(id = 99)) // The same URL is still the same favorite.
+            data.write(added.copy(netUrl = "https://images.example/updated.jpg"))
+            assertEquals(before, data(requireNotNull(file.parentFile)).getAll())
         }
     }
 
