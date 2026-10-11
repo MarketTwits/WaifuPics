@@ -87,7 +87,10 @@ fun BottomImageInfo(
                 enabled = infoEnabled,
                 modifier = Modifier.heightIn(min = 48.dp).semantics { contentDescription = infoDescription },
                 contentPadding = PaddingValues(horizontal = 8.dp),
-                colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onSurface)
+                colors = ButtonDefaults.textButtonColors(
+                    contentColor = MaterialTheme.colorScheme.primary,
+                    disabledContentColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.4f)
+                )
             ) {
                 Icon(Icons.Outlined.Info, contentDescription = null, modifier = Modifier.size(22.dp))
                 Spacer(Modifier.width(6.dp))

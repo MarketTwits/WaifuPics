@@ -143,8 +143,9 @@ internal fun FullImageScreen(
             AnimatedImageBackground(preview, colorPalette,
                 animate = isVisible && !transitionRunning && !closing && dragOffset == 0f)
         }
-        // The picture stays fitted inside system insets and the header; the backdrop remains edge to edge.
-        Box(Modifier.fillMaxSize().safeDrawingPadding().padding(top = 56.dp, bottom = 12.dp)) {
+        // Keep one full-screen zoom viewport so scaling never changes its size or focal point.
+        // Safe insets belong to the overlay controls, which are drawn above the artwork below.
+        Box(Modifier.fillMaxSize()) {
             Box(Modifier.fillMaxSize().pointerInput(canDismiss) {
                 if (!canDismiss) return@pointerInput
                 val velocity = VelocityTracker()
