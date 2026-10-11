@@ -210,7 +210,7 @@ jobs:
           New-Item -ItemType Directory -Force "release-assets" | Out-Null
           $iscc = Join-Path ${env:ProgramFiles(x86)} "Inno Setup 6/ISCC.exe"
           if (-not (Test-Path $iscc)) { throw "Inno Setup compiler is missing: $iscc" }
-          & $iscc "/DAppImage=$($appImage.FullName)" "/DAppVersion=$env:RELEASE_VERSION" "/O$PWD/release-assets" "/FWaifuPics-v$env:RELEASE_VERSION-windows-x64.exe" "packaging/windows/WaifuPics.iss"
+          & $iscc "/DAppImage=$($appImage.FullName)" "/DAppVersion=$env:RELEASE_VERSION" "/O$PWD/release-assets" "/FWaifuPics-v$env:RELEASE_VERSION-windows-x64" "packaging/windows/WaifuPics.iss"
           if ($LASTEXITCODE -ne 0) { throw "Inno Setup failed with exit code $LASTEXITCODE" }
 
       - name: Upload Windows release asset
