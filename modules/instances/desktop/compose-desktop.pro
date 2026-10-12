@@ -32,6 +32,12 @@
  -keep class coil3.** {*;}
  -keep class java.time.** {*;}
 
+# Ktor locates the default JVM engine through META-INF/services. The service
+# descriptor is named after this interface and contains OkHttpEngineContainer.
+# Keep both names stable so the descriptor still resolves after obfuscation.
+-keep interface io.ktor.client.HttpClientEngineContainer { *; }
+-keep class io.ktor.client.engine.okhttp.OkHttpEngineContainer { *; }
+
 -assumenosideeffects public class androidx.compose.runtime.ComposerKt {
     void sourceInformation(androidx.compose.runtime.Composer,java.lang.String);
     void sourceInformationMarkerStart(androidx.compose.runtime.Composer,int,java.lang.String);

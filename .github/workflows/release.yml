@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       release_summary:
-        description: Optional short summary shown above the generated changelog
+        description: Optional complete Markdown release notes. Replaces GitHub-generated notes when provided.
         required: false
         type: string
 
@@ -266,8 +266,7 @@ jobs:
             --input "$request_file" \
             --jq '.body' > "$notes_file"
           if [[ -n "$RELEASE_SUMMARY" ]]; then
-            printf '%s\n\n' "$RELEASE_SUMMARY" > release-notes.md
-            cat "$notes_file" >> release-notes.md
+            printf '%s\n' "$RELEASE_SUMMARY" > release-notes.md
           else
             cp "$notes_file" release-notes.md
           fi

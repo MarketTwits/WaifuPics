@@ -61,7 +61,10 @@ compose.desktop {
             configurationFiles.from("compose-desktop.pro")
             version.set("7.8.0")
             obfuscate.set(true)
-            optimize.set(true)
+            // ProGuard optimization emits invalid bytecode for the desktop app
+            // (VerifyError: Bad return type) on release startup. Keep shrinking
+            // and obfuscation enabled while skipping bytecode optimization.
+            optimize.set(false)
         }
     }
 }
