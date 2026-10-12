@@ -31,7 +31,7 @@ internal class NekoServiceBase(
     }
 
     companion object {
-        const val API_URL = "https://api.nekosapi.com/v4/"
+        val API_URL: String get() = nekoApiBaseUrl
 
         private object Endpoints {
             const val RANDOM_IMAGE = "images/random"

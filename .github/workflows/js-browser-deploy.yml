@@ -46,6 +46,15 @@ jobs:
           cp -R modules/instances/web/build/dist/js/productionExecutable/. website/
           cp -R modules/instances/web/build/dist/wasmJs/productionExecutable/. website/wasm/
 
+      - name: Configure production Nekos API proxy
+        if: github.event_name != 'pull_request'
+        env:
+          NEKOS_PROXY_BASE_URL: ${{ vars.NEKOS_PROXY_BASE_URL }}
+        run: |
+          test -n "$NEKOS_PROXY_BASE_URL"
+          printf 'globalThis.WAIFUPICS_NEKOS_API_URL = "%s";\n' "$NEKOS_PROXY_BASE_URL" > website/nekos-proxy-config.js
+          cp website/nekos-proxy-config.js website/wasm/nekos-proxy-config.js
+
       - name: Verify deploy directory
         run: |
           test -f website/index.html

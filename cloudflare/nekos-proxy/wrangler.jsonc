@@ -1,0 +1,18 @@
+{
+  "$schema": "https://developers.cloudflare.com/workers/wrangler/config-schema.json",
+  "name": "waifupics-nekos-proxy",
+  "main": "src/index.js",
+  "compatibility_date": "2026-10-12",
+  "workers_dev": true,
+  "vars": {
+    "ALLOWED_ORIGINS": "https://markettwits.github.io"
+  },
+  "env": {
+    "development": {
+      "name": "waifupics-nekos-proxy-local",
+      "vars": {
+        "ALLOWED_ORIGINS": "http://localhost:8080,http://127.0.0.1:8080"
+      }
+    }
+  }
+}
